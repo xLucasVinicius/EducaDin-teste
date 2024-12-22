@@ -1,0 +1,197 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+
+:root {
+    --cor-principal: #F2A900;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+html, body {
+    background-color: var(--cor-fundo-content);
+}
+
+.content {
+    width: 100vw;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+form {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    margin-bottom: 5dvh;
+}
+
+h1 {
+    font-family: "Orbitron", serif;
+    color: white;
+    text-align: center;
+    font-size: 3.2rem;
+}
+
+#titulo {
+    font-family: "Orbitron", serif;
+    color:var(--cor-principal);
+}
+
+label, span {
+    margin: 35px 0 0;
+    padding-bottom: 5px;
+}
+
+span {
+    position: relative;
+}
+
+label {
+    color: var(--cor-principal);
+    transition: all .3s;
+}
+
+label:hover {
+    color: #b88100;
+}
+
+d {
+    position: absolute;
+    top: 60px;
+    right: 160px;
+    visibility: hidden;
+}
+
+span.error .input {
+    border-color: red;
+}
+
+span.error d {
+    color: red;
+    visibility: visible;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 7px;
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+}
+
+.input:focus {
+    color: white;
+    outline: none;
+}
+
+#remember-box {
+    position: relative;
+  }
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #333;
+    border-radius: 4px;
+    position: relative;
+    transition: all .2s;
+  }
+
+  /* Estilo do checkbox quando está marcado */
+  input[type="checkbox"]:checked {
+    background-color: var(--cor-principal);
+    border-color: var(--cor-principal);
+  }
+
+  /* Adiciona um "check" dentro do checkbox */
+  input[type="checkbox"]:checked::before {
+    content: "✔";
+    color: white;
+    position: absolute;
+    left: 4px;
+    top: -3px;
+    font-size: 16px;
+  }
+
+  #remember-label {
+    position: absolute;
+    top: -32px;
+    left: 25px;
+    color: rgba(255, 255, 255, 0.856);
+  }
+
+
+input[type="submit"] {
+    background-color: var(--cor-principal);
+    color: white;
+    width: 100%;
+    padding: 10px;
+    border-radius: 7px;
+    margin-top: 30px;
+    margin-bottom: 25px;
+    border: none;
+    transition: all .2s;
+}
+
+input[type="submit"]:hover {
+    background-color: #b88100;
+}
+
+a {
+    color: var(--cor-principal);
+    text-decoration: none;
+    transition: all .2s;
+}
+
+a:hover {
+    color: #b88100;
+}
+
+.login-google {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    min-height: 100px;
+}
+
+p {
+    position: absolute;
+    top: -10px;
+    right: 105px;
+    color: var(--cor-principal);
+}
+
+.linha1, .linha2 {
+    position: absolute;
+    border-top: 1px solid rgba(255, 255, 255, 0.075);
+}
+
+.linha1 {
+    width: 100px;
+    top: -35px;
+    left: 0;
+}
+
+.linha2 {
+    width: 103px;
+    top: -35px;
+    right: 0;
+}
+
