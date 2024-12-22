@@ -30,9 +30,6 @@ if (isset($_SESSION['id'])) {
 ?>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-<style>
-
-</style>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -74,8 +71,8 @@ if (isset($_SESSION['id'])) {
         <label for="senha">Senha</label>
         <input type="password" name="senha" id="senha" placeholder="digite sua senha" required>
 
-        <label for="telefone">Número</label>
-        <input type="tel" name="telefone" value="<?php echo $row->num_tel?>" id="telefone" placeholder="11 99999-9999" >
+        <label for="senha">Confirmar Senha</label>
+        <input type="password" name="senha" id="confirmarsenha" placeholder="digite sua senha novamente" required>
     </div>
     <div class="input-outras-infos">
         <span>
@@ -84,36 +81,8 @@ if (isset($_SESSION['id'])) {
         </span>
 
         <span>
-            <label for="estado">Estado</label>
-            <select name="estado" id="estado">
-                <option value="Acre" <?php if ($row->estado == "Acre") echo 'selected'; ?>>Acre</option>
-                <option value="Alagoas" <?php if ($row->estado == "Alagoas") echo 'selected'; ?>>Alagoas</option>
-                <option value="Amapá" <?php if ($row->estado == "Amapá") echo 'selected'; ?>>Amapá</option>
-                <option value="Amazonas" <?php if ($row->estado == "Amazonas") echo 'selected'; ?>>Amazonas</option>
-                <option value="Bahia" <?php if ($row->estado == "Bahia") echo 'selected'; ?>>Bahia</option>
-                <option value="Ceará" <?php if ($row->estado == "Ceará") echo 'selected'; ?>>Ceará</option>
-                <option value="Distrito Federal" <?php if ($row->estado == "Distrito Federal") echo 'selected'; ?>>Distrito Federal</option>
-                <option value="Espírito Santo" <?php if ($row->estado == "Espirito Santo") echo 'selected'; ?>>Espírito Santo</option>
-                <option value="Goiás" <?php if ($row->estado == "Goiás") echo 'selected'; ?>>Goiás</option>
-                <option value="Maranhão" <?php if ($row->estado == "Maranhão") echo 'selected'; ?>>Maranhão</option>
-                <option value="Mato Grosso" <?php if ($row->estado == "Mato Grosso") echo 'selected'; ?>>Mato Grosso</option>
-                <option value="Mato Grosso do Sul" <?php if ($row->estado == "Mato Grosso do Sul") echo 'selected'; ?>>Mato Grosso do Sul</option>
-                <option value="Minas Gerais" <?php if ($row->estado == "Minas Gerais") echo 'selected'; ?>>Minas Gerais</option>
-                <option value="Pará" <?php if ($row->estado == "Pará") echo 'selected'; ?>>Pará</option>
-                <option value="Paraíba" <?php if ($row->estado == "Paraíba") echo 'selected'; ?>>Paraíba</option>
-                <option value="Paraná" <?php if ($row->estado == "Paraná") echo 'selected'; ?>>Paraná</option>
-                <option value="Pernambuco" <?php if ($row->estado == "Pernambuco") echo 'selected'; ?>>Pernambuco</option>
-                <option value="Piauí" <?php if ($row->estado == "Piauí") echo 'selected'; ?>>Piauí</option>
-                <option value="Rio de Janeiro" <?php if ($row->estado == "Rio de Janeiro") echo 'selected'; ?>>Rio de Janeiro</option>
-                <option value="Rio Grande do Norte" <?php if ($row->estado == "Rio Grande do Norte") echo 'selected'; ?>>Rio Grande do Norte</option>
-                <option value="Rio Grande do Sul" <?php if ($row->estado == "Rio Grande do Sul") echo 'selected'; ?>>Rio Grande do Sul</option>
-                <option value="Rondônia" <?php if ($row->estado == "Rondônia") echo 'selected'; ?>>Rondônia</option>
-                <option value="Roraima" <?php if ($row->estado == "Roraima") echo 'selected'; ?>>Roraima</option>
-                <option value="Santa Catarina" <?php if ($row->estado == "Santa Catarina") echo 'selected'; ?>>Santa Catarina</option>
-                <option value="São Paulo" <?php if ($row->estado == "São Paulo") echo 'selected'; ?>>São Paulo</option>
-                <option value="Sergipe" <?php if ($row->estado == "Sergipe") echo 'selected'; ?>>Sergipe</option>
-                <option value="Tocantins" <?php if ($row->estado == "Tocantins") echo 'selected'; ?>>Tocantins</option>
-            </select>
+        <label for="telefone">Número</label>
+        <input type="tel" name="telefone" value="<?php echo $row->num_tel?>" id="telefone" placeholder="11 99999-9999" >
         </span>
     </div>
     <div class="btn-form">

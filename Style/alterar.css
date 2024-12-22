@@ -4,6 +4,9 @@
 
 
     * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
         font-family: sans-serif;
     }
 
@@ -16,16 +19,16 @@
         flex-wrap: nowrap;
         margin: auto;
         max-width: 700px;
-        height: 89%;
+        height: calc(100vh - 70px);
         justify-content: center;
         align-items: center;
     }
 
     form > h1 {
-        font-size: 3rem;
+        font-size: 2rem;
         font-family: 'orbitron';
         margin-bottom: 100px;
-        color: #F5A900;
+        color: white;
     }
 
     label {
@@ -33,10 +36,10 @@
         margin-top: 20px;
     }
 
-    input, #estado {
+    input {
         background-color: transparent;
         color: white;
-        padding: 15px;
+        padding: 10px;
         border: 1.5px solid white;
         border-radius: 4px;
     }
@@ -99,7 +102,7 @@
         width: 100%;
     }
 
-    #nome, #sobrenome, #data-nasc, #estado {
+    #nome, #sobrenome, #data-nasc, #telefone {
         width: 300px;
     }
 
@@ -163,7 +166,7 @@ form {
 }
 
 form > h1 {
-    font-size: 2rem;
+    font-size: 1rem;
     margin-bottom: 1%;
 }
 
@@ -191,7 +194,7 @@ border-radius: 50%;
     width: 100%;
 }
 
-#nome, #sobrenome, #data-nasc, #estado {
+#nome, #sobrenome, #data-nasc, #telefone,#email, #senha, #confirmarsenha {
     width: 300px;
 }
 
@@ -226,8 +229,8 @@ label {
     font-size: 15px;
 }
 
-input, #estado {
-    padding: 1.5vh 5px;
+input {
+    padding: 5px 5px;
 }
 
 .img-perfil img{
@@ -236,7 +239,7 @@ input, #estado {
     border-radius: 50%;
 }
 
-#nome, #sobrenome, #data-nasc, #estado {
+#nome, #sobrenome, #data-nasc, #telefone {
     width: 180px;
 }
 

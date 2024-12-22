@@ -31,6 +31,11 @@ if(isset($_POST['email'])){
             $_SESSION['data_nasc'] = $usuario['data_nasc'];
             $_SESSION['estado'] = $usuario['estado'];
             
+            // Verificar se o usuário optou por "manter conectado"
+            if (isset($_POST['remember'])) {
+                // Definir um cookie com tempo de expiração de 30 dias
+                setcookie('user', $usuario['email'], time() + (86400 * 30), "/");
+            }
             // Redireciona para a página inicial
             header('location: index.php');
             exit(); // Certifique-se de sair após o redirecionamento
@@ -51,6 +56,7 @@ if(isset($_POST['email'])){
     <title>Login</title>
     <link rel="stylesheet" href="../Style/login.css">
     <link rel="shortcut icon" href="../imagens/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 <body>
 
@@ -64,10 +70,11 @@ if(isset($_POST['email'])){
                 <d>Email incorreto</d>
             </span>
             
-            <span class="form-span <?php echo ($error_senha) ? 'error' : ''; ?>">
+            <span class="form-span <?php echo ($error_senha) ? 'error' : ''; ?> senha">
                 <label for="senha">Senha</label>
                 <input class="input" type="password" name="senha" id="senha" required placeholder="********">
                 <d>Senha incorreta</d>
+                <span class="toggle-password" onclick="togglePassword()"><i class="bi bi-eye"></i></span>
             </span>
 
             <span id="remember-box">
@@ -89,5 +96,38 @@ if(isset($_POST['email'])){
         <a href="cadastro.php">Realizar cadastro</a>
     </div>
 
+    <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById("senha");
+            var toggleIcon = document.querySelector(".toggle-password");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.innerHTML = '<i class="bi bi-eye-slash"></i>';
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.innerHTML = '<i class="bi bi-eye"></i>';
+            }
+    }
+
+    const input = document.querySelector('.error>.input');
+    const content = document.querySelector('.error');
+
+    // Adiciona a classe "focused" quando o input recebe foco
+    input.addEventListener('focus', () => {
+        content.classList.add('focused');
+    });
+
+    // Remove a classe "focused" ao perder o foco, somente se o campo estiver vazio
+input.addEventListener('blur', () => {
+    if (input.value === '') {
+        content.classList.remove('focused');
+    }
+});
+
+    input.addEventListener('input', () => {
+        content.classList.add('focused');
+    });
+    </script>
 </body>
 </html>

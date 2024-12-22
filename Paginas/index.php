@@ -2,7 +2,7 @@
 session_start();
 // Verificar se o usuário está logado
 if (!isset($_SESSION['nome'])) {
-    header("Location:login.php");
+    header("Location:inicio.php");
 }
 ?>
 
@@ -16,10 +16,10 @@ if (!isset($_SESSION['nome'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Icons (Opcional) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../padrao.css">
+    <link rel="stylesheet" href="../Style/padrao.css">
       <!-- Bootstrap-Icons -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-      <script src="../nav-bar.js" async></script>
+      <script src="../jS/nav-bar.js" async></script>
 </head>
 <body>
     <!-- Navbar Vertical -->
@@ -35,7 +35,7 @@ if (!isset($_SESSION['nome'])) {
         <!-- Links das Páginas -->
         <ul class="nav flex-column w-100">
             <li class="nav-item">
-                <a href="?page=dashboard" class="nav-link active">
+                <a href="?page=dashboard" class="nav-link">
                     <i class="bi bi-house-door"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>
@@ -173,6 +173,5 @@ if (!isset($_SESSION['nome'])) {
     <!-- Bootstrap JS (Opcional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    
 </body>
 </html>

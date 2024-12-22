@@ -22,7 +22,8 @@
     border: 1px solid #F2A900; /* Borda dourada */
     transition: width 0.3s ease; /* Transição suave ao abrir/fechar */
     padding: 0;
-    /* flex-wrap: nowrap; */
+    z-index: 999;
+    flex-wrap: nowrap;
 }
 .navbar-vertical.collapsed {
     width: 60px; /* Largura da navbar quando recolhida */
@@ -39,10 +40,10 @@
 }
 .navbar-vertical .nav-link {
     color: white; /* Texto branco */
-    font-size: 1.1rem;
+    font-size: 1rem;
     transition: all 0.3s ease; /* Transição suave */
-    padding: 10px 20px; /* Espaçamento interno */
-    white-space: nowrap; /* Prevenir quebra de linha no texto */
+    padding: 10px 10px; /* Espaçamento interno */
+      white-space: nowrap; /*Prevenir quebra de linha no texto */
     text-align: left; /* Alinhamento à esquerda */
 }
 .navbar-vertical .nav-item {

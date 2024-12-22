@@ -83,6 +83,25 @@ span.error d {
     visibility: visible;
 }
 
+span.error .toggle-password i {
+    color: red;
+}
+
+span.error .input:focus {
+    border-color: white;
+}
+
+span.error.focused .input {
+    border: 1px solid white;
+}
+
+span.focused d{
+    visibility: hidden;
+}
+span.focused .toggle-password i{
+    color: white;
+}
+
 .input {
     width: 100%;
     padding: 10px;
@@ -92,9 +111,32 @@ span.error d {
     border: 1px solid white;
 }
 
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+    background-color: transparent !important;
+    color: white !important;
+    border: 1px solid white !important;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white  !important;
+    caret-color: white;
+}
+
 .input:focus {
     color: white;
     outline: none;
+}
+
+.senha {
+    position: relative;
+}
+
+.senha i {
+    position: absolute;
+    color: white;
+    top: 2px;
+    right: 15px;
+    cursor: pointer;
 }
 
 #remember-box {
@@ -123,7 +165,7 @@ input[type="checkbox"] {
     content: "✔";
     color: white;
     position: absolute;
-    left: 4px;
+    left: 2px;
     top: -3px;
     font-size: 16px;
   }
