@@ -11,12 +11,13 @@ if (!isset($_SESSION['nome'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar Vertical</title>
+    <title>EducaDin</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Icons (Opcional) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../Style/padrao.css">
+    <!-- Estilo Personalizado -->
+    <link rel="stylesheet" href="../padrao.css">
       <!-- Bootstrap-Icons -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
       <script src="../jS/nav-bar.js" async></script>
@@ -28,10 +29,7 @@ if (!isset($_SESSION['nome'])) {
         <a href="?page=dashboard" class="navbar-brand mb-0 mt-2 p-0">
             <img src="../imagens/logo.png" alt="Logo" id="navbar-logo">
         </a>
-        <!-- Botão de Toggle -->
-        <button class="toggle-btn" id="toggleBtn">
-            <i class="fas fa-angle-double-left"></i>
-        </button>
+        
         <!-- Links das Páginas -->
         <ul class="nav flex-column w-100">
             <li class="nav-item">
@@ -113,6 +111,10 @@ if (!isset($_SESSION['nome'])) {
 
         <!-- Navbar Superior -->
         <nav class="navbar-top" id="navbarTop">
+        <!-- Botão de Toggle -->
+        <button class="toggle-btn" id="toggleBtn">
+            <i class="fas fa-angle-double-left"></i>
+        </button>
         <div class="user-info">
         <a href="?page=alterar" class="link-perfil">
                 <img src="<?php echo $_SESSION['file'] ?>" alt="">

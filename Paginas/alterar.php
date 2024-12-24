@@ -28,21 +28,19 @@ if (isset($_SESSION['id'])) {
     exit;
 }
 ?>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EducaDin</title>
-    <link rel="stylesheet" href="../Style/alterar.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>EducaDin</title>
+        <link rel="stylesheet" href="../alterar.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
 <form action="salvar-usuario.php" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?php echo $row->id?>">
-    <h1>Editar perfil</h1>
+    <h1>Editar <e style="color: #F5A900; font-family:orbitron">perfil</e></h1>
     <div class="input-img-perfil">
         <div class="img-perfil">
             <img src="<?php echo $_SESSION['file'] ?>" alt="">

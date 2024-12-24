@@ -6,8 +6,8 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
     $arquivo = $_FILES['file'];
 
     // Verifique o tamanho do arquivo
-    if ($arquivo['size'] > 2097152) {
-        die("Arquivo muito grande! Max: 2mb");
+    if ($arquivo['size'] > 7340032) {
+        die("Arquivo muito grande! Max: 7mb");
     }
 
     $pasta = "../foto-perfil/";

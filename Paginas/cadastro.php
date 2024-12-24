@@ -5,7 +5,7 @@ $arquivo = $_FILES['file'];
     if($arquivo['error'])
         die("Falha ao enviar arquivo");
     if ($arquivo['size'] > 2097152)
-        die("Arquivo muito grande! Max: 2mb");
+        die("Arquivo muito grande! Max: 7mb");
 
 
     $pasta = "../foto-perfil/";
