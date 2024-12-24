@@ -1,4 +1,5 @@
 const navbar = document.getElementById('navbar');
+const navbarTop = document.getElementById('navbarTop');
 const toggleBtn = document.getElementById('toggleBtn');
 const logo = document.getElementById('navbar-logo');
 const content = document.querySelector('.conteudo');
@@ -16,6 +17,28 @@ toggleBtn.addEventListener('click', () => {
         content.classList.remove('collapsed');
     }
 });
+
+// Adiciona um ouvinte para o evento de redimensionamento da janela
+window.addEventListener('resize', verificarLarguraTela);
+
+function verificarLarguraTela() {
+    const larguraTela = window.innerWidth;
+
+    if (larguraTela < 768) {
+        navbar.classList.add('collapsed');
+        navbarTop.classList.add('collapsed');
+        content.classList.add('collapsed');
+        logo.src = '../imagens/favicon.ico'; 
+    } else {
+        navbar.classList.remove('collapsed');
+        navbarTop.classList.remove('collapsed');
+        content.classList.remove('collapsed');
+        logo.src = '../imagens/logo.png';
+    }
+}
+
+// Verifica a largura da tela assim que a página é carregada
+verificarLarguraTela();
 
 // Seleciona todos os links da navbar
 const navLinks = document.querySelectorAll('.nav-link');
@@ -51,3 +74,5 @@ navLinks.forEach(link => {
 
 // Configura o link ativo na carga da página
 window.onload = setActiveLink;
+
+

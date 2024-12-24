@@ -19,8 +19,8 @@ if (!isset($_SESSION['nome'])) {
     <!-- Estilo Personalizado -->
     <link rel="stylesheet" href="../padrao.css">
       <!-- Bootstrap-Icons -->
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-      <script src="../jS/nav-bar.js" async></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="../nav-bar.js" async></script>
 </head>
 <body>
     <!-- Navbar Vertical -->

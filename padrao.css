@@ -11,7 +11,6 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
 }
 
 .navbar-vertical {
@@ -136,18 +135,19 @@
     display: flex;
     text-decoration: none;
     align-items: center;
-    color: white;
+    color: rgb(255, 255, 255);
 }
 .navbar-top .user-info img {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     margin-right: 15px;
+    border: 1px solid var(--cor-principal);
 }
 .navbar-top .user-info h1 {
     color: #FFF;
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 500;
     margin-right: 5px;
     margin-top: auto;
 }

@@ -168,7 +168,7 @@
 
     @media screen and (max-width: 700px){
         .conteudo {
-            padding-top: 10px;
+            align-items: center;
         }
 
         form {
@@ -193,8 +193,8 @@
         }
         
         .img-perfil img{
-            width: 75px;
-            height: 75px;
+            width: 85px;
+            height: 85px;
             border-radius: 50%;
         }
 
@@ -213,6 +213,8 @@
         }
         
         #nome, #sobrenome, #data-nasc, #telefone,#email, #senha, #confirmarsenha {
+            padding: 5px;
+            font-size: 0.9rem;
             width: 290px;
         }
 
@@ -224,7 +226,7 @@
 @media screen and (min-width: 701px) and (max-width: 930px){
 
 .conteudo {
-    padding-top: 70px;
+    align-items: center;
 }
 
 form {
@@ -257,8 +259,8 @@ border-radius: 50%;
 }
 
 #nome, #sobrenome, #data-nasc, #telefone,#email, #senha, #confirmarsenha {
-    padding: 5px;
-    font-size: 0.9rem;
+    padding: 7px;
+    font-size: 0.95rem;
     width: 280px;
 }
 

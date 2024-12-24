@@ -37,7 +37,7 @@ if(isset($_POST['email'])){
                 setcookie('user', $usuario['email'], time() + (86400 * 30), "/");
             }
             // Redireciona para a página inicial
-            header('location: index.php');
+            header('location: index.php?page=dashboard');
             exit(); // Certifique-se de sair após o redirecionamento
         } else {
             $error_senha = true;
