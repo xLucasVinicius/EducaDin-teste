@@ -15,6 +15,7 @@
     }
 
     .conteudo {
+        display: flex;
         padding-top: 100px;
     }
 
