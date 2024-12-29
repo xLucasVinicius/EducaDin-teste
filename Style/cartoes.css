@@ -1,0 +1,109 @@
+@charset "UTF-8";
+
+:root {
+    --cor-principal: #F2A900;
+    --cor-fundo: #3D3D3D;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: var(--cor-fundo-content);
+}
+
+.conteudo-total {
+    background-color: var(--cor-fundo-content);
+    width: 100%;
+    height: 100%;
+    padding:5% 0 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+section.conteudo-cartao, section.lancamentos-cartao {
+    border: 1px solid var(--cor-principal);
+    border-radius: 15px;
+}
+
+section.conteudo-cartao {
+    display: flex;
+    width: 850px;
+    min-height: 280px;
+    max-height: 280px;
+    gap: 10px;
+}
+
+section.conteudo-cartao .cartao {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid white; */
+}
+
+section.conteudo-cartao .cartao img {
+    width: 350px;
+}
+
+section.conteudo-cartao .infos-cartao {
+    width: 40%;
+    padding: 15px 10px;
+    align-self: center;
+    /* border: 1px solid white; */
+}
+
+section.conteudo-cartao .infos-cartao p {
+    font-size: 1rem;
+    color: white;
+}
+
+section.lancamentos-cartao {
+    width: 95%;
+    min-height: 350px;
+        max-height: 350px;
+}
+
+@media screen and (max-width: 1100px) {
+    section.conteudo-cartao {
+        flex-direction: column;
+        align-items: center;
+        max-width: 400px;
+        min-height: 200px;
+        max-height: 200px;
+        position: relative;
+        margin-top: 95px;
+    }
+
+    section.conteudo-cartao .cartao img{
+        position: absolute;
+        top: -80px;
+        width: 250px;
+    }
+
+    section.conteudo-cartao .infos-cartao {
+        position: absolute;
+        bottom: 25px;
+        width: 85%;
+        height: 50%;
+        text-align: center;
+    }
+    
+    section.conteudo-cartao .infos-cartao .status-card2{
+        display: flex;
+        justify-content: space-evenly;
+        text-align: center;
+        /* border: 1px solid green; */
+        padding: 0 5px;
+    }
+    span.txt-card {
+        display: block;
+    }
+}

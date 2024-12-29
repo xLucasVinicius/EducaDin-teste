@@ -12,22 +12,23 @@ if (!isset($_SESSION['nome'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EducaDin</title>
+    <link rel="shortcut icon" href="../imagens/logos/favicon.ico" type="image/x-icon">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Icons (Opcional) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Estilo Personalizado -->
-    <link rel="stylesheet" href="../padrao.css">
+    <link rel="stylesheet" href="../Style/padrao.css">
       <!-- Bootstrap-Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="../nav-bar.js" async></script>
+    <script src="../Js/nav-bar.js" async></script>
 </head>
 <body>
     <!-- Navbar Vertical -->
     <nav class="navbar navbar-vertical d-flex flex-column p-0" id="navbar">
         <!-- Logo do Projeto -->
         <a href="?page=dashboard" class="navbar-brand mb-0 mt-2 p-0">
-            <img src="../imagens/logo.png" alt="Logo" id="navbar-logo">
+            <img src="../imagens/logos/logo.png" alt="Logo" id="navbar-logo">
         </a>
         
         <!-- Links das Páginas -->
@@ -136,8 +137,11 @@ if (!isset($_SESSION['nome'])) {
                 case "desempenho":
                     include("desempenho.php");
                 break;
+                case "cartoes":
+                    include("cartoes.php");
+                break;
                 case "minigames":
-                    include("mingames.php");
+                    include("minigames.php");
                 break;
                 case "planos":
                     include("planos.php");

@@ -159,9 +159,9 @@
     position: absolute;
     background-color: var(--cor-fundo-content);
     width: calc(100% - 200px); /* Ajusta para a largura da barra lateral */
-    height: calc(100vh - 60px); /* Preenche a área abaixo da navbar superior */
+    height: calc(100dvh - 60px); /* Preenche a área abaixo da navbar superior */
     right: 0;
-    top: 0px; /* Ajusta para abaixo da barra superior */
+    top: 60px; /* Ajusta para abaixo da barra superior */
     z-index: 0; /* Mantém o conteúdo abaixo das navbars */
     transition: width 0.3s ease; /* Animação suave ao colapsar a barra lateral */
 }
@@ -169,6 +169,7 @@
 /* Quando a barra lateral está colapsada */
 .conteudo.collapsed {
     width: calc(100% - 60px); /* Ajusta a largura quando a barra lateral é colapsada */
+    height: calc(100dvh - 53px);
     top: 53px; /* Ajuste para quando a navbar superior também encolher */
 }
 

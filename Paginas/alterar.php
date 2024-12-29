@@ -34,7 +34,7 @@ if (isset($_SESSION['id'])) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>EducaDin</title>
-        <link rel="stylesheet" href="../alterar.css">
+        <link rel="stylesheet" href="../Style/alterar.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
