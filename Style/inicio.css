@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+:root {
+    --cor-principal: #F2A900;
+    --cor-fundo: #3D3D3D;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.content {
+    position: relative;
+    width: 100vw;
+    height: 100dvh;
+    background-color: var(--cor-fundo-content);
+}
+
+.img-edu img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40%;
+    filter: drop-shadow(-1px 0px 5px white);
+    
+}
