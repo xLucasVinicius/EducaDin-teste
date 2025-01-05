@@ -55,14 +55,21 @@
     .img-perfil {
         display: flex;
         justify-content: center;
+        align-items: center;
+        width: 150px;  /* Definindo o tamanho fixo do contêiner */
+        height: 150px;
+        border-radius: 50%;  /* Garante que o contêiner seja circular */
+        overflow: hidden;
     }
 
     .input-img-perfil {
         position: relative;
     }
 
-    .img-perfil img{
-        width: 150px;
+    .img-perfil img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;  /* Garante que a imagem preencha o espaço sem distorção */
         border-radius: 50%;
     }
 

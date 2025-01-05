@@ -16,7 +16,8 @@
 
     .conteudo {
         display: flex;
-        padding-top: 100px;
+        overflow: scroll;
+        scrollbar-width: none;
     }
 
     form {
@@ -75,6 +76,7 @@
         width: 150px;
         height: 150px;
         border-radius: 50%;
+        object-fit: cover !important;
     }
 
     input[type="file"] {

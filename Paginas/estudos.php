@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EducaDin</title>
-    <link rel="stylesheet" href="../Style/estudos.css">
+    <link rel="stylesheet" href="./Style/estudos.css">
 </head>
 <body>
-    <img src="../imagens/Police-Tape-Transparent.webp" alt="" id="manutencao">
+    <img src="./imagens/Police-Tape-Transparent.webp" alt="" id="manutencao">
 </body>
 </html>

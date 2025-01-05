@@ -2,7 +2,7 @@
 session_start();
 // Verificar se o usuário está logado
 if (!isset($_SESSION['nome'])) {
-    header("Location:inicio.php");
+    header("Location:../index.php");
 }
 ?>
 
@@ -21,7 +21,7 @@ if (!isset($_SESSION['nome'])) {
     <link rel="stylesheet" href="../Style/padrao.css">
       <!-- Bootstrap-Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="../Js/nav-bar.js" async></script>
+    
 </head>
 <body>
     <!-- Navbar Vertical -->
@@ -119,7 +119,7 @@ if (!isset($_SESSION['nome'])) {
         <div class="user-info">
         <a href="?page=alterar" class="link-perfil">
                 <img src="<?php echo $_SESSION['file'] ?>" alt="">
-                <h1>Lucas Vinicius<!--<?php echo $_SESSION['nome']. ' ' .$_SESSION['sobrenome'] ?> --></h1>
+                <h1><?php echo $_SESSION['nome']. ' ' .$_SESSION['sobrenome'] ?></h1>
             </a>
         </div>
     </nav>
@@ -178,6 +178,8 @@ if (!isset($_SESSION['nome'])) {
 
     <!-- Bootstrap JS (Opcional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="../Js/nav-bar.js"></script>
 
 </body>
 </html>

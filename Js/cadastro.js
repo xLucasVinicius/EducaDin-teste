@@ -15,5 +15,5 @@ document.querySelector('#file').addEventListener('change', function(event) {
 });
 
 document.querySelector('#btn-input1').addEventListener('click', function(event){
-    window.location.href = 'http://localhost/EducaDin/Paginas/index.php'; 
+    window.location.href = 'http://localhost/EducaDin-teste/Paginas/navbar.php'; 
 });

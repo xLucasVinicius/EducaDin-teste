@@ -1,0 +1,236 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+:root {
+    --cor-principal: rgb(242, 169, 0);
+    --cor-fundo: #3D3D3D;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cor-fundo-content);
+    width: 100vw;
+    height: 100dvh;
+    position: relative;
+    display: grid;
+    place-content: center;
+    overflow: hidden;
+}
+
+#pattern {
+    width: 100vw;
+    height: 100dvh;
+    position: absolute;
+    top: -44px;
+    left: -50px;
+    right: 0;
+    bottom: 0;
+}
+
+#gradient {
+    background: radial-gradient(#F2A900, transparent 50%);
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    top: -200px;
+    left: -200px;
+    transform: translate(200px, 200px);
+}
+
+.content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 95%;
+    height: 800px;
+    padding: 40px;
+    margin: 0 auto;
+    background-color: #0d0c0f15;
+    backdrop-filter: blur(10px);
+    border: 1px solid #f2a90011;
+    border-radius: 25px;
+}
+
+.content .introducao {
+    height: 50%;
+    font-size: 2rem;
+    font-family: "Orbitron", serif;
+    text-align: center;
+    color: white;
+}
+
+.introducao #animado {
+    color: var(--cor-principal);
+    border-right: 10px solid var(--cor-principal);
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0 auto;
+
+    animation: mark .5s step-end infinite, write 3s steps(22, end) infinite;
+}
+
+@keyframes mark {
+    50% {
+        border-right-color: transparent;
+    }
+}
+
+@keyframes write {
+    20% {
+        width: 7ch;
+    }
+    70% {
+        width: 7ch;
+    }
+    85% {
+        width: 0;
+    }
+    100% {
+        width: 0;
+    }
+}
+
+.img-edu img {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    width: 20%;
+    filter: drop-shadow(2px 0px 6px #F2A900);
+    
+}
+
+.links {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 30px;
+    gap: 5px;
+}
+
+.links a {
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 40px 0;
+    color: #ffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.5s;
+    letter-spacing: 2px;
+    overflow: hidden;
+    font-family: "Orbitron", serif;
+}
+
+.links a:hover {
+    background: rgb(242, 169, 0);
+    color: #050801;
+    box-shadow: 0 0 2px rgb(242, 169, 0),
+                0 0 22px rgb(242, 169, 0),
+                0 0 30px rgb(242, 169, 0),
+                0 0 80px rgb(242, 169, 0);
+     -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+.links a span {
+    position: absolute;
+    display: block;
+}
+
+.links a span:nth-child(1) {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg,transparent,rgb(242, 169, 0));
+    animation: animate1 1s linear infinite;
+}
+
+@keyframes animate1{
+    0%{
+        left: -100%;
+    }
+    50%,100%{
+        left: 100%;
+    }
+}
+
+.links a span:nth-child(2){
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg,transparent,rgb(242, 169, 0));
+    animation: animate2 1s linear infinite;
+    animation-delay: 0.25s;
+}
+
+@keyframes animate2{
+    0%{
+        top: -100%;
+    }
+    50%,100%{
+        top: 100%;
+    }
+}
+.links a span:nth-child(3){
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg,transparent,rgb(242, 169, 0));
+    animation: animate3 1s linear infinite;
+    animation-delay: 0.50s;
+}
+
+@keyframes animate3{
+    0%{
+        right: -100%;
+    }
+    50%,100%{
+        right: 100%;
+    }
+}
+
+.links a span:nth-child(4){
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg,transparent,rgb(242, 169, 0));
+    animation: animate4 1s linear infinite;
+    animation-delay: 0.75s;
+}
+
+@keyframes animate4{
+    0%{
+        bottom: -100%;
+    }
+    50%,100%{
+        bottom: 100%;
+    }
+}
+
+@media screen and (max-width: 675px){
+
+    .content {
+        padding-top: 120px;
+    }
+
+    .content .introducao {
+        font-size: 1.3rem;
+    }
+}

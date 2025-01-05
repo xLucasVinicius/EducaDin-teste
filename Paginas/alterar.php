@@ -84,10 +84,16 @@ if (isset($_SESSION['id'])) {
         </span>
     </div>
     <div class="btn-form">
-        <span id="btn-input1"><button>Cancelar</button></span>
+        <span id="btn-input1"><button onclick="cancelar()">Cancelar</button></span>
         <span id="btn-input2"><input id="btn-salvar" type="submit" value="Salvar"></span>
     </div>
 </form>
+
+<script>
+    function cancelar() {
+        window.location.href = "navbar.php?page=dashboard";
+    }
+</script>
 </body>
 </html>
 
