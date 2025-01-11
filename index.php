@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EducaDin</title>
     <link rel="shortcut icon" href="imagens/logos/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="Style/index.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <div id="gradient"></div>
@@ -32,7 +32,10 @@
             </a>
         </div>
         <div class="img-edu">
-            <img src="imagens/logos/edu-joia.png" alt="Logo EducaDin">
+            <div class="img-content">
+                <img src="imagens/logos/edu-fala.png" alt="Logo EducaDin">
+                <p>Olá,<br> eu sou Edu!</p>
+            </div>
         </div>
     </div>
     
