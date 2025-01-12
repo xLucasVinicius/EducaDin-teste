@@ -15,6 +15,11 @@
 
 html, body {
     background-color: var(--cor-fundo-content);
+    scrollbar-width: hidden;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 .container {
@@ -24,7 +29,7 @@ html, body {
     gap: 20px; /* Espaçamento entre as seções */
     height: 100%; /* Altura da página completa */
     padding: 40px 20px; /* Espaçamento externo opcional */
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .container > section {
@@ -35,12 +40,97 @@ html, body {
 .secao1 {
     height: 150px;
     grid-column: 1 / span 2; /* Ocupa 2 colunas, ou seja, a largura completa */
+    padding: 0 4%;
+}
+
+.desempenho-fluxo { /* conteudo total de desempenho */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+}
+
+.desempenho-fluxo > div { /* cada uma das 3 divs dos desempenhos */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    width: calc(99% / 3);
+    height: 100%;
+    position: relative;
+}
+
+.desempenho-fluxo > div > span > i { /* icones principais */
+    font-size: 5rem;
+}
+
+.desempenho-fluxo div .icon { /* onde contem os icones */
+    position: relative;
+}
+
+.desempenho-fluxo > div > span > .arrow { /* onde contem as setas */
+    font-size: 2rem;
+    text-align: center;
+    position: absolute;
+    top: 30px;
+    right: -7px;
+    background-color: var(--cor-fundo-content);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.desempenho-fluxo > div > span > .arrow > i { /* setas */
+    position: relative;
+    top: -10px;
+    right: 1px;
+}
+
+.desempenho-fluxo > div > .infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    height: 100%;
+}
+
+.desempenho-fluxo > div > .infos > h1 {
+    text-align: start;
+    font-size: 1rem;
+    color: white;
+    margin-top: 20px;
+}
+
+.desempenho-fluxo > div > .infos > h2 {
+    font-size: 1.5rem;
+    font-weight: bolder;
+    color: white;
+}
+
+.desempenho-fluxo > div > .infos > p {
+    font-size: 0.8rem;
+    color: white;
+}
+
+.desempenho-fluxo .barra {
+    position: absolute;
+    right: -3px;
+    height: 105px;
+    border-right: 1px solid rgba(255, 255, 255, 0.315);
 }
 
 .secao2 {
     height: 250px;
     width: 90%;
     align-self: start;
+}
+
+#chart1 {
+    width: 95%;
+    margin: 0 auto;
 }
 
 .secao3 {
@@ -50,8 +140,68 @@ html, body {
     width: 330px; 
 }
 
+#chart2 {
+    width: 95%;
+    margin: 0 auto;
+}
+
 .secao4 {
-    height: 300px;
+    height: 350px;
     grid-column: 1 / span 2; /* Ocupa 2 colunas, ou seja, a largura completa */
-    
+    position: relative;
+}
+
+#btn-lancamentos {
+    position: absolute;
+    top: 12px;
+    right: 30px;
+    width: 200px;
+    height: 30px;
+    background-color: transparent;
+    color: var(--cor-principal);
+    border: 1px solid var(--cor-principal);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+#btn-lancamentos:hover {
+    background-color: var(--cor-principal);
+    color: white;
+}
+
+.table-lancamentos {
+    width: 98%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.table-lancamentos h1 {
+    text-align: center;
+    font-size: 1rem;
+    color: white;
+    margin: 18px 0;
+}
+
+table {
+    width: 100%;
+    height: 84%;
+    border-collapse: collapse;
+}
+
+th {
+    color: #F2A900;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.363);
+    padding: 1px;
+    text-align: center;
+}
+
+td {
+    color: white;
+    border-top: 1px solid rgba(255, 255, 255, 0.363);
+    padding: 1px;
+    text-align: center;
 }
