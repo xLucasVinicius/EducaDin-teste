@@ -29,7 +29,7 @@ body::-webkit-scrollbar {
     gap: 20px; /* Espaçamento entre as seções */
     height: 100%; /* Altura da página completa */
     padding: 40px 20px; /* Espaçamento externo opcional */
-    /* border: 1px solid red; */
+
 }
 
 .container > section {
@@ -125,7 +125,7 @@ body::-webkit-scrollbar {
 .secao2 {
     height: 250px;
     width: 90%;
-    align-self: start;
+    justify-self: end;
 }
 
 #chart1 {
@@ -135,9 +135,9 @@ body::-webkit-scrollbar {
 
 .secao3 {
     aspect-ratio: 1 / 1;
-    justify-self: end;
+    justify-self: center;
     height: 250px; 
-    width: 330px; 
+    width: 330px;
 }
 
 #chart2 {
