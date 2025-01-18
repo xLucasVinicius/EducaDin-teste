@@ -74,7 +74,7 @@ $result = $mysqli->query($query);
                 <th>DESCRIÇÃO</th>
                 <th>VALOR</th>
                 <th>TIPO</th>
-                <th>MÉTODO</th>
+                <th>CATEGORIA</th>
                 <th>PARCELAS</th>
                 <th>DATA</th>
                 <th>OPÇÕES</th>
@@ -101,12 +101,89 @@ $result = $mysqli->query($query);
         </tbody>
     </table>
 </div>
-        <button id="btn-lancamentos">
+        <button id="btn-lancamentos" onclick="exibirLancamentos()">
           Adicionar Lançamento
         </button>
         </section>
-    </section>
+      </section>
+        <section class="section-lancamentos">
+          <div class="lancar">
+            <h1>Lançamento</h1>
+            <form action="" method="post" id="form-lancamentos">
+              <span class="descricao span-flex">
+                <label for="descricao">Descrição</label>
+                <input type="text" name="descricao" placeholder="Descrição">
+              </span>
+
+              <span class="valor span-flex">
+                <label for="valor">Valor</label>
+                <input type="number" name="valor" placeholder="Valor">
+              </span>
+
+              <span class="tipo span-flex">
+                <label for="tipo">Tipo</label>
+                <span class="radio">
+                  <input type="radio" name="tipo" id="tipo1" value="receita" onchange="ocultarParcelas()">
+                  <label for="tipo1" id="label-receita" ">Receita</label>
+                </span>
+                  <span class="radio">
+                    <input type="radio" name="tipo" id="tipo2" value="despesa" onchange="mostrarParcelas()">
+                    <label for="tipo2" id="label-despesa">Despesa</label>
+                  </span>
+              </span>
+
+              <span class="categorias span-flex">
+                <label for="categoria">Categoria</label>
+                <select name="categoria" id="categoria" onchange="mostrarSubcategorias()">
+                <option value="">Selecione uma categoria</option>
+                <option value="moradia">Moradia</option>
+                <option value="alimentacao">Alimentação</option>
+                <option value="transporte">Transporte</option>
+                <option value="educacao">Educação</option>
+                <option value="saude">Saúde</option>
+                <option value="lazer">Lazer e Entretenimento</option>
+                <option value="vestuario">Vestuário</option>
+                <option value="impostos">Impostos e Taxas</option>
+                <option value="servicos">Serviços e Assinaturas</option>
+                <option value="despesas_gerais">Despesas Gerais</option>
+                <option value="salario">Salário</option>
+                <option value="freelance">Freelance</option>
+                <option value="investimentos">Investimentos</option>
+                <option value="vendas">Vendas</option>
+                <option value="outros">Outros</option>
+                </select>
+              </span>
+
+            <span class="subcategoria span-flex">
+              <label for="subcategoria" id="label-subcategoria">Subcategoria:</label>
+              <select name="subcategoria" id="subcategoria">
+                <!-- As opções de subcategoria serão preenchidas dinamicamente -->
+              </select>
+            </span>
+
+              <span class="data span-flex date-container">
+                <label for="data">Data</label>
+                <input type="date" name="data" placeholder="Data" id="customDate">
+              </span>
+
+              <span class="parcelas span-flex">
+                <label for="parcelas" id="label-parcelas">Parcelas</label>
+                <input type="number" name="parcelas" placeholder="Parcelas" id="parcelas">
+              </span>
+
+              <span class="btns span-flex">
+                <button type="reset">Limpar</button>
+                <button type="submit">Adicionar</button>
+              </span>
+
+            </form>
+            <button id="btn-lancamentos-fechar" onclick="fecharLancamentos()">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+        </section>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../Js/dashboard.js"></script>
 
     <script>
         const ctx = document.getElementById('chart1');
