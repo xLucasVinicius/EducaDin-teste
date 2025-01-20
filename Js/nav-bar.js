@@ -24,7 +24,7 @@ window.addEventListener('resize', verificarLarguraTela);
 function verificarLarguraTela() {
     const larguraTela = window.innerWidth;
 
-    if (larguraTela < 768) {
+    if (larguraTela < 850) {
         navbar.classList.add('collapsed');
         navbarTop.classList.add('collapsed');
         content.classList.add('collapsed');

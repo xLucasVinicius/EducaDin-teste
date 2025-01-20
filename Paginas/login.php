@@ -59,6 +59,8 @@ if(isset($_POST['email'])){
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 <body>
+    <div id="gradient"></div>
+    <div id="pattern"></div>
 
     <div class="content">
         <form action="" method="post" id="form" class="form">
@@ -97,5 +99,6 @@ if(isset($_POST['email'])){
     </div>
 
 <script src="../Js/login.js"></script>
+<script src="../Js/background.js"></script>
 </body>
 </html>

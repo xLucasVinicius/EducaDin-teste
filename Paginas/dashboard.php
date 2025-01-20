@@ -11,120 +11,124 @@ $result = $mysqli->query($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EducaDin</title>
-    <link rel="stylesheet" href="../Style/dashboard.css">
+    <link rel="stylesheet" href="../Style/dashboard/dashboard.css">
+    <link rel="stylesheet" href="../Style/dashboard/dashboard-media.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-    <section class="container">
-        <section class="secao1">
-          <div class="desempenho-fluxo">
-            <div>
-              <span class="icon">
-                <i class="bi bi-coin" style="color: green"></i>
-                <span class="arrow">
-                  <i class="bi bi-arrow-down-left-circle" style="color: green"></i>
+    <div class="conteudo-flex">
+      <section class="conteudo-dash">
+          <section class="secao1">
+            <div class="desempenho-fluxo">
+              <div>
+                <span class="icon">
+                  <i class="bi bi-coin" style="color: green"></i>
+                  <span class="arrow">
+                    <i class="bi bi-arrow-down-left-circle" style="color: green"></i>
+                  </span>
                 </span>
-              </span>
-              <span class="infos">
-                <h1>Entradas</h1>
-                <h2>R$ 1.000</h2>
-                <p>+5% ao mês anterior</p>
-              </span>
-              <span class="barra"></span>
-            </div>
-
-            <div>
-              <span class="icon">
-                <i class="bi bi-coin" style="color: red"></i>
-                <span class="arrow">
-                  <i class="bi bi-arrow-up-right-circle" style="color: red"></i>
+                <span class="infos">
+                  <h1>Entradas</h1>
+                  <h2>R$ 1.000</h2>
+                  <p>+5% ao mês anterior</p>
                 </span>
-              </span>
-              <span class="infos">
-                <h1>Saidas</h1>
-                <h2>R$ 1.000</h2>
-                <p>-5% ao mês anterior</p>
-              </span>
-              <span class="barra"></span>
+                <span class="barra"></span>
+              </div>
+              <div>
+                <span class="icon">
+                  <i class="bi bi-coin" style="color: red"></i>
+                  <span class="arrow">
+                    <i class="bi bi-arrow-up-right-circle" style="color: red"></i>
+                  </span>
+                </span>
+                <span class="infos">
+                  <h1>Saidas</h1>
+                  <h2>R$ 1.000</h2>
+                  <p>-5% ao mês anterior</p>
+                </span>
+                <span class="barra"></span>
+              </div>
+              <div>
+                <span class="icon">
+                  <i class="bi bi-cash-coin" style="color: skyblue"></i>
+                </span>
+                <span class="infos">
+                  <h1>Total</h1>
+                  <h2>R$ 1.000</h2>
+                  <p>+5% ao mês anterior</p>
+                </span>
+              </div>
             </div>
-            <div>
-              <span class="icon">
-                <i class="bi bi-cash-coin" style="color: skyblue"></i>
-              </span>
-              <span class="infos">
-                <h1>Total</h1>
-                <h2>R$ 1.000</h2>
-                <p>+5% ao mês anterior</p>
-              </span>
-            </div>
+          </section>
+          <section class="secao2">
+              <canvas id="chart1"></canvas>
+          </section>
+          <section class="secao3">
+              <canvas id="chart2"></canvas>
+          </section>
+          <section class="secao4">
+          <div class="table-lancamentos">
+              <h1>LANÇAMENTOS</h1>
+              <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>DESCRIÇÃO</th>
+                            <th>VALOR</th>
+                            <th>TIPO</th>
+                            <th>CATEGORIA</th>
+                            <th>PARCELAS</th>
+                            <th>DATA</th>
+                            <th>OPÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if ($result->num_rows > 0): ?>
+                            <?php while ($lancamento = $result->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($lancamento['descricao']); ?></td>
+                                    <td>R$ <?php echo number_format($lancamento['valor'], 2, ',', '.'); ?></td>
+                                    <td><?php echo htmlspecialchars($lancamento['tipo']); ?></td>
+                                    <td><?php echo htmlspecialchars($lancamento['metodo']); ?></td>
+                                    <td><?php echo htmlspecialchars($lancamento['parcelas']); ?></td>
+                                    <td><?php echo date('d/m/Y', strtotime($lancamento['data'])); ?></td>
+                                    <td>editar/excluir</td>
+                                </tr>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="7">Nenhum lançamento encontrado.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+              </div>
           </div>
+          <button id="btn-lancamentos" onclick="exibirLancamentos()">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+          </section>
         </section>
-        <section class="secao2">
-            <canvas id="chart1" style="width: 100%;"></canvas>
-        </section>
-        <section class="secao3">
-            <canvas id="chart2"></canvas>
-        </section>
-        <section class="secao4">
-        <div class="table-lancamentos">
-    <h1>LANÇAMENTOS</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>DESCRIÇÃO</th>
-                <th>VALOR</th>
-                <th>TIPO</th>
-                <th>CATEGORIA</th>
-                <th>PARCELAS</th>
-                <th>DATA</th>
-                <th>OPÇÕES</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if ($result->num_rows > 0): ?>
-                <?php while ($lancamento = $result->fetch_assoc()): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($lancamento['descricao']); ?></td>
-                        <td>R$ <?php echo number_format($lancamento['valor'], 2, ',', '.'); ?></td>
-                        <td><?php echo htmlspecialchars($lancamento['tipo']); ?></td>
-                        <td><?php echo htmlspecialchars($lancamento['metodo']); ?></td>
-                        <td><?php echo htmlspecialchars($lancamento['parcelas']); ?></td>
-                        <td><?php echo date('d/m/Y', strtotime($lancamento['data'])); ?></td>
-                        <td>editar/excluir</td>
-                    </tr>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="7">Nenhum lançamento encontrado.</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-</div>
-        <button id="btn-lancamentos" onclick="exibirLancamentos()">
-          Adicionar Lançamento
-        </button>
-        </section>
-      </section>
+    </div>
         <section class="section-lancamentos">
           <div class="lancar">
             <h1>Lançamento</h1>
             <form action="" method="post" id="form-lancamentos">
               <span class="descricao span-flex">
                 <label for="descricao">Descrição</label>
-                <input type="text" name="descricao" placeholder="Descrição">
+                <input type="text" name="descricao" id="descricao" placeholder="Descrição">
               </span>
 
               <span class="valor span-flex">
                 <label for="valor">Valor</label>
-                <input type="number" name="valor" placeholder="Valor">
+                <input type="number" name="valor" id="valor" placeholder="Valor">
               </span>
 
               <span class="tipo span-flex">
-                <label for="tipo">Tipo</label>
+                <label for="tipo1">Tipo</label>
                 <span class="radio">
                   <input type="radio" name="tipo" id="tipo1" value="receita" onchange="ocultarParcelas()">
-                  <label for="tipo1" id="label-receita" ">Receita</label>
+                  <label for="tipo1" id="label-receita">Receita</label>
                 </span>
                   <span class="radio">
                     <input type="radio" name="tipo" id="tipo2" value="despesa" onchange="mostrarParcelas()">
@@ -162,7 +166,7 @@ $result = $mysqli->query($query);
             </span>
 
               <span class="data span-flex date-container">
-                <label for="data">Data</label>
+                <label for="customDate">Data</label>
                 <input type="date" name="data" placeholder="Data" id="customDate">
               </span>
 
@@ -186,7 +190,6 @@ $result = $mysqli->query($query);
     <script src="../Js/dashboard.js"></script>
 
     <script>
-        const ctx = document.getElementById('chart1');
         const ctx2 = document.getElementById('chart2');
         const data = new Date();
         const mesAtual = data.toLocaleString('default', { month: 'long' });
@@ -198,7 +201,11 @@ $result = $mysqli->query($query);
           return label.toLowerCase() === mesAtual.toLowerCase() ? 'rgb(255, 255, 255)' : '#F2A900';
         });
 
-        new Chart(ctx, {
+        let chartInstance;
+        
+        // Crie o gráfico inicialmente
+        const chart = document.querySelector('#chart1').getContext('2d');
+        chartInstance = new Chart(chart, {
           type: 'bar',
           data: {
             labels: labels,
@@ -218,6 +225,34 @@ $result = $mysqli->query($query);
             },
             plugins: {legend: {labels: {color: 'white'}}}
           }
+        });
+        
+        // Atualize o gráfico quando o evento de resize ocorre
+        window.addEventListener('resize', function() {
+            setTimeout(function() {
+                chartInstance.destroy();
+                chartInstance = new Chart(chart, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Sobra no Mês em Reais',
+                            data: [125, 129, 365,235, 322,563, 56, 134, 245, 232, 245, 245],
+                            backgroundColor: backgroundColors,
+                            borderColor: borderColors,
+                            borderWidth: 2,
+                            maxBarThickness: 30,
+                            borderRadius: 5
+                        }]
+                    },
+                    options: {
+                        scales: {x: {ticks: {color: 'white'}},
+                                y: {beginAtZero: true, ticks: {display: false}}
+                        },
+                        plugins: {legend: {labels: {color: 'white'}}}
+                    }
+                });
+            }, 300);
         });
 
         new Chart(ctx2, {

@@ -1,11 +1,18 @@
 function exibirLancamentos() {
     const lancamentos = document.querySelector(".section-lancamentos");
+    const body = document.querySelector("body");
+
     lancamentos.style.display = "flex";
+    window.scrollTo(0, 0);
+    body.style.overflow = "hidden";
 }
 
 function fecharLancamentos() {
     const lancamentos = document.querySelector(".section-lancamentos");
+    const body = document.querySelector("body");
+
     lancamentos.style.display = "none";
+    body.style.overflow = "auto";
   }
 
 
@@ -150,5 +157,6 @@ const subcategorias = {
     parcelas.style.display = "none";
     labelParcelas.style.display = "none";
   }
+
 
   

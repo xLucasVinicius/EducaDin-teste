@@ -24,19 +24,28 @@ body::-webkit-scrollbar {
     display: none;
 }
 
-.container {
+.conteudo-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.conteudo-dash {
     position: relative;
     display: grid;
     grid-template-rows: auto auto auto auto;
     grid-template-columns: 3fr 2fr;
     gap: 20px; /* Espaçamento entre as seções */
-    width: 100%;
+    width: 80%;
     height: 100%; /* Altura da página completa */
-    padding: 40px 20px; /* Espaçamento externo opcional */
-
+    padding: 10px; /* Espaçamento externo opcional */
+    align-items: center;
+    justify-content: center;
 }
 
-.container > section {
+.conteudo-dash > section {
     border: 1px solid var(--cor-principal);
     border-radius: 20px;
 }
@@ -44,7 +53,7 @@ body::-webkit-scrollbar {
 .secao1 {
     height: 150px;
     grid-column: 1 / span 2; /* Ocupa 2 colunas, ou seja, a largura completa */
-    padding: 0 4%;
+    padding: 0 1%;
 }
 
 .desempenho-fluxo { /* conteudo total de desempenho */
@@ -134,7 +143,7 @@ body::-webkit-scrollbar {
 }
 
 #chart1 {
-    width: 95%;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -146,7 +155,6 @@ body::-webkit-scrollbar {
 }
 
 #chart2 {
-    width: 95%;
     margin: 0 auto;
 }
 
@@ -160,12 +168,12 @@ body::-webkit-scrollbar {
     position: absolute;
     top: 12px;
     right: 30px;
-    width: 200px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     background-color: transparent;
     color: var(--cor-principal);
     border: 1px solid var(--cor-principal);
-    border-radius: 20px;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -191,23 +199,29 @@ body::-webkit-scrollbar {
     margin: 18px 0;
 }
 
+.table-container {
+    width: 100%;
+    height: 80%;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+
 table {
     width: 100%;
-    height: 84%;
+    height: 100%;
     border-collapse: collapse;
 }
 
 th {
     color: #F2A900;
     border-bottom: 1px solid rgba(255, 255, 255, 0.363);
-    padding: 1px;
+    padding-bottom: 5px;
     text-align: center;
 }
 
 td {
     color: white;
     border-top: 1px solid rgba(255, 255, 255, 0.363);
-    padding: 1px;
     text-align: center;
 }
 
@@ -227,7 +241,7 @@ td {
 }
 
 .section-lancamentos .lancar {
-    width: 400px;
+    width: 450px;
     height: 700px;
     background-color: var(--cor-fundo-content);
     border: 2px solid var(--cor-principal);
@@ -256,8 +270,7 @@ td {
 }
 
 .section-lancamentos .lancar #form-lancamentos label {
-    margin-top: 20px;
-    margin-bottom: 5px;
+    margin-top: 10px;
 }
 
 .section-lancamentos .lancar #form-lancamentos label#label-receita {
@@ -269,13 +282,22 @@ td {
 }
 
 .section-lancamentos .lancar #form-lancamentos input, .section-lancamentos .lancar #form-lancamentos select{
-    width: 220px;
-    height: 30px;
+    width: 300px;
+    height: 40px;
     padding: 5px;
     border: 1px solid var(--cor-principal);
     border-radius: 5px;
     background-color: transparent;
     color: white;
+}
+
+.section-lancamentos .lancar #form-lancamentos option {
+    background-color: var(--cor-fundo-content);
+    color: white;
+}
+
+.section-lancamentos .lancar #form-lancamentos option:focus {
+    background-color: var(--cor-principal);
 }
 
 .section-lancamentos .lancar #form-lancamentos input:focus, .section-lancamentos .lancar #form-lancamentos select:focus {
@@ -299,7 +321,7 @@ td {
 }
 
 .section-lancamentos .lancar #form-lancamentos span.tipo {
-    width: 200px;
+    width: 300px;
 }
 
 .section-lancamentos .lancar #form-lancamentos span.radio {
@@ -329,6 +351,7 @@ input[type="number"] {
   
 input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0;
+    cursor: pointer;
   }
 
   /* Esconde o ícone nativo para o Firefox */
@@ -359,7 +382,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-family: "FontAwesome";
     position: absolute;
     right: 10px;
-    bottom: -8px;
+    bottom: -2px;
     transform: translateY(-50%);
     pointer-events: none;
     color: white;
@@ -431,7 +454,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .radio input[type="radio"] + label::before {
     content: "";
     position: absolute;
-    left: 0;
+    left: 0px;
     top: 50%;
     transform: translateY(-50%);
     height: 10px;
@@ -454,7 +477,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   input[type="radio"]:checked + label::after {
     content: "";
     position: absolute;
-    left: 0px;
+    left: 0;
     top: 50%;
     transform: translateY(-50%);
     height: 10px;

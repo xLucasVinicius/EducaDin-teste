@@ -151,7 +151,8 @@
     font-size: 1.2rem;
     font-weight: 500;
     margin-right: 5px;
-    margin-top: auto;
+    margin-bottom: 0px;
+    padding: 0;
 }
 
 /* ----------------------------------------------------------------- */

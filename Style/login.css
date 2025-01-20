@@ -18,15 +18,47 @@
 
 html, body {
     background-color: var(--cor-fundo-content);
+    width: 100vw;
+    height: 100dvh;
+    position: relative;
+    display: grid;
+    place-content: center;
+    overflow: hidden;
+}
+
+#pattern {
+    width: 100vw;
+    height: 100dvh;
+    position: absolute;
+    top: -44px;
+    left: -50px;
+    right: 0;
+    bottom: 0;
+}
+
+#gradient {
+    background: radial-gradient(#F2A900, transparent 50%);
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    top: -200px;
+    left: -200px;
+    transform: translate(200px, 200px);
 }
 
 .content {
-    width: 100vw;
-    height: 100dvh;
+    width: 600px;
+    height: 800px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 1;
+    background-color: #0d0c0f15;
+    backdrop-filter: blur(10px);
+    border: 1px solid #f2a90011;
+    border-radius: 25px;
+
 }
 
 form {
