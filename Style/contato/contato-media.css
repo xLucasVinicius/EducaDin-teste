@@ -1,0 +1,57 @@
+@media screen and (max-width: 678px) {
+
+    .conteudo-contato .infos-contato .texto-infos p {
+        font-size: 1rem;
+    }
+    
+    .conteudo-contato .infos-contato .texto-infos .redes-contato a {
+        font-size: 1rem;
+    }
+
+    section.conteudo-contato .form-contato form {
+        width: 350px;
+    }
+}
+
+
+
+@media screen and (max-width: 1200px) {
+
+    section.conteudo-contato {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    section.conteudo-contato .infos-contato, section.conteudo-contato .form-contato {
+        width: 100%;
+        height: 50%;
+        
+    }
+
+    .conteudo-contato .infos-contato .texto-infos {
+        width: 100%;
+        gap: 0px;
+    }
+
+    .conteudo-contato .infos-contato .texto-infos h1 {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .conteudo-contato .infos-contato .texto-infos p {
+        
+    }
+
+    .conteudo-contato .infos-contato .texto-infos .redes-contato {
+        width: 100%;
+    }
+
+    .conteudo-contato .infos-contato .texto-infos .redes-contato a {
+        
+    }
+
+    section.conteudo-contato .form-contato form {
+        height: 400px;
+    }
+
+}

@@ -1,0 +1,154 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+:root {
+    --cor-principal: #f2a900;
+    --cor-fundo: #3D3D3D;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: var(--cor-fundo-content);
+}
+
+section.conteudo-contato {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+}
+
+section.conteudo-contato .infos-contato, section.conteudo-contato .form-contato {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.conteudo-contato .infos-contato .texto-infos {
+    height: 50%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+}
+
+.conteudo-contato .infos-contato .texto-infos h1 {
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 10px;
+    font-size: 2.8rem;
+    color: var(--cor-principal);
+}
+
+.conteudo-contato .infos-contato .texto-infos p {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.conteudo-contato .infos-contato .texto-infos .redes-contato {
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudo-contato .infos-contato .texto-infos .redes-contato a {
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: white;
+    transition: all .3s;
+}
+
+.conteudo-contato .infos-contato .texto-infos .redes-contato a:hover {
+    color: rgb(185, 185, 185);
+}
+
+.conteudo-contato .infos-contato .texto-infos .redes-contato a i {
+    color: var(--cor-principal);
+    margin: 0 5px 0 0;
+    transition: all .3s;
+}
+
+.conteudo-contato .infos-contato .texto-infos .redes-contato a:hover i {
+    color: #b88100;
+}
+
+section.conteudo-contato .form-contato form {
+    width: 500px;
+    height: 600px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+section.conteudo-contato .form-contato form label {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: white;
+}
+
+section.conteudo-contato .form-contato form input, section.conteudo-contato .form-contato form textarea {
+    padding: 7px;
+    background-color: transparent;
+    border: 1px solid var(--cor-principal);
+}
+
+section.conteudo-contato .form-contato form input:focus, section.conteudo-contato .form-contato form textarea:focus {
+    color: white;
+    outline: none;
+    border: 1px solid var(--cor-principal);
+}
+
+section.conteudo-contato .form-contato form input::placeholder, section.conteudo-contato .form-contato form textarea::placeholder {
+    color: rgb(119, 119, 119);
+}
+
+.form-contato form input:-webkit-autofill,
+.form-contato form input:-webkit-autofill:hover,
+.form-contato form input:-webkit-autofill:focus {
+    background-color: transparent !important;
+    color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white  !important;
+    caret-color: white;
+}
+
+.form-contato form textarea:-webkit-autofill,
+.form-contato form textarea:-webkit-autofill:hover,
+.form-contato form textarea:-webkit-autofill:focus {
+    background-color: transparent !important;
+    color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white  !important;
+    caret-color: white;
+}
+
+section.conteudo-contato .form-contato form textarea {
+    resize: none;
+}
+
+section.conteudo-contato .form-contato form input[type="submit"]
+{
+    width: 100px;
+    margin-top: 10px;
+    padding: 7px;
+    color: white;
+    transition: all .2s;
+}
+
+section.conteudo-contato .form-contato form input[type="submit"]:hover {
+    background-color: var(--cor-principal);
+}
