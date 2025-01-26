@@ -1,3 +1,8 @@
+@media screen and (max-width: 500px) {
+    
+}
+
+
 @media screen and (max-width: 715px) {
     .container {
         grid-template-columns: 1fr; /* Todas as seções em uma coluna */
@@ -103,6 +108,22 @@
 
     td {
         font-size: 0.8rem
+    }
+
+    .section-lancamentos .lancar {
+        width: 300px;
+    }
+    
+    .section-lancamentos .lancar h1 {
+        font-size: 1.5rem;
+    }
+
+    .section-lancamentos .lancar #form-lancamentos input, .section-lancamentos .lancar #form-lancamentos select{
+        width: 280px;
+    }
+
+    .section-lancamentos .lancar #form-lancamentos span.tipo {
+        width: 280px;
     }
 
 }

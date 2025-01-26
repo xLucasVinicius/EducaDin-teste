@@ -240,14 +240,3 @@ p {
         bottom: 100%;
     }
 }
-
-@media screen and (max-width: 675px){
-
-    .content {
-        padding-top: 120px;
-    }
-
-    .content .introducao {
-        font-size: 1.3rem;
-    }
-}

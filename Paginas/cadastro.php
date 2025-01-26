@@ -45,7 +45,7 @@ $arquivo = $_FILES['file'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
     <link rel="shortcut icon" href="../imagens/logos/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../Style/cadastro.css">
+    <link rel="stylesheet" href="../Style/cadastro/cadastro.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>

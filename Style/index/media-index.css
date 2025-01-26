@@ -1,0 +1,40 @@
+@media screen and (max-width: 675px){
+
+    body {
+        place-content: center;
+    }
+
+    .content {
+        padding-top: 15%;
+        height: 97vh;
+    }
+
+    .content .introducao {
+        height: 26%;
+        font-size: 0.9rem;
+    }
+
+    .img-edu {
+        bottom: -10px;
+        right: -245px;
+    }
+
+    p {
+        right: 320px;
+        bottom: 190px;
+        position: absolute;
+        font-size: 0.75rem;
+        color: white;
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    .img-content img {
+
+        width: 45%;
+        
+    }
+
+    .links a {
+        margin: 20px 0;
+    }
+}

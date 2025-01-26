@@ -176,7 +176,7 @@ $result = $mysqli->query($query);
               </span>
 
               <span class="btns span-flex">
-                <button type="reset">Limpar</button>
+                <button type="reset" onclick="ocultarParcelas()">Limpar</button>
                 <button type="submit">Adicionar</button>
               </span>
 
