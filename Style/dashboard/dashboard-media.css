@@ -183,10 +183,6 @@
         min-width: 600px;
         width: 70vw;
     }
-    
-    .table-container {
-        overflow-x: auto; /* Habilita a rolagem horizontal */
-    }
 
     table {
         min-width: 550px; /* Largura mínima para a tabela, ativando a rolagem */
