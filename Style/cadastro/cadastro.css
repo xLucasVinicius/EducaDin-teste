@@ -266,10 +266,11 @@ border-radius: 50%;
 .input-name, .input-outras-infos {
     display: block;
     width: 100%;
+    
 }
 
 .input-login {
-    width: 100%;
+    width: 300px;
 }
 
 #nome, #sobrenome, #data-nasc, #telefone,#email, #senha, #confirmarsenha {
@@ -322,13 +323,14 @@ input {
 }
 
 #nome, #sobrenome, #data-nasc, #telefone {
-    width: 200px;
+    width: 300px;
 }
 
 
 
 .input-name, .input-outras-infos {
-display: flex;
-width: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
 }
 }
