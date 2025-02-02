@@ -1,3 +1,27 @@
+function handleCredentialResponse(response) {
+    const data = jwt_decode(response.credential);
+}
+window.onload = function () {
+  google.accounts.id.initialize({
+    client_id: "775969932336-cv0glea3ij3nkrhgt7d4u12s3kepddfd.apps.googleusercontent.com",
+    callback: handleCredentialResponse
+  });
+  google.accounts.id.renderButton(
+    document.getElementById("buttonDiv"),
+    { theme: "outline", 
+      size: "large",
+      type: "standard",
+      shape: "pill",
+      text: "continue_with",
+      logo_alignment: "left",
+      locale: "pt-BR"
+    
+    }  // customization attributes
+  );
+  google.accounts.id.prompt(); // also display the One Tap dialog
+}
+
+
 function togglePassword() {
     var passwordInput = document.getElementById("senha");
     var toggleIcon = document.querySelector(".toggle-password");
@@ -29,3 +53,5 @@ content.classList.remove('focused');
 input.addEventListener('input', () => {
 content.classList.add('focused');
 });
+
+

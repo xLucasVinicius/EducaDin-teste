@@ -1,163 +1,239 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
+:root {
+    --cor-principal: #F2A900;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
 
-    * {
-        margin: 0;
-        padding: 0;
-        font-family: sans-serif;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
 
-    body {
-        background-color: #1F1F1F;
-    }
+body {
+    background-color: #1F1F1F;
+}
 
-    form {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        margin: auto;
-        max-width: 700px;
-        height: 100dvh;
-        justify-content: center;
-        align-items: center;
-    }
+form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin: auto;
+    max-width: 700px;
+    height: 100dvh;
+    justify-content: center;
+    align-items: center;
+}
 
-    form > h1 {
-        font-size: 3rem;
-        font-family: 'orbitron';
-        margin-bottom: 100px;
-        color: #F5A900;
-    }
+form > h1 {
+    font-size: 3rem;
+    font-family: 'orbitron';
+    margin-bottom: 100px;
+    color: #F5A900;
+}
 
-    label {
-        color: #F5A900;
-        margin-top: 20px;
-    }
+label {
+    color: #F5A900;
+    margin-top: 20px;
+}
 
-    input {
-        background-color: transparent;
-        color: white;
-        padding: 15px;
-        border: 1.5px solid white;
-        border-radius: 4px;
-    }
+input {
+    background-color: transparent;
+    color: white;
+    padding: 15px;
+    border: 1.5px solid white;
+    border-radius: 4px;
+}
 
-    input:focus {
-        color: white;
-        outline: none;
-    }
+input:focus {
+    color: white;
+    outline: none;
+}
 
-    input::placeholder {
-        color: white;
-    }
+input::placeholder {
+    color: white;
+}
 
-    .img-perfil {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 150px;  /* Definindo o tamanho fixo do contêiner */
-        height: 150px;
-        border-radius: 50%;  /* Garante que o contêiner seja circular */
-        overflow: hidden;
-    }
+.img-perfil {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;  /* Definindo o tamanho fixo do contêiner */
+    height: 150px;
+    border-radius: 50%;  /* Garante que o contêiner seja circular */
+    overflow: hidden;
+}
 
-    .input-img-perfil {
-        position: relative;
-    }
+.input-img-perfil {
+    position: relative;
+}
 
-    .img-perfil img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;  /* Garante que a imagem preencha o espaço sem distorção */
-        border-radius: 50%;
-    }
+.img-perfil img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Garante que a imagem preencha o espaço sem distorção */
+    border-radius: 50%;
+}
 
-    input[type="file"] {
-        display: none;
-    }
+input[type="file"] {
+    display: none;
+}
 
-    .file-label {
-        justify-content: center;
-        align-items: center;
-        display: flex;
-        position: absolute;
-        bottom: 0;
-        right: 5px;
-        background-color: white;
-        color: black;
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-    }
+.file-label {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    background-color: white;
+    color: black;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
 
-    .file-label i {
-        font-size: 20px;
-    }
-    
-    .input-name, .input-outras-infos {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-    }
+.file-label i {
+    font-size: 20px;
+}
 
-    .input-login {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
+.input-name, .input-outras-infos {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
 
-    #nome, #sobrenome, #data-nasc, #telefone {
-        width: 300px;
-    }
+.input-login {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
 
-    #data-nasc {
-        color: white;
-    }
+#nome, #sobrenome, #data-nasc, #telefone {
+    width: 300px;
+}
 
-    select option {
-        color: black;
-        background-color: transparent;
-    }
+#data-nasc {
+    color: white;
+}
 
-    span > label{
-        display: block;
+select option {
+    color: black;
+    background-color: transparent;
+}
 
-    }
+span > label{
+    display: block;
 
-    .btn-form {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-        width: 100%;
-    }
+}
 
-    #btn-input1 {
-        text-align: end;
-    }
+.btn-form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%;
+}
 
-    #btn-input1, #btn-input2 {
-        width: 300px;
-    }
+#btn-input1 {
+    text-align: end;
+}
 
-    #btn-salvar {
-        background-color: #F5A900;
-        color: white;
-        border: none;
-        padding: 7px;
-        width: 100px;
-        font-size: 1rem;
-    }
-    button {
-        
-        background-color: white;
-        color: #F5A900;
-        padding: 7px;
-        width: 100px;
-        border: #F5A900;
-        border-radius: 4px;
-        font-size: 1rem;
-    }
+#btn-input1, #btn-input2 {
+    width: 300px;
+}
+
+#btn-salvar {
+    background-color: #F5A900;
+    color: white;
+    border: none;
+    padding: 7px;
+    width: 100px;
+    font-size: 1rem;
+    transition: all .2s;
+}
+
+#btn-salvar:hover {
+    background-color: #8a6000;
+}
+
+button {
+    background-color: white;
+    color: #F5A900;
+    padding: 7px;
+    width: 100px;
+    border: #F5A900;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all .2s;
+}
+
+button:hover {
+    background-color: rgb(184, 184, 184);
+}
+
+.input-termos-politicas {
+    position: relative;
+    width: 700px;
+    margin-top: 10px;
+  }
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 2px solid #333;
+    border-radius: 4px;
+    position: relative;
+    transition: all .2s;
+  }
+
+  /* Estilo do checkbox quando está marcado */
+  input[type="checkbox"]:checked {
+    background-color: var(--cor-principal);
+    border-color: var(--cor-principal);
+  }
+
+  /* Adiciona um "check" dentro do checkbox */
+  input[type="checkbox"]:checked::before {
+    content: "✔";
+    color: white;
+    position: absolute;
+    left: 2px;
+    top: -3px;
+    font-size: 16px;
+  }
+
+  #termos-label {
+    position: absolute;
+    top: -18px;
+    left: 25px;
+    color: var(--cor-principal);
+  }
+
+  .termos-politicas {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 50px;
+    padding-top: 10px;
+    text-align: left;
+    width: 700px;
+  }
+
+  .termos-politicas a {
+    color: var(--cor-principal);
+    text-decoration: none;
+    transition: all .2s;
+}
+
+.termos-politicas a:hover {
+    color: #8a6000;
+}
 
 @media screen and (max-width: 930px){
 
@@ -179,13 +255,13 @@ span {
     display: block;
     
     
-}    
-.img-perfil img {
-width: 100px;
-height: 100px;
-border-radius: 50%;
 }
 
+.img-perfil img {
+width: 200px;
+height: 200px;
+border-radius: 50%;
+}
 
 .input-name, .input-outras-infos {
     display: block;
@@ -203,6 +279,22 @@ border-radius: 50%;
 #btn-input1, #btn-input2 {
     width: 45%;
 }
+
+.input-termos-politicas {
+    width: 300px;
+}
+
+.termos-politicas {
+    flex-direction: column;
+    width: 300px;
+}
+
+#termos-label {
+    top: -3px;
+}
+
+
+
 }
 
 @media screen and  (max-width: 500px){

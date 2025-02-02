@@ -93,6 +93,19 @@ $arquivo = $_FILES['file'];
         <input type="tel" name="telefone" id="telefone" placeholder="11 99999-9999" required>
         </span>
     </div>
+
+    <div class="termos-politicas">
+    <a href="politicas.php">Politicas de uso</a>
+    <a href="termos.php">Termos de uso</a>
+    </div>
+
+    <div class="input-termos-politicas">
+        <input type="checkbox" name="termos" id="termos">
+        <label for="termos" id="termos-label" >
+            Eu aceito os termos e politicas de uso
+        </label>
+    </div>
+
     <div class="btn-form">
         <span id="btn-input1"><button>Cancelar</button></span>
         <span id="btn-input2"><input id="btn-salvar" type="submit" value="Salvar"></span>

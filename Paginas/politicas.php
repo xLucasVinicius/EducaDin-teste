@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Política de Privacidade - Controle Financeiro</title>
+    <link rel="stylesheet" href="../Style/termos/termos.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <button><i class="bi bi-arrow-left-circle"></i></button>
+    <div class="container-termos">
+        <h1>Política de Privacidade</h1>
+
+        <h2 class="section-title">1. Introdução</h2>
+        <p>Esta Política de Privacidade descreve como coletamos, usamos e protegemos suas informações pessoais ao utilizar nosso site de controle financeiro. Ao acessar o site, você concorda com as práticas descritas nesta política.</p>
+
+        <h2 class="section-title">2. Informações Coletadas</h2>
+        <p>Coletamos informações fornecidas diretamente por você, como nome, e-mail, e dados financeiros. Também coletamos automaticamente informações de uso, como o tipo de dispositivo, navegador e interações com o site.</p>
+
+        <h2 class="section-title">3. Uso das Informações</h2>
+        <p>Utilizamos suas informações para fornecer e melhorar nossos serviços, personalizar sua experiência, enviar notificações e comunicações, e garantir a segurança do site.</p>
+
+        <h2 class="section-title">4. Compartilhamento de Informações</h2>
+        <p>Não compartilhamos suas informações pessoais com terceiros, exceto quando necessário para cumprir a legislação, proteger nossos direitos, ou com o seu consentimento explícito.</p>
+
+        <h2 class="section-title">5. Segurança das Informações</h2>
+        <p>Implementamos medidas de segurança para proteger suas informações pessoais contra acesso, alteração, divulgação ou destruição não autorizados. Utilizamos criptografia SSL para transmissões seguras.</p>
+
+        <h2 class="section-title">6. Retenção de Dados</h2>
+        <p>Retemos suas informações pelo tempo necessário para fornecer os serviços ou conforme exigido por lei. Você pode solicitar a exclusão de suas informações entrando em contato conosco.</p>
+
+        <h2 class="section-title">7. Direitos do Usuário</h2>
+        <p>Você tem o direito de acessar, corrigir ou excluir suas informações pessoais. Para exercer esses direitos, entre em contato conosco através do nosso canal de suporte.</p>
+
+        <h2 class="section-title">8. Cookies</h2>
+        <p>Utilizamos cookies para melhorar a experiência do usuário, armazenar preferências e coletar dados de uso. Você pode desativar os cookies nas configurações do seu navegador, mas isso pode afetar a funcionalidade do site.</p>
+
+        <h2 class="section-title">9. Alterações na Política</h2>
+        <p>Podemos atualizar esta Política de Privacidade periodicamente. Notificaremos os usuários sobre quaisquer alterações importantes. O uso contínuo do site após essas alterações implica em sua aceitação.</p>
+
+        <h2 class="section-title">10. Contato</h2>
+        <p>Se você tiver alguma dúvida sobre esta Política de Privacidade, entre em contato conosco através do e-mail: educadin.contato@gmail.com</p>
+    </div>
+    <script src="../Js/termos.js"></script>
+</body>
+</html>

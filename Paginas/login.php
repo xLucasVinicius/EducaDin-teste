@@ -57,6 +57,7 @@ if(isset($_POST['email'])){
     <link rel="stylesheet" href="../Style/login/login.css">
     <link rel="shortcut icon" href="../imagens/logos/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    
 </head>
 <body>
     <div id="gradient"></div>
@@ -92,7 +93,7 @@ if(isset($_POST['email'])){
             <span class="linha2"></span>
             <p>Acessar com</p>
             <!-- Aqui vem botao de login com o google -->
-             <button>login com o google</button>
+            <div id="buttonDiv"></div>
         </div>
         
         <a href="cadastro.php">Realizar cadastro</a>
@@ -100,5 +101,7 @@ if(isset($_POST['email'])){
 
 <script src="../Js/login.js"></script>
 <script src="../Js/background.js"></script>
+<script src="https://accounts.google.com/gsi/client" async></script>
+<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
 </body>
 </html>
