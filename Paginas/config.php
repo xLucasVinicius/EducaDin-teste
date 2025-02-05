@@ -2,7 +2,7 @@
     $host = "localhost";
     $user = "root";
     $pass = "";
-    $bd = "educadin";
+    $bd = "educadin-teste";
 
     $mysqli = new mysqli($host, $user, $pass, $bd);
 

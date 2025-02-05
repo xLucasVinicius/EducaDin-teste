@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Verifica se o 'id' foi fornecido via GET ou POST
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
@@ -39,11 +39,11 @@ if (isset($_SESSION['id'])) {
 </head>
 <body>
 <form action="salvar-usuario.php" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="id" value="<?php echo $row->id?>">
+    <input type="hidden" name="id" value="<?php echo $row->id; ?>">
     <h1>Editar <e style="color: #F5A900; font-family:orbitron">perfil</e></h1>
     <div class="input-img-perfil">
         <div class="img-perfil">
-            <img src="<?php echo $_SESSION['file'] ?>" alt="">
+            <img src="<?php echo $_SESSION['file']; ?>" alt="">
         </div>
         <label for="file" class="file-label">
         <i class="bi bi-pencil"></i>
@@ -54,17 +54,17 @@ if (isset($_SESSION['id'])) {
     <div class="input-name">
         <span>
             <label for="nome">Nome</label>
-            <input type="text" name="nome" value="<?php echo $row->nome?>" id="nome" placeholder="Digite seu nome">
+            <input type="text" name="nome" value="<?php echo $row->nome; ?>" id="nome" placeholder="Digite seu nome">
         </span>
 
         <span>
             <label for="sobrenome">Sobrenome</label>
-            <input type="text" name="sobrenome"  id="sobrenome" value="<?php echo $row->sobrenome?>" placeholder="Digite seu sobrenome">
+            <input type="text" name="sobrenome"  id="sobrenome" value="<?php echo $row->sobrenome; ?>" placeholder="Digite seu sobrenome">
         </span>
     </div>
     <div class="input-login">
         <label for="email">Email</label>
-        <input type="email" name="email" value="<?php echo $row->email?>" id="email" placeholder="exemplo@gmail.com">
+        <input type="email" name="email" value="<?php echo $row->email; ?>" id="email" placeholder="exemplo@gmail.com">
 
         <label for="senha">Senha</label>
         <input type="password" name="senha" id="senha" placeholder="digite sua senha" required>
@@ -75,12 +75,12 @@ if (isset($_SESSION['id'])) {
     <div class="input-outras-infos">
         <span>
             <label for="data-nasc">Data de Nascimento</label>
-            <input type="date" name="data-nasc" value="<?php echo $row->data_nasc?>" id="data-nasc">
+            <input type="date" name="data-nasc" value="<?php echo $row->data_nascimento; ?>" id="data-nasc">
         </span>
 
         <span>
         <label for="telefone">Número</label>
-        <input type="tel" name="telefone" value="<?php echo $row->num_tel?>" id="telefone" placeholder="11 99999-9999" >
+        <input type="tel" name="telefone" value="<?php echo $row->telefone; ?>" id="telefone" placeholder="11 99999-9999" >
         </span>
     </div>
     <div class="btn-form">
@@ -96,4 +96,3 @@ if (isset($_SESSION['id'])) {
 </script>
 </body>
 </html>
-

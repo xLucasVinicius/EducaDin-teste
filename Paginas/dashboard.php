@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 $categorias = "['cartao de credito','pix','debito','laser','viagem']";
-$query = "SELECT descricao, valor, tipo, metodo, parcelas, data FROM lancamentos ORDER BY data DESC LIMIT 5";
+$query = "SELECT descricao, valor, tipo, metodo_pagamento, parcelas, data_compra FROM lancamentos ORDER BY data_compra DESC LIMIT 5";
 $result = $mysqli->query($query);
 ?>
 
@@ -89,7 +89,7 @@ $result = $mysqli->query($query);
                                     <td><?php echo htmlspecialchars($lancamento['descricao']); ?></td>
                                     <td>R$ <?php echo number_format($lancamento['valor'], 2, ',', '.'); ?></td>
                                     <td><?php echo htmlspecialchars($lancamento['tipo']); ?></td>
-                                    <td><?php echo htmlspecialchars($lancamento['metodo']); ?></td>
+                                    <td><?php echo htmlspecialchars($lancamento['metodo_pagamento']); ?></td>
                                     <td><?php echo htmlspecialchars($lancamento['parcelas']); ?></td>
                                     <td><?php echo date('d/m/Y', strtotime($lancamento['data'])); ?></td>
                                     <td>editar/excluir</td>
