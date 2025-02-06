@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include 'configs/config.php';
 $categorias = "['cartao de credito','pix','debito','laser','viagem']";
 $query = "SELECT descricao, valor, tipo, metodo_pagamento, parcelas, data_compra FROM lancamentos ORDER BY data_compra DESC LIMIT 5";
 $result = $mysqli->query($query);

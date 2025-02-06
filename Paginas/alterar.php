@@ -38,7 +38,7 @@ if (isset($_SESSION['id'])) {
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-<form action="salvar-usuario.php" method="post" enctype="multipart/form-data">
+<form action="configs/salvar-usuario.php" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?php echo $row->id; ?>">
     <h1>Editar <e style="color: #F5A900; font-family:orbitron">perfil</e></h1>
     <div class="input-img-perfil">
@@ -74,8 +74,8 @@ if (isset($_SESSION['id'])) {
     </div>
     <div class="input-outras-infos">
         <span>
-            <label for="data-nasc">Data de Nascimento</label>
-            <input type="date" name="data-nasc" value="<?php echo $row->data_nascimento; ?>" id="data-nasc">
+            <label for="data_nascimento">Data de Nascimento</label>
+            <input type="date" name="data_nascimento" value="<?php echo $row->data_nascimento; ?>" id="data-nasc">
         </span>
 
         <span>

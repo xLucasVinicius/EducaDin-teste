@@ -49,8 +49,8 @@ if (!isset($_SESSION['nome'])) {
                 <i class="bi bi-graph-up-arrow"></i> <span class="nav-text">Desempenho</span>
                 </a>
                 <li class="nav-item">
-                <a href="?page=cartoes" class="nav-link">
-                <i class="bi bi-credit-card-2-back"></i> <span class="nav-text">Meus Cartões</span>
+                <a href="?page=contas" class="nav-link">
+                <i class="bi bi-credit-card-2-back"></i> <span class="nav-text">Contas e Cartões</span>
                 </a>
             </li>    
             </li>
@@ -103,7 +103,7 @@ if (!isset($_SESSION['nome'])) {
                 </a>
             </li>
             <li class="nav-item">
-                <a href="logout.php" class="nav-link">
+                <a href="configs/logout.php" class="nav-link">
                     <i class="bi bi-box-arrow-right"></i> <span class="nav-text">Logout</span>
                 </a>
             </li>
@@ -126,7 +126,7 @@ if (!isset($_SESSION['nome'])) {
 
     <section class="conteudo">  <!-- section conteúdo -->
         <?php
-            include("config.php");
+            include("configs/config.php");
             switch(@$_REQUEST["page"]){
                 case "dashboard":
                     include("dashboard.php");
@@ -137,8 +137,8 @@ if (!isset($_SESSION['nome'])) {
                 case "desempenho":
                     include("desempenho.php");
                 break;
-                case "cartoes":
-                    include("cartoes.php");
+                case "contas":
+                    include("contas.php");
                 break;
                 case "minigames":
                     include("minigames.php");
@@ -158,9 +158,9 @@ if (!isset($_SESSION['nome'])) {
                 case "alterar":
                     include("alterar.php");
                 break;
-                case "logout":
-                    include("logout.php");
-                break;
+                // case "logout":
+                //     include("configs/logout.php");
+                // break;
                 case "login":
                     include("login.php");
                 break;
