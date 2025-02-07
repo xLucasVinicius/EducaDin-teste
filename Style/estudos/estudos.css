@@ -1,6 +1,136 @@
+@charset "UTF-8";
 
+:root {
+    --cor-principal: #f2a900;
+    --cor-fundo: #3D3D3D;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
 
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 
+html, body {
+    background-color: var(--cor-fundo-content);
+    overflow: scroll;
+    scrollbar-width: none;
+}
 
+/* Oculta a scrollbar */
+body::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
 
+/* Oculta o track da scrollbar */
+body::-webkit-scrollbar-track, body::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb:hover{
+    background: transparent;
+}
 
+.conteudo-total {  /* Conteudo principal */
+    width: 100%;
+    height: 100%;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.conteudo-total .dicas {  /* Conteudo total das dicas */
+    width: 100%;
+}
+
+.conteudo-total .dicas h1 {  /* Titulo das dicas */
+    color: var(--cor-principal);
+    text-align: center;
+}
+
+.conteudo-total .dicas p {  /* paragráfo a cima das dicas */
+    color: white;
+    padding-left: 60px;
+}
+
+.conteudo-total .dicas ol {  /* Lista dos titulos das dicas */
+    color: var(--cor-principal);
+    font-size: 20px;
+}
+
+.conteudo-total .dicas ol ul {  /* Lista das dicas */
+    color: white;
+    list-style-type: disc;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.conteudo-total .dicas ol ul li {   /* Itens das dicas */
+    margin-bottom: 5px;
+}
+
+.conteudo-total .conteudo-estudo .txt-explicacao h1 {   /* Titulo da seção de videos */
+    color: var(--cor-principal);
+    text-align: center;
+}
+
+.conteudo-total .conteudo-estudo .txt-explicacao p {    /* Paragrafo da seção de videos */
+    color: white;
+    margin-bottom: 10px;
+}
+
+.conteudo-total .conteudo-estudo .txt-explicacao a {    /* Botão que leva até o canal */
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    width: 150px;
+    padding: 5px;
+    border-radius: 20px;
+    color: var(--cor-principal);
+    font-weight: bold;
+    margin: 0 auto;
+
+    border: 1px solid var(--cor-principal);
+    transition: all .3s;
+}
+
+.conteudo-total .conteudo-estudo .txt-explicacao a:hover {
+    background-color: var(--cor-principal);
+    color: var(--cor-fundo-content);
+}
+
+.conteudo-total .conteudo-estudo .videos-content {  /* Container geral dos videos */
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.conteudo-total .conteudo-estudo .videos {  /* Container onde esta todas as divs dos videos */
+    width: 1400px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.conteudo-total .conteudo-estudo .videos .video-container {  /* Container dos videos */
+    width: 321px;
+    height: 223px;
+    border: 1px solid var(--cor-principal);
+}
+
+.conteudo-total .conteudo-estudo .videos .video-container iframe {  /* Iframe dos videos */
+    width: 320px;
+    height: 180px;
+    border: 1px solid var(--cor-principal);
+}
+
+.conteudo-total .conteudo-estudo .videos .video-container p {  /* titulo dos videos */
+    color: white;
+    text-align: center;
+    font-size: 0.7rem;
+}

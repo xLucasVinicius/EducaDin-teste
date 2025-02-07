@@ -5,7 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EducaDin</title>
     <link rel="stylesheet" href="../Style/estudos/estudos.css">
+    <link rel="stylesheet" href="../Style/estudos/media-estudos.css">
 </head>
 <body>
+    <section class="conteudo-total">
+        <div class="dicas">
+            <h1>Estude sobre Finanças</h1>
+            <p>Aqui estão as melhores dicas para o seu sucesso financeiro.</p>
+            <ol>
+                <li>Compreender a Importância do Orçamento
+                    <ul>
+                        <li>Rastrear despesas: Mapeie todas as suas receitas e despesas. Apps como o <strong>Mobills</strong> ou <strong>GuiaBolso</strong> podem ajudar a registrar automaticamente.</li>
+                        <li>Divida as despesas em categorias: Fixas (aluguel, contas) e variáveis (lazer, alimentação).</li>
+                        <li>Ajuste seu orçamento: Priorize o pagamento de dívidas e mantenha as despesas dentro dos limites da sua receita.</li>
+                    </ul>
+                </li>
+                
+                <li>Estabeleça Metas Financeiras
+                    <ul>
+                        <li>Curto prazo (1 ano): Ex. fazer uma reserva de emergência, quitar dívidas.</li>
+                        <li>Médio prazo (2 a 5 anos): Ex. comprar um carro, viajar.</li>
+                        <li>Longo prazo (acima de 5 anos): Ex. poupar para aposentadoria, comprar uma casa.</li>
+                        <li>Ao traçar metas, defina <strong>valores específicos</strong> e <strong>prazos</strong>, para que sejam realistas e motivadores.</li>
+                    </ul>
+                </li>
+                
+                <li>Controle de Dívidas
+                    <ul>
+                        <li>Evitar dívidas com juros altos, como cartão de crédito e cheque especial.</li>
+                        <li>Negociar dívidas para conseguir condições melhores, como parcelamento ou redução de juros.</li>
+                        <li>Planejar o pagamento: Dê prioridade às dívidas com os juros mais altos.</li>
+                    </ul>
+                </li>
+
+                <li>Crie uma Reserva de Emergência
+                    <ul>
+                        <li>Guardar pelo menos <strong>3 a 6 meses do valor das suas despesas mensais</strong> em uma conta separada, de fácil acesso, como poupança ou CDBs de liquidez diária.</li>
+                        <li>Essa reserva te protege de situações inesperadas como perda de emprego ou emergências médicas.</li>
+                    </ul>
+                </li>
+
+                <li>Invista para Crescer
+                    <ul>
+                        <li>Tesouro Direto: Seguro e acessível, é um bom ponto de partida para iniciantes.</li>
+                        <li>CDBs e LCI/LCAs: Opções que geralmente têm retornos melhores que a poupança e ainda oferecem cobertura do FGC.</li>
+                        <li>Fundos de Investimento e Ações: Para quem tem perfil de investidor mais arrojado, essas opções podem oferecer maior retorno a longo prazo, mas envolvem mais risco.</li>
+                        <li>Educação financeira contínua: Leia livros e faça cursos sobre finanças e investimentos. Ex.: “Pai Rico, Pai Pobre” (Robert Kiyosaki) e “Os Segredos da Mente Milionária” (T. Harv Eker).</li>
+                    </ul>
+                </li>
+
+                <li>Entenda os Juros Compostos
+                    <ul>
+                        <li>Os juros compostos podem ser grandes aliados quando você investe ou inimigos em dívidas.</li>
+                        <li>Investir regularmente com o benefício dos juros compostos pode gerar grandes retornos a longo prazo.</li>
+                        <li>Quanto antes começar a investir, maior será o efeito.</li>
+                    </ul>
+                </li>
+
+                <li>Viver Dentro de Suas Possibilidades
+                    <ul>
+                        <li>Praticar a frugalidade: Faça compras conscientes, pense duas vezes antes de adquirir algo, e considere a real necessidade do item.</li>
+                        <li>Evitar dívidas para consumo: Se não for possível pagar à vista, repense se a compra é realmente necessária.</li>
+                    </ul>
+                </li>
+
+                <li>Planeje sua Aposentadoria
+                    <ul>
+                        <li>Invista em opções de longo prazo, como ações ou fundos de previdência privada.</li>
+                        <li>Aproveite o tempo para deixar os juros compostos trabalharem a seu favor.</li>
+                    </ul>
+                </li>
+
+                <li>Automatize Suas Finanças
+                    <ul>
+                        <li>Configurar débito automático para contas e transferências programadas para poupança ou investimentos facilita o processo e reduz a tentação de gastar o dinheiro destinado à poupança.</li>
+                    </ul>
+                </li>
+
+                <li>Eduque-se Continuamente
+                    <ul>
+                        <li>Leia livros, faça cursos, e siga especialistas em finanças.</li>
+                        <li>Livros recomendados: "O Homem Mais Rico da Babilônia" (George S. Clason) e "Investimentos Inteligentes" (Gustavo Cerbasi).</li>
+                        <li>Canais do YouTube: Me Poupe! (Nathalia Arcuri) e Primo Rico (Thiago Nigro).</li>
+                        <li>Podcasts: NerdCash e Café com ADM.</li>
+                    </ul>
+                </li>
+
+                <li>Diversifique as Fontes de Renda
+                    <ul>
+                        <li>Explore formas de gerar renda extra, como freelances, investimentos ou criar um negócio próprio.</li>
+                        <li>Ter múltiplas fontes de renda aumenta sua segurança e acelera o crescimento do patrimônio.</li>
+                    </ul>
+                </li>
+            </ol>
+
+        </div>
+        <div class="conteudo-estudo">
+            <div class="txt-explicacao">
+                <h1>Assista e Aprenda</h1>
+                <p>Nessa seção, você pode assistir e aprender sobre financas com o conteúdo disponibilizado pelo Criador de Conteudo "Diego Bechara", um investidor que está no meio a mais de 10 anos, por meio do canal "A Cara da Riqueza"</p>
+                <a href="https://www.youtube.com/@ACaraDaRiquezaOficial" target="_blank">Acesse o canal</a>
+            </div>
+            <div class="videos-content">
+                <div class="videos">
+                    <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/oT0w0wpyeeM?si=yklZcoh6UOUVRmkS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <p>GUIA BÁSICO DE INVESTIMENTOS - E SE UM CLONE TRABALHASSE NO SEU LUGAR?</p>
+                    </div>
+                    <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/7XV7Rb1kbR4?si=lneM-IYBxSzxGe2l" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <p>DE DEVEDOR A INVESTIDOR: COMO ACUMULEI R$140 MIL E COMPREI MEU APARTAMENTO?</p>
+                    </div>
+                    <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dIxHjnU33XE?si=5a7b8IXT1_aK3yNe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <p>FICOU POBRE POR CAUSA DA RESERVA DE EMERGÊNCIA.... ENTENDA!</p>
+                    </div>
+                    <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/60CR7QaRxX4?si=585Mx808F_T5iegm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <p>PASSO A PASSO PARA INICIANTES: COMO E ONDE INVESTIR SEUS PRIMEIROS R$1000</p>
+                    </div>
+                    <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/3v2c1nZSsFM?si=ORKIiH1tQpYVheM1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <p>O QUE É 100% do CDI [e quanto rende?] VALE A PENA?</p>
+                    </div>
+                    <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/N9QDkF0KmUg?si=cvXmRnaZ0fJJZeXP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <p>Receba ALUGUEL todo mês, Investindo pouco com FIIs [PASSO A PASSO na PRÁTICA]</p>
+                    </div>
+                    <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/H7pfMfZC5d0?si=6E2tM70FhiGm0_Mk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <p>Como comprar AÇÕES passo a passo! [Mostrei as minhas ações] É SEGURO? Porque investir em ações?</p>
+                    </div>
+                    <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VE7ksLSiVXk?si=8ohxSvbpZia9AZJh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <p>INVISTA ASSIM PARA CONSEGUIR SUA INDEPENDÊNCIA FINANCEIRA E NÃO PERDER DINHEIRO</p>
+                    </div>
+                    <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/5_TwK0qqCi0?si=8DwNb4tpAm76NGEq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <p>SABER ISSO MUDOU MINHA FORMA DE ENXERGAR A BOLSA DE VALORES</p>
+                    </div>
+                    <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/eU1pFQ79QQM?si=xNZzGqiUjgRtEXy5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <p>É POR ISSO QUE EU CONSIGO INVESTIR TODO MÊS! 6 DICAS PRÁTICAS PARA ECONOMIZAR DINHEIRO SEMPRE!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
