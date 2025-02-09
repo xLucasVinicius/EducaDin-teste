@@ -4,9 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EducaDin</title>
-    <link rel="stylesheet" href="planos/planos.css">
+    <link rel="stylesheet" href="../Style/planos/planos.css">
+    <link rel="stylesheet" href="../Style/planos/media-planos.css">
 </head>
 <body>
-    <h1>Planos</h1>
+    <section class="conteudo-total">
+        <div class="txt-content-planos">
+            <div class="titulos-planos">
+                <h1>Adiquira o seu Plano</h1>
+                <p>Continue com a opção que melhor defina a sua necessidade dentro do EducaDin.</p>
+            </div>
+            <div class="cards-planos">
+                <div class="cards card1">
+                    <i class="bi bi-currency-dollar icone"></i>
+                    <h2>Básico</h2>
+                    <h1>Gratis</h1>
+                    <p>Plano padrão, sem custo algum</p>
+                    <span class="linha-separacao"></span>
+                    <p>beneficios inclusos:</p>
+                    <span class="beneficios-plano">
+                        <span class="linha-beneficios">
+                            <i class="bi bi-check2"></i>
+                            <p>Gráficos limitados a apenas 3 meses anteriores</p>
+                        </span>
+                        <span class="linha-beneficios">
+                            <i class="bi bi-check2"></i>
+                            <p>Limite de 3 contas bancárias por perfil</p>
+                        </span>
+                        <span class="linha-beneficios">
+                            <i class="bi bi-check2"></i>
+                            <p>Limite de 3 cartões de crédito por perfil</p>
+                        </span>
+                    </span>
+                </div>
+                <div class="cards card2">
+                    <i class="bi bi-currency-dollar icone"></i>
+                    <h2>Premium</h2>
+                    <h1>R$20 <l>/mês</l></h1>
+                    <p>ou R$210 ao ano</p>
+                    <span class="linha-separacao"></span>
+                    <p>beneficios inclusos:</p>
+                    <span class="beneficios-plano">
+                    <span class="linha-beneficios">
+                            <i class="bi bi-check2"></i>
+                            <p>Gráficos sem limitações de meses</p>
+                        </span>
+                        <span class="linha-beneficios">
+                            <i class="bi bi-check2"></i>
+                            <p>Crie quantas contas bancárias quiser</p>
+                        </span>
+                        <span class="linha-beneficios">
+                            <i class="bi bi-check2"></i>
+                            <p>Crie quantos cartões de crédito quiser</p>
+                        </span>
+                        <span class="linha-beneficios">
+                            <i class="bi bi-check2"></i>
+                            <p>Acesso ao sistema de investimentos</p>
+                        </span>
+                        <span class="linha-beneficios">
+                            <i class="bi bi-check2"></i>
+                            <p>Dobro de moedas ganhas nos minigames</p>
+                        </span>
+                        
+                    </span>
+                    <button><a href="#">Assinar</a></button>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

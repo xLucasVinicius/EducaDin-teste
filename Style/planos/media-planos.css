@@ -1,0 +1,44 @@
+@media screen and (max-width: 767px) {
+    .conteudo-total .txt-content-planos .titulos-planos h1 {    /* Titulo  */  
+        font-size: 1.9rem;
+    }
+
+    .conteudo-total .txt-content-planos .titulos-planos p { /* Paragrafo */
+        font-size: 0.8rem;
+    }
+
+    .conteudo-total .txt-content-planos .cards-planos { /* Div que contém as divs dos planos */
+        flex-direction: column;
+        margin-bottom: 50px;
+    }
+    
+}
+
+@media screen and (max-width: 1120px) {
+    .conteudo-total .txt-content-planos .cards-planos { /* Div que contém as divs dos planos */
+        gap: 50px;
+    }
+
+    .conteudo-total .txt-content-planos .cards-planos .cards {  /* Div dos plano */
+        width: 290px;
+        height: 470px;
+        padding: 50px 15px 15px 15px;
+        
+    }
+    
+    .conteudo-total .txt-content-planos .cards-planos .cards i.icone {  /* Icone de sifrão dos cards */
+        font-size: 1.8rem;
+    }
+    
+    .conteudo-total .txt-content-planos .cards-planos .cards h2 {    /* Texto com o nome do plano */
+        font-size: 1.1rem;
+    }
+    
+    .conteudo-total .txt-content-planos .cards-planos .cards h1 {    /* Texto com o valor do plano */
+        font-size: 2.1rem;
+    }
+    
+    .conteudo-total .txt-content-planos .cards-planos .cards p {    /* Texto com o valor do plano anual */
+        font-size: 0.7rem;
+    }
+}

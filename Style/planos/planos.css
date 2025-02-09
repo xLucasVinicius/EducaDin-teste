@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+:root {
+    --cor-principal: #F2A900;
+    --cor-fundo: #3D3D3D;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: var(--cor-fundo-content);
+    scrollbar-width: none;
+}
+
+.conteudo-total {  /* Seção que contém todo o conteudo */
+    background-color: var(--cor-fundo-content);
+    width: 100%;
+    height: 100%;
+}
+
+.conteudo-total .txt-content-planos {  /* div que contém as divs do titulo e dos planos */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5%;
+}
+
+.conteudo-total .txt-content-planos .titulos-planos {  /* Div que contém o titulo e o paragrafo */
+    margin: 40px 0;
+}
+
+.conteudo-total .txt-content-planos .titulos-planos h1 {    /* Titulo  */
+    color: var(--cor-principal);
+    text-align: center;
+    font-size: 2.7rem;
+}
+
+.conteudo-total .txt-content-planos .titulos-planos p {    /* Paragrafo */
+    color: white;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.conteudo-total .txt-content-planos .cards-planos {  /* Div que contém as divs dos planos */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+}
+
+.conteudo-total .txt-content-planos .cards-planos .cards {  /* Div dos plano */
+    position: relative;
+    width: 400px;
+    height: 500px;
+    padding: 70px 20px 20px 20px;
+    color: white;
+    border: 1px solid var(--cor-principal);
+}
+
+.conteudo-total .txt-content-planos .cards-planos .cards i.icone {  /* Icone de sifrão dos cards */
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: var(--cor-principal);
+    font-size: 2rem;
+}
+
+.conteudo-total .txt-content-planos .cards-planos .cards h2 {    /* Texto com o nome do plano */
+    font-size: 1.5rem;
+}
+
+.conteudo-total .txt-content-planos .cards-planos .cards h1 {    /* Texto com o valor do plano */
+    font-size: 2.7rem;
+}
+
+.conteudo-total .txt-content-planos .cards-planos .cards p {    /* Texto com o valor do plano anual */
+    font-size: 0.9rem;
+}
+
+.conteudo-total .txt-content-planos .cards-planos .cards span.linha-separacao {  /* Linha de separação dentro dos cards */
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: var(--cor-principal);
+    margin: 20px 0;
+}
+
+.conteudo-total .txt-content-planos .cards-planos .card2 span.linha-separacao {  /* Linha de separação dentro do card 2 */
+    margin: 0 0 20px 0;
+}
+
+.conteudo-total .txt-content-planos .cards-planos .cards span.beneficios-plano .linha-beneficios {  /* Cada linha de beneficios dentro dos cards */
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+    
+.conteudo-total .txt-content-planos .cards-planos .cards span.beneficios-plano .linha-beneficios i {    /* Icone de check */
+    color: var(--cor-principal);
+    font-size: 1.2rem;
+}
+
+.conteudo-total .txt-content-planos .cards-planos .cards span.beneficios-plano .linha-beneficios p {    /* Texto dos beneficios */
+    margin: 0;
+}
+
+.conteudo-total .txt-content-planos .cards-planos .card2 {  /* Div do card 2 */
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudo-total .txt-content-planos .cards-planos .card2 button {   /* Botão do card 2 */
+    width: 100%;
+    height: 40px;
+    border: none;
+    background-color: var(--cor-principal);
+    font-size: 1.2rem;
+    margin-top: auto;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.conteudo-total .txt-content-planos .cards-planos .card2 button a {    /* Link do botão do card 2 */
+    text-decoration: none;
+    color: var(--cor-fundo);
+}
+
+.conteudo-total .txt-content-planos .cards-planos .card2 button:hover {    /* Hover do botão do card 2 */
+    background-color: #b88100;
+    scale: 0.98;
+}
