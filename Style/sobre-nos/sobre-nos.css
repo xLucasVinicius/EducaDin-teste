@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+:root {
+    --cor-principal: #F2A900;
+    --cor-fundo: #3D3D3D;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: var(--cor-fundo-content);
+    scrollbar-width: none;
+}
+
+.conteudo-total-sobrenos {  /* Seção que contém todo o conteudo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    padding: 3% 2%;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.conteudo-total-sobrenos .quem-somos { /* Div que contém quem h1 e p */
+    width: 100%;
+    text-align: center;
+}
+
+.conteudo-total-sobrenos .quem-somos h1, .conteudo-total-sobrenos .apresentar-membros > h1 { /* Titulo quem somos e equipe*/
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.3rem;
+    color: var(--cor-principal);
+    margin-bottom: 20px;
+}
+
+.conteudo-total-sobrenos .quem-somos p { /* Paragrafo quem somos */
+    font-size: 1.1rem;
+    color: white;
+    padding: 0 10%;
+}
+
+.conteudo-total-sobrenos .apresentar-membros { /* Div que contém os membros */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.conteudo-total-sobrenos .apresentar-membros .membros { /* Div que contém todos os membros */
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.conteudo-total-sobrenos .apresentar-membros .membros .membro-container { /* Div que contém um membro */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 400px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+.conteudo-total-sobrenos .apresentar-membros .membros .membro-container img { /* Imagem do membro */
+    width: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.conteudo-total-sobrenos .apresentar-membros .membros .membro-container h1 { /* Nome do membro */
+    font-size: 1.6rem;
+    color: var(--cor-principal);
+}
+
+.conteudo-total-sobrenos .apresentar-membros .membros .membro-container p { /* função do membro */
+    font-size: 1.1rem;
+}
+
+.conteudo-total-sobrenos .apresentar-membros .membros .membro-container span a { /* Icones do membro */ 
+    font-size: 1.3rem;
+    text-decoration: none;
+    margin-right: 5px;
+}

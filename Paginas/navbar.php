@@ -75,20 +75,11 @@ if (!isset($_SESSION['nome'])) {
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="bi bi-house-door"></i> <span class="nav-text">#</span>
+                <a href="?page=sobre" class="nav-link">
+                <i class="bi bi-person-raised-hand"></i> <span class="nav-text">Sobre nós</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="bi bi-house-door"></i> <span class="nav-text">#</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="bi bi-house-door"></i> <span class="nav-text">#</span>
-                </a>
-            </li>
+            
         </ul>
         <!-- Links Inferiores -->
         <ul class="nav flex-column w-100 bottom-links">
@@ -155,12 +146,12 @@ if (!isset($_SESSION['nome'])) {
                 case "contato":
                     include("contato.php");
                 break;
+                case "sobre":
+                    include("sobre-nos.html");
+                break;
                 case "alterar":
                     include("alterar.php");
                 break;
-                // case "logout":
-                //     include("configs/logout.php");
-                // break;
                 case "login":
                     include("login.php");
                 break;
