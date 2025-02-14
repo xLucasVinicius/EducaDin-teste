@@ -140,6 +140,9 @@ body::-webkit-scrollbar {
     min-width: 500px;
     width: 85%;
     justify-self: end;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #chart1 {
@@ -156,7 +159,9 @@ body::-webkit-scrollbar {
 }
 
 #chart2 {
-    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .secao4 {

@@ -61,10 +61,10 @@ $result = $mysqli->query($query);
             </div>
           </section>
           <section class="secao2">
-              <canvas id="chart1"></canvas>
+              <div id="chart1"></div>
           </section>
           <section class="secao3">
-              <canvas id="chart2"></canvas>
+              <div id="chart2"></div>
           </section>
           <section class="secao4">
           <div class="table-lancamentos">
@@ -186,99 +186,113 @@ $result = $mysqli->query($query);
             </button>
           </div>
         </section>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../Js/apexcharts.min.js"></script>
     <script src="../Js/dashboard.js"></script>
 
     <script>
-        const ctx2 = document.getElementById('chart2');
-        const data = new Date();
-        const mesAtual = data.toLocaleString('default', { month: 'long' });
-        const labels = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-        const backgroundColors = labels.map(label => {
-          return label.toLowerCase() === mesAtual.toLowerCase() ? '#F2A900' : 'rgb(255, 255, 255)';
-        });
-        const borderColors = labels.map(label => {
-          return label.toLowerCase() === mesAtual.toLowerCase() ? 'rgb(255, 255, 255)' : '#F2A900';
-        });
+    // Configuração para o gráfico de barras
+// Obtenha o mês atual abreviado no formato correto
+const mesAtual = new Date().toLocaleString('pt-BR', { month: 'short' }).replace('.', '').toLowerCase();
 
-        let chartInstance;
-        
-        // Crie o gráfico inicialmente
-        const chart = document.querySelector('#chart1').getContext('2d');
-        chartInstance = new Chart(chart, {
-          type: 'bar',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: 'Sobra no Mês em Reais',
-              data: [125, 129, 365,235, 322,563, 56, 134, 245, 232, 245, 245],
-              backgroundColor: backgroundColors,
-              borderColor: borderColors,
-              borderWidth: 2,
-              maxBarThickness: 30,
-              borderRadius: 5
-            }]
-          },
-          options: {
-            scales: {x: {ticks: {color: 'white'}},
-                    y: {beginAtZero: true, ticks: {display: false}}
-            },
-            plugins: {legend: {labels: {color: 'white'}}}
-          }
-        });
-        
-        // Atualize o gráfico quando o evento de resize ocorre
-        window.addEventListener('resize', function() {
-            setTimeout(function() {
-                chartInstance.destroy();
-                chartInstance = new Chart(chart, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Sobra no Mês em Reais',
-                            data: [125, 129, 365,235, 322,563, 56, 134, 245, 232, 245, 245],
-                            backgroundColor: backgroundColors,
-                            borderColor: borderColors,
-                            borderWidth: 2,
-                            maxBarThickness: 30,
-                            borderRadius: 5
-                        }]
-                    },
-                    options: {
-                        scales: {x: {ticks: {color: 'white'}},
-                                y: {beginAtZero: true, ticks: {display: false}}
-                        },
-                        plugins: {legend: {labels: {color: 'white'}}}
-                    }
-                });
-            }, 300);
-        });
+const labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+const values = [125, 129, 365, 235, 322, 563, 56, 134, 245, 232, 245, 245];
 
-        new Chart(ctx2, {
-          type: 'doughnut',
-          data: {
-            labels: <?php echo $categorias; ?>,
-            datasets: [{
-              label: 'Vezes que utilizou a categoria',
-              data: [12, 19, 3, 5, 2, 3],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            plugins: {
-                legend: {
-                  position: 'right',
-                  labels: {
-                      boxWidth: 10,
-                      color: 'white'
-                  }
+// Converta os rótulos para o mesmo formato do mês atual (tudo em minúsculo)
+const labelsFormatados = labels.map(label => label.toLowerCase());
+
+// Defina a cor branca para todas as barras e uma cor destacada para o mês atual
+const barColors = labelsFormatados.map(label => {
+  return label === mesAtual ? '#F2A900' : 'rgb(255, 255, 255)';
+});
+
+const chartElement = document.querySelector('#chart1');
+
+const options = {
+    chart: {
+        type: 'bar',
+        height: '100%',
+        width: '100%'
+    },
+    series: [{
+        name: 'Sobra no Mês em Reais',
+        data: values
+    }],
+    plotOptions: {
+        bar: {
+            borderRadius: 3,
+            columnWidth: '65%',
+            distributed: true  // Distribui as cores para cada barra
+        }
+    },
+    dataLabels: {
+        enabled: false  // Desativa os números dentro das barras
+    },
+    colors: barColors,  // Aplica as cores nas barras
+    xaxis: {
+        categories: labels,
+        labels: {
+            style: {
+                colors: 'white'
+            }
+        }
+    },
+    yaxis: {
+        labels: {
+            show: true,  // Mostra os números no eixo Y
+            style: {
+                colors: 'white'  // Cor dos números do lado esquerdo
+            }
+        }
+    },
+    grid: {
+        show: true,  // Exibe as linhas de grade
+        borderColor: 'rgba(255, 255, 255, 0.1)',  // Cor quase invisível para a grade
+        strokeDashArray: 2  // Torna as linhas tracejadas
+    },
+    legend: {
+        show: false  // Remove os quadrados de legenda
+    },
+    tooltip: {
+        enabled: true
+    }
+};
+
+const chart = new ApexCharts(chartElement, options);
+chart.render();
+
+
+
+
+    // Gráfico de Rosca (Doughnut)
+    const categorias = <?php echo $categorias; ?>;
+    const chartElement2 = document.querySelector('#chart2');
+
+    const optionsDoughnut = {
+        chart: {
+            type: 'donut',
+            height: 250,
+            width: 350
+        },
+        series: [5, 5, 5, 5, 5, 5],  // Substitua os dados conforme necessário
+        labels: categorias,
+        legend: {
+            position: 'bottom',
+            labels: {
+                colors: 'white'
+            }
+        },
+        plotOptions: {
+            pie: {
+                donut: {
+                    size: '30%'
                 }
             }
-          }
-        });
+        }
+    };
 
-
+    const chartDoughnut = new ApexCharts(chartElement2, optionsDoughnut);
+    chartDoughnut.render();
 </script>
+
 </body>
 </html>

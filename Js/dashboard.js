@@ -15,23 +15,6 @@ function fecharLancamentos() {
     body.style.overflow = "auto";
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const subcategorias = {
     moradia: [
       "Aluguel", 
