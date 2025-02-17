@@ -49,8 +49,13 @@ if (!isset($_SESSION['nome'])) {
                 <i class="bi bi-graph-up-arrow"></i> <span class="nav-text">Desempenho</span>
                 </a>
                 <li class="nav-item">
+                <a href="?page=cartoes" class="nav-link">
+                <i class="bi bi-credit-card-2-back"></i> <span class="nav-text">Cartões</span>
+                </a>
+            </li>    
+                <li class="nav-item">
                 <a href="?page=contas" class="nav-link">
-                <i class="bi bi-credit-card-2-back"></i> <span class="nav-text">Contas e Cartões</span>
+                <i class="bi bi-credit-card-2-back"></i> <span class="nav-text">Contas</span>
                 </a>
             </li>    
             </li>
@@ -127,6 +132,9 @@ if (!isset($_SESSION['nome'])) {
                 break;
                 case "desempenho":
                     include("desempenho.php");
+                break;
+                case "cartoes":
+                    include("cartoes.php");
                 break;
                 case "contas":
                     include("contas.php");
