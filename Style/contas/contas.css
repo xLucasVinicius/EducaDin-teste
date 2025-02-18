@@ -1,0 +1,181 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+:root {
+    --cor-principal: #F2A900;
+    --cor-fundo: #3D3D3D;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: var(--cor-fundo-content);
+    scrollbar-width: hidden;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.elemento-fora {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 2% 3%;
+}
+
+.conteudo-total-contas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    height: 100%; 
+    overflow: hidden;
+
+    border: 1px solid green;
+  }
+  
+  .contas-carrossel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 300px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 15px;
+  }
+  
+  /* Cada conta ocupará o container inteiro, posicionada de forma absoluta */
+  .conta {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: translateX(100%);
+    transition: transform 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Slide ativo: visível na tela */
+  .conta.active {
+    transform: translateX(0);
+  }
+  
+  /* Botões de navegação (estilização básica) */
+  .buttons {
+    align-self: center;
+    display: flex;
+    gap: 15px;
+    pointer-events: none;
+  }
+  
+  .buttons button {
+    background: transparent;
+    color: var(--cor-principal);
+    width: 50px;
+    height: 50px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 50%;
+    margin-top: 20px;
+    cursor: pointer;
+    pointer-events: all;
+  }
+  
+  /* Efeito de bounce para primeira div (prev): movimento para a direita */
+  .bounce-right {
+    animation: bounce-right 0.3s;
+  }
+  
+  @keyframes bounce-right {
+    0%   { transform: translateX(0); }
+    50%  { transform: translateX(10px); }
+    100% { transform: translateX(0); }
+  }
+  
+  /* Efeito de bounce para última div (next): movimento para a esquerda */
+  .bounce-left {
+    animation: bounce-left 0.3s;
+  }
+  
+  @keyframes bounce-left {
+    0%   { transform: translateX(0); }
+    50%  { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+  }
+
+.fora-lancamentos {
+    width: 100%;
+    height: 440px;
+    padding: 1%;
+    margin-top: auto;
+
+    border: 1px solid var(--cor-principal);
+    border-radius: 20px;
+}
+
+.fora-lancamentos .lancamentos-carrossel table {
+    width: 100%;
+    height: 100%;
+}
+
+.fora-lancamentos .lancamentos-carrossel table th {
+    color: var(--cor-principal);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.363);
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.fora-lancamentos .lancamentos-carrossel table tr {
+    border-top: 1px solid rgba(255, 255, 255, 0.363);
+    text-align: center;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.add-contas {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+}
+
+.add-contas .form-content {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid lightskyblue;
+}
+  
