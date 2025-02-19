@@ -1,10 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     // Simulação dos dados retornados do banco de dados para contas e lançamentos
     const accountsData = [
-        { id: 1, nome: "Conta 1" },
-        { id: 2, nome: "Conta 2" },
-        { id: 3, nome: "Conta 3" },
-        { id: 4, nome: "Conta 4" }
+        { id: 1, nome: "Nubank" },
+        { id: 2, nome: "PicPay" },
+        { id: 3, nome: "Mercado Pago" },
+        { id: 4, nome: "Inter" },
+        { id: 5, nome: "Itaú" },
+        { id: 6, nome: "Santander" },
+        { id: 7, nome: "Banco do Brasil" },
+        { id: 8, nome: "C6 Bank" },
+        { id: 9, nome: "Caixa" }
     ];
 
     const lancamentosData = {
@@ -40,7 +45,16 @@ document.addEventListener("DOMContentLoaded", () => {
             contaDiv.classList.add('active');
             contaDiv.style.transform = 'translateX(0)';
         }
-        contaDiv.innerHTML = `<h1>${account.nome}</h1>`;
+        contaDiv.innerHTML = `
+        <div class="logo">
+            <img src="../imagens/logos/${account.nome}.png" alt="Logo ${account.nome}">
+        </div>
+        <div class="infos-conta">
+            <h1>${account.nome}</h1>
+            <h2>Saldo: R$ 1000,00</h2>
+            <p>+5% ao mês anterior</p>
+        </div>
+        `;
         carouselContainer.appendChild(contaDiv);
     });
 

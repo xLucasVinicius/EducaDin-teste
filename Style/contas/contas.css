@@ -58,11 +58,54 @@ body::-webkit-scrollbar {
     left: 0;
     width: 100%;
     height: 100%;
+    padding: 0px 80px;
     transform: translateX(100%);
     transition: transform 0.5s ease;
     display: flex;
     align-items: center;
-    justify-content: center;
+  }
+
+  .conta .logo {
+    overflow: hidden;
+    width: 150px;
+    height: 150px;
+    margin-right: 150px;
+    
+    border-radius: 50%;
+  }
+
+  .conta .logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .conta .infos-conta {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 30px;
+    height: 100%;
+  }
+
+  .conta .infos-conta h1 {
+    font-size: 3rem;
+    text-align: center;
+    width: 100%;
+    color: var(--cor-principal);
+    margin: 20px 0 30px 0;
+  }
+  
+  .conta .infos-conta h2 {
+    font-size: 2.5rem;
+    color: var(--cor-txt);
+    
+  }
+  
+  .conta .infos-conta p {
+    font-size: 1rem;
+    color: var(--cor-txt);
+    
   }
   
   /* Slide ativo: visível na tela */
