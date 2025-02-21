@@ -3,185 +3,194 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
 :root {
-    --cor-principal: #F2A900;
-    --cor-fundo: #3D3D3D;
-    --cor-fundo-content: #1F1F1F;
-    --cor-txt: #FFFFFF;
+  --cor-principal: #F2A900;
+  --cor-fundo: #3D3D3D;
+  --cor-fundo-content: #1F1F1F;
+  --cor-txt: #FFFFFF;
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 html, body {
-    background-color: var(--cor-fundo-content);
-    scrollbar-width: hidden;
+  background-color: var(--cor-fundo-content);
+  scrollbar-width: hidden;
 }
 
 body::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .elemento-fora {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    padding: 2% 3%;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 2% 3%;
 }
 
 .conteudo-total-contas {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
-    height: 100%; 
-    overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  height: 100%; 
+  overflow: hidden;
+}
 
-    border: 1px solid green;
-  }
-  
-  .contas-carrossel {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 300px;
-    border: 1px solid var(--cor-principal);
-    border-radius: 15px;
-  }
-  
-  /* Cada conta ocupará o container inteiro, posicionada de forma absoluta */
-  .conta {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 0px 80px;
-    transform: translateX(100%);
-    transition: transform 0.5s ease;
-    display: flex;
-    align-items: center;
-  }
+.contas-carrossel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 300px;
+  border: 1px solid var(--cor-principal);
+  border-radius: 15px;
+}
 
-  .conta .logo {
-    overflow: hidden;
-    width: 150px;
-    height: 150px;
-    margin-right: 150px;
-    
-    border-radius: 50%;
-  }
+/* Cada conta ocupará o container inteiro, posicionada de forma absoluta */
+.conta {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0px 80px;
+  transform: translateX(100%);
+  transition: transform 0.5s ease;
+  display: flex;
+  align-items: center;
+}
 
-  .conta .logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.conta .logo {
+  overflow: hidden;
+  width: 150px;
+  height: 150px;
+  margin-right: 150px;
 
-  .conta .infos-conta {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 30px;
-    height: 100%;
-  }
+  border-radius: 50%;
+}
 
-  .conta .infos-conta h1 {
-    font-size: 3rem;
-    text-align: center;
-    width: 100%;
-    color: var(--cor-principal);
-    margin: 20px 0 30px 0;
-  }
-  
-  .conta .infos-conta h2 {
-    font-size: 2.5rem;
-    color: var(--cor-txt);
-    
-  }
-  
-  .conta .infos-conta p {
-    font-size: 1rem;
-    color: var(--cor-txt);
-    
-  }
-  
-  /* Slide ativo: visível na tela */
-  .conta.active {
-    transform: translateX(0);
-  }
-  
-  /* Botões de navegação (estilização básica) */
-  .buttons {
-    align-self: center;
-    display: flex;
-    gap: 15px;
-    pointer-events: none;
-  }
-  
-  .buttons button {
-    background: transparent;
-    color: var(--cor-principal);
-    width: 50px;
-    height: 50px;
-    border: 1px solid var(--cor-principal);
-    border-radius: 50%;
-    margin-top: 20px;
-    cursor: pointer;
-    pointer-events: all;
-  }
-  
-  /* Efeito de bounce para primeira div (prev): movimento para a direita */
-  .bounce-right {
-    animation: bounce-right 0.3s;
-  }
-  
-  @keyframes bounce-right {
-    0%   { transform: translateX(0); }
-    50%  { transform: translateX(10px); }
-    100% { transform: translateX(0); }
-  }
-  
-  /* Efeito de bounce para última div (next): movimento para a esquerda */
-  .bounce-left {
-    animation: bounce-left 0.3s;
-  }
-  
-  @keyframes bounce-left {
-    0%   { transform: translateX(0); }
-    50%  { transform: translateX(-10px); }
-    100% { transform: translateX(0); }
-  }
+.conta .logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.conta .infos-conta {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 30px;
+  height: 100%;
+}
+
+.conta .infos-conta h1 {
+  font-size: 3rem;
+  text-align: center;
+  width: 100%;
+  color: var(--cor-principal);
+  margin: 20px 0 30px 0;
+}
+
+.conta .infos-conta h2 {
+  font-size: 2.5rem;
+  color: var(--cor-txt);
+
+}
+
+.conta .infos-conta p {
+  font-size: 1rem;
+  color: var(--cor-txt);
+
+}
+
+/* Slide ativo: visível na tela */
+.conta.active {
+  transform: translateX(0);
+}
+
+/* Botões de navegação (estilização básica) */
+.buttons {
+  align-self: center;
+  display: flex;
+  gap: 15px;
+  pointer-events: none;
+}
+
+.buttons button {
+  background: transparent;
+  color: var(--cor-principal);
+  width: 50px;
+  height: 50px;
+  border: 1px solid var(--cor-principal);
+  border-radius: 50%;
+  margin-top: 20px;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+/* Efeito de bounce para primeira div (prev): movimento para a direita */
+.bounce-right {
+  animation: bounce-right 0.3s;
+}
+
+@keyframes bounce-right {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+
+/* Efeito de bounce para última div (next): movimento para a esquerda */
+.bounce-left {
+  animation: bounce-left 0.3s;
+}
+
+@keyframes bounce-left {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
 
 .fora-lancamentos {
-    width: 100%;
-    height: 440px;
-    padding: 1%;
-    margin-top: auto;
+  width: 100%;
+  height: 440px;
+  margin-top: auto;
+  overflow-y: auto;
+  scrollbar-width: none;
 
-    border: 1px solid var(--cor-principal);
-    border-radius: 20px;
+  border: 1px solid var(--cor-principal);
+  border-radius: 20px;
 }
 
 .fora-lancamentos .lancamentos-carrossel table {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
+
 }
 
 .fora-lancamentos .lancamentos-carrossel table th {
-    color: var(--cor-principal);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.363);
-    padding-bottom: 5px;
-    text-align: center;
+  color: var(--cor-txt);
+  padding: 10px 0;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  background-color: var(--cor-principal);
 }
 
 .fora-lancamentos .lancamentos-carrossel table tr {
-    border-top: 1px solid rgba(255, 255, 255, 0.363);
-    text-align: center;
-    color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.363);
+  text-align: center;
+  color: white;
+
 }
+
+.fora-lancamentos .lancamentos-carrossel table td {
+  padding: 1% 0;
+}
+
 
 
 
@@ -202,23 +211,21 @@ body::-webkit-scrollbar {
 
 
 .add-contas {
-    width: 50%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid red;
+width: 50%;
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
 }
 
 .add-contas .form-content {
-    width: 75%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+width: 75%;
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
 
-    border: 1px solid lightskyblue;
+border: 1px solid lightskyblue;
 }
-  

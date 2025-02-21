@@ -15,6 +15,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const lancamentosData = {
         1: [
             { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
+            { descricao: "Lançamento 1.1", valor: 100, tipo: "Receita", metodo_pagamento: "Dinheiro", parcelas: 1, data: "2025-02-10" },
             { descricao: "Lançamento 1.2", valor: 200, tipo: "Despesa", metodo_pagamento: "Cartão", parcelas: 2, data: "2025-02-11" }
         ],
         2: [
