@@ -64,13 +64,14 @@ body::-webkit-scrollbar {
   transition: transform 0.5s ease;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .conta .logo {
   overflow: hidden;
-  width: 150px;
-  height: 150px;
-  margin-right: 150px;
+  width: 200px;
+  height: auto;
+  /* margin-right: 150px; */
 
   border-radius: 50%;
 }
@@ -85,7 +86,7 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 30px;
+  gap: 20px;
   height: 100%;
 }
 
@@ -98,15 +99,17 @@ body::-webkit-scrollbar {
 }
 
 .conta .infos-conta h2 {
-  font-size: 2.5rem;
+  text-align: center;
+  font-size: 2.3rem;
   color: var(--cor-txt);
 
 }
 
 .conta .infos-conta p {
+  text-align: center;
   font-size: 1rem;
   color: var(--cor-txt);
-
+  width: 100%;
 }
 
 /* Slide ativo: visível na tela */
@@ -195,7 +198,7 @@ body::-webkit-scrollbar {
 
 
 .add-contas {
-width: 600px;
+width: 80%;
 height: 100%;
 display: flex;
 flex-direction: column;
@@ -222,7 +225,7 @@ border: 1px solid var(--cor-principal);
 }
 
 .add-contas .form-content form {
-  width: 80%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -258,6 +261,17 @@ border: 1px solid var(--cor-principal);
 .add-contas .form-content form input::placeholder {
   color: var(--cor-txt);
   transition: all .3s;  
+}
+
+.add-contas .form-content form input:-webkit-autofill,
+.add-contas .form-content form input:-webkit-autofill:hover,
+.add-contas .form-content form input:-webkit-autofill:focus {
+    background-color: transparent !important;
+    color: white !important;
+    border: 1px solid white !important;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white  !important;
+    caret-color: white;
 }
 
 .add-contas .form-content form option {

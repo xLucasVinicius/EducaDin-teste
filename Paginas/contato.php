@@ -16,7 +16,7 @@
                 <div class="redes-contato">
                     <a href="" target="_blank">
                         <i class="bi bi-envelope-at"></i>
-                        educadin.contato@gmail.com
+                        educadin.contact@gmail.com
                     </a>
                     <a href="https://www.instagram.com/educa_din/" target="_blank">
                         <i class="bi bi-instagram"></i>

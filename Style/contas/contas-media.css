@@ -1,4 +1,47 @@
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
+  .contas-carrossel {
+    /* height: 200px; */
+    min-height: 200px;
+  }
+
+  .conta {
+    padding: 0 20px;
+    justify-content: center;
+    gap: 2%;
+  }
+
+  .conta .logo {
+      width: 30%;
+      height: auto;
+      margin-right: 13%;
+  }
+
+  .conta .infos-conta {
+    gap: 10px;
+  }
+
+  .conta .infos-conta h1 {
+    font-size: 2rem;
+  }
+  
+  .conta .infos-conta h2 {
+    font-size: 1rem;   
+  }
+  
+  .conta .infos-conta p {
+    font-size: 0.9rem;
+  }
+
+  .add-contas {
+    width: 100%;
+  }
+
+  .add-contas .form-content {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
     .conteudo-total-contas {
         width: 100%;
     }
@@ -7,67 +50,20 @@
         width: 100%;
     }
 
-    .conta {
-        padding: 0 20px;
-        justify-content: center;
-        gap: 2%;
-    }
-
-    .conta .logo {
-        width: 35%;
-        height: auto;
-        margin-right: 13%;
-    }
-
     .conta .infos-conta {
         justify-content: center;
     }
 
-    .conta .infos-conta h1 {
-        font-size: 2rem;
-        text-align: center;
-      }
-      
-      .conta .infos-conta h2 {
-        font-size: 1.2rem;
-        text-align: center;   
-      }
-      
-      .conta .infos-conta p {
-        font-size: 0.9rem;
-        text-align: center;
-      }
-
-
-
-
-
-      .fora-lancamentos {
-        width: 100%;
-        overflow: scroll;
-      }
-
-      .fora-lancamentos .lancamentos-carrossel table {
-        width: 806px;
-      }
-
-      .add-contas {
-        width: 100%;
-      }
-
-      .add-contas .form-content {
-        width: 100%;
-      }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1560px) {
-    .add-contas {
-        width: 80%;
-      }
-      
-    .add-contas .form-content form {
-        width: 60%;
+    .fora-lancamentos {
+      width: 100%;
+      overflow: scroll;
     }
+
+    .fora-lancamentos .lancamentos-carrossel table {
+      width: 806px;
+    }
+
+    
 }
 
 @media screen and (max-width: 1560px) {

@@ -201,9 +201,12 @@ function formatarMoeda(input) {
 
     // Adiciona os centavos
     valor = (valor / 100).toFixed(2) + '';
-    
-    // Substitui o ponto por uma vírgula
+
+    // Substitui o ponto por uma vírgula (para casas decimais)
     valor = valor.replace(".", ",");
+
+    // Adiciona um ponto a cada três números antes da vírgula
+    valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
     // Adiciona o símbolo R$
     input.value = 'R$ ' + valor;
@@ -215,19 +218,14 @@ const selectConta = document.getElementById('conta');
 const imagemContent = document.querySelector('.imagem-conta');
 const imgConta = document.querySelector('.imagem-conta img');
 
-function formatarMoeda(input) {
-    // Remove todos os caracteres que não são dígitos
-    let valor = input.value.replace(/\D/g, '');
-
-    // Adiciona os centavos
-    valor = (valor / 100).toFixed(2) + '';
-
-    // Substitui o ponto por uma vírgula (para casas decimais)
-    valor = valor.replace(".", ",");
-
-    // Adiciona um ponto a cada três números antes da vírgula
-    valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
-    // Adiciona o símbolo R$
-    input.value = 'R$ ' + valor;
+function mostrarImagem() {
+    const valueSelect = selectConta.value;
+    if (valueSelect) {
+        imagemContent.style.display = 'block';
+        imgConta.src = `../imagens/logos/${valueSelect}.png`;
+    } else {
+        imagemContent.style.display = 'none';
+        imgConta.src = '';
+    }
+    console.log(valueSelect);
 }
