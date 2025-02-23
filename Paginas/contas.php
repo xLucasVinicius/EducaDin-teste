@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contas e Lançamentos</title>
     <link rel="stylesheet" href="../Style/contas/contas.css">
+    <link rel="stylesheet" href="../Style/contas/contas-media.css">
 </head>
 <body>
     <section class="elemento-fora">
@@ -30,9 +31,32 @@
         <section class="add-contas">
             <div class="form-content">
                 <h1>Adicionar Conta</h1>
-                <form action="">
-                    <input type="text" placeholder="Conta" name="conta">
-                    <input type="password" placeholder="Senha" name="senha">
+                <form action="configs/add-conta.php" method="POST">
+                    <div class="form-conta">
+                        <label for="conta">Nome da Conta</label>
+                        <select name="conta" id="conta" onchange="mostrarImagem()">
+                            <option value="">Selecione uma conta</option>
+                            <option value="Nubank">Nubank</option>
+                            <option value="PicPay">PicPay</option>
+                            <option value="Mercado Pago">Mercado Pago</option>
+                            <option value="Inter">Inter</option>
+                            <option value="Itaú">Itaú</option>
+                            <option value="Santander">Santander</option>
+                            <option value="Banco do Brasil">Banco do Brasil</option>
+                            <option value="C6 Bank">C6 Bank</option>
+                            <option value="Caixa">Caixa</option>
+                        </select>
+                    </div>
+                    <div class="imagem-conta">
+                        <p>Imagem da Conta</p>
+                        <span>
+                            <img src="../imagens/logos/Nubank.png" alt="Imagem da Conta">
+                        </span>
+                    </div>
+                    <div class="form-saldo">
+                        <label for="saldo">Saldo Inicial</label>
+                        <input type="text" name="saldo" id="saldo" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
+                    </div>
                     <button type="submit">Adicionar</button>
                 </form>
             </div>

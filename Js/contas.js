@@ -193,3 +193,41 @@ document.addEventListener("DOMContentLoaded", () => {
         goToSlide(currentIndex - 1, 'prev');
     });
 });
+
+
+function formatarMoeda(input) {
+    // Remove todos os caracteres que não são dígitos
+    let valor = input.value.replace(/\D/g, '');
+
+    // Adiciona os centavos
+    valor = (valor / 100).toFixed(2) + '';
+    
+    // Substitui o ponto por uma vírgula
+    valor = valor.replace(".", ",");
+
+    // Adiciona o símbolo R$
+    input.value = 'R$ ' + valor;
+}
+
+
+// Função para mostrar a imagem da conta selecionada no formulário para adicionar contas
+const selectConta = document.getElementById('conta');
+const imagemContent = document.querySelector('.imagem-conta');
+const imgConta = document.querySelector('.imagem-conta img');
+
+function formatarMoeda(input) {
+    // Remove todos os caracteres que não são dígitos
+    let valor = input.value.replace(/\D/g, '');
+
+    // Adiciona os centavos
+    valor = (valor / 100).toFixed(2) + '';
+
+    // Substitui o ponto por uma vírgula (para casas decimais)
+    valor = valor.replace(".", ",");
+
+    // Adiciona um ponto a cada três números antes da vírgula
+    valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    // Adiciona o símbolo R$
+    input.value = 'R$ ' + valor;
+}

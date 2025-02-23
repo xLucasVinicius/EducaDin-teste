@@ -26,6 +26,9 @@ body::-webkit-scrollbar {
 
 .elemento-fora {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
   width: 100%;
   height: 100%;
   padding: 2% 3%;
@@ -36,16 +39,15 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
-  height: 100%; 
-  overflow: hidden;
+  width: 820px;
+  height: 100%;
 }
 
 .contas-carrossel {
   position: relative;
   overflow: hidden;
-  width: 100%;
-  height: 300px;
+  width: 806px;
+  min-height: 290px;
   border: 1px solid var(--cor-principal);
   border-radius: 15px;
 }
@@ -116,6 +118,7 @@ body::-webkit-scrollbar {
 .buttons {
   align-self: center;
   display: flex;
+  margin-bottom: 15px;
   gap: 15px;
   pointer-events: none;
 }
@@ -155,9 +158,8 @@ body::-webkit-scrollbar {
 }
 
 .fora-lancamentos {
-  width: 100%;
-  height: 440px;
-  margin-top: auto;
+  width: 806px;
+  min-height: 440px;
   overflow-y: auto;
   scrollbar-width: none;
 
@@ -192,26 +194,8 @@ body::-webkit-scrollbar {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .add-contas {
-width: 50%;
+width: 600px;
 height: 100%;
 display: flex;
 flex-direction: column;
@@ -220,12 +204,96 @@ align-items: center;
 }
 
 .add-contas .form-content {
-width: 75%;
-height: 100%;
+width: 400px;
+height: 500px;
 display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+border-radius: 20px;
 
-border: 1px solid lightskyblue;
+border: 1px solid var(--cor-principal);
 }
+
+.add-contas .form-content h1 {
+  color: var(--cor-principal);
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.add-contas .form-content form {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.add-contas .form-content div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.add-contas .form-content form label, .add-contas .form-content form p {
+  color: var(--cor-principal);
+  font-size: 1.2rem;
+}
+
+.add-contas .form-content form input, .add-contas .form-content form select {
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 5px;
+  border: 1px solid var(--cor-txt);
+  background-color: transparent;
+  color: var(--cor-txt);
+  font-size: 1rem;
+  outline: none;
+  transition: all .3s;
+}
+
+.add-contas .form-content form input::placeholder {
+  color: var(--cor-txt);
+  transition: all .3s;  
+}
+
+.add-contas .form-content form option {
+  background-color: var(--cor-fundo-content);
+}
+
+.add-contas .form-content .imagem-conta {
+  display: none;
+  width: 160px;
+  height: 150px;
+  overflow: hidden;
+  align-self: flex-start;
+}
+
+.add-contas .form-content .imagem-conta img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.add-contas .form-content form button {
+  width: 100px;
+  height: 35px;
+  border: 1px solid var(--cor-principal);
+  border-radius: 25px;
+  background-color: transparent;
+  color: var(--cor-principal);
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.add-contas .form-content form button:hover {
+  background-color: var(--cor-principal);
+  color: var(--cor-txt);
+  transform: scale(0.97);
+}
+
+
