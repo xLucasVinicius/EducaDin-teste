@@ -196,6 +196,54 @@ body::-webkit-scrollbar {
   padding: 1% 0;
 }
 
+.fora-lancamentos .lancamentos-carrossel table td:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.fora-lancamentos .lancamentos-carrossel table td #btn-editar {
+  width: 40px;
+  height: 30px;
+  margin-top: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
+  color: var(--cor-txt);
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.fora-lancamentos .lancamentos-carrossel table td #btn-editar:hover {
+  background-color: rgb(0, 0, 153);
+}
+
+.fora-lancamentos .lancamentos-carrossel table td #btn-excluir {
+  width: 40px;
+  height: 30px;
+  margin-top: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  font-size: 1.5rem;
+  color: var(--cor-txt);
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.fora-lancamentos .lancamentos-carrossel table td #btn-excluir:hover {
+  background-color: rgb(153, 0, 0);
+}
+
 
 .add-contas {
 width: 80%;

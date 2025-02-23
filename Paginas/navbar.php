@@ -48,16 +48,16 @@ if (!isset($_SESSION['nome'])) {
                 <a href="?page=desempenho" class="nav-link">
                 <i class="bi bi-graph-up-arrow"></i> <span class="nav-text">Desempenho</span>
                 </a>
-                <li class="nav-item">
-                <a href="?page=cartoes" class="nav-link">
-                <i class="bi bi-credit-card-2-back"></i> <span class="nav-text">Cartões</span>
-                </a>
-            </li>    
-                <li class="nav-item">
+            </li>   
+            <li class="nav-item">
                 <a href="?page=contas" class="nav-link">
                 <i class="bi bi-credit-card-2-back"></i> <span class="nav-text">Contas</span>
                 </a>
-            </li>    
+            </li>
+            <li class="nav-item">
+                <a href="?page=cartoes" class="nav-link">
+                <i class="bi bi-credit-card-2-back"></i> <span class="nav-text">Cartões</span>
+                </a>    
             </li>
             <li class="nav-item">
                 <a href="?page=minigames" class="nav-link">

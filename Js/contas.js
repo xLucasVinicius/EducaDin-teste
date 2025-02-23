@@ -108,7 +108,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     <td>${lancamento.metodo_pagamento}</td>
                     <td>${lancamento.parcelas}</td>
                     <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
-                    <td>editar/excluir</td>
+                    <td>
+                        <button id="btn-editar"><i class="bi bi-pencil"></i></button>
+                        <button id="btn-excluir"><i class="bi bi-x"></i></button>
+                    </td>
                 </tr>`;
         });
 

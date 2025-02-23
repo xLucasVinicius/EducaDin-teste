@@ -92,7 +92,10 @@ $result = $mysqli->query($query);
                                     <td><?php echo htmlspecialchars($lancamento['metodo_pagamento']); ?></td>
                                     <td><?php echo htmlspecialchars($lancamento['parcelas']); ?></td>
                                     <td><?php echo date('d/m/Y', strtotime($lancamento['data'])); ?></td>
-                                    <td>editar/excluir</td>
+                                    <td>
+                                      <button id="btn-editar"><i class="bi bi-pencil"></i></button>
+                                      <button id="btn-excluir"><i class="bi bi-x-lg"></i></button>
+                                    </td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
