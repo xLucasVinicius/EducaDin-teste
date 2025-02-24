@@ -13,8 +13,9 @@
     font-family: sans-serif;
 }
 
-body {
+body, html {
     background-color: #1F1F1F;
+    scrollbar-width: none;
 }
 
 form {
@@ -23,7 +24,7 @@ form {
     flex-wrap: nowrap;
     margin: auto;
     max-width: 700px;
-    height: 100dvh;
+    height: 100vh;
     justify-content: center;
     align-items: center;
 }
@@ -31,7 +32,7 @@ form {
 form > h1 {
     font-size: 3rem;
     font-family: 'orbitron';
-    margin-bottom: 100px;
+    margin-bottom: 20px;
     color: #F5A900;
 }
 
@@ -109,6 +110,14 @@ input[type="file"] {
 .input-login {
     display: flex;
     flex-direction: column;
+    width: 100%;
+}
+
+.input-login span {
+    width: 95%;
+}
+
+.input-login span input {
     width: 100%;
 }
 
@@ -316,6 +325,11 @@ input {
     padding: 1.5vh 5px;
 }
 
+.img-perfil {
+    width: 120px;
+    height: 100px;
+}
+
 .img-perfil img{
     width: 100px;
     height: 100px;
@@ -326,11 +340,15 @@ input {
     width: 300px;
 }
 
-
-
 .input-name, .input-outras-infos {
     display: flex;
     flex-direction: column;
     width: 300px;
+}
+
+.termos-politicas {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
 }
 }

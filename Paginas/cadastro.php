@@ -1,5 +1,5 @@
 <?php
-include('config.php');
+include('configs/config.php');
 if(isset($_POST['email'])) {
 $arquivo = $_FILES['file'];
     if($arquivo['error'])
@@ -55,10 +55,9 @@ $arquivo = $_FILES['file'];
         <div class="img-perfil">
             <img id="imagem-perfil" src="../foto-perfil/default.png" alt="">
         </div>
-        <label for="file" class="file-label">
+        <a href="editar-imagem.html" class="file-label">
         <i class="bi bi-pencil"></i>
-        </label>
-        <input type="file" name="file" id="file">
+        </a>
     </div>
     
     <div class="input-name">
@@ -73,14 +72,20 @@ $arquivo = $_FILES['file'];
         </span>
     </div>
     <div class="input-login">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" placeholder="exemplo@gmail.com" required>
+        <span>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" placeholder="exemplo@gmail.com" required>
+        </span>
 
-        <label for="senha">Senha</label>
-        <input type="password" name="senha" id="senha" placeholder="digite sua senha" required>
+        <span>
+            <label for="senha">Senha</label>
+            <input type="password" name="senha" id="senha" placeholder="digite sua senha" required>
+        </span>
 
-        <label for="senha">Confirmar Senha</label>
-        <input type="password" name="senha" id="confirmarsenha" placeholder="digite sua senha novamente" required>
+        <span>
+            <label for="senha">Confirmar Senha</label>
+            <input type="password" name="senha" id="confirmarsenha" placeholder="digite sua senha novamente" required>
+        </span>
     </div>
     <div class="input-outras-infos">
         <span>
@@ -95,8 +100,8 @@ $arquivo = $_FILES['file'];
     </div>
 
     <div class="termos-politicas">
-    <a href="politicas.php">Politicas de uso</a>
-    <a href="termos.php">Termos de uso</a>
+        <a href="politicas.php">Politicas de uso</a>
+        <a href="termos.php">Termos de uso</a>
     </div>
 
     <div class="input-termos-politicas">
