@@ -1,5 +1,5 @@
 <?php
-include 'configs/infos-login.php';
+include 'configs/infos-login.php'; // Inclui o arquivo de configuração
 ?>
 
 <!DOCTYPE html>
@@ -14,27 +14,29 @@ include 'configs/infos-login.php';
     
 </head>
 <body>
+    <!-- Fundo com efeito hexagonal -->
     <div id="gradient"></div>
     <div id="pattern"></div>
 
+    <!-- Todo o conteúdo -->
     <div class="content">
-        <form action="" method="post" id="form" class="form">
-            <h1>Educa<span id="titulo">Din</span></h1>
+        <form action="" method="post" id="form" class="form"> <!-- Formulário de login -->
+            <h1>Educa<span id="titulo">Din</span></h1> <!-- Logo -->
 
-            <span class="form-span <?php echo ($error_email) ? 'error' : ''; ?>">
+            <span class="form-span <?php echo ($error_email) ? 'error' : ''; ?>"> <!-- Campo de email -->
                 <label for="email">Endereço de Email</label>
                 <input class="input" type="email" name="email" id="email" placeholder="exemplo@mail.com" required>
                 <d>Email incorreto</d>
             </span>
             
-            <span class="form-span <?php echo ($error_senha) ? 'error' : ''; ?> senha">
+            <span class="form-span <?php echo ($error_senha) ? 'error' : ''; ?> senha"> <!-- Campo de senha -->
                 <label for="senha">Senha</label>
                 <input class="input" type="password" name="senha" id="senha" required placeholder="********">
                 <d>Senha incorreta</d>
                 <span class="toggle-password" onclick="togglePassword()"><i class="bi bi-eye"></i></span>
             </span>
 
-            <span id="remember-box">
+            <span id="remember-box"> <!-- Checkbox de manter conectado -->
                 <input type="checkbox" name="remember" id="remember">
                 <label for="remember" id="remember-label">Manter conectado</label>
             </span>
@@ -42,7 +44,8 @@ include 'configs/infos-login.php';
             <input type="submit" value="Login">
             <a href="#">Esqueci a senha</a>
         </form>
-        <div class="login-google">
+
+        <div class="login-google"> <!-- Botão de login com o google -->
             <span class="linha1"></span>
             <span class="linha2"></span>
             <p>Acessar com</p>
@@ -53,9 +56,9 @@ include 'configs/infos-login.php';
         <a href="cadastro.php">Realizar cadastro</a>
     </div>
 
-<script src="../Js/login.js"></script>
-<script src="../Js/background.js"></script>
-<script src="https://accounts.google.com/gsi/client" async></script>
-<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
+<script src="../Js/login.js"></script> <!-- JS Personalizado -->
+<script src="../Js/background.js"></script> <!-- JS Personalizado -->
+<script src="https://accounts.google.com/gsi/client" async></script> <!-- JS do botão de login com o google -->
+<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script> <!-- JS do botão de login com o google -->
 </body>
 </html>

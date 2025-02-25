@@ -1,21 +1,20 @@
-function exibirLancamentos() {
-    const lancamentos = document.querySelector(".section-lancamentos");
-    const body = document.querySelector("body");
+const lancamentos = document.querySelector(".section-lancamentos"); // Seleciona o formulário
+const body = document.querySelector("body"); // Seleciona o body
+const parcelas = document.getElementById("parcelas"); // Seleciona o select de parcelas
+const labelParcelas = document.getElementById("label-parcelas"); // Seleciona o label de parcelas
 
-    lancamentos.style.display = "flex";
-    window.scrollTo(0, 0);
-    body.style.overflow = "hidden";
+function exibirLancamentos() { // Abre o formulário de lançamentos
+    lancamentos.style.display = "flex"; // Exibe o formulário
+    window.scrollTo(0, 0); // Desloca a janela para o topo quando o formulário abre
+    body.style.overflow = "hidden"; // Bloqueia a rolagem da janela
 }
 
-function fecharLancamentos() {
-    const lancamentos = document.querySelector(".section-lancamentos");
-    const body = document.querySelector("body");
-
+function fecharLancamentos() { // Fecha o formulário de lançamentos
     lancamentos.style.display = "none";
     body.style.overflow = "auto";
   }
 
-const subcategorias = {
+const subcategorias = { // Objeto com as subcategorias para cada categoria
     moradia: [
       "Aluguel", 
       "Prestação do imóvel", 
@@ -30,6 +29,7 @@ const subcategorias = {
       "Delivery"
     ],
     transporte: [
+      "Aplicativos de transporte",
       "Combustível", 
       "Transporte público", 
       "Manutenção de veículo", 
@@ -97,17 +97,17 @@ const subcategorias = {
     ]
   };
 
-  function mostrarSubcategorias() {
-    const categoriaSelect = document.getElementById("categoria");
-    const subcategoriaSelect = document.getElementById("subcategoria");
-    const subcategoriaLabel = document.getElementById("label-subcategoria");
-    const categoriaSelecionada = categoriaSelect.value;
+  function mostrarSubcategorias() { // Função para mostrar as subcategorias
+    const categoriaSelect = document.getElementById("categoria"); // Seleciona o select de categoria
+    const subcategoriaSelect = document.getElementById("subcategoria"); // Seleciona o select de subcategoria
+    const subcategoriaLabel = document.getElementById("label-subcategoria"); // Seleciona o label de subcategoria
+    const categoriaSelecionada = categoriaSelect.value; // Obtem o valor da categoria selecionada
 
-    subcategoriaLabel.style.display = "block";
-    subcategoriaSelect.style.display = "block";
+    subcategoriaLabel.style.display = "block"; // Exibe o label
+    subcategoriaSelect.style.display = "block"; // Exibe o select
 
     // Limpa as opções anteriores
-    subcategoriaSelect.innerHTML = "";
+    subcategoriaSelect.innerHTML = ""; 
 
     if (categoriaSelecionada === "") {
       // Se nenhuma categoria estiver selecionada, oculta as subcategorias
@@ -116,29 +116,25 @@ const subcategorias = {
       return;
     }
 
-    if (categoriaSelecionada && subcategorias[categoriaSelecionada]) {
-      // Adiciona as novas opções de subcategorias
-      subcategorias[categoriaSelecionada].forEach(subcategoria => {
-        const option = document.createElement("option");
-        option.value = subcategoria;
-        option.textContent = subcategoria;
-        subcategoriaSelect.appendChild(option);
+    if (categoriaSelecionada && subcategorias[categoriaSelecionada]) { // Verifica se a categoria selecionada possui subcategorias
+      
+      subcategorias[categoriaSelecionada].forEach(subcategoria => { // Adiciona as novas opções de subcategorias
+        const option = document.createElement("option"); // Cria uma nova opção
+        option.value = subcategoria; // Define o valor da opção
+        option.textContent = subcategoria; // Define o texto da opção
+        subcategoriaSelect.appendChild(option); // Adiciona a opção ao select
       });
     }
   }
 
-  function mostrarParcelas() {
-    const parcelas = document.getElementById("parcelas");
-    const labelParcelas = document.getElementById("label-parcelas");
-    parcelas.style.display = "block";
-    labelParcelas.style.display = "block";
+  function mostrarParcelas() { // Função para mostrar as parcelas
+    parcelas.style.display = "block"; // Exibe o select
+    labelParcelas.style.display = "block"; // Exibe o label
   }
 
-  function ocultarParcelas() {
-    const parcelas = document.getElementById("parcelas");
-    const labelParcelas = document.getElementById("label-parcelas");
-    parcelas.style.display = "none";
-    labelParcelas.style.display = "none";
+  function ocultarParcelas() { // Função para ocultar as parcelas
+    parcelas.style.display = "none"; // Oculta o select
+    labelParcelas.style.display = "none"; // Oculta o label
   }
 
 

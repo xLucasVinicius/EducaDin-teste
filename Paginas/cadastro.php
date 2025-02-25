@@ -60,7 +60,7 @@ $arquivo = $_FILES['file'];
         </a>
     </div>
     
-    <div class="input-name">
+    <div class="input-name"> <!-- div com inputs do nome -->
         <span>
             <label for="nome">Nome</label>
             <input type="text" name="nome" id="nome" placeholder="Digite seu nome" required>
@@ -71,7 +71,7 @@ $arquivo = $_FILES['file'];
             <input type="text" name="sobrenome" id="sobrenome" placeholder="Digite seu sobrenome" required>
         </span>
     </div>
-    <div class="input-login">
+    <div class="input-login"> <!-- div com inputs de login -->
         <span>
             <label for="email">Email</label>
             <input type="email" name="email" id="email" placeholder="exemplo@gmail.com" required>
@@ -87,7 +87,7 @@ $arquivo = $_FILES['file'];
             <input type="password" name="senha" id="confirmarsenha" placeholder="digite sua senha novamente" required>
         </span>
     </div>
-    <div class="input-outras-infos">
+    <div class="input-outras-infos"> <!-- div com inputs das outras infos -->
         <span>
             <label for="data-nasc">Data de Nascimento</label>
             <input type="date" name="data-nasc" id="data-nasc">
@@ -99,25 +99,25 @@ $arquivo = $_FILES['file'];
         </span>
     </div>
 
-    <div class="termos-politicas">
-        <a href="politicas.php">Politicas de uso</a>
-        <a href="termos.php">Termos de uso</a>
+    <div class="termos-politicas"> <!-- div com links dos termos e politicas -->
+        <a href="politicas.html">Politicas de uso</a>
+        <a href="termos.html">Termos de uso</a>
     </div>
 
-    <div class="input-termos-politicas">
+    <div class="input-termos-politicas"> <!-- div com checkbox dos termos e politicas -->
         <input type="checkbox" name="termos" id="termos">
         <label for="termos" id="termos-label" >
             Eu aceito os termos e politicas de uso
         </label>
     </div>
 
-    <div class="btn-form">
+    <div class="btn-form"> <!-- div com botoes de cancelar e salvar -->
         <span id="btn-input1"><button>Cancelar</button></span>
         <span id="btn-input2"><input id="btn-salvar" type="submit" value="Salvar"></span>
     </div>
 </form>
 
-<script src="../Js/cadastro.js"></script>
+<script src="../Js/cadastro.js"></script> <!-- Js de cadastro -->
 </body>
 </html>
 

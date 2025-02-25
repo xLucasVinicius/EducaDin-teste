@@ -16,11 +16,11 @@ $result = $mysqli->query($query);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-    <div class="conteudo-flex">
-      <section class="conteudo-dash">
-          <section class="secao1">
-            <div class="desempenho-fluxo">
-              <div>
+    <div class="conteudo-flex"> <!-- section flex -->
+      <section class="conteudo-dash"> <!-- section com todo o conteudo -->
+          <section class="secao1"> <!-- section com resumo do mes -->
+            <div class="desempenho-fluxo"> <!-- div que armazena as outras divs -->
+              <div> <!-- div com as informacoes -->
                 <span class="icon">
                   <i class="bi bi-coin" style="color: green"></i>
                   <span class="arrow">
@@ -34,7 +34,7 @@ $result = $mysqli->query($query);
                 </span>
                 <span class="barra"></span>
               </div>
-              <div>
+              <div> <!-- div com as informacoes -->
                 <span class="icon">
                   <i class="bi bi-coin" style="color: red"></i>
                   <span class="arrow">
@@ -48,7 +48,7 @@ $result = $mysqli->query($query);
                 </span>
                 <span class="barra"></span>
               </div>
-              <div>
+              <div> <!-- div com as informacoes -->
                 <span class="icon">
                   <i class="bi bi-cash-coin" style="color: skyblue"></i>
                 </span>
@@ -60,16 +60,16 @@ $result = $mysqli->query($query);
               </div>
             </div>
           </section>
-          <section class="secao2">
-              <div id="chart1"></div>
+          <section class="secao2"> <!-- section com o grafico 1 -->
+              <div id="chart1"></div> <!-- div que armazena o grafico -->
           </section>
-          <section class="secao3">
-              <div id="chart2"></div>
+          <section class="secao3"> <!-- section com o grafico 2 -->
+              <div id="chart2"></div> <!-- div que armazena o grafico -->
           </section>
-          <section class="secao4">
-          <div class="table-lancamentos">
+          <section class="secao4"> <!-- section com a tabela de lancamentos -->
+          <div class="table-lancamentos"> <!-- div que armazena tudo relativo a tabela -->
               <h1>LANÇAMENTOS</h1>
-              <div class="table-container">
+              <div class="table-container"> <!-- div que armazena a tabela -->
                 <table>
                     <thead>
                         <tr>
@@ -83,51 +83,52 @@ $result = $mysqli->query($query);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if ($result->num_rows > 0): ?>
-                            <?php while ($lancamento = $result->fetch_assoc()): ?>
+                        <?php if ($result->num_rows > 0): ?> <!-- Verifica se houve resultados -->
+                            <?php while ($lancamento = $result->fetch_assoc()): ?> <!-- Itera sobre os resultados -->
                                 <tr>
-                                    <td><?php echo htmlspecialchars($lancamento['descricao']); ?></td>
-                                    <td>R$ <?php echo number_format($lancamento['valor'], 2, ',', '.'); ?></td>
-                                    <td><?php echo htmlspecialchars($lancamento['tipo']); ?></td>
-                                    <td><?php echo htmlspecialchars($lancamento['metodo_pagamento']); ?></td>
-                                    <td><?php echo htmlspecialchars($lancamento['parcelas']); ?></td>
-                                    <td><?php echo date('d/m/Y', strtotime($lancamento['data'])); ?></td>
+                                    <td><?php echo htmlspecialchars($lancamento['descricao']); ?></td> <!-- Exibe a descrição -->
+                                    <td>R$ <?php echo number_format($lancamento['valor'], 2, ',', '.'); ?></td> <!-- Exibe o valor formatado -->
+                                    <td><?php echo htmlspecialchars($lancamento['tipo']); ?></td> <!-- Exibe o tipo -->
+                                    <td><?php echo htmlspecialchars($lancamento['metodo_pagamento']); ?></td> <!-- Exibe o metodo de pagamento -->
+                                    <td><?php echo htmlspecialchars($lancamento['parcelas']); ?></td> <!-- Exibe o numero de parcelas -->
+                                    <td><?php echo date('d/m/Y', strtotime($lancamento['data'])); ?></td> <!-- Exibe a data formatada -->
                                     <td>
-                                      <button id="btn-editar"><i class="bi bi-pencil"></i></button>
-                                      <button id="btn-excluir"><i class="bi bi-x-lg"></i></button>
+                                      <button id="btn-editar"><i class="bi bi-pencil"></i></button> <!-- Botão de edição -->
+                                      <button id="btn-excluir"><i class="bi bi-x-lg"></i></button>  <!-- Botão de exclusão -->
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="7">Nenhum lançamento encontrado.</td>
+                                <td colspan="7">Nenhum lançamento encontrado.</td> <!-- Mensagem de nenhum lançamento encontrado -->
                             </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
               </div>
           </div>
-          <button id="btn-lancamentos" onclick="exibirLancamentos()">
-            <i class="bi bi-plus-lg"></i>
+          <button id="btn-lancamentos" onclick="exibirLancamentos()"> <!-- div que armazena o botão de exibir lançamentos -->
+            <i class="bi bi-plus-lg"></i> <!-- icone do botão -->
           </button>
           </section>
         </section>
     </div>
-        <section class="section-lancamentos">
-          <div class="lancar">
+        <section class="section-lancamentos"> <!-- section com o formulário de lançamentos -->
+          <div class="lancar"> <!-- div que armazena tudo relativo ao formulário -->
             <h1>Lançamento</h1>
-            <form action="" method="post" id="form-lancamentos">
-              <span class="descricao span-flex">
+            <form action="" method="post" id="form-lancamentos"> <!-- formulário -->
+              
+              <span class="descricao span-flex"> <!-- span referentes a descrição -->
                 <label for="descricao">Descrição</label>
                 <input type="text" name="descricao" id="descricao" placeholder="Descrição">
               </span>
 
-              <span class="valor span-flex">
+              <span class="valor span-flex"> <!-- span referentes ao valor -->
                 <label for="valor">Valor</label>
                 <input type="number" name="valor" id="valor" placeholder="Valor">
               </span>
 
-              <span class="tipo span-flex">
+              <span class="tipo span-flex"> <!-- span referentes ao tipo -->
                 <label for="tipo1">Tipo</label>
                 <span class="radio">
                   <input type="radio" name="tipo" id="tipo1" value="receita" onchange="ocultarParcelas()">
@@ -139,7 +140,7 @@ $result = $mysqli->query($query);
                   </span>
               </span>
 
-              <span class="categorias span-flex">
+              <span class="categorias span-flex"> <!-- span referentes as categorias -->
                 <label for="categoria">Categoria</label>
                 <select name="categoria" id="categoria" onchange="mostrarSubcategorias()">
                 <option value="">Selecione uma categoria</option>
@@ -161,36 +162,36 @@ $result = $mysqli->query($query);
                 </select>
               </span>
 
-            <span class="subcategoria span-flex">
+            <span class="subcategoria span-flex"> <!-- span referentes as subcategorias -->
               <label for="subcategoria" id="label-subcategoria">Subcategoria:</label>
               <select name="subcategoria" id="subcategoria">
                 <!-- As opções de subcategoria serão preenchidas dinamicamente -->
               </select>
             </span>
 
-              <span class="data span-flex date-container">
+              <span class="data span-flex date-container"> <!-- span referentes a data -->
                 <label for="customDate">Data</label>
                 <input type="date" name="data" placeholder="Data" id="customDate">
               </span>
 
-              <span class="parcelas span-flex">
+              <span class="parcelas span-flex"> <!-- span referentes as parcelas -->
                 <label for="parcelas" id="label-parcelas">Parcelas</label>
                 <input type="number" name="parcelas" placeholder="Parcelas" id="parcelas">
               </span>
 
-              <span class="btns span-flex">
-                <button type="reset" onclick="ocultarParcelas()">Limpar</button>
-                <button type="submit">Adicionar</button>
+              <span class="btns span-flex"> <!-- span referentes aos botões -->
+                <button type="reset" onclick="ocultarParcelas()">Limpar</button> <!-- Botão de limpar -->
+                <button type="submit">Adicionar</button> <!-- Botão de adicionar -->
               </span>
 
             </form>
-            <button id="btn-lancamentos-fechar" onclick="fecharLancamentos()">
+            <button id="btn-lancamentos-fechar" onclick="fecharLancamentos()"> <!-- Botão de fechar a div de lançamentos -->
               <i class="bi bi-x-lg"></i>
             </button>
           </div>
         </section>
-    <script src="../Js/apexcharts.min.js"></script>
-    <script src="../Js/dashboard.js"></script>
-    <script src="../Js/graficos.js"></script>
+    <script src="../Js/apexcharts.min.js"></script> <!-- Biblioteca ApexCharts -->
+    <script src="../Js/dashboard.js"></script> <!-- JS Personalizado -->
+    <script src="../Js/graficos.js"></script> <!-- JS Personalizado -->
 </body>
 </html>

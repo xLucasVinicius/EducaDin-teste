@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="../Style/estudos/media-estudos.css">
 </head>
 <body>
-    <section class="conteudo-total">
-        <div class="dicas">
+    <section class="conteudo-total">  <!-- section conteudo-total -->
+        <div class="dicas"> <!-- div de dicas -->
             <h1>Estude sobre Finanças</h1>
             <p>Aqui estão as melhores dicas para o seu sucesso financeiro.</p>
             <ol>
@@ -100,51 +100,54 @@
             </ol>
 
         </div>
-        <div class="conteudo-estudo">
-            <div class="txt-explicacao">
+        <div class="conteudo-estudo"> <!-- div de conteudo-estudo -->
+            <div class="txt-explicacao"> <!-- div com texto introdutório para os videos -->
                 <h1>Assista e Aprenda</h1>
                 <p>Nessa seção, você pode assistir e aprender sobre financas com o conteúdo disponibilizado pelo Criador de Conteudo "Diego Bechara", um investidor que está no meio a mais de 10 anos, por meio do canal "A Cara da Riqueza"</p>
                 <a href="https://www.youtube.com/@ACaraDaRiquezaOficial" target="_blank">Acesse o canal</a>
             </div>
-            <div class="videos-content">
-                <div class="videos">
-                    <div class="video-container">
+            <div class="videos-content"> <!-- div com todas as divs devideos -->
+                <div class="videos"> <!-- div com os videos -->
+
+                    <div class="video-container"> <!-- div com o video -->
                     <iframe src="https://www.youtube.com/embed/oT0w0wpyeeM?si=yklZcoh6UOUVRmkS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         <p>GUIA BÁSICO DE INVESTIMENTOS - E SE UM CLONE TRABALHASSE NO SEU LUGAR?</p>
                     </div>
-                    <div class="video-container">
+
+                    <div class="video-container"> <!-- div com o video -->
                     <iframe src="https://www.youtube.com/embed/7XV7Rb1kbR4?si=lneM-IYBxSzxGe2l" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         <p>DE DEVEDOR A INVESTIDOR: COMO ACUMULEI R$140 MIL E COMPREI MEU APARTAMENTO?</p>
                     </div>
-                    <div class="video-container">
+
+                    <div class="video-container"> <!-- div com o video -->
                     <iframe src="https://www.youtube.com/embed/dIxHjnU33XE?si=5a7b8IXT1_aK3yNe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         <p>FICOU POBRE POR CAUSA DA RESERVA DE EMERGÊNCIA.... ENTENDA!</p>
                     </div>
-                    <div class="video-container">
+                    <div class="video-container"> <!-- div com o video -->
                     <iframe src="https://www.youtube.com/embed/60CR7QaRxX4?si=585Mx808F_T5iegm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         <p>PASSO A PASSO PARA INICIANTES: COMO E ONDE INVESTIR SEUS PRIMEIROS R$1000</p>
                     </div>
-                    <div class="video-container">
+                    <div class="video-container"> <!-- div com o video -->
                     <iframe src="https://www.youtube.com/embed/3v2c1nZSsFM?si=ORKIiH1tQpYVheM1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         <p>O QUE É 100% do CDI [e quanto rende?] VALE A PENA?</p>
                     </div>
-                    <div class="video-container">
+                    <div class="video-container"> <!-- div com o video -->
                     <iframe src="https://www.youtube.com/embed/N9QDkF0KmUg?si=cvXmRnaZ0fJJZeXP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         <p>Receba ALUGUEL todo mês, Investindo pouco com FIIs [PASSO A PASSO na PRÁTICA]</p>
                     </div>
-                    <div class="video-container">
+                    <div class="video-container"> <!-- div com o video -->
                     <iframe src="https://www.youtube.com/embed/H7pfMfZC5d0?si=6E2tM70FhiGm0_Mk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         <p>Como comprar AÇÕES passo a passo! [Mostrei as minhas ações] É SEGURO? Porque investir em ações?</p>
                     </div>
-                    <div class="video-container">
+                    <div class="video-container"> <!-- div com o video -->
                     <iframe src="https://www.youtube.com/embed/VE7ksLSiVXk?si=8ohxSvbpZia9AZJh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         <p>INVISTA ASSIM PARA CONSEGUIR SUA INDEPENDÊNCIA FINANCEIRA E NÃO PERDER DINHEIRO</p>
                     </div>
-                    <div class="video-container">
+                    <div class="video-container"> <!-- div com o video -->
                     <iframe src="https://www.youtube.com/embed/5_TwK0qqCi0?si=8DwNb4tpAm76NGEq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         <p>SABER ISSO MUDOU MINHA FORMA DE ENXERGAR A BOLSA DE VALORES</p>
                     </div>
-                    <div class="video-container">
+                    <div class="video-container"> <!-- div com o video -->
                     <iframe src="https://www.youtube.com/embed/eU1pFQ79QQM?si=xNZzGqiUjgRtEXy5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         <p>É POR ISSO QUE EU CONSIGO INVESTIR TODO MÊS! 6 DICAS PRÁTICAS PARA ECONOMIZAR DINHEIRO SEMPRE!</p>
                     </div>

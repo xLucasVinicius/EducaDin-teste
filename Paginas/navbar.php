@@ -2,7 +2,7 @@
 session_start();
 // Verificar se o usuário está logado
 if (!isset($_SESSION['nome'])) {
-    header("Location:../index.php");
+    header("Location:../index.php"); // Redirecionar para a página de login
 }
 ?>
 
@@ -26,6 +26,7 @@ if (!isset($_SESSION['nome'])) {
 <body>
     <!-- Navbar Vertical -->
     <nav class="navbar navbar-vertical d-flex flex-column p-0" id="navbar">
+
         <!-- Logo do Projeto -->
         <a href="?page=dashboard" class="navbar-brand mb-0 mt-2 p-0">
             <img src="../imagens/logos/logo.png" alt="Logo" id="navbar-logo">
@@ -33,52 +34,62 @@ if (!isset($_SESSION['nome'])) {
         
         <!-- Links das Páginas -->
         <ul class="nav flex-column w-100">
-            <li class="nav-item">
+            <!-- link Dashboard -->
+            <li class="nav-item"> 
                 <a href="?page=dashboard" class="nav-link">
                     <i class="bi bi-house-door"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
+            <!-- link Lançamentos -->
             <li class="nav-item">
                 <a href="?page=lancamentos" class="nav-link">
                 <i class="bi bi-card-checklist"></i> <span class="nav-text">Lançamentos</span>
                 </a>
             </li>
+            <!-- link Desempenho -->
             <li class="nav-item">
                 <a href="?page=desempenho" class="nav-link">
                 <i class="bi bi-graph-up-arrow"></i> <span class="nav-text">Desempenho</span>
                 </a>
             </li>   
+            <!-- link Contas -->
             <li class="nav-item">
                 <a href="?page=contas" class="nav-link">
                 <i class="bi bi-credit-card-2-back"></i> <span class="nav-text">Contas</span>
                 </a>
             </li>
+            <!-- link Cartões -->
             <li class="nav-item">
                 <a href="?page=cartoes" class="nav-link">
                 <i class="bi bi-credit-card-2-back"></i> <span class="nav-text">Cartões</span>
                 </a>    
             </li>
+            <!-- link Minigames -->
             <li class="nav-item">
                 <a href="?page=minigames" class="nav-link">
                     <i class="bi bi-controller"></i> <span class="nav-text">Mini Games</span>
                 </a>
             </li>
+            <!-- link Planos -->
             <li class="nav-item">
                 <a href="?page=planos" class="nav-link">
                 <i class="bi bi-currency-dollar"></i> <span class="nav-text">Planos</span>
                 </a>
             </li>
+            <!-- link Investimentos -->
             <li class="nav-item">
                 <a href="?page=investimentos" class="nav-link">
                 <i class="bi bi-cash-coin"></i> <span class="nav-text">Investimentos</span>
                 </a>
             </li>
+            <!-- link Estudos -->
             <li class="nav-item">
                 <a href="?page=estudos" class="nav-link">
                     <i class="bi bi-book"></i> <span class="nav-text">Estude Finanças</span>
                 </a>
             </li>
+            <!-- link Sobre nós -->
             <li class="nav-item">
                 <a href="?page=sobre" class="nav-link">
                 <i class="bi bi-person-raised-hand"></i> <span class="nav-text">Sobre nós</span>
@@ -88,16 +99,19 @@ if (!isset($_SESSION['nome'])) {
         </ul>
         <!-- Links Inferiores -->
         <ul class="nav flex-column w-100 bottom-links">
+            <!-- link Suporte -->
             <li class="nav-item">
                 <a href="?page=contato" class="nav-link">
                 <i class="bi bi-question-circle"></i> <span class="nav-text">Suporte</span>
                 </a>
             </li>
+            <!-- link Editar Perfil -->
             <li class="nav-item">
                 <a href="?page=alterar" class="nav-link">
                 <i class="bi bi-person-gear"></i> <span class="nav-text">Editar Perfil</span>
                 </a>
             </li>
+            <!-- link Logout -->
             <li class="nav-item">
                 <a href="configs/logout.php" class="nav-link">
                     <i class="bi bi-box-arrow-right"></i> <span class="nav-text">Logout</span>
@@ -108,11 +122,11 @@ if (!isset($_SESSION['nome'])) {
 
         <!-- Navbar Superior -->
         <nav class="navbar-top" id="navbarTop">
-        <!-- Botão de Toggle -->
+        <!-- Botão de fechar a navbar -->
         <button class="toggle-btn" id="toggleBtn">
             <i class="fas fa-angle-double-left"></i>
         </button>
-        <div class="user-info">
+        <div class="user-info"> <!-- Informações do usuário -->
         <a href="?page=alterar" class="link-perfil">
                 <img src="<?php echo $_SESSION['file'] ?>" alt="">
                 <h1><?php echo $_SESSION['nome']. ' ' .$_SESSION['sobrenome'] ?></h1>
@@ -123,7 +137,7 @@ if (!isset($_SESSION['nome'])) {
     <section class="conteudo">  <!-- section conteúdo -->
         <?php
             include("configs/config.php");
-            switch(@$_REQUEST["page"]){
+            switch(@$_REQUEST["page"]){ // switch para verificar qual pagina deve ser carregada
                 case "dashboard":
                     include("dashboard.php");
                 break;
@@ -175,9 +189,10 @@ if (!isset($_SESSION['nome'])) {
         ?>
     </section> <!-- section conteúdo -->
 
-    <!-- Bootstrap JS (Opcional) -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- JS Personalizado -->
     <script src="../Js/nav-bar.js"></script>
 
 </body>

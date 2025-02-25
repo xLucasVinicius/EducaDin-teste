@@ -8,15 +8,16 @@
     <link rel="stylesheet" href="../Style/planos/media-planos.css">
 </head>
 <body>
-    <section class="conteudo-total">
-        <div class="txt-content-planos">
-            <div class="titulos-planos">
+    <section class="conteudo-total"> <!-- Section do conteudo total -->
+        <div class="txt-content-planos"> <!-- Div que contém as divs do titulo e dos planos -->
+            <div class="titulos-planos"> <!-- Div que contém o titulo e o paragrafo -->
                 <h1>Adiquira o seu Plano</h1>
                 <p>Continue com a opção que melhor defina a sua necessidade dentro do EducaDin.</p>
             </div>
-            <div class="cards-planos">
-                <div class="cards card1">
-                    <i class="bi bi-currency-dollar icone"></i>
+            <div class="cards-planos"> <!-- Div que contém as divs dos planos -->
+
+                <div class="cards card1"> <!-- Div do card 1 -->
+                    <i class="bi bi-currency-dollar icone"></i> 
                     <h2>Básico</h2>
                     <h1>Gratis</h1>
                     <p>Plano padrão, sem custo algum</p>
@@ -37,7 +38,7 @@
                         </span>
                     </span>
                 </div>
-                <div class="cards card2">
+                <div class="cards card2"> <!-- Div do card 2 -->
                     <i class="bi bi-currency-dollar icone"></i>
                     <h2>Premium</h2>
                     <h1>R$20 <l>/mês</l></h1>

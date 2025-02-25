@@ -9,12 +9,14 @@
 </head>
 <body>
     <section class="elemento-fora">
-        <!-- Carrossel de Contas -->
-        <section class="conteudo-total-contas">
+        
+        <section class="conteudo-total-contas"> <!-- Carrossel de Contas -->
+
             <section class="contas-carrossel">
                 <!-- As divs de conta serão inseridas aqui dinamicamente -->
             </section>
-            <div class="buttons">
+
+            <div class="buttons"> <!-- Botoes de navegacao do carrossel -->
                 <button class="prev buttom"><i class="bi bi-arrow-left"></i></button>
                 <button class="next buttom"><i class="bi bi-arrow-right"></i></button>
             </div>
@@ -47,13 +49,14 @@
                             <option value="Caixa">Caixa</option>
                         </select>
                     </div>
-                    <div class="imagem-conta">
+                    <div class="imagem-conta"> <!-- Div para mostrar a imagem da conta (só será mostrada se uma conta for selecionada) -->
                         <p>Imagem da Conta</p>
                         <span>
                             <img src="../imagens/logos/Nubank.png" alt="Imagem da Conta">
                         </span>
                     </div>
-                    <div class="form-saldo">
+
+                    <div class="form-saldo"> <!-- Div para o campo de saldo da conta -->
                         <label for="saldo">Saldo Inicial</label>
                         <input type="text" name="saldo" id="saldo" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
                     </div>
@@ -63,6 +66,6 @@
         </section>
     </section>
 
-    <script src="../Js/contas.js"></script>
+    <script src="../Js/contas.js"></script> <!-- JS Personalizado -->
 </body>
 </html>

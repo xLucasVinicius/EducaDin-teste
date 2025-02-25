@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte para o evento de carregamento do DOM
     // Simulação dos dados retornados do banco de dados para contas e lançamentos
     const accountsData = [
         { id: 1, nome: "Nubank" },
@@ -54,12 +54,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Cria as divs de contas dinamicamente com base nos dados
     accountsData.forEach((account, index) => {
-        const contaDiv = document.createElement('div');
-        contaDiv.classList.add('conta');
-        if (index === 0) {
-            contaDiv.classList.add('active');
-            contaDiv.style.transform = 'translateX(0)';
+        const contaDiv = document.createElement('div'); // Cria uma div para cada conta
+        contaDiv.classList.add('conta'); // Adiciona a classe "conta"
+        if (index === 0) { // Se for a primeira conta
+            contaDiv.classList.add('active'); // Adiciona a classe "active"
+            contaDiv.style.transform = 'translateX(0)'; // Define o transform para exibir a primeira conta
         }
+
+        // Cria o HTML para a div da conta
         contaDiv.innerHTML = `
         <div class="logo">
             <img src="../imagens/logos/${account.nome}.png" alt="Logo ${account.nome}">
@@ -70,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>+5% ao mês anterior</p>
         </div>
         `;
-        carouselContainer.appendChild(contaDiv);
+        carouselContainer.appendChild(contaDiv); // Adiciona a div da conta ao container
     });
 
     // Função para renderizar os lançamentos em formato de tabela
@@ -78,12 +80,14 @@ document.addEventListener("DOMContentLoaded", () => {
         lancamentosContainer.innerHTML = ''; // Limpar lançamentos antigos
         const lancamentos = lancamentosData[accountId] || []; // Obter lançamentos da conta atual
 
-        if (lancamentos.length === 0) {
-            lancamentosContainer.innerHTML = '<tr><td colspan="7">Nenhum lançamento encontrado.</td></tr>';
+        if (lancamentos.length === 0) { // Se nenhuma lançamento, exibir mensagem
+            lancamentosContainer.innerHTML = '<tr><td colspan="7">Nenhum lançamento encontrado.</td></tr>'; 
             return;
         }
 
-        const table = document.createElement('table');
+        const table = document.createElement('table'); // Cria uma tabela
+
+        // Cria o cabeçalho da tabela
         const thead = `
             <thead>
                 <tr>
@@ -97,9 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 </tr>
             </thead>`;
         
-        let tbody = '<tbody>';
+        let tbody = '<tbody>'; // Inicia o corpo da tabela
 
-        lancamentos.forEach((lancamento) => {
+        lancamentos.forEach((lancamento) => { // Itera sobre os lançamentos
+
+            // Cria uma linha da tabela com os dados do lançamento
             tbody += `
                 <tr>
                     <td>${lancamento.descricao}</td>
@@ -117,8 +123,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         tbody += '</tbody>';
 
-        table.innerHTML = thead + tbody;
-        lancamentosContainer.appendChild(table);
+        table.innerHTML = thead + tbody; // Adiciona o cabeçalho e o corpo ao HTML
+        lancamentosContainer.appendChild(table); // Adiciona a tabela ao container
     }
 
     // Inicializa os lançamentos para a primeira conta
@@ -126,21 +132,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Seleciona todas as slides de contas
     const slides = document.querySelectorAll('.conta');
+    // Inicializa o slide atual
     let currentIndex = 0;
+    // Total de slides
     const totalSlides = slides.length;
 
     // Função para realizar a transição entre slides
     function goToSlide(newIndex, direction = 'next') {
         if (newIndex === currentIndex) return; // Nada a fazer se for o mesmo slide
 
-        const currentSlide = slides[currentIndex];
-        const nextSlide = slides[newIndex];
+        const currentSlide = slides[currentIndex]; // Slide atual
+        const nextSlide = slides[newIndex]; // Proximo slide
 
         // Define a posição inicial do próximo slide conforme a direção
         if (direction === 'next') {
-            nextSlide.style.transform = 'translateX(100%)';
+            nextSlide.style.transform = 'translateX(100%)'; // Translada para a direita
         } else {
-            nextSlide.style.transform = 'translateX(-100%)';
+            nextSlide.style.transform = 'translateX(-100%)'; // Translada para a esquerda
         }
 
         // Força o reflow para garantir que a posição inicial seja aplicada
@@ -148,11 +156,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Anima o slide atual para fora e o próximo para dentro
         if (direction === 'next') {
-            currentSlide.style.transform = 'translateX(-100%)';
+            currentSlide.style.transform = 'translateX(-100%)'; // Translada para a esquerda
         } else {
-            currentSlide.style.transform = 'translateX(100%)';
+            currentSlide.style.transform = 'translateX(100%)'; // Translada para a direita
         }
-        nextSlide.style.transform = 'translateX(0)';
+        nextSlide.style.transform = 'translateX(0)'; // Translada para a direita
 
         // Atualiza as classes para controle visual
         currentSlide.classList.remove('active');
@@ -165,16 +173,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Função para aplicar efeito bounce quando não houver mudança
-    function applyBounce(slide, direction) {
-        slide.classList.remove('bounce-left', 'bounce-right');
+    function applyBounce(slide, direction) { // slide: slide que recebe o efeito, direction: direção do efeito
+        slide.classList.remove('bounce-left', 'bounce-right'); // Remove os efeitos anteriores
 
-        if (direction === 'prev') {
+        if (direction === 'prev') { // Aplica o efeito conforme a direção
             slide.classList.add('bounce-right');
         } else if (direction === 'next') {
             slide.classList.add('bounce-left');
         }
 
-        setTimeout(() => {
+        setTimeout(() => { // Remove os efeitos depois de 300ms
             slide.classList.remove('bounce-left', 'bounce-right');
         }, 300);
     }
@@ -182,10 +190,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Eventos para os botões de navegação
     document.querySelector('.next.buttom').addEventListener('click', () => {
         if (currentIndex === totalSlides - 1) {
-            applyBounce(slides[currentIndex], 'next');
+            applyBounce(slides[currentIndex], 'next'); // Aplica o efeito
             return;
         }
-        goToSlide(currentIndex + 1, 'next');
+        goToSlide(currentIndex + 1, 'next'); // Realiza a transição
     });
 
     document.querySelector('.prev.buttom').addEventListener('click', () => {
@@ -230,5 +238,4 @@ function mostrarImagem() {
         imagemContent.style.display = 'none';
         imgConta.src = '';
     }
-    console.log(valueSelect);
 }

@@ -1,39 +1,39 @@
-const navbar = document.getElementById('navbar');
-const navbarTop = document.getElementById('navbarTop');
-const toggleBtn = document.getElementById('toggleBtn');
-const logo = document.getElementById('navbar-logo');
-const content = document.querySelector('.conteudo');
+const navbar = document.getElementById('navbar'); // Seleciona a navbar
+const navbarTop = document.getElementById('navbarTop'); // Seleciona a navbar superior
+const toggleBtn = document.getElementById('toggleBtn'); // Seleciona o botão de alternar
+const logo = document.getElementById('navbar-logo'); // Seleciona a logo
+const content = document.querySelector('.conteudo'); // Seleciona o conteúdo
 
-toggleBtn.addEventListener('click', () => {
-    navbar.classList.toggle('collapsed');
-    navbarTop.classList.toggle('collapsed');
+toggleBtn.addEventListener('click', () => { // Adiciona um ouvinte para o evento de clique no botão
+    navbar.classList.toggle('collapsed'); // Alterna a classe "collapsed"
+    navbarTop.classList.toggle('collapsed'); // Alterna a classe "collapsed"
 
     // Alterar logo quando a navbar estiver recolhida
     if (navbar.classList.contains('collapsed')) {
         logo.src = '../imagens/logos/favicon.ico'; // Altere para o caminho da logo recolhida
-        content.classList.add('collapsed');
+        content.classList.add('collapsed'); // Adiciona a classe "collapsed" ao conteúdo
     } else {
         logo.src = '../imagens/logos/logo.png'; // Altere para o caminho da logo expandida
-        content.classList.remove('collapsed');
+        content.classList.remove('collapsed'); // Remove a classe "collapsed" do conteúdo
     }
 });
 
 // Adiciona um ouvinte para o evento de redimensionamento da janela
 window.addEventListener('resize', verificarLarguraTela);
 
-function verificarLarguraTela() {
-    const larguraTela = window.innerWidth;
+function verificarLarguraTela() { // Função para verificar a largura da tela
+    const larguraTela = window.innerWidth; // Obtem a largura da tela
 
-    if (larguraTela < 850) {
-        navbar.classList.add('collapsed');
-        navbarTop.classList.add('collapsed');
-        content.classList.add('collapsed');
-        logo.src = '../imagens/logos/favicon.ico'; 
+    if (larguraTela < 850) { // Verifica se a largura da tela é menor que 850
+        navbar.classList.add('collapsed'); // Adiciona a classe "collapsed" a navbar
+        navbarTop.classList.add('collapsed'); // Adiciona a classe "collapsed" a navbar superior
+        content.classList.add('collapsed'); // Adiciona a classe "collapsed" ao conteúdo
+        logo.src = '../imagens/logos/favicon.ico'; // Altere para o caminho da logo recolhida
     } else {
-        navbar.classList.remove('collapsed');
-        navbarTop.classList.remove('collapsed');
-        content.classList.remove('collapsed');
-        logo.src = '../imagens/logos/logo.png';
+        navbar.classList.remove('collapsed'); // Remove a classe "collapsed" da navbar
+        navbarTop.classList.remove('collapsed'); // Remove a classe "collapsed" da navbar superior
+        content.classList.remove('collapsed'); // Remove a classe "collapsed" do conteúdo
+        logo.src = '../imagens/logos/logo.png'; // Altere para o caminho da logo expandida
     }
 }
 
@@ -41,16 +41,16 @@ function verificarLarguraTela() {
 verificarLarguraTela();
 
 // Seleciona todos os links da navbar
-const navLinks = document.querySelectorAll('.nav-link');
+const navLinks = document.querySelectorAll('.nav-link'); 
 
 // Função para ativar o link correto após a recarga da página
 function setActiveLink() {
-    const currentPage = new URLSearchParams(window.location.search).get('page');
-    navLinks.forEach(link => {
-        if (link.getAttribute('href') === `?page=${currentPage}`) {
-            link.classList.add('active');
+    const currentPage = new URLSearchParams(window.location.search).get('page'); // Obtem o nome da página atual
+    navLinks.forEach(link => { // Percorre todos os links
+        if (link.getAttribute('href') === `?page=${currentPage}`) { // Verifica se o href do link corresponde ao nome da página atual
+            link.classList.add('active'); // Adiciona a classe "active"
         } else {
-            link.classList.remove('active');
+            link.classList.remove('active'); // Remove a classe "active"
         }
     });
 }
