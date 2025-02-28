@@ -1,3 +1,4 @@
+@charset "UTF-8";
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
@@ -10,12 +11,54 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     font-family: sans-serif;
 }
 
-body, html {
-    background-color: #1F1F1F;
+html, body {
+    background-color: var(--cor-fundo-content);
+    width: 100vw;
+    height: 100dvh;
+    position: relative;
+    display: grid;
+    place-content: center;
+    overflow: hidden;
     scrollbar-width: none;
+}
+
+#pattern {
+    width: 100vw;
+    height: 100dvh;
+    position: absolute;
+    top: -44px;
+    left: -50px;
+    right: 0;
+    bottom: 0;
+}
+
+#gradient {
+    background: radial-gradient(#F2A900, transparent 50%);
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    top: -200px;
+    left: -200px;
+    transform: translate(200px, 200px);
+}
+
+.form-container-cadastro {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #0d0c0f15;
+    backdrop-filter: blur(10px);
+    border: 1px solid #f2a90011;
+    border-radius: 25px;
+    padding: 10px;
+    z-index: 1;
 }
 
 form {
@@ -23,8 +66,8 @@ form {
     flex-direction: column;
     flex-wrap: nowrap;
     margin: auto;
-    max-width: 700px;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     justify-content: center;
     align-items: center;
 }
@@ -32,19 +75,19 @@ form {
 form > h1 {
     font-size: 3rem;
     font-family: 'orbitron';
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: #F5A900;
 }
 
 label {
     color: #F5A900;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 input {
     background-color: transparent;
     color: white;
-    padding: 15px;
+    padding: 10px;
     border: 1.5px solid white;
     border-radius: 4px;
 }
@@ -73,8 +116,8 @@ input::placeholder {
 }
 
 .img-perfil img {
-    width: 100%;
-    height: 100%;
+    width: 200px;
+    height: 200px;
     object-fit: cover;  /* Garante que a imagem preencha o espaço sem distorção */
     border-radius: 50%;
 }
@@ -101,10 +144,29 @@ input[type="file"] {
     font-size: 20px;
 }
 
+.input-box.invalid input{
+    border: 1px solid red;
+}
+
+.input-box.valid input{
+    border: 1px solid green;
+}
+
 .input-name, .input-outras-infos {
     display: flex;
     width: 100%;
     justify-content: space-between;
+}
+
+.input-name > span, .input-outras-infos > span {
+    display: flex;
+    flex-direction: column;
+}
+
+.error {
+    color: red;
+    margin-top: 5px;
+    flex-direction: row;
 }
 
 .input-login {
@@ -113,8 +175,28 @@ input[type="file"] {
     width: 100%;
 }
 
+.input-login > .input-box > input {
+    margin-bottom: 5px;
+}
+
 .input-login span {
-    width: 95%;
+    width: 100%;
+}
+
+#span-senha, #span-confirmarsenha {
+    position: relative;
+}
+
+#senha-icon, #confirmarsenha-icon {
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+    color: var(--cor-txt);
+}
+
+.invalid #senha-icon, .invalid #confirmarsenha-icon {
+    top: 39px;
+    right: 10px;
 }
 
 .input-login span input {
@@ -129,11 +211,6 @@ input[type="file"] {
     color: white;
 }
 
-select option {
-    color: black;
-    background-color: transparent;
-}
-
 span > label{
     display: block;
 
@@ -141,18 +218,12 @@ span > label{
 
 .btn-form {
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    justify-content: center;
+    gap: 100px;
+    margin-top: 10px;
     width: 100%;
 }
 
-#btn-input1 {
-    text-align: end;
-}
-
-#btn-input1, #btn-input2 {
-    width: 300px;
-}
 
 #btn-salvar {
     background-color: #F5A900;
@@ -187,7 +258,11 @@ button:hover {
     position: relative;
     width: 700px;
     margin-top: 10px;
-  }
+}
+
+.input-termos-politicas span {
+    margin-top: 5px;
+}
 
 input[type="checkbox"] {
     appearance: none;
@@ -219,7 +294,8 @@ input[type="checkbox"] {
 
   #termos-label {
     position: absolute;
-    top: -18px;
+    top: 0;
+    margin-top: 0;
     left: 25px;
     color: var(--cor-principal);
   }
@@ -227,8 +303,8 @@ input[type="checkbox"] {
   .termos-politicas {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    height: 50px;
+    justify-content: center;
+    gap: 10px;
     padding-top: 10px;
     text-align: left;
     width: 700px;
@@ -244,111 +320,3 @@ input[type="checkbox"] {
     color: #8a6000;
 }
 
-@media screen and (max-width: 930px){
-
-form {
-    width: 300px;
-    height: 97vh;
-}
-
-form > h1 {
-    font-size: 2rem;
-    margin-bottom: 1%;
-}
-
-label {
-    margin-top: 5px;
-}
-
-span {
-    display: block;
-    
-    
-}
-
-.img-perfil img {
-width: 200px;
-height: 200px;
-border-radius: 50%;
-}
-
-.input-name, .input-outras-infos {
-    display: block;
-    width: 100%;
-    
-}
-
-.input-login {
-    width: 300px;
-}
-
-#nome, #sobrenome, #data-nasc, #telefone,#email, #senha, #confirmarsenha {
-    width: 300px;
-}
-
-#btn-input1, #btn-input2 {
-    width: 45%;
-}
-
-.input-termos-politicas {
-    width: 300px;
-}
-
-.termos-politicas {
-    flex-direction: column;
-    width: 300px;
-}
-
-#termos-label {
-    top: -3px;
-}
-
-
-
-}
-
-@media screen and  (max-width: 500px){
-    form {
-    width: 90vw;
-    padding: 5px;
-}
-
-form > h1 {
-    font-size: 1.3rem;
-}
-
-label {
-    font-size: 15px;
-}
-
-input {
-    padding: 1.5vh 5px;
-}
-
-.img-perfil {
-    width: 120px;
-    height: 100px;
-}
-
-.img-perfil img{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-}
-
-#nome, #sobrenome, #data-nasc, #telefone {
-    width: 300px;
-}
-
-.input-name, .input-outras-infos {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-}
-
-.termos-politicas {
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px;
-}
-}

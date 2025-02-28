@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+:root {
+    --cor-principal: #F2A900;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
+
+@media screen and  (max-width: 767px){
+    html, body {
+        overflow: scroll;
+        height: auto;
+        
+    }
+
+    #pattern, #gradient {
+        display: none;
+    }
+
+    .form-container-cadastro {
+        width: 100vw;
+        height: 100%;
+        background-color: var(--cor-fundo-content);
+        border-radius: 0px;
+    }
+
+    form {
+        width: 300px; 
+    }
+
+    form > h1 {
+        font-size: 1.3rem;
+    }
+
+    label {
+        font-size: 15px;
+    }
+
+    .img-perfil {
+        width: 100px;
+        height: 100px;
+    }
+
+    .img-perfil img {
+        width: 130px;
+        height: 130px;
+    }
+
+    #nome, #sobrenome, #data-nasc, #telefone {
+        width: 300px;
+    }
+
+    .input-name, .input-outras-infos {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 930px){
+    form {
+        width: 600px; 
+    } 
+}
+
+@media screen and (max-width: 930px){
+    form > h1 {
+        font-size: 2rem;
+        margin-bottom: 1%;
+    }
+    
+    span {
+        display: block;
+    }
+    
+    .input-name, .input-outras-infos {
+        display: block;
+        width: 300px;
+    }
+    
+    .input-login {
+        width: 300px;
+    }
+    
+    #nome, #sobrenome, #data-nasc, #telefone,#email, #senha, #confirmarsenha {
+        width: 300px;
+    }
+
+    #senha-icon, #confirmarsenha-icon {
+        bottom: 18px;
+    }
+    
+    .btn-form {
+        gap: 10px;
+    }
+
+    .termos-politicas {
+        flex-direction: row;
+        gap: 20px;
+    }
+    
+    .input-termos-politicas {
+        width: 300px;
+    }
+    
+    
+    }
+    

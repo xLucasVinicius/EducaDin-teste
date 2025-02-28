@@ -14,21 +14,17 @@
                 <h1>Contato</h1>
                 <p>Alguma duvida ou sugestão? Entre em contato conosco!</p>
                 <div class="redes-contato">
-                    <a href="" target="_blank">
+                    <a href="mailto:educadin.contact@gmail.com" target="_blank">
                         <i class="bi bi-envelope-at"></i>
                         educadin.contact@gmail.com
                     </a>
-                    <a href="https://www.instagram.com/educa_din/" target="_blank">
+                    <a href="https://www.instagram.com/educadin__" target="_blank">
                         <i class="bi bi-instagram"></i>
-                        @educa_din
+                        @educadin__
                     </a>
                     <a href="https://www.facebook.com/educa.din" target="_blank">
                         <i class="bi bi-facebook"></i>
-                        @educa.din
-                    </a>
-                    <a href="" target="_blank">
-                        <i class="bi bi-telephone"></i>
-                        (11) 99999-9999
+                        @educadin__
                     </a>
                 </div>
             </div>   

@@ -15,8 +15,8 @@ include 'configs/infos-login.php'; // Inclui o arquivo de configuração
 </head>
 <body>
     <!-- Fundo com efeito hexagonal -->
-    <div id="gradient"></div>
-    <div id="pattern"></div>
+<div id="gradient"></div>
+<div id="pattern"></div>
 
     <!-- Todo o conteúdo -->
     <div class="content">

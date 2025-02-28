@@ -104,6 +104,7 @@ section.conteudo-contato .form-contato form input, section.conteudo-contato .for
     padding: 7px;
     background-color: transparent;
     border: 1px solid var(--cor-principal);
+    color: white;
 }
 
 section.conteudo-contato .form-contato form input:focus, section.conteudo-contato .form-contato form textarea:focus {
