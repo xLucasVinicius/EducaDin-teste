@@ -9,6 +9,6 @@ if (isset($_COOKIE['user'])) { // Verifica se o cookie existe
 }
 
 // Redirecionar para a página de login
-header("Location: ../../index.php");
+header("Location: ../../index.html");
 exit();
 ?>

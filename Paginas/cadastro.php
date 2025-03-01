@@ -1,43 +1,3 @@
-<?php
-include('configs/config.php');
-if(isset($_POST['email'])) {
-$arquivo = $_FILES['file'];
-    if($arquivo['error'])
-        die("Falha ao enviar arquivo");
-    if ($arquivo['size'] > 2097152)
-        die("Arquivo muito grande! Max: 7mb");
-
-
-    $pasta = "../foto-perfil/";
-    $nomeDoArquivo = $arquivo['name'];
-    $novoNomeDoArquivo = uniqid();
-    $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
-
-    if($extensao != 'jpg' && $extensao != 'png')
-        die("Tipo de arquivo não aceito");
-
-    $path = $pasta . $novoNomeDoArquivo . "." . $extensao;
-    $deu_certo = move_uploaded_file($arquivo["tmp_name"], $path);
-
-    $nome = $_POST['nome'];
-    $sobrenome = $_POST['sobrenome'];
-    $email = $_POST['email'];
-    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
-    $num_cel = $_POST['telefone'];
-    $data_nasc = $_POST['data-nasc'];
-    $estado = $_POST['estado'];
-
-        if($deu_certo){
-            $mysqli->query("INSERT INTO usuarios (path , nome, sobrenome, email, senha, num_tel, data_nasc, estado) VALUES ('$path','$nome', '$sobrenome', '$email', '$senha', '$num_cel', '$data_nasc', '$estado')");
-            echo "<script>alert('Cadastrado com sucesso')</script>";
-            echo "<script>location.href='login.php'</script>";
-
-        } else {
-            echo "<h1>Falha ao enviar arquivo de midia</h1>";
-        }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -54,7 +14,7 @@ $arquivo = $_FILES['file'];
     <div id="pattern"></div>    
     
 <main class="form-container-cadastro">
-    <form action="" method="post" enctype="multipart/form-data" id="form-cadastro">
+    <form action="configs/salvar-usuario.php" method="post" enctype="multipart/form-data" id="form-cadastro">
         <h1>Cadastro</h1>
         <div class="input-img-perfil">
             <div class="img-perfil">
@@ -103,15 +63,17 @@ $arquivo = $_FILES['file'];
         <div class="input-outras-infos"> <!-- div com inputs das outras infos -->
             <span class="input-box">
                 <label for="data-nasc">Data de Nascimento</label>
-                <input type="date" name="data-nasc" id="data-nasc">
+                <input type="date" name="data-nascimento" id="data-nasc">
                 <span class="error"></span>
+                <i class="bi bi-calendar3"></i>
             </span>
     
             <span class="input-box">
-            <label for="telefone">Número</label>
-            <input type="tel" name="telefone" id="telefone" placeholder="(99) 99999-9999">
-            <span class="error"></span>
+                <label for="salario">Salário</label>
+                <input type="text" name="salario" id="salario" placeholder="R$ 0,00">
+                <span class="error"></span>
             </span>
+
         </div>
     
         <div class="termos-politicas"> <!-- div com links dos termos e politicas -->
@@ -120,16 +82,19 @@ $arquivo = $_FILES['file'];
         </div>
     
         <div class="input-termos-politicas"> <!-- div com checkbox dos termos e politicas -->
-            <input type="checkbox" name="termos" id="termos" onchange="aceitarTermos()">
+            <input type="checkbox" name="termos" id="termos">
             <label for="termos" id="termos-label" >
                 Eu aceito os termos e politicas de uso
             </label>
         </div>
     
         <div class="btn-form"> <!-- div com botoes de cancelar e salvar -->
-            <span id="btn-input1"><button>Cancelar</button></span>
-            <input id="btn-salvar" type="submit" value="Salvar">
+            <span id="btn-input1"><button type="button">Cancelar</button></span>
+            <input id="btn-salvar" type="submit" value="Salvar" class="disabled" disabled>
         </div>
+
+        <!-- Campo oculto para enviar a imagem em base64 -->
+        <input type="hidden" name="base64-image" id="base64-image">
     </form>
 </main>
 

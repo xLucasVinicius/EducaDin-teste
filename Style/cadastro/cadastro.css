@@ -101,6 +101,17 @@ input::placeholder {
     color: white;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    background-color: transparent !important;
+    color: white !important;
+    border: 1px solid white !important;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white  !important;
+    caret-color: white;
+}
+
 .img-perfil {
     display: flex;
     justify-content: center;
@@ -203,7 +214,7 @@ input[type="file"] {
     width: 100%;
 }
 
-#nome, #sobrenome, #data-nasc, #telefone {
+#nome, #sobrenome, #data-nasc, #salario {
     width: 300px;
 }
 
@@ -216,6 +227,26 @@ span > label{
 
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Esconde o ícone nativo para o Firefox */
+input[type="date"] {-moz-appearance: textfield;}
+
+.input-outras-infos .input-box:first-child {
+    position: relative;
+}
+
+.bi-calendar3 {
+    position: absolute;
+    top: 39px;
+    right: 10px;
+    color: var(--cor-txt);
+    z-index: -1;
+}
+
 .btn-form {
     display: flex;
     justify-content: center;
@@ -224,9 +255,17 @@ span > label{
     width: 100%;
 }
 
+.disabled {
+    background-color: #8a6000;
+    cursor: not-allowed;
+}
+
+.enable {
+    background-color: #F5A900;
+    cursor: pointer;
+}
 
 #btn-salvar {
-    background-color: #F5A900;
     color: white;
     border: none;
     padding: 7px;
@@ -238,6 +277,7 @@ span > label{
 #btn-salvar:hover {
     background-color: #8a6000;
 }
+
 
 button {
     background-color: white;

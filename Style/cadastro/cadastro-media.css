@@ -46,7 +46,7 @@
         height: 130px;
     }
 
-    #nome, #sobrenome, #data-nasc, #telefone {
+    #nome, #sobrenome, #data-nasc, #salario {
         width: 300px;
     }
 
@@ -82,7 +82,7 @@
         width: 300px;
     }
     
-    #nome, #sobrenome, #data-nasc, #telefone,#email, #senha, #confirmarsenha {
+    #nome, #sobrenome, #data-nasc, #salario,#email, #senha, #confirmarsenha {
         width: 300px;
     }
 

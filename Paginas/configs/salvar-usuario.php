@@ -1,108 +1,81 @@
 <?php
 include('config.php');
 
-// Verifique se o arquivo foi enviado antes de processar a imagem
-if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
-    $arquivo = $_FILES['file'];
+// Verifique se o formulário foi enviado
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Verifique o tamanho do arquivo
-    if ($arquivo['size'] > 7340032) {
-        die("Arquivo muito grande! Max: 7mb");
-    }
+    // Verifique se a imagem foi enviada como base64
+    if (isset($_POST['base64-image']) && !empty($_POST['base64-image'])) {
+        $base64Image = $_POST['base64-image'];
 
-    // Caminho relativo para exibir no frontend
-    $pasta_relativa = "../foto-perfil/";
-    // Caminho absoluto para mover o arquivo no backend
-    $pasta_absoluta = $_SERVER['DOCUMENT_ROOT'] . '/EducaDin-teste/foto-perfil/';
-    
-    $nomeDoArquivo = $arquivo['name'];
-    $novoNomeDoArquivo = uniqid();
-    $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
+        // Detecta o tipo de imagem (png, jpg, jpeg)
+        if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $tipoImagem)) {
+            $extensao = $tipoImagem[1]; // Obtém a extensão do arquivo (png, jpg, etc.)
 
-    // Verifique a extensão do arquivo
-    if ($extensao != 'jpg' && $extensao != 'png') {
-        die("Tipo de arquivo não aceito");
-    }
+            // Remove o prefixo do base64
+            $imageData = preg_replace('/^data:image\/\w+;base64,/', '', $base64Image);
+            $imageData = base64_decode($imageData);
 
-    // Caminho absoluto para mover a imagem
-    $path_absoluto = $pasta_absoluta . $novoNomeDoArquivo . "." . $extensao;
-    // Caminho relativo para salvar no banco e exibir no frontend
-    $path_relativo = $pasta_relativa . $novoNomeDoArquivo . "." . $extensao;
+            // Definir o caminho para salvar a imagem no servidor
+            $pasta_relativa = "../foto-perfil/";
+            $pasta_absoluta = $_SERVER['DOCUMENT_ROOT'] . '/EducaDin-teste/foto-perfil/';
+            $novoNomeDoArquivo = uniqid();
 
-    // Verificar se o diretório absoluto existe e criar se necessário
-    if (!is_dir($pasta_absoluta)) {
-        mkdir($pasta_absoluta, 0777, true);
-    }
+            // Caminho absoluto e relativo
+            $path_absoluto = $pasta_absoluta . $novoNomeDoArquivo . "." . $extensao;
+            $path_relativo = $pasta_relativa . $novoNomeDoArquivo . "." . $extensao;
 
-    // 1. Recuperar o caminho da imagem antiga do banco de dados usando prepared statement
-    $id = $_REQUEST['id'];
-    $stmt = $mysqli->prepare("SELECT path FROM usuarios WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $res_select = $stmt->get_result();
-
-    if ($res_select->num_rows > 0) {
-        $row = $res_select->fetch_assoc();
-        $imagem_antiga = $_SERVER['DOCUMENT_ROOT'] . '/EducaDin-teste/' . $row['path']; // Caminho absoluto da imagem antiga
-
-        // 2. Excluir a imagem antiga, se existir
-        if (file_exists($imagem_antiga)) {
-            if (!unlink($imagem_antiga)) {
-                echo "Erro ao excluir a imagem antiga";
+            // Verificar se o diretório existe, se não, criar
+            if (!is_dir($pasta_absoluta)) {
+                mkdir($pasta_absoluta, 0777, true);
             }
+
+            // Salvar a imagem no diretório
+            if (file_put_contents($path_absoluto, $imageData) === false) {
+                die("Erro ao salvar a imagem.");
+            }
+        } else {
+            die("Formato de imagem inválido.");
         }
+
+    } else {
+        // Caso não tenha imagem, atribua a imagem padrão
+        $path_relativo = "../foto-perfil/default.png"; // Caminho padrão
     }
 
-    // 3. Mover a nova imagem para o diretório absoluto
-    $deu_certo = move_uploaded_file($arquivo["tmp_name"], $path_absoluto);
+    // Informações do usuário
+    $nome = $_POST['nome'];
+    $sobrenome = $_POST['sobrenome'];
+    $email = $_POST['email'];
+    $salario = $_POST['salario'];  // Pegando o salário do formulário
+    $data_nascimento = $_POST['data_nascimento'];  // Pegando a data de nascimento
+    $senha = $_POST['senha'];
+    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);  // Hash da senha para segurança
 
-    if (!$deu_certo) {
-        die("Falha ao mover o arquivo");
+    // Verificar se o email já existe no banco de dados
+    $stmt_check_email = $mysqli->prepare("SELECT id_usuario FROM usuarios WHERE email = ?");
+    $stmt_check_email->bind_param("s", $email);
+    $stmt_check_email->execute();
+    $stmt_check_email->store_result();
+
+    if ($stmt_check_email->num_rows > 0) {
+        die("Este e-mail já está registrado.");
     }
 
-    // Agora o novo caminho relativo da imagem será atualizado no banco de dados
-} else {
-    // Caso o usuário não tenha enviado uma nova imagem, não faça nada com a imagem
-    $path_relativo = null; // Define como null se nenhuma nova imagem for carregada
-}
+    // Insira os dados do usuário no banco
+    $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario) 
+                   VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-// Informações do usuário
-$nome = $_POST['nome'];
-$sobrenome = $_POST['sobrenome'];
-$email = $_POST['email'];
-$telefone = $_POST['telefone'];
-$data_nascimento = $_POST['data_nascimento'];
+    $stmt_insert = $mysqli->prepare($sql_insert);
+    $stmt_insert->bind_param("sssssss", $path_relativo, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario);  // Alterado para incluir salário e data
 
-// Preparar a consulta de atualização
-$sql_update = "UPDATE usuarios SET 
-        nome = ?, 
-        sobrenome = ?, 
-        email = ?, 
-        telefone = ?, 
-        data_nascimento = ?";
-
-// Se o usuário adicionou uma nova imagem, inclua o campo path no SQL
-if ($path_relativo !== null) {
-    $sql_update .= ", path = ?";
-}
-
-$sql_update .= " WHERE id = ?";
-
-$stmt_update = $mysqli->prepare($sql_update);
-
-// Bind dos parâmetros para evitar SQL injection
-if ($path_relativo !== null) {
-    $stmt_update->bind_param("ssssssi", $nome, $sobrenome, $email, $telefone, $data_nascimento, $path_relativo, $id);
-} else {
-    $stmt_update->bind_param("sssssi", $nome, $sobrenome, $email, $telefone, $data_nascimento, $id);
-}
-
-// Verificar se a execução foi bem-sucedida
-if ($stmt_update->execute()) {
-    echo "<script>alert('Editado com sucesso')</script>";
-    echo "<script>location.href='logout.php'</script>";
-} else {
-    // Exibir mensagem de erro específica do MySQL
-    echo "Erro ao atualizar: " . $stmt_update->error;
+    // Verifique se a execução foi bem-sucedida
+    if ($stmt_insert->execute()) {
+        echo "<script>alert('Cadastro realizado com sucesso!')</script>";
+        echo "<script>location.href='http://localhost:3000/EducaDin-teste/index.html'</script>"; // Redireciona para página de login
+    } else {
+        // Exibir mensagem de erro específica do MySQL
+        echo "Erro ao cadastrar: " . $stmt_insert->error;
+    }
 }
 ?>

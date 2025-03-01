@@ -3,7 +3,7 @@
     $host = "localhost";
     $user = "root";
     $pass = "";
-    $bd = "educadin-teste";
+    $bd = "educadin";
 
     $mysqli = new mysqli($host, $user, $pass, $bd); //criando a conexao
 

@@ -2,7 +2,7 @@
 session_start();
 // Verificar se o usuário está logado
 if (!isset($_SESSION['nome'])) {
-    header("Location:../index.php"); // Redirecionar para a página de login
+    header("Location:../index.html"); // Redirecionar para a página de login
 }
 ?>
 
@@ -173,12 +173,6 @@ if (!isset($_SESSION['nome'])) {
                 break;
                 case "alterar":
                     include("alterar.php");
-                break;
-                case "login":
-                    include("login.php");
-                break;
-                case "cadastrar":
-                    include("cadastro.php");
                 break;
                 case "salvar":
                     include("salvar-usuario.php");

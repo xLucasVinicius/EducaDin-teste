@@ -1,7 +1,9 @@
 const form = document.querySelector('#form-cadastro');
 
 form.addEventListener('submit', function (e) {
-    e.preventDefault(); // Impede o envio do formulário
+    e.preventDefault();  // Impede o envio do formulário inicialmente
+
+    let isFormValid = true;  // Variável para verificar se o formulário é válido
 
     const fields = [
         {
@@ -31,13 +33,13 @@ form.addEventListener('submit', function (e) {
         },
         {
             id: 'data-nasc',
-            label: 'data-nasc',
+            label: 'Data de Nascimento',
             validator: dataIsValid
         },
         {
-            id: 'telefone',
-            label: 'Telefone',
-            validator: phoneIsValid
+            id: 'salario',  // Aqui pode substituir "salario" se necessário
+            label: 'Salário',
+            validator: salaryIsValid
         }
     ];
 
@@ -45,9 +47,9 @@ form.addEventListener('submit', function (e) {
 
     fields.forEach(function (field) {
         const input = document.getElementById(field.id);
-        const inputBox = input.closest('.input-box'); // buscar o .input-box mais próximo
+        const inputBox = input.closest('.input-box');
         const inputValue = input.value;
-        const errorSpan = inputBox.querySelector('.error'); // Busca o .error dentro do inputBox
+        const errorSpan = inputBox.querySelector('.error');
         errorSpan.innerHTML = '';
 
         inputBox.classList.remove('invalid');
@@ -55,14 +57,21 @@ form.addEventListener('submit', function (e) {
 
         const fieldValidator = field.validator(inputValue);
 
-        // Verifica se a validação falhou
         if (fieldValidator && !fieldValidator.isValid) {
             errorSpan.innerHTML = `${errorIcon} ${fieldValidator.errorMessage}`;
             inputBox.classList.add('invalid');
             inputBox.classList.remove('valid');
+            isFormValid = false;  // Marca o formulário como inválido
         }
     });
+
+    // Envia o formulário apenas se todos os campos forem válidos
+    if (isFormValid) {
+        form.submit();  // Envia o formulário
+        localStorage.removeItem('croppedImage');
+    }
 });
+
 
 // Função de verificação de campo vazio
 function isEmpty(value) {
@@ -194,58 +203,56 @@ function passwordMatch(value) {
     return validator;
 }
 
-function phoneIsValid(value) {
+// Função para validar o campo de salário
+function salaryIsValid(value) {
     const validator = {
         isValid: true,
         errorMessage: null
     };
 
-    // Remove formatação para validar apenas números
+    // Remove os símbolos de formatação para validar apenas números
     const cleanedValue = value.replace(/\D/g, '');
 
     if (isEmpty(cleanedValue)) {
         validator.isValid = false;
-        validator.errorMessage = 'Insira um número de telefone';
+        validator.errorMessage = 'Insira seu salário';
         return validator;
     }
 
-    // Verifica se o número tem 11 dígitos (formato (XX) XXXXX-XXXX)
-    if (cleanedValue.length !== 11) {
+    // Verifica se o salário é um número válido (mínimo de 3 dígitos para um valor razoável)
+    if (cleanedValue.length < 3) {
         validator.isValid = false;
-        validator.errorMessage = 'Insira um número válido com 11 dígitos';
+        validator.errorMessage = 'Insira um valor de salário válido';
         return validator;
     }
 
     return validator;
 }
 
-
-
-
-
-
-
-document.getElementById('telefone').addEventListener('input', function (e) {
+// Formatação automática do campo salário
+document.getElementById('salario').addEventListener('input', function (e) {
     let value = e.target.value.replace(/\D/g, ''); // Remove qualquer caractere que não seja número
-    if (value.length > 11) value = value.slice(0, 11); // Limita a 11 caracteres
-
-    if (value.length > 10) {
-        // Formato para (XX) XXXXX-XXXX
-        value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-    } else if (value.length > 5) {
-        // Formato para (XX) XXXX-XXXX
-        value = value.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
-    } else if (value.length > 2) {
-        // Formato para (XX) XXXX
-        value = value.replace(/(\d{2})(\d{0,5})/, '($1) $2');
-    } else if (value.length > 0) {
-        // Formato para (XX
-        value = value.replace(/(\d{0,2})/, '($1');
-    }
-    e.target.value = value;
+    value = (value / 100).toFixed(2).replace('.', ','); // Adiciona a vírgula para separação de centavos
+    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Adiciona pontos para milhares
+    e.target.value = `R$ ${value}`; // Adiciona o símbolo R$
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+// Função para habilitar/desabilitar o botão de salvar e adicionar/remover a classe "disable"
+document.getElementById("termos").addEventListener("change", function() {
+    const btnSalvar = document.getElementById("btn-salvar");
+    if (this.checked) {
+        btnSalvar.disabled = false;
+        btnSalvar.classList.remove("disabled");
+        btnSalvar.classList.add("enable");
+    } else {
+        btnSalvar.disabled = true;
+        btnSalvar.classList.remove("enable");
+        btnSalvar.classList.add("disabled");
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
     const profilePic = document.querySelector('#imagem-perfil');
 
     // Recupera a imagem recortada do localStorage
@@ -255,31 +262,23 @@ document.addEventListener('DOMContentLoaded', function() {
         // Se houver uma imagem recortada no localStorage, atualize a preview do perfil
         profilePic.src = croppedImage;
 
-        // Remova a imagem do localStorage após o uso, se desejar
-        localStorage.removeItem('croppedImage');
+        // Se a imagem foi recortada, enviamos ela via form
+        const base64ImageInput = document.querySelector('#base64-image');
+        base64ImageInput.value = croppedImage; // Adiciona a imagem base64 no campo oculto
     }
 });
 
+document.querySelector('#form-cadastro').addEventListener('submit', function (e) {
+    const base64ImageInput = document.querySelector('#base64-image');
+    const croppedImage = localStorage.getItem('croppedImage');
 
-// Evento de mudança de imagem
-document.querySelector('.file-label').addEventListener('change', function(event) {
-    const file = event.target.files[0]; // Obtenha o arquivo selecionado
-    const profilePic = document.querySelector('#imagem-perfil'); // Selecione a imagem de perfil
-
-    if (file) { // Verifique se um arquivo foi selecionado
-        const reader = new FileReader(); // Crie um leitor de arquivos
-
-        reader.onload = function(e) { // Quando o arquivo for carregado
-            profilePic.src = e.target.result; // Atualize a preview do perfil
-        };
-
-        reader.readAsDataURL(file); // Leia o arquivo como Data URL
+    if (croppedImage) {
+        // Se houver uma imagem, enviamos ela em base64
+        base64ImageInput.value = croppedImage;
+    } else {
+        // Caso contrário, enviamos o valor padrão
+        base64ImageInput.value = '';
     }
-});
-
-// Evento de clique no botão
-document.querySelector('#btn-input1').addEventListener('click', function(event) {
-    window.location.href = 'http://localhost/EducaDin-teste/index.php'; // Redireciona para a tela de login
 });
 
 // Evento de clique no botão de exibir senha
@@ -313,8 +312,6 @@ function mostrarConfirmarSenha() {
     }
 }
 
-btnTermos = document.getElementById('termos');
-
-function aceitarTermos() {
-    console.log("checked");
-}
+document.getElementById('btn-input1').addEventListener('click', function () {
+    window.location.href = 'http://localhost:3000/EducaDin-teste/index.html';
+});
