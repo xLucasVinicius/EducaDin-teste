@@ -37,7 +37,7 @@ form.addEventListener('submit', function (e) {
             validator: dataIsValid
         },
         {
-            id: 'salario',  // Aqui pode substituir "salario" se necessário
+            id: 'salario',
             label: 'Salário',
             validator: salaryIsValid
         }
