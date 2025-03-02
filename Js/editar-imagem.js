@@ -74,7 +74,7 @@ avatarImagem.addEventListener('change', event => { // evento de mudança de imag
             
             localStorage.setItem('croppedImage', dataUrl); // Salva a Data URL da imagem recortada no localStorage
 
-            window.location.href = 'http://localhost:3000/EducaDin-teste/Paginas/cadastro.php'; // Redireciona para a tela de cadastro
+            history.back();
         });
     };
 

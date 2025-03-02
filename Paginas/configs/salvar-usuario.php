@@ -1,6 +1,15 @@
 <?php
 include('config.php');
 
+// Função para formatar o salário
+function formatarSalario($salario) {
+    $salario = str_replace("R$", "", $salario); 
+    $salario = str_replace(".", "", $salario); 
+    $salario = str_replace(",", ".", $salario); 
+    $salario = floatval($salario); 
+    return $salario;
+}
+
 // Verifique se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -10,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Detecta o tipo de imagem (png, jpg, jpeg)
         if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $tipoImagem)) {
-            $extensao = $tipoImagem[1]; // Obtém a extensão do arquivo (png, jpg, etc.)
+            $extensao = $tipoImagem[1]; 
 
             // Remove o prefixo do base64
             $imageData = preg_replace('/^data:image\/\w+;base64,/', '', $base64Image);
@@ -40,42 +49,89 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     } else {
         // Caso não tenha imagem, atribua a imagem padrão
-        $path_relativo = "../foto-perfil/default.png"; // Caminho padrão
+        $path_relativo = "../foto-perfil/default.png"; 
     }
 
     // Informações do usuário
     $nome = $_POST['nome'];
     $sobrenome = $_POST['sobrenome'];
     $email = $_POST['email'];
-    $salario = $_POST['salario'];  // Pegando o salário do formulário
-    $data_nascimento = $_POST['data_nascimento'];  // Pegando a data de nascimento
+    $salario = $_POST['salario'];  
+    $data_nascimento = $_POST['data-nascimento'];  
     $senha = $_POST['senha'];
-    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);  // Hash da senha para segurança
+    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);  
 
-    // Verificar se o email já existe no banco de dados
-    $stmt_check_email = $mysqli->prepare("SELECT id_usuario FROM usuarios WHERE email = ?");
-    $stmt_check_email->bind_param("s", $email);
-    $stmt_check_email->execute();
-    $stmt_check_email->store_result();
+    // Formatar corretamente o salário
+    $salario = formatarSalario($salario);  
 
-    if ($stmt_check_email->num_rows > 0) {
-        die("Este e-mail já está registrado.");
+    // Verificar e formatar a data de nascimento
+    $data_nascimento_obj = DateTime::createFromFormat('Y-m-d', $data_nascimento);
+    if ($data_nascimento_obj) {
+        $data_nascimento = $data_nascimento_obj->format('Y-m-d'); 
+    } else {
+        die("Formato de data inválido.");
     }
 
-    // Insira os dados do usuário no banco
-    $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario) 
-                   VALUES (?, ?, ?, ?, ?, ?, ?)";
+    // Verificar se é uma atualização ou um cadastro
+    if (isset($_POST['id_usuario']) && !empty($_POST['id_usuario'])) {
+        // Atualização de cadastro
+        $id_usuario = $_POST['id_usuario'];
 
-    $stmt_insert = $mysqli->prepare($sql_insert);
-    $stmt_insert->bind_param("sssssss", $path_relativo, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario);  // Alterado para incluir salário e data
+// Recuperar a imagem de perfil antiga
+$stmt_check_image = $mysqli->prepare("SELECT foto_perfil FROM usuarios WHERE id_usuario = ?");
+$stmt_check_image->bind_param("i", $id_usuario);
+$stmt_check_image->execute();
+$stmt_check_image->store_result();
+$stmt_check_image->bind_result($foto_antiga);
+$stmt_check_image->fetch();
 
-    // Verifique se a execução foi bem-sucedida
-    if ($stmt_insert->execute()) {
-        echo "<script>alert('Cadastro realizado com sucesso!')</script>";
-        echo "<script>location.href='http://localhost:3000/EducaDin-teste/index.html'</script>"; // Redireciona para página de login
+// Verificar se existe uma imagem antiga e apagar
+if ($foto_antiga && $foto_antiga != "../foto-perfil/default.png") {
+    // Corrigir o caminho absoluto da imagem (remover o '../' do caminho)
+    $caminho_imagem_antiga = $_SERVER['DOCUMENT_ROOT'] . "/EducaDin-teste" . substr($foto_antiga, 2);
+
+    // Verificar se o arquivo existe antes de deletar
+    if (file_exists($caminho_imagem_antiga)) {
+        unlink($caminho_imagem_antiga); // Apaga a imagem antiga
+    }
+}
+
+
+        // Gerar a query SQL para atualização
+        $sql_update = "UPDATE usuarios SET foto_perfil = ?, nome = ?, sobrenome = ?, email = ?, senha = ?, data_nascimento = ?, salario = ? WHERE id_usuario = ?";
+        $stmt_update = $mysqli->prepare($sql_update);
+        $stmt_update->bind_param("sssssssi", $path_relativo, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario, $id_usuario);
+
+        // Executar a query
+        if ($stmt_update->execute()) {
+            echo "<script>alert('Cadastro atualizado com sucesso!')</script>";
+            echo "<script>location.href='http://localhost:3000/EducaDin-teste/index.html'</script>";
+        } else {
+            die("Erro ao atualizar: " . $stmt_update->error);
+        }
     } else {
-        // Exibir mensagem de erro específica do MySQL
-        echo "Erro ao cadastrar: " . $stmt_insert->error;
+        // Cadastro novo
+        $stmt_check_email = $mysqli->prepare("SELECT id_usuario FROM usuarios WHERE email = ?");
+        $stmt_check_email->bind_param("s", $email);
+        $stmt_check_email->execute();
+        $stmt_check_email->store_result();
+
+        if ($stmt_check_email->num_rows > 0) {
+            die("Este e-mail já está registrado.");
+        }
+
+        // Inserção dos dados do usuário
+        $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario) 
+                       VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt_insert = $mysqli->prepare($sql_insert);
+        $stmt_insert->bind_param("sssssss", $path_relativo, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario);
+
+        if ($stmt_insert->execute()) {
+            echo "<script>alert('Cadastro realizado com sucesso!')</script>";
+            echo "<script>location.href='http://localhost:3000/EducaDin-teste/index.html'</script>"; 
+        } else {
+            die("Erro ao cadastrar: " . $stmt_insert->error);
+        }
     }
 }
 ?>

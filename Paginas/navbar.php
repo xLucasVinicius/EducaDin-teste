@@ -128,7 +128,7 @@ if (!isset($_SESSION['nome'])) {
         </button>
         <div class="user-info"> <!-- Informações do usuário -->
         <a href="?page=alterar" class="link-perfil">
-                <img src="<?php echo $_SESSION['file'] ?>" alt="">
+                <img src='<?php echo $_SESSION['file'] ?>' alt="">
                 <h1><?php echo $_SESSION['nome']. ' ' .$_SESSION['sobrenome'] ?></h1>
             </a>
         </div>

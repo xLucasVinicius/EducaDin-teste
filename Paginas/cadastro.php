@@ -54,7 +54,7 @@
     
             <span class="input-box" id="span-confirmarsenha">
                 <label for="confirmar-senha">Confirmar Senha</label>
-                <input type="password" name="senha" id="confirmar-senha" placeholder="Digite sua senha novamente">
+                <input type="password" name="confirmar-senha" id="confirmar-senha" placeholder="Digite sua senha novamente">
                 <i class="bi bi-eye" id="confirmarsenha-icon" onclick="mostrarConfirmarSenha()"></i>
                 <span class="error"></span>
             </span>

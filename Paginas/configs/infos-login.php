@@ -13,6 +13,7 @@ if(isset($_POST['email'])){
 
     $sql_code = "SELECT * FROM usuarios WHERE email = '$email' LIMIT 1";
     $sql_exec = $mysqli->query($sql_code) or die($mysqli->error);
+    
 
     // Verifica se a consulta retornou algum usuário
     if ($sql_exec->num_rows > 0) {
@@ -21,14 +22,16 @@ if(isset($_POST['email'])){
         // Verifica a senha
         if (password_verify($senha, $usuario['senha'])) {
             // Armazenando os dados do usuário na sessão
+            $_SESSION['id'] = $usuario['id_usuario'];
+            $_SESSION['file'] = $usuario['foto_perfil'];
             $_SESSION['nome'] = $usuario['nome'];
             $_SESSION['sobrenome'] = $usuario['sobrenome'];
-            $_SESSION['file'] = $usuario['path'];
-            $_SESSION['id'] = $usuario['id'];
             $_SESSION['email'] = $usuario['email'];
-            $_SESSION['telefone'] = $usuario['num_tel'];
-            $_SESSION['data_nasc'] = $usuario['data_nasc'];
-            $_SESSION['estado'] = $usuario['estado'];
+            $_SESSION['data_nasc'] = $usuario['data_nascimento'];
+            $_SESSION['salario'] = $usuario['salario'];
+            $_SESSION['plano'] = $usuario['plano'];
+            $_SESSION['poder'] = $usuario['poder'];
+            
             
             // Verificar se o usuário optou por "manter conectado"
             if (isset($_POST['remember'])) {

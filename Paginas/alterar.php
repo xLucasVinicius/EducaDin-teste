@@ -7,7 +7,7 @@ if (isset($_SESSION['id'])) {
     if (is_numeric($id)) {
 
         // Usa uma prepared statement para maior segurança
-        $stmt = $mysqli->prepare("SELECT * FROM usuarios WHERE id = ?");
+        $stmt = $mysqli->prepare("SELECT * FROM usuarios WHERE id_usuario = ?");
         $stmt->bind_param("i", $id); // 'i' indica que o parâmetro é um inteiro
         $stmt->execute();
         $res = $stmt->get_result();
@@ -15,7 +15,7 @@ if (isset($_SESSION['id'])) {
         // Verifica se há algum resultado
         if ($res->num_rows > 0) {
             $row = $res->fetch_object();
-            // Agora você pode acessar os dados do $row
+            $salario = 'R$ '.number_format($row->salario, 2, ',', '.');
         } else {
             echo "Nenhum usuário encontrado com esse ID.";
         }
@@ -38,61 +38,79 @@ if (isset($_SESSION['id'])) {
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-<form action="configs/salvar-usuario.php" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="id" value="<?php echo $row->id; ?>">
+<form action="configs/salvar-usuario.php" method="post" enctype="multipart/form-data" id="form-salvar-usuario">
     <h1>Editar <e style="color: #F5A900; font-family:orbitron">perfil</e></h1>
     <div class="input-img-perfil">
         <div class="img-perfil">
-            <img src="<?php echo $_SESSION['file']; ?>" alt="">
+            <img id="imagem-perfil" src="<?php echo $_SESSION['file']; ?>" alt="">
         </div>
-        <label for="file" class="file-label">
-        <i class="bi bi-pencil"></i>
-        </label>
-        <input type="file" name="file" id="file">
+        <a href="editar-imagem.html" class="file-label">
+            <i class="bi bi-pencil"></i>
+        </a>
     </div>
     
     <div class="input-name">
-        <span>
+        <span class="input-box">
             <label for="nome">Nome</label>
             <input type="text" name="nome" value="<?php echo $row->nome; ?>" id="nome" placeholder="Digite seu nome">
+            <span class="error"></span>
         </span>
 
-        <span>
+        <span class="input-box">
             <label for="sobrenome">Sobrenome</label>
             <input type="text" name="sobrenome"  id="sobrenome" value="<?php echo $row->sobrenome; ?>" placeholder="Digite seu sobrenome">
+            <span class="error"></span>
         </span>
     </div>
     <div class="input-login">
-        <label for="email">Email</label>
-        <input type="email" name="email" value="<?php echo $row->email; ?>" id="email" placeholder="exemplo@gmail.com">
+        <span class="input-box">
+            <label for="email">Email</label>
+            <input type="email" name="email" value="<?php echo $row->email; ?>" id="email" placeholder="exemplo@gmail.com">
+            <span class="error"></span>
+        </span>
 
-        <label for="senha">Senha</label>
-        <input type="password" name="senha" id="senha" placeholder="digite sua senha" required>
+        <span class="input-box" id="span-senha">
+            <label for="senha">Senha</label>
+            <input type="password" name="senha" id="senha" placeholder="digite sua senha">
+            <i class="bi bi-eye" id="senha-icon" onclick="mostrarSenha()"></i>
+            <span class="error"></span>
+        </span>
 
-        <label for="senha">Confirmar Senha</label>
-        <input type="password" name="senha" id="confirmarsenha" placeholder="digite sua senha novamente" required>
+        <span class="input-box" id="span-confirmarsenha">
+            <label for="confirmar-senha">Confirmar Senha</label>
+            <input type="password" name="confirmar-senha" id="confirmar-senha" placeholder="digite sua senha novamente">
+            <i class="bi bi-eye" id="confirmarsenha-icon" onclick="mostrarConfirmarSenha()"></i>
+            <span class="error"></span>
+        </span>
     </div>
     <div class="input-outras-infos">
-        <span>
+        <span class="input-box">
             <label for="data_nascimento">Data de Nascimento</label>
-            <input type="date" name="data_nascimento" value="<?php echo $row->data_nascimento; ?>" id="data-nasc">
+            <input type="date" name="data-nascimento" value="<?php echo $row->data_nascimento; ?>" id="data-nasc">
+            <span class="error"></span>
+            <i class="bi bi-calendar3"></i>
         </span>
 
-        <span>
-        <label for="telefone">Número</label>
-        <input type="tel" name="telefone" value="<?php echo $row->telefone; ?>" id="telefone" placeholder="11 99999-9999" >
-        </span>
+        <span class="input-box">
+                <label for="salario">Salário</label>
+                <input type="text" name="salario" value=" <?php echo $salario; ?>" id="salario" placeholder="R$ 0,00">
+                <span class="error"></span>
+            </span>
     </div>
     <div class="btn-form">
-        <span id="btn-input1"><button onclick="cancelar()">Cancelar</button></span>
+        <span id="btn-input1"><button type="button" onclick="cancelar()">Cancelar</button></span>
         <span id="btn-input2"><input id="btn-salvar" type="submit" value="Salvar"></span>
     </div>
+
+    <!-- Campo oculto para enviar a imagem em base64 -->
+    <input type="hidden" name="base64-image" id="base64-image">
+    <!-- Campo oculto para enviar o ID do usuário -->
+    <input type="hidden" name="id_usuario" value="<?php echo $id; ?>">
+
 </form>
 
-<script>
-    function cancelar() {
-        window.location.href = "navbar.php?page=dashboard";
-    }
-</script>
+
+<script src="../Js/salvar-usuario.js"></script>
+
 </body>
 </html>

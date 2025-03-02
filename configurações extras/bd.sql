@@ -12,7 +12,26 @@ CREATE TABLE usuarios (
     poder ENUM('administrador', 'usuario') DEFAULT 'usuario'
 );
 
--- 2. Tabela de Lançamentos
+-- 2. Tabela de Contas
+CREATE TABLE contas (
+    id_conta INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT,
+    nome_conta VARCHAR(100) NOT NULL,
+    saldo_atual DECIMAL(10,2) DEFAULT 0,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- 3. Tabela de Cartões
+CREATE TABLE cartoes (
+    id_cartao INT AUTO_INCREMENT PRIMARY KEY,
+    id_conta INT,
+    limite_total DECIMAL(10,2),
+    data_fechamento DATE,
+    data_vencimento DATE,
+    FOREIGN KEY (id_conta) REFERENCES contas(id_conta) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- 4. Tabela de Lançamentos
 CREATE TABLE lancamentos (
     id_lancamento INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
@@ -29,25 +48,6 @@ CREATE TABLE lancamentos (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_conta) REFERENCES contas(id_conta) ON DELETE SET NULL ON UPDATE CASCADE,
     FOREIGN KEY (id_cartao) REFERENCES cartoes(id_cartao) ON DELETE SET NULL ON UPDATE CASCADE
-);
-
--- 3. Tabela de Contas
-CREATE TABLE contas (
-    id_conta INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT,
-    nome_conta VARCHAR(100) NOT NULL,
-    saldo_atual DECIMAL(10,2) DEFAULT 0,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
--- 4. Tabela de Cartões
-CREATE TABLE cartoes (
-    id_cartao INT AUTO_INCREMENT PRIMARY KEY,
-    id_conta INT,
-    limite_total DECIMAL(10,2),
-    data_fechamento DATE,
-    data_vencimento DATE,
-    FOREIGN KEY (id_conta) REFERENCES contas(id_conta) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- 5. Tabela de Desempenho Anual (por mês)

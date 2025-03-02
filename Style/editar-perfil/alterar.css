@@ -3,227 +3,307 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
 
-    * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        font-family: sans-serif;
-    }
+:root {
+    --cor-principal: #F2A900;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
 
-    body {
-        background-color: #1F1F1F;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
 
-    .conteudo {
-        display: flex;
-        overflow: scroll;
-        scrollbar-width: none;
-    }
+body {
+    background-color: #1F1F1F;
+}
 
-    form {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-items: center;
-        width: 700px;
-        height: 750px;
-        padding: 20px;
-        margin: auto;
-        border-radius: 20px;
-        background-color: rgba(0, 0, 0, 0.50);
-    }
+.conteudo {
+    display: flex;
+    overflow: scroll;
+    scrollbar-width: none;
+}
 
-    form > h1 {
-        font-size: 2rem;
-        font-family: 'orbitron';
-        margin-bottom: 20px;
-        color: white;
-    }
+form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 700px;
+    height: 760px;
+    padding: 20px;
+    margin: auto;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.50);
+    z-index: -2;
+}
 
-    label {
-        color: #F5A900;
-        margin-top: 20px;
-    }
+form > h1 {
+    font-size: 2rem;
+    font-family: 'orbitron';
+    margin-bottom: 10px;
+    color: white;
+}
 
-    input {
-        background-color: transparent;
-        color: white;
-        padding: 10px;
-        border: 1.5px solid white;
-        border-radius: 4px;
-    }
+label {
+    color: #F5A900;
+    margin-top: 15px;
+}
 
-    input:focus {
-        color: white;
-        outline: none;
-    }
+input {
+    background-color: transparent;
+    color: white;
+    padding: 8px;
+    border: 1.5px solid white;
+    border-radius: 4px;
+}
 
-    input::placeholder {
-        color: white;
-    }
+input:focus {
+    color: white;
+    outline: none;
+}
 
-    .img-perfil {
-        display: flex;
-        justify-content: center;
-    }
+input::placeholder {
+    color: white;
+}
 
-    .input-img-perfil {
-        position: relative;
-    }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    background-color: transparent !important;
+    color: white !important;
+    border: 1px solid white !important;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white  !important;
+    caret-color: white;
+}
 
-    .img-perfil img{
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        object-fit: cover !important;
-    }
+.input-box.valid input:-webkit-autofill,
+.input-box.valid input:-webkit-autofill:hover,
+.input-box.valid input:-webkit-autofill:focus {
+    border: 1px solid green !important;
+}
 
-    input[type="file"] {
-        display: none;
-    }
+.img-perfil {
+    display: flex;
+    justify-content: center;
+}
 
-    .file-label {
-        justify-content: center;
-        align-items: center;
-        display: flex;
-        position: absolute;
-        bottom: 0;
-        right: 5px;
-        background-color: white;
-        color: black;
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-    }
+.input-img-perfil {
+    position: relative;
+}
 
-    .file-label i {
-        font-size: 20px;
-    }
-    
-    .input-name, .input-outras-infos {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-    }
+.img-perfil img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover !important;
+}
 
-    .input-login {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
+.file-label {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    background-color: white;
+    color: black;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
 
-    #nome, #sobrenome, #data-nasc, #telefone {
-        width: 300px;
-    }
+.file-label i {
+    font-size: 20px;
+}
 
-    #data-nasc {
-        color: white;
-    }
+.input-box.invalid input{
+    border: 1px solid red;
+}
 
-    #estado {
-        color: white;
-    }
+.input-box.valid input{
+    border: 1px solid green;
+}
 
-    select option {
-        color: black;
-        background-color: transparent;
-    }
+.input-name, .input-outras-infos {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
 
-    span > label{
-        display: block;
+.input-name > span, .input-outras-infos > span {
+    display: flex;
+    flex-direction: column;
+}
 
-    }
+.error {
+    color: red;
+    margin-top: 5px;
+    flex-direction: row;
+}
 
-    .btn-form {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-        width: 100%;
-    }
+.input-login {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
 
-    #btn-input1 {
-        text-align: end;
-    }
+.input-login span {
+    width: 100%;
+}
 
-    #btn-input1, #btn-input2 {
-        width: 300px;
-    }
+.input-login span input {
+    width: 100%;
+}
 
-    #btn-salvar {
-        background-color: #F5A900;
-        color: white;
-        border: none;
-        padding: 7px;
-        width: 100px;
-        font-size: 1rem;
-    }
-    button {
-        
-        background-color: white;
-        color: #F5A900;
-        padding: 7px;
-        width: 100px;
-        border: #F5A900;
-        border-radius: 4px;
-        font-size: 1rem;
-    }
+#span-senha, #span-confirmarsenha {
+    position: relative;
+}
 
-    @media screen and (max-width: 700px){
-        .conteudo {
-            align-items: center;
-        }
+#senha-icon, #confirmarsenha-icon {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    color: var(--cor-txt);
+}
 
-        form {
-            width: 350px;
-            height: 720px;
-            padding: 2px;
-        }
-        
-        form > h1 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-        }
+.invalid #senha-icon, .invalid #confirmarsenha-icon {
+    top: 47px;
+    right: 10px;
+}
 
-        .file-label {
-            right: 2px;
-            width: 20px;
-            height: 20px;
-        }
-        
-        .file-label i {
-            font-size: 13px;
-        }
-        
-        .img-perfil img{
-            width: 85px;
-            height: 85px;
-            border-radius: 50%;
-        }
+#nome, #sobrenome, #data-nasc, #salario {
+    width: 300px;
+}
 
-        label {
-            font-size: 15px;
-            margin-top: 5px;
-        }
+span > label{
+    display: block;
+}
 
-        .input-login {
-            width: 83%;
-        }
-        
-        .input-name, .input-outras-infos {
-        display: block;
-        width: 83%;
-        }
-        
-        #nome, #sobrenome, #data-nasc, #telefone,#email, #senha, #confirmarsenha {
-            padding: 5px;
-            font-size: 0.9rem;
-            width: 290px;
-        }
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    cursor: pointer;
+}
 
-        #btn-input1, #btn-input2 {
-            width: 45%;    
-        }
+/* Esconde o ícone nativo para o Firefox */
+input[type="date"] {-moz-appearance: textfield;}
+
+.input-outras-infos .input-box:first-child {
+    position: relative;
+}
+
+.bi-calendar3 {
+    position: absolute;
+    top: 50px;
+    right: 11px;
+    color: white;
+    z-index: -1;
+}
+
+.btn-form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#btn-input1 {
+    text-align: end;
+}
+
+#btn-input1, #btn-input2 {
+    width: 300px;
+}
+
+#btn-salvar {
+    background-color: #F5A900;
+    color: white;
+    border: none;
+    padding: 7px;
+    width: 100px;
+    font-size: 1rem;
+    transition: all .2s;
+}
+
+#btn-salvar:hover {
+    background-color: #8a6000;
+}
+
+button {
+    background-color: white;
+    color: #F5A900;
+    padding: 7px;
+    width: 100px;
+    border: #F5A900;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all .2s;
+}
+
+button:hover {
+    color: #ffcb21;
+    background-color: rgb(184, 184, 184);
+}
+
+@media screen and (max-width: 700px){
+.conteudo {
+    align-items: center;
+}
+
+form {
+    width: 350px;
+    height: 720px;
+    padding: 2px;
+}
+
+form > h1 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+}
+
+.file-label {
+    right: 2px;
+    width: 20px;
+    height: 20px;
+}
+
+.file-label i {
+    font-size: 13px;
+}
+
+.img-perfil img{
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+}
+
+label {
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.input-login {
+    width: 83%;
+}
+
+.input-name, .input-outras-infos {
+    display: block;
+    width: 83%;
+}
+
+#nome, #sobrenome, #data-nasc, #telefone,#email, #senha, #confirmarsenha {
+    padding: 5px;
+    font-size: 0.9rem;
+    width: 290px;
+}
+
+#btn-input1, #btn-input2 {
+    width: 45%;    
+}
 }
 
 @media screen and (min-width: 701px) and (max-width: 930px){

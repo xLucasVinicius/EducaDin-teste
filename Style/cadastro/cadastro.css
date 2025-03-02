@@ -112,6 +112,12 @@ input:-webkit-autofill:focus {
     caret-color: white;
 }
 
+.input-box.valid input:-webkit-autofill,
+.input-box.valid input:-webkit-autofill:hover,
+.input-box.valid input:-webkit-autofill:focus {
+    border: 1px solid green !important;
+}
+
 .img-perfil {
     display: flex;
     justify-content: center;
@@ -131,10 +137,6 @@ input:-webkit-autofill:focus {
     height: 200px;
     object-fit: cover;  /* Garante que a imagem preencha o espaço sem distorção */
     border-radius: 50%;
-}
-
-input[type="file"] {
-    display: none;
 }
 
 .file-label {
@@ -216,10 +218,6 @@ input[type="file"] {
 
 #nome, #sobrenome, #data-nasc, #salario {
     width: 300px;
-}
-
-#data-nasc {
-    color: white;
 }
 
 span > label{

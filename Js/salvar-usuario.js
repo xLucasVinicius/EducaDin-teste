@@ -1,4 +1,4 @@
-const form = document.querySelector('#form-cadastro');
+const form = document.querySelector('#form-salvar-usuario');
 
 form.addEventListener('submit', function (e) {
     e.preventDefault();  // Impede o envio do formulário inicialmente
@@ -238,19 +238,6 @@ document.getElementById('salario').addEventListener('input', function (e) {
     e.target.value = `R$ ${value}`; // Adiciona o símbolo R$
 });
 
-// Função para habilitar/desabilitar o botão de salvar e adicionar/remover a classe "disable"
-document.getElementById("termos").addEventListener("change", function() {
-    const btnSalvar = document.getElementById("btn-salvar");
-    if (this.checked) {
-        btnSalvar.disabled = false;
-        btnSalvar.classList.remove("disabled");
-        btnSalvar.classList.add("enable");
-    } else {
-        btnSalvar.disabled = true;
-        btnSalvar.classList.remove("enable");
-        btnSalvar.classList.add("disabled");
-    }
-});
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -269,7 +256,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-document.querySelector('#form-cadastro').addEventListener('submit', function (e) {
+
+document.querySelector('#form-salvar-usuario').addEventListener('submit', function (e) {
     const base64ImageInput = document.querySelector('#base64-image');
     const croppedImage = localStorage.getItem('croppedImage');
 
@@ -313,7 +301,6 @@ function mostrarConfirmarSenha() {
     }
 }
 
-document.getElementById('btn-input1').addEventListener('click', function () {
-    window.location.href = 'http://localhost:3000/EducaDin-teste/index.html';
-});
-
+function cancelar() {
+    window.location.href = "navbar.php?page=dashboard";
+}
