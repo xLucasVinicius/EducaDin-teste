@@ -118,6 +118,12 @@ input:-webkit-autofill:focus {
     border: 1px solid green !important;
 }
 
+.input-box.invalid input:-webkit-autofill,
+.input-box.invalid input:-webkit-autofill:hover,
+.input-box.invalid input:-webkit-autofill:focus {
+    border: 1px solid red !important;
+}
+
 .img-perfil {
     display: flex;
     justify-content: center;
@@ -231,7 +237,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /* Esconde o ícone nativo para o Firefox */
-input[type="date"] {-moz-appearance: textfield;}
+input[type="date"] {
+    -moz-appearance: textfield;
+    appearance: none;
+}
 
 .input-outras-infos .input-box:first-child {
     position: relative;

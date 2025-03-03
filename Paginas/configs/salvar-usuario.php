@@ -104,10 +104,9 @@ if ($foto_antiga && $foto_antiga != "../foto-perfil/default.png") {
 
         // Executar a query
         if ($stmt_update->execute()) {
-            echo "<script>alert('Cadastro atualizado com sucesso!')</script>";
-            echo "<script>location.href='http://localhost:3000/EducaDin-teste/index.html'</script>";
+            echo json_encode(['status' => 'success']);
         } else {
-            die("Erro ao atualizar: " . $stmt_update->error);
+            echo json_encode(['status' => 'error']);
         }
     } else {
         // Cadastro novo
@@ -117,7 +116,8 @@ if ($foto_antiga && $foto_antiga != "../foto-perfil/default.png") {
         $stmt_check_email->store_result();
 
         if ($stmt_check_email->num_rows > 0) {
-            die("Este e-mail já está registrado.");
+            echo json_encode(['status' => 'error_email']);
+            exit;
         }
 
         // Inserção dos dados do usuário
@@ -127,10 +127,9 @@ if ($foto_antiga && $foto_antiga != "../foto-perfil/default.png") {
         $stmt_insert->bind_param("sssssss", $path_relativo, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario);
 
         if ($stmt_insert->execute()) {
-            echo "<script>alert('Cadastro realizado com sucesso!')</script>";
-            echo "<script>location.href='http://localhost:3000/EducaDin-teste/index.html'</script>"; 
+            echo json_encode(['status' => 'success2']);
         } else {
-            die("Erro ao cadastrar: " . $stmt_insert->error);
+            echo json_encode(['status' => 'error']);
         }
     }
 }

@@ -1,3 +1,11 @@
+const errorIcon = '<i class="bi bi-exclamation-circle"></i>';
+
+window.onpageshow = function(event) {
+  if (event.persisted) {
+    window.location.reload();
+  }
+};
+
 const form = document.querySelector('#form-cadastro');
 
 form.addEventListener('submit', function (e) {
@@ -43,8 +51,6 @@ form.addEventListener('submit', function (e) {
         }
     ];
 
-    const errorIcon = '<i class="bi bi-exclamation-circle"></i>';
-
     fields.forEach(function (field) {
         const input = document.getElementById(field.id);
         const inputBox = input.closest('.input-box');
@@ -66,10 +72,28 @@ form.addEventListener('submit', function (e) {
         }
     });
 
-    // Envia o formulário apenas se todos os campos forem válidos
     if (isFormValid) {
-        form.submit();  // Envia o formulário
         localStorage.removeItem('croppedImage');
+        // Envio via AJAX
+        const formData = new FormData(form); // Cria o objeto FormData com o conteúdo do formulário
+
+        fetch('../Paginas/configs/salvar-usuario.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'error_email') {
+                // Se o status for 'error_email', exibe a mensagem de erro no modal
+                showModalError(data); // Função para exibir o modal com erro
+            } else if (data.status === 'success2') {
+                handleSuccess(data);
+            } else {
+                // Em caso de outro erro
+                console.log('Erro desconhecido', data);
+            }
+        })
+        .catch(error => console.error('Erro:', error));
     }
 });
 
@@ -315,5 +339,45 @@ function mostrarConfirmarSenha() {
 
 document.getElementById('btn-input1').addEventListener('click', function () {
     window.location.href = 'http://localhost:3000/EducaDin-teste/index.html';
+});
+
+function handleSuccess(response) {
+    var modal2 = document.getElementById("successModal2");
+    var closeModalBtn = document.getElementById("closeModalBtn");
+    var closeModalBtn2 = document.getElementById("closeModalBtn2");
+
+    // Mostrar o modal se a resposta for de sucesso
+    if (response.status === 'success2') {
+        modal2.style.display = "block"; // Exibe o modal
+        // Quando o usuário clicar no botão, redireciona para a página inicial
+        closeModalBtn.onclick = function() {
+            window.location.href = "login.php"; // Redireciona para a página inicial
+        };
+    }
+}
+
+const errorSpanEmail = document.querySelector('.email-error');
+const inputEmailBox = document.querySelector('.login-email');
+
+function showModalError(data) {
+    var modalerror = document.getElementById("errorModal");
+    var closeModalBtn2 = document.getElementById("closeModalBtn2");
+
+    if (data.status === 'error_email') {
+        modalerror.style.display = "block";
+        errorSpanEmail.innerHTML = `${errorIcon} Insira um email válido`;
+        errorSpanEmail.style.display = "block";
+        inputEmailBox.classList.remove('valid');
+        inputEmailBox.classList.add('invalid');
+
+        closeModalBtn2.onclick = function() {
+            modalerror.style.display = "none";
+        };
+    }
+}
+
+inputEmailBox.addEventListener('input', function() {
+    errorSpanEmail.style.display = "none";
+    inputEmailBox.classList.remove('invalid');
 });
 

@@ -35,9 +35,19 @@ if (isset($_SESSION['id'])) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>EducaDin</title>
         <link rel="stylesheet" href="../Style/editar-perfil/alterar.css">
+        <link rel="stylesheet" href="../Style/globais/msg-confirmacao.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
+<!-- Modal de Sucesso -->
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <h2>Sucesso!</h2>
+        <p>O cadastro foi atualizado com sucesso.</p>
+        <button id="closeModalBtn">Login</button>
+    </div>
+</div>
+
 <form action="configs/salvar-usuario.php" method="post" enctype="multipart/form-data" id="form-salvar-usuario">
     <h1>Editar <e style="color: #F5A900; font-family:orbitron">perfil</e></h1>
     <div class="input-img-perfil">

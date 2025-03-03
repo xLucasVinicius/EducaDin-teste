@@ -65,11 +65,19 @@ form.addEventListener('submit', function (e) {
             console.log(document.getElementById('data-nasc').value);
         }
     });
-
-    // Envia o formulário apenas se todos os campos forem válidos
+    
     if (isFormValid) {
-        form.submit();  // Envia o formulário
         localStorage.removeItem('croppedImage');
+        // Envio via AJAX
+        const formData = new FormData(form); // Cria o objeto FormData com o conteúdo do formulário
+
+        fetch('../Paginas/configs/salvar-usuario.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => handleSuccess(data)) // Chama a função de sucesso
+        .catch(error => console.error('Erro:', error));
     }
 });
 
@@ -303,4 +311,20 @@ function mostrarConfirmarSenha() {
 
 function cancelar() {
     window.location.href = "navbar.php?page=dashboard";
+}
+
+
+function handleSuccess(response) {
+    var modal = document.getElementById("successModal");
+    var closeModalBtn = document.getElementById("closeModalBtn");
+
+    // Mostrar o modal se a resposta for de sucesso
+    if (response.status === 'success') {
+        modal.style.display = "block"; // Exibe o modal
+    }
+
+    // Quando o usuário clicar no botão, redireciona para a página inicial
+    closeModalBtn.onclick = function() {
+        window.location.href = "login.php"; // Redireciona para a página inicial
+    };
 }

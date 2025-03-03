@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="../imagens/logos/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../Style/cadastro/cadastro.css">
     <link rel="stylesheet" href="../Style/cadastro/cadastro-media.css">
+    <link rel="stylesheet" href="../Style/globais/msg-confirmacao.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
@@ -14,6 +15,22 @@
     <div id="pattern"></div>    
     
 <main class="form-container-cadastro">
+    <!-- Modal de Sucesso -->
+    <div id="successModal2" class="modal">
+        <div class="modal-content">
+            <h2>Sucesso!</h2>
+            <p>O cadastro foi realizado com sucesso.</p>
+            <button id="closeModalBtn">Login</button>
+        </div>
+    </div>
+    
+    <div id="errorModal" class="modal2">
+        <div class="modal-content">
+            <h2>Erro!</h2>
+            <p>O email ja esta em uso.</p>
+            <button id="closeModalBtn2">OK</button>
+        </div>
+    </div>
     <form action="configs/salvar-usuario.php" method="post" enctype="multipart/form-data" id="form-cadastro">
         <h1>Cadastro</h1>
         <div class="input-img-perfil">
@@ -39,10 +56,10 @@
             </span>
         </div>
         <div class="input-login"> <!-- div com inputs de login -->
-            <span class="input-box">
+            <span class="input-box  login-email">
                 <label for="email">Email</label>
                 <input type="email" name="email" id="email" placeholder="exemplo@gmail.com">
-                <span class="error"></span>
+                <span class="error email-error"></span>
             </span>
     
             <span class="input-box" id="span-senha">

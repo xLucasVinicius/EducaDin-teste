@@ -190,7 +190,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /* Esconde o ícone nativo para o Firefox */
-input[type="date"] {-moz-appearance: textfield;}
+input[type="date"] {
+    -moz-appearance: textfield;
+    appearance: none;
+}
 
 .input-outras-infos .input-box:first-child {
     position: relative;
@@ -295,7 +298,15 @@ label {
     width: 83%;
 }
 
-#nome, #sobrenome, #data-nasc, #telefone,#email, #senha, #confirmarsenha {
+#senha-icon, #confirmarsenha-icon {
+    bottom: 3px;
+}
+
+.invalid #senha-icon, .invalid #confirmarsenha-icon {
+    top: 33px;
+}
+
+#nome, #sobrenome, #data-nasc, #salario,#email, #senha, #confirmar-senha {
     padding: 5px;
     font-size: 0.9rem;
     width: 290px;
@@ -303,6 +314,10 @@ label {
 
 #btn-input1, #btn-input2 {
     width: 45%;    
+}
+
+.bi-calendar3 {
+    top: 34px;
 }
 }
 
