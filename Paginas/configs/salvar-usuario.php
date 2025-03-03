@@ -13,45 +13,6 @@ function formatarSalario($salario) {
 // Verifique se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Verifique se a imagem foi enviada como base64
-    if (isset($_POST['base64-image']) && !empty($_POST['base64-image'])) {
-        $base64Image = $_POST['base64-image'];
-
-        // Detecta o tipo de imagem (png, jpg, jpeg)
-        if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $tipoImagem)) {
-            $extensao = $tipoImagem[1]; 
-
-            // Remove o prefixo do base64
-            $imageData = preg_replace('/^data:image\/\w+;base64,/', '', $base64Image);
-            $imageData = base64_decode($imageData);
-
-            // Definir o caminho para salvar a imagem no servidor
-            $pasta_relativa = "../foto-perfil/";
-            $pasta_absoluta = $_SERVER['DOCUMENT_ROOT'] . '/EducaDin-teste/foto-perfil/';
-            $novoNomeDoArquivo = uniqid();
-
-            // Caminho absoluto e relativo
-            $path_absoluto = $pasta_absoluta . $novoNomeDoArquivo . "." . $extensao;
-            $path_relativo = $pasta_relativa . $novoNomeDoArquivo . "." . $extensao;
-
-            // Verificar se o diretório existe, se não, criar
-            if (!is_dir($pasta_absoluta)) {
-                mkdir($pasta_absoluta, 0777, true);
-            }
-
-            // Salvar a imagem no diretório
-            if (file_put_contents($path_absoluto, $imageData) === false) {
-                die("Erro ao salvar a imagem.");
-            }
-        } else {
-            die("Formato de imagem inválido.");
-        }
-
-    } else {
-        // Caso não tenha imagem, atribua a imagem padrão
-        $path_relativo = "../foto-perfil/default.png"; 
-    }
-
     // Informações do usuário
     $nome = $_POST['nome'];
     $sobrenome = $_POST['sobrenome'];
@@ -77,25 +38,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Atualização de cadastro
         $id_usuario = $_POST['id_usuario'];
 
-// Recuperar a imagem de perfil antiga
-$stmt_check_image = $mysqli->prepare("SELECT foto_perfil FROM usuarios WHERE id_usuario = ?");
-$stmt_check_image->bind_param("i", $id_usuario);
-$stmt_check_image->execute();
-$stmt_check_image->store_result();
-$stmt_check_image->bind_result($foto_antiga);
-$stmt_check_image->fetch();
+        // Recuperar a imagem de perfil antiga
+        $stmt_check_image = $mysqli->prepare("SELECT foto_perfil FROM usuarios WHERE id_usuario = ?");
+        $stmt_check_image->bind_param("i", $id_usuario);
+        $stmt_check_image->execute();
+        $stmt_check_image->store_result();
+        $stmt_check_image->bind_result($foto_antiga);
+        $stmt_check_image->fetch();
 
-// Verificar se existe uma imagem antiga e apagar
-if ($foto_antiga && $foto_antiga != "../foto-perfil/default.png") {
-    // Corrigir o caminho absoluto da imagem (remover o '../' do caminho)
-    $caminho_imagem_antiga = $_SERVER['DOCUMENT_ROOT'] . "/EducaDin-teste" . substr($foto_antiga, 2);
-
-    // Verificar se o arquivo existe antes de deletar
-    if (file_exists($caminho_imagem_antiga)) {
-        unlink($caminho_imagem_antiga); // Apaga a imagem antiga
-    }
-}
-
+        // Verificar se existe uma imagem antiga e apagar
+        if ($foto_antiga && $foto_antiga != "../foto-perfil/default.png") {
+            $caminho_imagem_antiga = $_SERVER['DOCUMENT_ROOT'] . "/EducaDin-teste" . substr($foto_antiga, 2);
+            if (file_exists($caminho_imagem_antiga)) {
+                unlink($caminho_imagem_antiga); // Apaga a imagem antiga
+            }
+        }
 
         // Gerar a query SQL para atualização
         $sql_update = "UPDATE usuarios SET foto_perfil = ?, nome = ?, sobrenome = ?, email = ?, senha = ?, data_nascimento = ?, salario = ? WHERE id_usuario = ?";
@@ -109,7 +66,7 @@ if ($foto_antiga && $foto_antiga != "../foto-perfil/default.png") {
             echo json_encode(['status' => 'error']);
         }
     } else {
-        // Cadastro novo
+        // Verificar se o email já está cadastrado antes de salvar a imagem
         $stmt_check_email = $mysqli->prepare("SELECT id_usuario FROM usuarios WHERE email = ?");
         $stmt_check_email->bind_param("s", $email);
         $stmt_check_email->execute();
@@ -118,6 +75,45 @@ if ($foto_antiga && $foto_antiga != "../foto-perfil/default.png") {
         if ($stmt_check_email->num_rows > 0) {
             echo json_encode(['status' => 'error_email']);
             exit;
+        }
+
+        // Verifique se a imagem foi enviada como base64
+        if (isset($_POST['base64-image']) && !empty($_POST['base64-image'])) {
+            $base64Image = $_POST['base64-image'];
+
+            // Detecta o tipo de imagem (png, jpg, jpeg)
+            if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $tipoImagem)) {
+                $extensao = $tipoImagem[1]; 
+
+                // Remove o prefixo do base64
+                $imageData = preg_replace('/^data:image\/\w+;base64,/', '', $base64Image);
+                $imageData = base64_decode($imageData);
+
+                // Definir o caminho para salvar a imagem no servidor
+                $pasta_relativa = "../foto-perfil/";
+                $pasta_absoluta = $_SERVER['DOCUMENT_ROOT'] . '/EducaDin-teste/foto-perfil/';
+                $novoNomeDoArquivo = uniqid();
+
+                // Caminho absoluto e relativo
+                $path_absoluto = $pasta_absoluta . $novoNomeDoArquivo . "." . $extensao;
+                $path_relativo = $pasta_relativa . $novoNomeDoArquivo . "." . $extensao;
+
+                // Verificar se o diretório existe, se não, criar
+                if (!is_dir($pasta_absoluta)) {
+                    mkdir($pasta_absoluta, 0777, true);
+                }
+
+                // Salvar a imagem no diretório
+                if (file_put_contents($path_absoluto, $imageData) === false) {
+                    die("Erro ao salvar a imagem.");
+                }
+            } else {
+                die("Formato de imagem inválido.");
+            }
+
+        } else {
+            // Caso não tenha imagem, atribua a imagem padrão
+            $path_relativo = "../foto-perfil/default.png"; 
         }
 
         // Inserção dos dados do usuário
