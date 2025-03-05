@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte para o evento de carregamento do DOM
-    fetch('../Paginas/configs/infos-contas.php')
+  fetch('../Paginas/configs/infos-contas.php')
   .then(response => {
     if (!response.ok) {
       throw new Error('Erro ao carregar dados: ' + response.statusText);
@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
 
     const accountsData = data.contas; // Atribuir os dados de contas da resposta
     const lancamentosData = data.lancamentos; // Atribuir os dados de lançamentos da resposta
+    localStorage.setItem('accountsData', JSON.stringify(accountsData));
+
 
     const carouselContainer = document.querySelector('.contas-carrossel');
     const lancamentosContainer = document.querySelector('.lancamentos-carrossel');
@@ -44,10 +46,8 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
 
     // Seleciona todas as slides de contas após a criação dinâmica
     const slides = document.querySelectorAll('.conta');
-    console.log(`slides: ${slides}`);
     let currentIndex = 0;
     const totalSlides = slides.length;
-    console.log(`totalSlides: ${totalSlides}`);
 
     // Função para realizar a transição entre slides
     function goToSlide(newIndex, direction = 'next') {
@@ -135,13 +135,14 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
       const thead = `
         <thead>
             <tr>
-                <th>DESCRIÇÃO</th>
-                <th>VALOR</th>
-                <th>TIPO</th>
-                <th>CATEGORIA</th>
-                <th>PARCELAS</th>
-                <th>DATA</th>
-                <th>OPÇÕES</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Tipo</th>
+                <th>Método</th>
+                <th>Subcategoria</th>
+                <th>Data</th>
+                <th>Parcelas</th>
+                <th>Opções</th>
             </tr>
         </thead>`;
       
@@ -154,8 +155,9 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
               <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
               <td>${lancamento.tipo}</td>
               <td>${lancamento.metodo_pagamento}</td>
-              <td>${lancamento.parcelas}</td>
+              <td>${lancamento.subcategoria}</td>
               <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
+              <td>${lancamento.parcelas}</td>
               <td>
                   <button id="btn-editar"><i class="bi bi-pencil"></i></button>
                   <button id="btn-excluir"><i class="bi bi-x"></i></button>

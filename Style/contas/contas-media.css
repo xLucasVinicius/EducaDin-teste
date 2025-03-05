@@ -41,7 +41,7 @@
   }
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1090px) {
     .conteudo-total-contas {
         width: 100%;
     }
@@ -58,12 +58,6 @@
       width: 100%;
       overflow: scroll;
     }
-
-    .fora-lancamentos .lancamentos-carrossel table {
-      width: 806px;
-    }
-
-    
 }
 
 @media screen and (max-width: 1560px) {

@@ -76,9 +76,10 @@ $result = $mysqli->query($query);
                             <th>DESCRIÇÃO</th>
                             <th>VALOR</th>
                             <th>TIPO</th>
-                            <th>CATEGORIA</th>
-                            <th>PARCELAS</th>
+                            <th>METODO DE PAGAMENTO</th>
+                            <th>SUBCATEGORIA</th>
                             <th>DATA</th>
+                            <th>PARCELAS</th>
                             <th>OPÇÕES</th>
                         </tr>
                     </thead>
@@ -128,6 +129,13 @@ $result = $mysqli->query($query);
                 <label for="valor">Valor</label>
                 <input type="number" name="valor" id="valor" placeholder="Valor">
               </span>
+              
+              <span class="conta span-flex"> <!-- span referentes a conta -->
+                <label for="conta-select">Conta</label>
+                <select name="conta-selected" id="conta-selected">
+                  <option value="">Selecione uma conta</option>
+                </select>
+              </span>
 
               <span class="tipo span-flex"> <!-- span referentes ao tipo -->
                 <label for="tipo1">Tipo</label>
@@ -136,7 +144,7 @@ $result = $mysqli->query($query);
                   <label for="tipo1" id="label-receita">Receita</label>
                 </span>
                   <span class="radio">
-                    <input type="radio" name="tipo" id="tipo2" value="despesa" onchange="mostrarParcelas()">
+                    <input type="radio" name="tipo" id="tipo2" value="despesa" onchange="mostrarParcelas(), mostarCartoes()">
                     <label for="tipo2" id="label-despesa">Despesa</label>
                   </span>
               </span>

@@ -137,5 +137,6 @@ const subcategorias = { // Objeto com as subcategorias para cada categoria
     labelParcelas.style.display = "none"; // Oculta o label
   }
 
-
+const accountsData = JSON.parse(localStorage.getItem('accountsData'));
+console.log(accountsData);
   
