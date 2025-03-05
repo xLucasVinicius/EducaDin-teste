@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
         <div class="infos-conta">
             <h1>${account.nome_conta}</h1>
             <h2>Saldo: R$ ${parseFloat(account.saldo_atual).toFixed(2).replace('.', ',')}</h2>
+            <p>+5% ao mês anterior</p>
         </div>
         `;
       carouselContainer.appendChild(contaDiv);
@@ -247,6 +248,7 @@ const modalErrorPreencher = document.querySelector('#errorModalPreencher');
 // Eventos para fechar os modais
 document.getElementById('btnModalAdd').addEventListener('click', function () {
     modalSucess.style.display = 'none';
+    location.reload();
 });
 
 document.getElementById('btnModalCampos').addEventListener('click', function () {
