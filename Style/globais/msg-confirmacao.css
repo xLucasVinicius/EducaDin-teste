@@ -46,11 +46,21 @@
     border: none;
     margin: 5px auto;
     border-radius: 4px;
+    transition: all .3s;
     cursor: pointer;
 }
 
+.modal-content.error-conta button {
+    background-color: red;
+}
+
+
 .modal-content button:hover {
     background-color: #45a049;
+}
+
+.modal-content.error-conta button:hover {
+    background-color: rgb(194, 0, 0);
 }
 
 @keyframes exibir {

@@ -70,7 +70,7 @@ body::-webkit-scrollbar {
 .conta .logo {
   overflow: hidden;
   width: 200px;
-  height: auto;
+  height: 200px;
   /* margin-right: 150px; */
 
   border-radius: 50%;

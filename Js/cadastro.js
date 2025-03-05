@@ -344,7 +344,6 @@ document.getElementById('btn-input1').addEventListener('click', function () {
 function handleSuccess(response) {
     var modal2 = document.getElementById("successModal2");
     var closeModalBtn = document.getElementById("closeModalBtn");
-    var closeModalBtn2 = document.getElementById("closeModalBtn2");
 
     // Mostrar o modal se a resposta for de sucesso
     if (response.status === 'success2') {

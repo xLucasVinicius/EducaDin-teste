@@ -1,3 +1,8 @@
+<?php
+    $id = $_SESSION['id'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,8 +11,33 @@
     <title>Contas e Lançamentos</title>
     <link rel="stylesheet" href="../Style/contas/contas.css">
     <link rel="stylesheet" href="../Style/contas/contas-media.css">
+    <link rel="stylesheet" href="../style/globais/msg-confirmacao.css">
 </head>
 <body>
+    <!-- Modal de Sucesso -->
+    <div id="modalAddContas" class="modal">
+        <div class="modal-content">
+            <h2>Sucesso!</h2>
+            <p>Conta adicionada com sucesso.</p>
+            <button id="btnModalAdd">Ok</button>
+        </div>
+    </div>
+    <!-- Modal de Erro -->
+    <div id="errorModalPreencher" class="modal">
+        <div class="modal-content error-conta">
+            <h2>Erro!</h2>
+            <p>Preencha todos os campos antes de enviar.</p>
+            <button id="btnModalCampos">Ok</button>
+        </div>
+    </div>
+    <!-- Modal de Erro -->
+    <div id="errorModalAddContas" class="modal">
+        <div class="modal-content error-conta">
+            <h2>Erro!</h2>
+            <p>Você já possui essa conta.</p>
+            <button id="btnModalConta">Ok</button>
+        </div>
+    </div>
     <section class="elemento-fora">
         
         <section class="conteudo-total-contas"> <!-- Carrossel de Contas -->
@@ -33,7 +63,7 @@
         <section class="add-contas">
             <div class="form-content">
                 <h1>Adicionar Conta</h1>
-                <form action="configs/add-conta.php" method="POST">
+                <form action="configs/add-conta.php" method="POST" id="form-add-conta">
                     <div class="form-conta">
                         <label for="conta">Nome da Conta</label>
                         <select name="conta" id="conta" onchange="mostrarImagem()">
@@ -61,6 +91,7 @@
                         <input type="text" name="saldo" id="saldo" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
                     </div>
                     <button type="submit">Adicionar</button>
+                    <input type="hidden" name="id_usuario" value="<?php echo $id; ?>">
                 </form>
             </div>
         </section>
