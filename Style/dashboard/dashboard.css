@@ -385,6 +385,8 @@ input[type="number"]::-webkit-outer-spin-button {
 /* Remove as setas para o Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+  appearance: none;
+
 }
   
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -395,6 +397,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   /* Esconde o ícone nativo para o Firefox */
   input[type="date"] {
     -moz-appearance: textfield;
+    appearance: none;
     position: relative;
     padding-right: 40px; /* Espaço para o ícone personalizado */
   }

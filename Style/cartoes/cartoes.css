@@ -1,109 +1,369 @@
 @charset "UTF-8";
 
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
 :root {
-    --cor-principal: #F2A900;
-    --cor-fundo: #3D3D3D;
-    --cor-fundo-content: #1F1F1F;
-    --cor-txt: #FFFFFF;
+  --cor-principal: #F2A900;
+  --cor-fundo: #3D3D3D;
+  --cor-fundo-content: #1F1F1F;
+  --cor-txt: #FFFFFF;
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 html, body {
-    background-color: var(--cor-fundo-content);
+  background-color: var(--cor-fundo-content);
+  scrollbar-width: hidden;
 }
 
-.conteudo-total {
-    background-color: var(--cor-fundo-content);
-    width: 100%;
-    height: 100%;
-    padding:5% 0 2%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 50px;
+body::-webkit-scrollbar {
+  display: none;
 }
 
-section.conteudo-cartao, section.lancamentos-cartao {
-    border: 1px solid var(--cor-principal);
-    border-radius: 15px;
+.elemento-fora {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+  height: 100%;
+  padding: 2% 3%;
 }
 
-section.conteudo-cartao {
-    display: flex;
-    width: 850px;
-    min-height: 280px;
-    max-height: 280px;
-    gap: 10px;
+.conteudo-total-contas {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 820px;
+  height: 100%;
 }
 
-section.conteudo-cartao .cartao {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* border: 1px solid white; */
+.contas-carrossel {
+  position: relative;
+  overflow: hidden;
+  width: 870px;
+  min-height: 290px;
+  border: 1px solid var(--cor-principal);
+  border-radius: 15px;
 }
 
-section.conteudo-cartao .cartao img {
-    width: 350px;
+/* Cada conta ocupará o container inteiro, posicionada de forma absoluta */
+.conta {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0px 115px;
+  transform: translateX(100%);
+  transition: transform 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-section.conteudo-cartao .infos-cartao {
-    width: 40%;
-    padding: 15px 10px;
-    align-self: center;
-    /* border: 1px solid white; */
+.conta .logo {
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  /* margin-right: 150px; */
+
+  border-radius: 50%;
 }
 
-section.conteudo-cartao .infos-cartao p {
-    font-size: 1rem;
-    color: white;
+.conta .logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-section.lancamentos-cartao {
-    width: 95%;
-    min-height: 350px;
-        max-height: 350px;
+.conta .infos-conta {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 20px;
+  height: 100%;
 }
 
-@media screen and (max-width: 1100px) {
-    section.conteudo-cartao {
-        flex-direction: column;
-        align-items: center;
-        max-width: 400px;
-        min-height: 200px;
-        max-height: 200px;
-        position: relative;
-        margin-top: 95px;
-    }
-
-    section.conteudo-cartao .cartao img{
-        position: absolute;
-        top: -80px;
-        width: 250px;
-    }
-
-    section.conteudo-cartao .infos-cartao {
-        position: absolute;
-        bottom: 25px;
-        width: 85%;
-        height: 50%;
-        text-align: center;
-    }
-    
-    section.conteudo-cartao .infos-cartao .status-card2{
-        display: flex;
-        justify-content: space-evenly;
-        text-align: center;
-        /* border: 1px solid green; */
-        padding: 0 5px;
-    }
-    span.txt-card {
-        display: block;
-    }
+.conta .infos-conta h1 {
+  font-size: 3rem;
+  text-align: center;
+  width: 100%;
+  color: var(--cor-principal);
+  margin: 20px 0 30px 0;
 }
+
+.conta .infos-conta h2 {
+  text-align: center;
+  font-size: 2.3rem;
+  color: var(--cor-txt);
+
+}
+
+.conta .infos-conta p {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--cor-txt);
+  width: 100%;
+}
+
+/* Slide ativo: visível na tela */
+.conta.active {
+  transform: translateX(0);
+}
+
+/* Botões de navegação (estilização básica) */
+.buttons {
+  align-self: center;
+  display: flex;
+  margin-bottom: 15px;
+  gap: 15px;
+  pointer-events: none;
+}
+
+.buttons button {
+  background: transparent;
+  color: var(--cor-principal);
+  width: 50px;
+  height: 50px;
+  border: 1px solid var(--cor-principal);
+  border-radius: 50%;
+  margin-top: 20px;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+/* Efeito de bounce para primeira div (prev): movimento para a direita */
+.bounce-right {
+  animation: bounce-right 0.3s;
+}
+
+@keyframes bounce-right {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+
+/* Efeito de bounce para última div (next): movimento para a esquerda */
+.bounce-left {
+  animation: bounce-left 0.3s;
+}
+
+@keyframes bounce-left {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+.fora-lancamentos {
+  width: 870px;
+  min-height: 440px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid var(--cor-principal);
+  border-radius: 20px;
+}
+
+.fora-lancamentos .lancamentos-carrossel {
+  overflow: scroll;
+  scrollbar-width: none;
+}
+
+.fora-lancamentos .lancamentos-carrossel table {
+  width: 100%;
+  height: 100%;
+
+}
+
+.fora-lancamentos .lancamentos-carrossel table th {
+  color: var(--cor-txt);
+  padding: 10px 0;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  background-color: var(--cor-principal);
+}
+
+.fora-lancamentos .lancamentos-carrossel table tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.363);
+  text-align: center;
+  color: white;
+
+}
+
+.fora-lancamentos .lancamentos-carrossel table td {
+  padding: 1% 0;
+}
+
+.fora-lancamentos .lancamentos-carrossel table td:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.fora-lancamentos .lancamentos-carrossel table td #btn-editar {
+  width: 40px;
+  height: 30px;
+  margin-top: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
+  color: var(--cor-txt);
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.fora-lancamentos .lancamentos-carrossel table td #btn-editar:hover {
+  background-color: rgb(0, 0, 153);
+}
+
+.fora-lancamentos .lancamentos-carrossel table td #btn-excluir {
+  width: 40px;
+  height: 30px;
+  margin-top: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  font-size: 1.5rem;
+  color: var(--cor-txt);
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.fora-lancamentos .lancamentos-carrossel table td #btn-excluir:hover {
+  background-color: rgb(153, 0, 0);
+}
+
+
+.add-contas {
+width: 80%;
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+
+.add-contas .form-content {
+width: 400px;
+height: 500px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+border-radius: 20px;
+
+border: 1px solid var(--cor-principal);
+}
+
+.add-contas .form-content h1 {
+  color: var(--cor-principal);
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.add-contas .form-content form {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.add-contas .form-content div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.add-contas .form-content form label, .add-contas .form-content form p {
+  color: var(--cor-principal);
+  font-size: 1.2rem;
+}
+
+.add-contas .form-content form input, .add-contas .form-content form select {
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 5px;
+  border: 1px solid var(--cor-txt);
+  background-color: transparent;
+  color: var(--cor-txt);
+  font-size: 1rem;
+  outline: none;
+  transition: all .3s;
+}
+
+.add-contas .form-content form input::placeholder {
+  color: var(--cor-txt);
+  transition: all .3s;  
+}
+
+.add-contas .form-content form input:-webkit-autofill,
+.add-contas .form-content form input:-webkit-autofill:hover,
+.add-contas .form-content form input:-webkit-autofill:focus {
+    background-color: transparent !important;
+    color: white !important;
+    border: 1px solid white !important;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white  !important;
+    caret-color: white;
+}
+
+.add-contas .form-content form option {
+  background-color: var(--cor-fundo-content);
+}
+
+.add-contas .form-content .imagem-conta {
+  display: none;
+  width: 160px;
+  height: 150px;
+  overflow: hidden;
+  align-self: flex-start;
+}
+
+.add-contas .form-content .imagem-conta img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.add-contas .form-content form button {
+  width: 100px;
+  height: 35px;
+  border: 1px solid var(--cor-principal);
+  border-radius: 25px;
+  background-color: transparent;
+  color: var(--cor-principal);
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.add-contas .form-content form button:hover {
+  background-color: var(--cor-principal);
+  color: var(--cor-txt);
+  transform: scale(0.97);
+}
+
+

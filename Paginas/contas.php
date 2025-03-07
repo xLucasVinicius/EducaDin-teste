@@ -52,9 +52,9 @@
             </div>
 
             <!-- Nova section para os lançamentos relacionados à conta -->
-            <section class="fora-lancamentos">
-                <div class="lancamentos-carrossel">
-                    <!-- As divs de lançamentos serão inseridas aqui dinamicamente -->
+            <section class="fora-lancamentos" id="fora-lancamentos">
+                <div class="lancamentos">
+                    <!-- Os lançamentos serão inseridas aqui dinamicamente -->
                 </div>
             </section>
         </section>

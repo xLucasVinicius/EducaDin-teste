@@ -95,7 +95,7 @@ if (isset($_SESSION['id'])) {
     </div>
     <div class="input-outras-infos">
         <span class="input-box">
-            <label for="data_nascimento">Data de Nascimento</label>
+            <label for="data-nasc">Data de Nascimento</label>
             <input type="date" name="data-nascimento" value="<?php echo $row->data_nascimento; ?>" id="data-nasc">
             <span class="error"></span>
             <i class="bi bi-calendar3"></i>

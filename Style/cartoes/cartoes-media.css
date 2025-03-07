@@ -1,0 +1,73 @@
+@media screen and (max-width: 767px) {
+  .contas-carrossel {
+    /* height: 200px; */
+    min-height: 200px;
+  }
+
+  .conta {
+    padding: 0 20px;
+    justify-content: center;
+    gap: 2%;
+  }
+
+  .conta .logo {
+      width: 30%;
+      height: auto;
+      margin-right: 13%;
+  }
+
+  .conta .infos-conta {
+    gap: 10px;
+  }
+
+  .conta .infos-conta h1 {
+    font-size: 2rem;
+  }
+  
+  .conta .infos-conta h2 {
+    font-size: 1rem;   
+  }
+  
+  .conta .infos-conta p {
+    font-size: 0.9rem;
+  }
+
+  .add-contas {
+    width: 100%;
+  }
+
+  .add-contas .form-content {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1090px) {
+    .conteudo-total-contas {
+        width: 100%;
+    }
+
+    .contas-carrossel {
+        width: 100%;
+    }
+
+    .conta .infos-conta {
+        justify-content: center;
+    }
+
+    .fora-lancamentos {
+      width: 100%;
+      overflow: scroll;
+    }
+}
+
+@media screen and (max-width: 1560px) {
+    .elemento-fora {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+    }
+
+    .add-contas {
+        margin-top: 20px;
+    }
+}

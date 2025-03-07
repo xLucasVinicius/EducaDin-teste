@@ -7,32 +7,21 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
     return response.json();
   })
   .then(data => {
-    
+    // Aqui, alteramos de 'data.accounts' para 'data.contas', conforme o JSON retornado
     if (!Array.isArray(data.contas)) {
       throw new Error('Dados de contas inválidos ou não encontrados.');
     }
-    
+
     const accountsData = data.contas; // Atribuir os dados de contas da resposta
     const lancamentosData = data.lancamentos; // Atribuir os dados de lançamentos da resposta
     localStorage.setItem('accountsData', JSON.stringify(accountsData));
 
+
     const carouselContainer = document.querySelector('.contas-carrossel');
-    const lancamentosContainer = document.querySelector('.lancamentos');
-
-
+    const lancamentosContainer = document.querySelector('.lancamentos-carrossel');
 
     carouselContainer.innerHTML = '';
     lancamentosContainer.innerHTML = '';
-
-      
-    if (accountsData.length === 0) { 
-      carouselContainer.innerHTML = '<z style="color: white;">Nenhuma conta encontrada.</z>';
-    }
-
-    if (lancamentosData.length === 0) { 
-      lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>'; 
-    }
-
 
     accountsData.forEach((account, index) => {
       const contaDiv = document.createElement('div');
@@ -128,6 +117,9 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
       goToSlide(currentIndex - 1, 'prev'); // Realiza a transição
     });
 
+    
+
+
     // Função para renderizar os lançamentos em formato de tabela
     function renderLancamentos(accountId) {
       lancamentosContainer.innerHTML = ''; 
@@ -177,12 +169,10 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
 
       table.innerHTML = thead + tbody;
       lancamentosContainer.appendChild(table);
+      
     }
 
-    // Renderiza os lançamentos iniciais
-    renderLancamentos(accountsData[currentIndex].id_conta);
-    const lancamentosFora = document.getElementById('fora-lancamentos');
-    lancamentosFora.style.display = 'block';
+    renderLancamentos(accountsData[0].id_conta);
   })
   .catch(error => {
     console.error('Erro ao carregar os dados:', error);

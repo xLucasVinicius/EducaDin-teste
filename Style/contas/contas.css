@@ -45,6 +45,9 @@ body::-webkit-scrollbar {
 
 .contas-carrossel {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   width: 870px;
   min-height: 290px;
@@ -165,23 +168,26 @@ body::-webkit-scrollbar {
   min-height: 440px;
   overflow-y: auto;
   scrollbar-width: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   border: 1px solid var(--cor-principal);
   border-radius: 20px;
 }
 
-.fora-lancamentos .lancamentos-carrossel {
+.fora-lancamentos .lancamentos {
   overflow: scroll;
   scrollbar-width: none;
 }
 
-.fora-lancamentos .lancamentos-carrossel table {
+.fora-lancamentos .lancamentos table {
   width: 100%;
   height: 100%;
 
 }
 
-.fora-lancamentos .lancamentos-carrossel table th {
+.fora-lancamentos .lancamentos table th {
   color: var(--cor-txt);
   padding: 10px 0;
   text-align: center;
@@ -190,25 +196,25 @@ body::-webkit-scrollbar {
   background-color: var(--cor-principal);
 }
 
-.fora-lancamentos .lancamentos-carrossel table tr {
+.fora-lancamentos .lancamentos table tr {
   border-bottom: 1px solid rgba(255, 255, 255, 0.363);
   text-align: center;
   color: white;
 
 }
 
-.fora-lancamentos .lancamentos-carrossel table td {
+.fora-lancamentos .lancamentos table td {
   padding: 1% 0;
 }
 
-.fora-lancamentos .lancamentos-carrossel table td:last-child {
+.fora-lancamentos .lancamentos table td:last-child {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
 }
 
-.fora-lancamentos .lancamentos-carrossel table td #btn-editar {
+.fora-lancamentos .lancamentos table td #btn-editar {
   width: 40px;
   height: 30px;
   margin-top: 3px;
@@ -224,11 +230,11 @@ body::-webkit-scrollbar {
   transition: all .3s;
 }
 
-.fora-lancamentos .lancamentos-carrossel table td #btn-editar:hover {
+.fora-lancamentos .lancamentos table td #btn-editar:hover {
   background-color: rgb(0, 0, 153);
 }
 
-.fora-lancamentos .lancamentos-carrossel table td #btn-excluir {
+.fora-lancamentos .lancamentos table td #btn-excluir {
   width: 40px;
   height: 30px;
   margin-top: 3px;
@@ -245,7 +251,7 @@ body::-webkit-scrollbar {
   transition: all .3s;
 }
 
-.fora-lancamentos .lancamentos-carrossel table td #btn-excluir:hover {
+.fora-lancamentos .lancamentos table td #btn-excluir:hover {
   background-color: rgb(153, 0, 0);
 }
 
