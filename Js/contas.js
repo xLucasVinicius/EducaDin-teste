@@ -147,10 +147,10 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
                 <th>Valor</th>
                 <th>Tipo</th>
                 <th>Método</th>
+                <th>Conta</th>
                 <th>Subcategoria</th>
                 <th>Data</th>
                 <th>Parcelas</th>
-                <th>Opções</th>
             </tr>
         </thead>`;
       
@@ -163,13 +163,11 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
               <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
               <td>${lancamento.tipo}</td>
               <td>${lancamento.metodo_pagamento}</td>
+              <td>${lancamento.nome_conta}</td>
               <td>${lancamento.subcategoria}</td>
               <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
               <td>${lancamento.parcelas}</td>
-              <td>
-                  <button id="btn-editar"><i class="bi bi-pencil"></i></button>
-                  <button id="btn-excluir"><i class="bi bi-x"></i></button>
-              </td>
+              
           </tr>`;
       });
 
@@ -190,29 +188,20 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
 
   });
 
-// Função para formatar moeda
-function formatarMoeda(input) {
-    // Remove todos os caracteres que não são dígitos
-    let valor = input.value.replace(/\D/g, '');
-
-    // Adiciona os centavos
-    valor = (valor / 100).toFixed(2) + '';
-
-    // Substitui o ponto por uma vírgula (para casas decimais)
-    valor = valor.replace(".", ",");
-
-    // Adiciona um ponto a cada três números antes da vírgula
-    valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
-    // Adiciona o símbolo R$
-    input.value = 'R$ ' + valor;
-}
+const selectConta = document.getElementById('conta'); //select de conta do formulário de adicionar conta
+const imagemContent = document.querySelector('.imagem-conta'); //div da imagem da conta
+const imgConta = document.querySelector('.imagem-conta img'); //imagem da conta
+const formConta = document.getElementById('form-add-conta'); //formulário de adicionar conta
+const modalExcluir = document.getElementById('ModalexcluirContas'); //modal de excluir conta
+const modalExcluirSucesso = document.getElementById('modalexcluirSucesso'); //modal de sucesso ao excluir conta
+const modalSucess = document.querySelector('#modalAddContas'); //modal de sucesso ao adicionar conta
+const modalErrorAdd = document.querySelector('#errorModalAddContas'); //modal de erro ao adicionar conta
+const modalErrorPreencher = document.querySelector('#errorModalPreencher'); //modal de erro para preencher campos
+const modalConfirmarExcluir = document.querySelector('#modalConfirmarExcluir'); //modal de confirmação de exclusão de conta
+const msgConfirmarExcluir = document.querySelector('#modalConfirmarExcluir h2'); //mensagem de confirmação de exclusão de conta
+const tabelaBody = document.getElementById('contas-tabela-body'); //tabela de contas para excluir
 
 // Função para mostrar a imagem da conta selecionada no formulário
-const selectConta = document.getElementById('conta');
-const imagemContent = document.querySelector('.imagem-conta');
-const imgConta = document.querySelector('.imagem-conta img');
-
 function mostrarImagem() {
     const valueSelect = selectConta.value;
     if (valueSelect) {
@@ -224,8 +213,25 @@ function mostrarImagem() {
     }
 }
 
+// Função para formatar moeda
+function formatarMoeda(input) {
+  // Remove todos os caracteres que não são dígitos
+  let valor = input.value.replace(/\D/g, '');
+
+  // Adiciona os centavos
+  valor = (valor / 100).toFixed(2) + '';
+
+  // Substitui o ponto por uma vírgula (para casas decimais)
+  valor = valor.replace(".", ",");
+
+  // Adiciona um ponto a cada três números antes da vírgula
+  valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  // Adiciona o símbolo R$
+  input.value = 'R$ ' + valor;
+}
+
 // Evento de submissão do formulário para adicionar conta
-const formConta = document.getElementById('form-add-conta');
 
 formConta.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -253,11 +259,6 @@ formConta.addEventListener('submit', function (event) {
     }
 });
 
-// Modais de sucesso e erro
-const modalSucess = document.querySelector('#modalAddContas');
-const modalErrorAdd = document.querySelector('#errorModalAddContas');
-const modalErrorPreencher = document.querySelector('#errorModalPreencher');
-
 // Eventos para fechar os modais
 document.getElementById('btnModalAdd').addEventListener('click', function () {
     modalSucess.style.display = 'none';
@@ -272,6 +273,16 @@ document.getElementById('btnModalConta').addEventListener('click', function () {
     modalErrorAdd.style.display = 'none';
 });
 
+document.getElementById('btnModalexcluirSucesso').addEventListener('click', function () {
+  modalExcluirSucesso.style.display = 'none';
+  location.reload();
+});
+
+document.getElementById('fecharModalExcluir').addEventListener('click', function () {
+  modalExcluir.style.display = 'none';
+  location.reload();
+});
+
 // Função para tratar o sucesso
 function handleSuccess(data) {
     modalSucess.style.display = 'block';
@@ -281,6 +292,93 @@ function handleSuccess(data) {
 function showModalError(data) {
     modalErrorAdd.style.display = 'block';
 }
+// Função para formatar o saldo como moeda
+function formatarSaldo(valor) {
+  return `R$ ${parseFloat(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+}
+
+document.getElementById('excluir-conta').addEventListener('click', function () {
+  modalExcluir.style.display = 'block';
+
+// Carregar os dados das contas
+fetch('../Paginas/configs/infos-contas.php')
+  .then(response => response.json())
+  .then(data => {
+    const contas = data.contas; // Acessa a lista de contas retornada da resposta
+
+    contas.forEach(conta => {
+        const row = document.createElement('tr');
+        row.id = conta.id_conta;
+
+        // Coluna da imagem (logo)
+        const logoCell = document.createElement('td');
+        const img = document.createElement('img');
+        img.src = `../imagens/logos/${conta.nome_conta}.png`; // Caminho para a imagem
+        img.alt = `Logo da ${conta.nome_conta}`;
+        img.width = 50;
+        img.height = 50;
+        img.style.borderRadius = '50%';
+        img.style.objectFit = 'cover';
+        logoCell.appendChild(img);
+        row.appendChild(logoCell);
+
+        // Coluna do nome da conta
+        const nomeCell = document.createElement('td');
+        nomeCell.textContent = conta.nome_conta;
+        row.appendChild(nomeCell);
+
+        // Coluna do saldo atual (formatado como moeda)
+        const saldoCell = document.createElement('td');
+        saldoCell.textContent = formatarSaldo(conta.saldo_atual);
+        row.appendChild(saldoCell);
+
+        // Coluna para o botão de exclusão
+        const acoesCell = document.createElement('td');
+        const excluirBtn = document.createElement('button');
+        excluirBtn.textContent = 'Excluir';
+        excluirBtn.className = 'btn-excluir'; // Adicione uma classe para estilizar se necessário
+        excluirBtn.addEventListener('click', () => {
+          modalConfirmarExcluir.style.display = 'block';
+          msgConfirmarExcluir.textContent = `Tem certeza de que deseja excluir a conta ${conta.nome_conta}?`;
+          document.getElementById('btnModalexcluir').addEventListener('click', function () {
+            modalConfirmarExcluir.style.display = 'none';
+            excluirConta(conta.id_conta, conta.id_usuario); // Chama a função de exclusão
+          });
+          document.getElementById('btnModalNao').addEventListener('click', function () {
+            modalConfirmarExcluir.style.display = 'none';
+          });
+        });
+        acoesCell.appendChild(excluirBtn);
+        row.appendChild(acoesCell);
+
+        // Adiciona a linha à tabela
+        tabelaBody.appendChild(row);
+    });
+  })
+  .catch(error => console.error('Erro ao carregar os dados:', error));
+
+});
+// Função para excluir a conta
+function excluirConta(id_conta, id_usuario) {
+  // Faz uma requisição para excluir a conta com os IDs fornecidos
+  fetch(`../Paginas/configs/excluir-conta.php?id_conta=${id_conta}&id_usuario=${id_usuario}`, {
+    method: 'DELETE', // ou 'POST', dependendo do método que você usa para exclusão
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.sucesso) {
+      modalExcluirSucesso.style.display = 'block';
+      //modalExcluir.style.display = 'none';
+    } else {
+      console.error('Erro ao excluir a conta:', result);
+    }
+  })
+  .catch(error => console.error('Erro ao excluir a conta:', error));
+}
+
+
+
+
 
 
 

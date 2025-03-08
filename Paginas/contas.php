@@ -25,7 +25,7 @@
     <!-- Modal de Erro -->
     <div id="errorModalPreencher" class="modal">
         <div class="modal-content error-conta">
-            <h2>Erro!</h2>
+            <h2 style="color: red;">Erro!</h2>
             <p>Preencha todos os campos antes de enviar.</p>
             <button id="btnModalCampos">Ok</button>
         </div>
@@ -38,6 +38,47 @@
             <button id="btnModalConta">Ok</button>
         </div>
     </div>
+    <!-- Modal de excluir conta -->
+    <div id="ModalexcluirContas" class="modal">
+        <div class="modal-content excluir-conta-modal">
+            <i class="bi bi-x-lg" id="fecharModalExcluir"></i>
+            <h2>Excluir Conta</h2>
+            <p>Selecione uma conta para excluir</p>
+            <div class="tabela-contas">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Logo</th>
+                            <th>Nome da Conta</th>
+                            <th>Saldo Atual</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contas-tabela-body">
+                        <!-- As linhas serão inseridas dinamicamente aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Modal de Confirmação de exclusão conta -->
+    <div id="modalConfirmarExcluir" class="modal">
+        <div class="modal-content">
+            <h2></h2>
+            <p>Esta operaçao nao pode ser desfeita.</p>
+            <button id="btnModalexcluir">Sim</button>
+            <button id="btnModalNao">Não</button>
+        </div>
+    </div>
+    <!-- Modal de Sucesso ao excluir conta -->
+    <div id="modalexcluirSucesso" class="modal">
+        <div class="modal-content">
+            <h2>Sucesso!</h2>
+            <p>Conta removida com sucesso.</p>
+            <button id="btnModalexcluirSucesso">Ok</button>
+        </div>
+    </div>
+    
     <section class="elemento-fora">
         
         <section class="conteudo-total-contas"> <!-- Carrossel de Contas -->
@@ -93,6 +134,7 @@
                     <button type="submit">Adicionar</button>
                     <input type="hidden" name="id_usuario" value="<?php echo $id; ?>">
                 </form>
+                <button class="excluir-conta" id="excluir-conta">Excluir Conta</button>
             </div>
         </section>
     </section>

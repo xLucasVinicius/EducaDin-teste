@@ -179,12 +179,11 @@ body::-webkit-scrollbar {
 .fora-lancamentos .lancamentos {
   overflow: scroll;
   scrollbar-width: none;
+  height: 100%;
 }
 
 .fora-lancamentos .lancamentos table {
   width: 100%;
-  height: 100%;
-
 }
 
 .fora-lancamentos .lancamentos table th {
@@ -192,7 +191,6 @@ body::-webkit-scrollbar {
   padding: 10px 0;
   text-align: center;
   position: sticky;
-  top: 0;
   background-color: var(--cor-principal);
 }
 
@@ -207,54 +205,13 @@ body::-webkit-scrollbar {
   padding: 1% 0;
 }
 
-.fora-lancamentos .lancamentos table td:last-child {
+z {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
 }
-
-.fora-lancamentos .lancamentos table td #btn-editar {
-  width: 40px;
-  height: 30px;
-  margin-top: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: blue;
-  color: var(--cor-txt);
-  text-decoration: none;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all .3s;
-}
-
-.fora-lancamentos .lancamentos table td #btn-editar:hover {
-  background-color: rgb(0, 0, 153);
-}
-
-.fora-lancamentos .lancamentos table td #btn-excluir {
-  width: 40px;
-  height: 30px;
-  margin-top: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: red;
-  font-size: 1.5rem;
-  color: var(--cor-txt);
-  text-decoration: none;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all .3s;
-}
-
-.fora-lancamentos .lancamentos table td #btn-excluir:hover {
-  background-color: rgb(153, 0, 0);
-}
-
 
 .add-contas {
 width: 80%;
@@ -365,6 +322,25 @@ border: 1px solid var(--cor-principal);
 
 .add-contas .form-content form button:hover {
   background-color: var(--cor-principal);
+  color: var(--cor-txt);
+  transform: scale(0.97);
+}
+
+.excluir-conta {
+  background-color: transparent;
+  width: 100px;
+  height: 35px;
+  margin-top: 15px;
+  border: 1px solid red;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: red;
+  transition: all .2s;
+}
+
+.excluir-conta:hover {
+  background-color: red;
   color: var(--cor-txt);
   transform: scale(0.97);
 }

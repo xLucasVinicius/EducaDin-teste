@@ -41,13 +41,15 @@ CREATE TABLE lancamentos (
     valor DECIMAL(10,2),
     tipo ENUM('receita', 'despesa'),
     metodo_pagamento VARCHAR(50),
+    nome_conta VARCHAR(100),  -- Nova coluna como chave estrangeira para a tabela contas
     categoria VARCHAR(100),
     subcategoria VARCHAR(100),
     data DATE,
     parcelas INT DEFAULT 1,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_conta) REFERENCES contas(id_conta) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (id_cartao) REFERENCES cartoes(id_cartao) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (id_cartao) REFERENCES cartoes(id_cartao) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (nome_conta) REFERENCES contas(nome_conta) ON DELETE CASCADE ON UPDATE CASCADE -- Chave estrangeira para a coluna nome_conta
 );
 
 -- 5. Tabela de Desempenho Anual (por mês)
