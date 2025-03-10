@@ -46,6 +46,7 @@ html, body {
     font-size: 1.1rem;
     color: white;
     padding: 0 10%;
+    text-align: justify;
 }
 
 .conteudo-total-sobrenos .apresentar-membros { /* Div que contém os membros */
@@ -99,4 +100,10 @@ html, body {
     font-size: 1.3rem;
     text-decoration: none;
     margin-right: 5px;
+
+    transition: all 0.3s;
+}
+
+.conteudo-total-sobrenos .apresentar-membros .membros .membro-container span a:hover {
+    filter: brightness(0.7);
 }

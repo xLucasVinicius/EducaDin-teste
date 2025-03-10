@@ -11,6 +11,7 @@
     .conteudo-total-sobrenos .quem-somos p { /* Paragrafo quem somos */
         font-size: 0.8rem;
         padding: 0 5%;
+        text-align: center;
     }
 
     .conteudo-total-sobrenos .apresentar-membros .membros .membro-container { /* Div que contém um membro */
@@ -21,6 +22,10 @@
 }
 
 @media screen and (max-width: 900px) {
+    .conteudo-total-sobrenos .quem-somos p { /* Paragrafo quem somos */
+        text-align: center;
+    }
+
     .conteudo-total-sobrenos .apresentar-membros {
         gap: 0;
     }
