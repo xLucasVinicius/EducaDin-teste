@@ -7,6 +7,9 @@
     <link rel="shortcut icon" href="imagens/logos/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="Style/index/index.css">
     <link rel="stylesheet" href="Style/index/media-index.css">
+    <script src="Js/botao-google.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async></script> <!-- JS do botão de login com o google -->
 </head>
 <body>
     <div id="gradient"></div>
@@ -31,7 +34,12 @@
             <span></span>
             Cadastro
             </a>
+        
+        <div class="login-google"> <!-- Botão de login com o google -->
+            <!-- Aqui vem botao de login com o google -->
+            <div id="buttonDiv"></div>
         </div>
+    </div>
         <div class="img-edu">
             <div class="img-content">
                 <img src="imagens/logos/edu-fala.png" alt="Logo EducaDin">

@@ -1,9 +1,10 @@
 <?php
 session_start();
 // Verificar se o usuário está logado
-if (!isset($_SESSION['nome'])) {
+if (!isset($_SESSION['email'])) {
     header("Location:../index.html"); // Redirecionar para a página de login
 }
+
 ?>
 
 <!DOCTYPE html>
