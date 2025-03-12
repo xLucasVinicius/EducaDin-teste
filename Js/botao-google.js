@@ -1,6 +1,5 @@
 function handleCredentialResponse(response) {
     const data = jwt_decode(response.credential); // Decodifica o token JWT
-    console.log(data); // Exibe o token JWT para verificar as informações
 
     // Extraindo as informações do usuário
     const nome = data.given_name;
@@ -27,7 +26,6 @@ function handleCredentialResponse(response) {
     })
     .then(response => response.json())
     .then(data => {
-        alert(data);
         if (data.status === 'success') {
             window.location.href = 'http://localhost:3000/EducaDin-teste/Paginas/navbar.php?page=dashboard'; // Redireciona para o dashboard
         } else if (data.status === 'error_email') {

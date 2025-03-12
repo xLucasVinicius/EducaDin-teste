@@ -8,9 +8,38 @@ $data = json_decode(file_get_contents('php://input'), true);
 $nome = $data['nome'];
 $sobrenome = $data['sobrenome'];
 $email = $data['email'];
-$foto_perfil = $data['foto_perfil'];
-$salario = null;  
+$link_foto_perfil_google = $data['foto_perfil']; // Link da foto de perfil retornado pelo Google
+$salario = null;
 $data_nascimento = null;
+
+// Função para salvar a imagem da URL do Google
+// Função para salvar a imagem da URL do Google
+function salvarImagemGoogle($url, $novo_nome) {
+    // Diretório absoluto/relativo ao servidor para salvar as imagens
+    $diretorio_absoluto = '../../foto-perfil/';
+    
+    // Caminho relativo ao front-end para exibir as imagens
+    $diretorio_frontend = '../foto-perfil/';
+
+    // Gerar o nome da imagem com o novo nome + extensão
+    $nome_imagem = $novo_nome . '.jpg';
+    
+    // Caminho completo para salvar a imagem no servidor
+    $caminho_imagem_absoluto = $diretorio_absoluto . $nome_imagem;
+
+    // Caminho relativo que será usado no front-end
+    $caminho_imagem_frontend = $diretorio_frontend . $nome_imagem;
+
+    // Baixar a imagem do Google e salvar no servidor
+    $conteudo_imagem = file_get_contents($url);
+
+    if ($conteudo_imagem) {
+        file_put_contents($caminho_imagem_absoluto, $conteudo_imagem);
+        return $caminho_imagem_frontend; // Retorna o caminho da imagem a ser usado no front-end
+    } else {
+        return false; // Falhou ao baixar a imagem
+    }
+}
 
 // Inicia a sessão
 session_start();
@@ -38,39 +67,51 @@ if ($stmt_check_email->num_rows > 0) {
     echo json_encode(['status' => 'success']);
 } else {
     // O email não existe, vamos cadastrar o usuário
-    // Como não temos a senha, vamos gerar uma senha aleatória ou deixar em branco, dependendo da sua lógica
-    $senha_hash = password_hash('senha_gerada_aleatoriamente', PASSWORD_DEFAULT);  
 
-    // Inserir no banco de dados
-    $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario) 
-                   VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $stmt_insert = $mysqli->prepare($sql_insert);
-    $stmt_insert->bind_param("sssssss", $foto_perfil, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario);
+    // Gerar um novo nome único para a imagem (pode ser o nome + timestamp ou outro identificador)
+    $novo_nome_imagem = uniqid(); // Gera um ID único para o nome da imagem
 
-    if ($stmt_insert->execute()) {
-        // Cadastro realizado com sucesso, fazer login e redirecionar para o dashboard
+    // Tenta salvar a imagem do Google no servidor
+    $caminho_foto_perfil = salvarImagemGoogle($link_foto_perfil_google, $novo_nome_imagem);
 
-        // Buscar as informações do usuário no banco de dados após o cadastro
-        $stmt_check_email = $mysqli->prepare("SELECT id_usuario, nome, sobrenome, email, foto_perfil, salario, data_nascimento FROM usuarios WHERE email = ?");
-        $stmt_check_email->bind_param("s", $email);
-        $stmt_check_email->execute();
-        $stmt_check_email->store_result();
+    if ($caminho_foto_perfil) {
+        // Cadastro no banco de dados com o novo caminho da imagem para o front-end
+        $senha_hash = password_hash('senha_gerada_aleatoriamente', PASSWORD_DEFAULT); // Gerar uma senha aleatória ou conforme sua lógica
+        
+        $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt_insert = $mysqli->prepare($sql_insert);
+        $stmt_insert->bind_param("sssssss", $caminho_foto_perfil, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario);
 
-        // Salvar as informações do usuário nas variáveis de sessão
-        $stmt_check_email->bind_result($id_usuario, $nome_usuario, $sobrenome_usuario, $email_usuario, $foto_perfil_usuario, $salario_usuario, $data_nascimento_usuario);
-        $stmt_check_email->fetch();
 
-        $_SESSION['id'] = $id_usuario;
-        $_SESSION['nome'] = $nome_usuario;
-        $_SESSION['sobrenome'] = $sobrenome_usuario;
-        $_SESSION['email'] = $email_usuario;
-        $_SESSION['file'] = $foto_perfil_usuario;
-        $_SESSION['salario'] = $salario_usuario;
-        $_SESSION['data_nascimento'] = $data_nascimento_usuario;
+        if ($stmt_insert->execute()) {
+            // Cadastro realizado com sucesso, fazer login e redirecionar para o dashboard
 
-        echo json_encode(['status' => 'success']);
+            // Buscar as informações do usuário no banco de dados após o cadastro
+            $stmt_check_email = $mysqli->prepare("SELECT id_usuario, nome, sobrenome, email, foto_perfil, salario, data_nascimento FROM usuarios WHERE email = ?");
+            $stmt_check_email->bind_param("s", $email);
+            $stmt_check_email->execute();
+            $stmt_check_email->store_result();
+
+            // Salvar as informações do usuário nas variáveis de sessão
+            $stmt_check_email->bind_result($id_usuario, $nome_usuario, $sobrenome_usuario, $email_usuario, $foto_perfil_usuario, $salario_usuario, $data_nascimento_usuario);
+            $stmt_check_email->fetch();
+
+            $_SESSION['id'] = $id_usuario;
+            $_SESSION['nome'] = $nome_usuario;
+            $_SESSION['sobrenome'] = $sobrenome_usuario;
+            $_SESSION['email'] = $email_usuario;
+            $_SESSION['file'] = $foto_perfil_usuario;
+            $_SESSION['salario'] = $salario_usuario;
+            $_SESSION['data_nascimento'] = $data_nascimento_usuario;
+
+            echo json_encode(['status' => 'success']);
+        } else {
+            echo json_encode(['status' => 'error']);
+        }
     } else {
-        echo json_encode(['status' => 'error']);
+        // Falha ao baixar a imagem
+        echo json_encode(['status' => 'error', 'message' => 'Falha ao salvar a imagem de perfil.']);
     }
 }
 ?>
