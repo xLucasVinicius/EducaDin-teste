@@ -3,11 +3,11 @@ function handleCredentialResponse(response) {
 
     // Extraindo as informações do usuário
     const nome = data.given_name;
-    const sobrenome = data.family_name;
+    const sobrenome = data.family_name || '';
     const email = data.email;
     const foto_perfil = data.picture; // Foto de perfil
     const data_nascimento = data.birthday || ''; // Caso haja
-    const salario = 'valor_inicial'; // Você pode definir um valor padrão ou deixá-lo em branco
+    const salario = ''; // 
 
     // Enviar os dados para o backend
     fetch('Paginas/configs/usuario-google.php', {

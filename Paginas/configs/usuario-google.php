@@ -13,7 +13,6 @@ $salario = null;
 $data_nascimento = null;
 
 // Função para salvar a imagem da URL do Google
-// Função para salvar a imagem da URL do Google
 function salvarImagemGoogle($url, $novo_nome) {
     // Diretório absoluto/relativo ao servidor para salvar as imagens
     $diretorio_absoluto = '../../foto-perfil/';

@@ -44,11 +44,11 @@ if (isset($_SESSION['id'])) {
     <div class="modal-content">
         <h2>Sucesso!</h2>
         <p>O cadastro foi atualizado com sucesso.</p>
-        <button id="closeModalBtn">Login</button>
+        <button id="closeModalBtn">Iniciar sessão</button>
     </div>
 </div>
 
-<form action="configs/salvar-usuario.php" method="post" enctype="multipart/form-data" id="form-salvar-usuario">
+<form action="configs/salvar-usuario.php" method="POST" enctype="multipart/form-data" id="form-salvar-usuario">
     <h1>Editar <e style="color: #F5A900; font-family:orbitron">perfil</e></h1>
     <div class="input-img-perfil">
         <div class="img-perfil">
