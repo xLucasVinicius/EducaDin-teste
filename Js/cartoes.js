@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte para o evento de carregamento do DOM
-  fetch('../Paginas/configs/infos-contas.php')
+  fetch('../Paginas/configs/infos-cartoes.php')
   .then(response => {
     if (!response.ok) {
       throw new Error('Erro ao carregar dados: ' + response.statusText);
@@ -7,45 +7,70 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
     return response.json();
   })
   .then(data => {
-    // Aqui, alteramos de 'data.accounts' para 'data.contas', conforme o JSON retornado
+    
     if (!Array.isArray(data.contas)) {
       throw new Error('Dados de contas inválidos ou não encontrados.');
     }
-
+    
     const accountsData = data.contas; // Atribuir os dados de contas da resposta
     const lancamentosData = data.lancamentos; // Atribuir os dados de lançamentos da resposta
     localStorage.setItem('accountsData', JSON.stringify(accountsData));
 
+    const carouselContainer = document.querySelector('.cartoes-carrossel');
+    const lancamentosContainer = document.querySelector('.lancamentos');
 
-    const carouselContainer = document.querySelector('.contas-carrossel');
-    const lancamentosContainer = document.querySelector('.lancamentos-carrossel');
+
 
     carouselContainer.innerHTML = '';
     lancamentosContainer.innerHTML = '';
 
+      
+    if (accountsData.length === 0) { 
+      carouselContainer.innerHTML = '<z style="color: white;">Nenhum cartão encontrado.</z>';
+    }
+
+    if (lancamentosData.length === 0) {
+      lancamentosContainer.style.height = '100%';
+      lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>'; 
+    }
+
+
     accountsData.forEach((account, index) => {
-      const contaDiv = document.createElement('div');
-      contaDiv.classList.add('conta');
+      const cartaoDiv = document.createElement('div');
+      cartaoDiv.classList.add('cartao');
       if (index === 0) {
-        contaDiv.classList.add('active');
-        contaDiv.style.transform = 'translateX(0)';
+        cartaoDiv.classList.add('active');
+        cartaoDiv.style.transform = 'translateX(0)';
       }
 
-      contaDiv.innerHTML = `
+      cartaoDiv.innerHTML = `
         <div class="logo">
-            <img src="../imagens/logos/${account.nome_conta}.png" alt="Logo ${account.nome_conta}">
+            <img src="../imagens/cartoes/${account.nome_conta}.jpg" alt="cartao de ${account.nome_conta}">
         </div>
-        <div class="infos-conta">
-            <h1>${account.nome_conta}</h1>
-            <h2>Saldo: R$ ${parseFloat(account.saldo_atual).toFixed(2).replace('.', ',')}</h2>
-            <p>+5% ao mês anterior</p>
+        <div class="infos-cartao">
+            <h1> Cartão ${account.nome_conta}</h1>
+            <h2>Limite Total: R$ ${parseFloat(account.saldo_atual).toFixed(2).replace('.', ',')}</h2>
+            <span class="infos-fatura">
+              <p>Fechamento: 12/01</p>
+              <p>Vencimento: 20/01</p>
+            </span>
         </div>
         `;
-      carouselContainer.appendChild(contaDiv);
+      carouselContainer.appendChild(cartaoDiv);
+    });
+
+    const selectConta = document.getElementById('conta'); // Seleciona o select de contas
+
+    // Loop separado para adicionar as contas ao <select>
+    accountsData.forEach(account => {
+      const option = document.createElement('option');
+      option.value = account.id_conta; // Valor da conta
+      option.text = account.nome_conta; // Nome da conta para exibir
+      selectConta.appendChild(option);
     });
 
     // Seleciona todas as slides de contas após a criação dinâmica
-    const slides = document.querySelectorAll('.conta');
+    const slides = document.querySelectorAll('.cartao');
     let currentIndex = 0;
     const totalSlides = slides.length;
 
@@ -117,9 +142,6 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
       goToSlide(currentIndex - 1, 'prev'); // Realiza a transição
     });
 
-    
-
-
     // Função para renderizar os lançamentos em formato de tabela
     function renderLancamentos(accountId) {
       lancamentosContainer.innerHTML = ''; 
@@ -139,10 +161,10 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
                 <th>Valor</th>
                 <th>Tipo</th>
                 <th>Método</th>
+                <th>Conta</th>
                 <th>Subcategoria</th>
                 <th>Data</th>
                 <th>Parcelas</th>
-                <th>Opções</th>
             </tr>
         </thead>`;
       
@@ -155,13 +177,11 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
               <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
               <td>${lancamento.tipo}</td>
               <td>${lancamento.metodo_pagamento}</td>
+              <td>${lancamento.nome_conta}</td>
               <td>${lancamento.subcategoria}</td>
               <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
               <td>${lancamento.parcelas}</td>
-              <td>
-                  <button id="btn-editar"><i class="bi bi-pencil"></i></button>
-                  <button id="btn-excluir"><i class="bi bi-x"></i></button>
-              </td>
+              
           </tr>`;
       });
 
@@ -169,10 +189,12 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
 
       table.innerHTML = thead + tbody;
       lancamentosContainer.appendChild(table);
-      
     }
 
-    renderLancamentos(accountsData[0].id_conta);
+    // Renderiza os lançamentos iniciais
+    renderLancamentos(accountsData[currentIndex].id_conta);
+    const lancamentosFora = document.getElementById('fora-lancamentos');
+    lancamentosFora.style.display = 'flex';
   })
   .catch(error => {
     console.error('Erro ao carregar os dados:', error);
@@ -180,42 +202,38 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
 
   });
 
+const body = document.querySelector('body');
+const selectConta = document.getElementById('conta'); //select de conta do formulário de adicionar conta
+const formConta = document.getElementById('form-add-cartao'); //formulário de adicionar conta
+const modalExcluir = document.getElementById('ModalexcluirCartao'); //modal de excluir conta
+const modalExcluirSucesso = document.getElementById('modalexcluirSucesso'); //modal de sucesso ao excluir conta
+const modalSucess = document.querySelector('#modalAddCartao'); //modal de sucesso ao adicionar conta
+const modalErrorAdd = document.querySelector('#errorModalAddCartoes'); //modal de erro ao adicionar conta
+const modalErrorPreencher = document.querySelector('#errorModalPreencher'); //modal de erro para preencher campos
+const modalConfirmarExcluir = document.querySelector('#modalConfirmarExcluir'); //modal de confirmação de exclusão de conta
+const msgConfirmarExcluir = document.querySelector('#modalConfirmarExcluir h2'); //mensagem de confirmação de exclusão de conta
+const tabelaBody = document.getElementById('cartaoes-tabela-body'); //tabela de contas para excluir
+
+
 // Função para formatar moeda
 function formatarMoeda(input) {
-    // Remove todos os caracteres que não são dígitos
-    let valor = input.value.replace(/\D/g, '');
+  // Remove todos os caracteres que não são dígitos
+  let valor = input.value.replace(/\D/g, '');
 
-    // Adiciona os centavos
-    valor = (valor / 100).toFixed(2) + '';
+  // Adiciona os centavos
+  valor = (valor / 100).toFixed(2) + '';
 
-    // Substitui o ponto por uma vírgula (para casas decimais)
-    valor = valor.replace(".", ",");
+  // Substitui o ponto por uma vírgula (para casas decimais)
+  valor = valor.replace(".", ",");
 
-    // Adiciona um ponto a cada três números antes da vírgula
-    valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  // Adiciona um ponto a cada três números antes da vírgula
+  valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-    // Adiciona o símbolo R$
-    input.value = 'R$ ' + valor;
-}
-
-// Função para mostrar a imagem da conta selecionada no formulário
-const selectConta = document.getElementById('conta');
-const imagemContent = document.querySelector('.imagem-conta');
-const imgConta = document.querySelector('.imagem-conta img');
-
-function mostrarImagem() {
-    const valueSelect = selectConta.value;
-    if (valueSelect) {
-        imagemContent.style.display = 'block';
-        imgConta.src = `../imagens/logos/${valueSelect}.png`;
-    } else {
-        imagemContent.style.display = 'none';
-        imgConta.src = '';
-    }
+  // Adiciona o símbolo R$
+  input.value = 'R$ ' + valor;
 }
 
 // Evento de submissão do formulário para adicionar conta
-const formConta = document.getElementById('form-add-conta');
 
 formConta.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -243,11 +261,6 @@ formConta.addEventListener('submit', function (event) {
     }
 });
 
-// Modais de sucesso e erro
-const modalSucess = document.querySelector('#modalAddContas');
-const modalErrorAdd = document.querySelector('#errorModalAddContas');
-const modalErrorPreencher = document.querySelector('#errorModalPreencher');
-
 // Eventos para fechar os modais
 document.getElementById('btnModalAdd').addEventListener('click', function () {
     modalSucess.style.display = 'none';
@@ -262,6 +275,16 @@ document.getElementById('btnModalConta').addEventListener('click', function () {
     modalErrorAdd.style.display = 'none';
 });
 
+document.getElementById('btnModalexcluirSucesso').addEventListener('click', function () {
+  modalExcluirSucesso.style.display = 'none';
+  location.reload();
+});
+
+document.getElementById('fecharModalExcluir').addEventListener('click', function () {
+  modalExcluir.style.display = 'none';
+  location.reload();
+});
+
 // Função para tratar o sucesso
 function handleSuccess(data) {
     modalSucess.style.display = 'block';
@@ -271,6 +294,97 @@ function handleSuccess(data) {
 function showModalError(data) {
     modalErrorAdd.style.display = 'block';
 }
+// Função para formatar o saldo como moeda
+function formatarSaldo(valor) {
+  return `R$ ${parseFloat(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+}
+
+document.getElementById('excluir-conta').addEventListener('click', function () {
+  modalExcluir.style.display = 'block';
+
+  window.scrollTo(0, 0); // Desloca a janela para o topo quando o formulário abre
+
+// Carregar os dados das contas
+fetch('../Paginas/configs/infos-contas.php')
+  .then(response => response.json())
+  .then(data => {
+    const contas = data.contas; // Acessa a lista de contas retornada da resposta
+
+    contas.forEach(conta => {
+        const row = document.createElement('tr');
+        row.id = conta.id_conta;
+
+        // Coluna da imagem (logo)
+        const logoCell = document.createElement('td');
+        const img = document.createElement('img');
+        img.src = `../imagens/logos/${conta.nome_conta}.png`; // Caminho para a imagem
+        img.alt = `Logo da ${conta.nome_conta}`;
+        img.width = 50;
+        img.height = 50;
+        img.style.borderRadius = '50%';
+        img.style.objectFit = 'cover';
+        logoCell.appendChild(img);
+        row.appendChild(logoCell);
+
+        // Coluna do nome da conta
+        const nomeCell = document.createElement('td');
+        nomeCell.textContent = conta.nome_conta;
+        row.appendChild(nomeCell);
+
+        // Coluna do saldo atual (formatado como moeda)
+        const saldoCell = document.createElement('td');
+        saldoCell.textContent = formatarSaldo(conta.saldo_atual);
+        row.appendChild(saldoCell);
+
+        // Coluna para o botão de exclusão
+        const acoesCell = document.createElement('td');
+        const excluirBtn = document.createElement('button');
+        excluirBtn.textContent = 'Excluir';
+        excluirBtn.className = 'btn-excluir'; // Adicione uma classe para estilizar se necessário
+        excluirBtn.addEventListener('click', () => {
+          modalConfirmarExcluir.style.display = 'block';
+          msgConfirmarExcluir.textContent = `Tem certeza de que deseja excluir a conta ${conta.nome_conta}?`;
+          document.getElementById('btnModalexcluir').addEventListener('click', function () {
+            modalConfirmarExcluir.style.display = 'none';
+            excluirConta(conta.id_conta, conta.id_usuario); // Chama a função de exclusão
+          });
+          document.getElementById('btnModalNao').addEventListener('click', function () {
+            modalConfirmarExcluir.style.display = 'none';
+          });
+        });
+        acoesCell.appendChild(excluirBtn);
+        row.appendChild(acoesCell);
+
+        // Adiciona a linha à tabela
+        tabelaBody.appendChild(row);
+    });
+    
+
+  })
+  .catch(error => console.error('Erro ao carregar os dados:', error));
+
+});
+// Função para excluir a conta
+function excluirConta(id_conta, id_usuario) {
+  // Faz uma requisição para excluir a conta com os IDs fornecidos
+  fetch(`../Paginas/configs/excluir-conta.php?id_conta=${id_conta}&id_usuario=${id_usuario}`, {
+    method: 'DELETE', // ou 'POST', dependendo do método que você usa para exclusão
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.sucesso) {
+      modalExcluirSucesso.style.display = 'block';
+      //modalExcluir.style.display = 'none';
+    } else {
+      console.error('Erro ao excluir a conta:', result);
+    }
+  })
+  .catch(error => console.error('Erro ao excluir a conta:', error));
+}
+
+
+
+
 
 
 

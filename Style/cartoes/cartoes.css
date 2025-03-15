@@ -18,6 +18,7 @@
 html, body {
   background-color: var(--cor-fundo-content);
   scrollbar-width: hidden;
+  overflow: auto;
 }
 
 body::-webkit-scrollbar {
@@ -34,7 +35,7 @@ body::-webkit-scrollbar {
   padding: 2% 3%;
 }
 
-.conteudo-total-contas {
+.conteudo-total-cartoes {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -43,8 +44,11 @@ body::-webkit-scrollbar {
   height: 100%;
 }
 
-.contas-carrossel {
+.cartoes-carrossel {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   width: 870px;
   min-height: 290px;
@@ -53,7 +57,7 @@ body::-webkit-scrollbar {
 }
 
 /* Cada conta ocupará o container inteiro, posicionada de forma absoluta */
-.conta {
+.cartao {
   position: absolute;
   top: 0;
   left: 0;
@@ -64,56 +68,60 @@ body::-webkit-scrollbar {
   transition: transform 0.5s ease;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 150px;
 }
 
-.conta .logo {
+.cartao .logo {
   overflow: hidden;
-  width: 200px;
-  height: 200px;
-  /* margin-right: 150px; */
-
-  border-radius: 50%;
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
 }
 
-.conta .logo img {
+.cartao .logo img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
-.conta .infos-conta {
+.cartao .infos-cartao {
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 20px;
-  height: 100%;
+  gap: 10px;
+  width: 250px;
 }
 
-.conta .infos-conta h1 {
-  font-size: 3rem;
+.cartao .infos-cartao h1 {
+  font-size: 2rem;
   text-align: center;
   width: 100%;
   color: var(--cor-principal);
-  margin: 20px 0 30px 0;
+  margin: 30px 0 35px 0;
 }
 
-.conta .infos-conta h2 {
+.cartao .infos-cartao h2 {
   text-align: center;
-  font-size: 2.3rem;
+  font-size: 1.3rem;
   color: var(--cor-txt);
 
 }
 
-.conta .infos-conta p {
-  text-align: center;
+.cartao .infos-cartao .infos-fatura {
+  display: flex;
+  justify-content: center;
+
+}
+
+.cartao .infos-cartao p {
   font-size: 1rem;
   color: var(--cor-txt);
   width: 100%;
+  text-align: center;
 }
 
 /* Slide ativo: visível na tela */
-.conta.active {
+.cartao.active {
   transform: translateX(0);
 }
 
@@ -173,87 +181,48 @@ body::-webkit-scrollbar {
   border-radius: 20px;
 }
 
-.fora-lancamentos .lancamentos-carrossel {
+.fora-lancamentos .lancamentos {
   overflow: scroll;
   scrollbar-width: none;
-}
-
-.fora-lancamentos .lancamentos-carrossel table {
-  width: 100%;
   height: 100%;
-
 }
 
-.fora-lancamentos .lancamentos-carrossel table th {
+.fora-lancamentos .lancamentos::-webkit-scrollbar {
+  display: none;
+}
+
+.fora-lancamentos .lancamentos table {
+  width: 100%;
+}
+
+.fora-lancamentos .lancamentos table th {
   color: var(--cor-txt);
   padding: 10px 0;
   text-align: center;
   position: sticky;
-  top: 0;
   background-color: var(--cor-principal);
 }
 
-.fora-lancamentos .lancamentos-carrossel table tr {
+.fora-lancamentos .lancamentos table tr {
   border-bottom: 1px solid rgba(255, 255, 255, 0.363);
   text-align: center;
   color: white;
 
 }
 
-.fora-lancamentos .lancamentos-carrossel table td {
+.fora-lancamentos .lancamentos table td {
   padding: 1% 0;
 }
 
-.fora-lancamentos .lancamentos-carrossel table td:last-child {
+z {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
 }
 
-.fora-lancamentos .lancamentos-carrossel table td #btn-editar {
-  width: 40px;
-  height: 30px;
-  margin-top: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: blue;
-  color: var(--cor-txt);
-  text-decoration: none;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all .3s;
-}
-
-.fora-lancamentos .lancamentos-carrossel table td #btn-editar:hover {
-  background-color: rgb(0, 0, 153);
-}
-
-.fora-lancamentos .lancamentos-carrossel table td #btn-excluir {
-  width: 40px;
-  height: 30px;
-  margin-top: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: red;
-  font-size: 1.5rem;
-  color: var(--cor-txt);
-  text-decoration: none;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all .3s;
-}
-
-.fora-lancamentos .lancamentos-carrossel table td #btn-excluir:hover {
-  background-color: rgb(153, 0, 0);
-}
-
-
-.add-contas {
+.add-cartoes {
 width: 80%;
 height: 100%;
 display: flex;
@@ -262,9 +231,9 @@ justify-content: center;
 align-items: center;
 }
 
-.add-contas .form-content {
+.add-cartoes .form-content {
 width: 400px;
-height: 500px;
+height: 550px;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -274,13 +243,13 @@ border-radius: 20px;
 border: 1px solid var(--cor-principal);
 }
 
-.add-contas .form-content h1 {
+.add-cartoes .form-content h1 {
   color: var(--cor-principal);
   font-size: 2rem;
   margin-bottom: 20px;
 }
 
-.add-contas .form-content form {
+.add-cartoes .form-content form {
   width: 60%;
   display: flex;
   flex-direction: column;
@@ -289,19 +258,19 @@ border: 1px solid var(--cor-principal);
   gap: 20px;
 }
 
-.add-contas .form-content div {
+.add-cartoes .form-content div {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.add-contas .form-content form label, .add-contas .form-content form p {
+.add-cartoes .form-content form label, .add-cartoes .form-content form p {
   color: var(--cor-principal);
   font-size: 1.2rem;
 }
 
-.add-contas .form-content form input, .add-contas .form-content form select {
+.add-cartoes .form-content form input, .add-cartoes .form-content form select {
   width: 100%;
   height: 40px;
   padding: 0 10px;
@@ -314,14 +283,14 @@ border: 1px solid var(--cor-principal);
   transition: all .3s;
 }
 
-.add-contas .form-content form input::placeholder {
+.add-cartoes .form-content form input::placeholder {
   color: var(--cor-txt);
   transition: all .3s;  
 }
 
-.add-contas .form-content form input:-webkit-autofill,
-.add-contas .form-content form input:-webkit-autofill:hover,
-.add-contas .form-content form input:-webkit-autofill:focus {
+.add-cartoes .form-content form input:-webkit-autofill,
+.add-cartoes .form-content form input:-webkit-autofill:hover,
+.add-cartoes .form-content form input:-webkit-autofill:focus {
     background-color: transparent !important;
     color: white !important;
     border: 1px solid white !important;
@@ -330,26 +299,11 @@ border: 1px solid var(--cor-principal);
     caret-color: white;
 }
 
-.add-contas .form-content form option {
+.add-cartoes .form-content form option {
   background-color: var(--cor-fundo-content);
 }
 
-.add-contas .form-content .imagem-conta {
-  display: none;
-  width: 160px;
-  height: 150px;
-  overflow: hidden;
-  align-self: flex-start;
-}
-
-.add-contas .form-content .imagem-conta img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.add-contas .form-content form button {
+.add-cartoes .form-content form button {
   width: 100px;
   height: 35px;
   border: 1px solid var(--cor-principal);
@@ -360,8 +314,27 @@ border: 1px solid var(--cor-principal);
   transition: all .3s;
 }
 
-.add-contas .form-content form button:hover {
+.add-cartoes .form-content form button:hover {
   background-color: var(--cor-principal);
+  color: var(--cor-txt);
+  transform: scale(0.97);
+}
+
+.excluir-cartao {
+  background-color: transparent;
+  width: 100px;
+  height: 35px;
+  margin-top: 15px;
+  border: 1px solid red;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: red;
+  transition: all .2s;
+}
+
+.excluir-cartao:hover {
+  background-color: red;
   color: var(--cor-txt);
   transform: scale(0.97);
 }

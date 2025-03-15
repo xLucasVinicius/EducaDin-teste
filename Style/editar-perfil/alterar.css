@@ -26,6 +26,10 @@ body {
     scrollbar-width: none;
 }
 
+.conteudo::-webkit-scrollbar {
+    display: none;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -290,20 +294,22 @@ label {
 }
 
 .input-login {
-    width: 83%;
+    width: 93%;
 }
 
 .input-name, .input-outras-infos {
     display: block;
-    width: 83%;
+    width: 93%;
 }
 
 #senha-icon, #confirmarsenha-icon {
     bottom: 3px;
+    right: 25px;
 }
 
 .invalid #senha-icon, .invalid #confirmarsenha-icon {
     top: 33px;
+    right: 25px;
 }
 
 #nome, #sobrenome, #data-nasc, #salario,#email, #senha, #confirmar-senha {
@@ -318,6 +324,7 @@ label {
 
 .bi-calendar3 {
     top: 34px;
+    right: 25px;
 }
 }
 
@@ -349,14 +356,22 @@ border-radius: 50%;
 
 .input-name, .input-outras-infos {
     display: block;
-    width: 95%;
+    width: 93%;
 }
 
 .input-login {
-    width: 95%;
+    width: 93%;
 }
 
-#nome, #sobrenome, #data-nasc, #telefone,#email, #senha, #confirmarsenha {
+.invalid #senha-icon, .invalid #confirmarsenha-icon {
+    top: 38px;
+}
+
+.bi-calendar3 {
+    top: 38px;
+}
+
+#nome, #sobrenome, #data-nasc, #salario, #email, #senha, #confirmar-senha {
     padding: 7px;
     font-size: 0.95rem;
     width: 280px;

@@ -63,20 +63,18 @@ body::-webkit-scrollbar {
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 0px 115px;
   transform: translateX(100%);
   transition: transform 0.5s ease;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  gap: 50px;
 }
 
 .conta .logo {
   overflow: hidden;
-  width: 200px;
-  height: 200px;
-  /* margin-right: 150px; */
-
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
 }
 
@@ -90,29 +88,30 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 20px;
+  justify-content: center;
+  gap: 10px;
+  width: 350px;
   height: 100%;
 }
 
 .conta .infos-conta h1 {
-  font-size: 3rem;
-  text-align: center;
-  width: 100%;
+  font-size: 2.8rem;
   color: var(--cor-principal);
-  margin: 20px 0 30px 0;
+  margin-bottom: 30px;
 }
 
 .conta .infos-conta h2 {
-  text-align: center;
-  font-size: 2.3rem;
+  font-size: 2.5rem;
   color: var(--cor-txt);
 
 }
 
 .conta .infos-conta p {
-  text-align: center;
   font-size: 1rem;
   color: var(--cor-txt);
+}
+
+.conta .infos-conta h2, .conta .infos-conta p {
   width: 100%;
 }
 
@@ -165,6 +164,7 @@ body::-webkit-scrollbar {
 }
 
 .fora-lancamentos {
+  position: relative;
   width: 870px;
   min-height: 440px;
   overflow-y: auto;
@@ -181,6 +181,10 @@ body::-webkit-scrollbar {
   overflow: scroll;
   scrollbar-width: none;
   height: 100%;
+}
+
+.fora-lancamentos .lancamentos::-webkit-scrollbar {
+  display: none;
 }
 
 .fora-lancamentos .lancamentos table {

@@ -29,8 +29,8 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
       carouselContainer.innerHTML = '<z style="color: white;">Nenhuma conta encontrada.</z>';
     }
 
-    if (lancamentosData.length === 0) { 
-      lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>'; 
+    if (lancamentosData.length === 0) {
+      lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>';
     }
 
 
@@ -133,8 +133,8 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
       lancamentosContainer.innerHTML = ''; 
       const lancamentos = lancamentosData.filter(l => l.id_conta === accountId);
 
-      if (lancamentos.length === 0) { 
-        lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>'; 
+      if (lancamentos.length === 0) {
+        lancamentosContainer.innerHTML = '<z style="color: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Nenhum lançamento encontrado.</z>'; 
         return;
       }
 

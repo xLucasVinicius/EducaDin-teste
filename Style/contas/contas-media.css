@@ -1,27 +1,31 @@
 @media screen and (max-width: 767px) {
   .contas-carrossel {
-    /* height: 200px; */
     min-height: 200px;
   }
 
   .conta {
-    padding: 0 20px;
     justify-content: center;
-    gap: 2%;
+    gap: 35px;
   }
 
   .conta .logo {
-      width: 30%;
-      height: auto;
-      margin-right: 13%;
+    width: 100px;
+    height: 100px;
+  }
+
+  .conta .logo img {
+    width: 100%;
+    height: 100%;
   }
 
   .conta .infos-conta {
+    width: 150px;
     gap: 10px;
   }
 
   .conta .infos-conta h1 {
-    font-size: 2rem;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
   }
   
   .conta .infos-conta h2 {
@@ -43,15 +47,11 @@
 
 @media screen and (max-width: 1090px) {
     .conteudo-total-contas {
-        width: 100%;
+      width: 100%;
     }
 
     .contas-carrossel {
-        width: 100%;
-    }
-
-    .conta .infos-conta {
-        justify-content: center;
+      width: 100%;
     }
 
     .fora-lancamentos {
@@ -62,12 +62,12 @@
 
 @media screen and (max-width: 1560px) {
     .elemento-fora {
-        flex-direction: column;
-        align-items: center;
-        height: auto;
+      flex-direction: column;
+      align-items: center;
+      height: auto;
     }
 
     .add-contas {
-        margin-top: 20px;
+      margin-top: 20px;
     }
 }

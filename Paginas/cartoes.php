@@ -1,6 +1,5 @@
 <?php
     $id = $_SESSION['id'];
-
 ?>
 
 <!DOCTYPE html>
@@ -15,34 +14,75 @@
 </head>
 <body>
     <!-- Modal de Sucesso -->
-    <div id="modalAddContas" class="modal">
+    <div id="modalAddCartoes" class="modal">
         <div class="modal-content">
             <h2>Sucesso!</h2>
-            <p>Conta adicionada com sucesso.</p>
+            <p>Cartão adicionado com sucesso.</p>
             <button id="btnModalAdd">Ok</button>
         </div>
     </div>
     <!-- Modal de Erro -->
     <div id="errorModalPreencher" class="modal">
-        <div class="modal-content error-conta">
-            <h2>Erro!</h2>
+        <div class="modal-content error-cartao">
+            <h2 style="color: red;">Erro!</h2>
             <p>Preencha todos os campos antes de enviar.</p>
             <button id="btnModalCampos">Ok</button>
         </div>
     </div>
     <!-- Modal de Erro -->
-    <div id="errorModalAddContas" class="modal">
-        <div class="modal-content error-conta">
+    <div id="errorModalAddCartoes" class="modal">
+        <div class="modal-content error-cartao">
             <h2>Erro!</h2>
-            <p>Você já possui essa conta.</p>
-            <button id="btnModalConta">Ok</button>
+            <p>Você já possui este cartão.</p>
+            <button id="btnModalCartao">Ok</button>
         </div>
     </div>
+    <!-- Modal de excluir conta -->
+    <div id="ModalexcluirCartao" class="modal">
+        <div class="modal-content excluir-cartao-modal">
+            <i class="bi bi-x-lg" id="fecharModalExcluir"></i>
+            <h2>Excluir Cartão</h2>
+            <p>Selecione um cartão para excluir</p>
+            <div class="tabela-cartoes">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Logo</th>
+                            <th>Nome da Conta</th>
+                            <th>Saldo Atual</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cartoes-tabela-body">
+                        <!-- As linhas serão inseridas dinamicamente aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Modal de Confirmação de exclusão conta -->
+    <div id="modalConfirmarExcluir" class="modal">
+        <div class="modal-content">
+            <h2></h2>
+            <p>Esta operaçao nao pode ser desfeita.</p>
+            <button id="btnModalexcluir">Sim</button>
+            <button id="btnModalNao">Não</button>
+        </div>
+    </div>
+    <!-- Modal de Sucesso ao excluir conta -->
+    <div id="modalexcluirSucesso" class="modal">
+        <div class="modal-content">
+            <h2>Sucesso!</h2>
+            <p>Cartão removido com sucesso.</p>
+            <button id="btnModalexcluirSucesso">Ok</button>
+        </div>
+    </div>
+    
     <section class="elemento-fora">
         
-        <section class="conteudo-total-contas"> <!-- Carrossel de Contas -->
+        <section class="conteudo-total-cartoes"> <!-- Carrossel de Contas -->
 
-            <section class="contas-carrossel">
+            <section class="cartoes-carrossel">
                 <!-- As divs de conta serão inseridas aqui dinamicamente -->
             </section>
 
@@ -52,31 +92,23 @@
             </div>
 
             <!-- Nova section para os lançamentos relacionados à conta -->
-            <section class="fora-lancamentos">
-                <div class="lancamentos-carrossel">
-                    <!-- As divs de lançamentos serão inseridas aqui dinamicamente -->
+            <section class="fora-lancamentos" id="fora-lancamentos">
+                <div class="lancamentos">
+                    <!-- Os lançamentos serão inseridas aqui dinamicamente -->
                 </div>
             </section>
         </section>
 
         <!-- Formulário para adicionar novas contas -->
-        <section class="add-contas">
+        <section class="add-cartoes">
             <div class="form-content">
                 <h1>Adicionar Cartão</h1>
-                <form action="configs/add-cartaophp" method="POST" id="form-add-cartao">
+                <form action="configs/add-cartao.php" method="POST" id="form-add-cartao">
                     <div class="form-conta">
                         <label for="conta">Instituição</label>
-                        <select name="conta" id="conta" onchange="mostrarImagem()">
-                            <option value="">Selecione a conta referente ao cartão</option>
-                            <option value="Nubank">Nubank</option>
-                            <option value="PicPay">PicPay</option>
-                            <option value="Mercado Pago">Mercado Pago</option>
-                            <option value="Inter">Inter</option>
-                            <option value="Itaú">Itaú</option>
-                            <option value="Santander">Santander</option>
-                            <option value="Banco do Brasil">Banco do Brasil</option>
-                            <option value="C6 Bank">C6 Bank</option>
-                            <option value="Caixa">Caixa</option>
+                        <select name="conta" id="conta">
+                            <option value="">Selecione a conta</option>
+                            
                         </select>
                     </div>
                     <div class="limite-cartao">
@@ -85,16 +117,83 @@
                     </div>
                     <div class="data-fechamento">
                         <label for="fechamento">Dia de fechamento</label>
-                        <input type="number" name="fechamento" id="fechamento" min="1" max="31" placeholder="Dia de fechamento da fatura">
+                        <select name="fechamento" id="fechamento">
+                            <option value="">Selecione o dia</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>    
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>    
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>    
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>    
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>    
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>    
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>    
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
                     </div>
                     
                     <div class="data-vencimento">
                         <label for="vencimento">Dia de vencimento</label>
-                        <input type="number" name="vencimento" id="vencimento" min="1" max="31" placeholder="Dia de vencimento da fatura">
+                        <select name="vencimento" id="vencimento">
+                            <option value="">Selecione o dia</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>    
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>    
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>    
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>    
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>    
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>    
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>    
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
                     </div>
                     <button type="submit">Adicionar</button>
                     <input type="hidden" name="id_usuario" value="<?php echo $id; ?>">
                 </form>
+                <button class="excluir-cartao" id="excluir-cartao">Excluir Cartão</button>
             </div>
         </section>
     </section>

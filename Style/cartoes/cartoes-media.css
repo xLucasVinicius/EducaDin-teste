@@ -1,56 +1,73 @@
 @media screen and (max-width: 767px) {
-  .contas-carrossel {
-    /* height: 200px; */
-    min-height: 200px;
-  }
-
-  .conta {
-    padding: 0 20px;
-    justify-content: center;
-    gap: 2%;
-  }
-
-  .conta .logo {
-      width: 30%;
-      height: auto;
-      margin-right: 13%;
-  }
-
-  .conta .infos-conta {
-    gap: 10px;
-  }
-
-  .conta .infos-conta h1 {
-    font-size: 2rem;
-  }
-  
-  .conta .infos-conta h2 {
-    font-size: 1rem;   
-  }
-  
-  .conta .infos-conta p {
-    font-size: 0.9rem;
-  }
-
-  .add-contas {
+  .cartoes-carrossel {
+    height: 400px;
+    /* min-height: 200px; */
     width: 100%;
   }
 
-  .add-contas .form-content {
+  .cartao {
+    padding: 0 20px;
+    gap: 2%;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+  }
+
+  .cartao .logo {
+      width: 280px;
+      height: auto;
+      margin-top: 3%;
+  }
+
+  .cartao .logo img {
+      width: 280px;
+      height: 100%;
+      object-fit: cover;
+  }
+
+  .cartao .infos-cartao {
+    align-items: center;
+  }
+
+  .cartao .infos-cartao h1 {
+    font-size: 1.5rem;
+    margin: 15px 0 20px 0;
+  }
+  
+  .cartao .infos-cartao h2 {
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  .cartao .infos-cartao p {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .add-cartoes {
+    width: 100%;
+  }
+
+  .add-cartoes .form-content {
     width: 100%;
   }
 }
 
+@media screen and (min-width: 768px) and (max-width: 1090px) {}
+
 @media screen and (max-width: 1090px) {
-    .conteudo-total-contas {
-        width: 100%;
+    .conteudo-total-cartoes, .cartoes-carrossel {
+      width: 100%;
     }
 
-    .contas-carrossel {
-        width: 100%;
+    .cartao {
+      padding: 0 20px;
+      gap: 2%;
+      align-items: center;
+      justify-content: space-evenly;
     }
 
-    .conta .infos-conta {
+    .cartao .infos-cartao {
         justify-content: center;
     }
 
@@ -67,7 +84,7 @@
         height: auto;
     }
 
-    .add-contas {
+    .add-cartoes {
         margin-top: 20px;
     }
 }
