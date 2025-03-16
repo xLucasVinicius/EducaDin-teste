@@ -25,9 +25,11 @@ CREATE TABLE contas (
 CREATE TABLE cartoes (
     id_cartao INT AUTO_INCREMENT PRIMARY KEY,
     id_conta INT,
+    id_usuario INT,
     limite_total DECIMAL(10,2),
-    data_fechamento DATE,
-    data_vencimento DATE,
+    dia_fechamento INT,
+    dia_vencimento INT,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_conta) REFERENCES contas(id_conta) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -36,7 +38,7 @@ CREATE TABLE lancamentos (
     id_lancamento INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
     id_conta INT,
-    id_cartao INT,  -- Somente se for despesa; pode ser NULL para receitas
+    id_cartao INT NULL,  -- Somente se for despesa; pode ser NULL para receitas
     descricao VARCHAR(255),
     valor DECIMAL(10,2),
     tipo ENUM('receita', 'despesa'),
@@ -48,15 +50,14 @@ CREATE TABLE lancamentos (
     parcelas INT DEFAULT 1,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_conta) REFERENCES contas(id_conta) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (id_cartao) REFERENCES cartoes(id_cartao) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (nome_conta) REFERENCES contas(nome_conta) ON DELETE CASCADE ON UPDATE CASCADE -- Chave estrangeira para a coluna nome_conta
+    FOREIGN KEY (id_cartao) REFERENCES cartoes(id_cartao) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- 5. Tabela de Desempenho Anual (por mês)
 CREATE TABLE desempenho_anual (
     id_desempenho INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
-    mes VARCHAR(20),  -- Nome do mês (ex.: "Janeiro")
+    mes ENUM('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'),
     total_receitas DECIMAL(10,2),
     total_despesas DECIMAL(10,2),
     sobra_mes DECIMAL(10,2),
@@ -66,7 +67,7 @@ CREATE TABLE desempenho_anual (
 -- 6. Tabela de Mini Games
 CREATE TABLE minigames (
     id_minigame INT AUTO_INCREMENT PRIMARY KEY,
-    nome_minigame VARCHAR(100)
+    nome VARCHAR(100)
 );
 
 -- 7. Tabela de Pontuação dos Mini Games

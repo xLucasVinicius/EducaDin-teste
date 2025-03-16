@@ -48,8 +48,8 @@
                     <thead>
                         <tr>
                             <th>Logo</th>
-                            <th>Nome da Conta</th>
-                            <th>Saldo Atual</th>
+                            <th>Conta</th>
+                            <th>Limite</th>
                             <th>Ação</th>
                         </tr>
                     </thead>

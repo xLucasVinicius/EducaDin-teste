@@ -184,6 +184,7 @@ body::-webkit-scrollbar {
 .fora-lancamentos .lancamentos {
   overflow: scroll;
   scrollbar-width: none;
+  width: 100%;
   height: 100%;
 }
 
@@ -192,7 +193,8 @@ body::-webkit-scrollbar {
 }
 
 .fora-lancamentos .lancamentos table {
-  width: 100%;
+  width: 868px;
+  height: 438px;
 }
 
 .fora-lancamentos .lancamentos table th {

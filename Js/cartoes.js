@@ -12,8 +12,9 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
       throw new Error('Dados de contas inválidos ou não encontrados.');
     }
     
-    const accountsData = data.contas; // Atribuir os dados de contas da resposta
-    const lancamentosData = data.lancamentos; // Atribuir os dados de lançamentos da resposta
+    const accountsData = data.contas; // Dados de contas
+    const cartoesData = data.cartoes; // Dados de cartões
+    const lancamentosData = data.lancamentos; // Dados de lançamentos
     localStorage.setItem('accountsData', JSON.stringify(accountsData));
 
     const carouselContainer = document.querySelector('.cartoes-carrossel');
@@ -32,10 +33,58 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
     if (lancamentosData.length === 0) {
       lancamentosContainer.style.height = '100%';
       lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>'; 
+    }  
+
+    
+
+    // Adicionar o zero à frente do mês, se necessário (exemplo: 01 para janeiro)
+    function formatarMes(mes) {
+      return mes < 9 ? `0${mes + 1}` : mes + 1;
+    }
+
+    // Função para garantir que o dia tenha dois algarismos
+    function formatarDia(dia) {
+      return dia < 10 ? `0${dia}` : dia;
     }
 
 
-    accountsData.forEach((account, index) => {
+    // Mapeia as contas por id_conta para acesso fácil
+    const contasMap = {};
+    accountsData.forEach(account => {
+      contasMap[account.id_conta] = account.nome_conta; // Mapeia o id_conta para o nome da conta
+    });
+
+    cartoesData.forEach((cartao, index) => {
+      const nomeConta = contasMap[cartao.id_conta]; // Busca o nome da conta associado ao id_conta do cartão
+
+      const diaFechamento = cartao.dia_fechamento;
+      const diaVencimento = cartao.dia_vencimento;
+
+      const dataAtual = new Date();
+      const diaAtual = dataAtual.getDate();
+      let mesAtual = dataAtual.getMonth(); 
+      let anoAtual = dataAtual.getFullYear();
+
+      // Verifica se o dia de vencimento já passou e ajusta o mês de vencimento
+      let mesVencimento = mesAtual;
+      if (diaAtual > diaVencimento) {
+        mesVencimento = mesAtual + 1;
+        if (mesVencimento > 11) { // Se o mês ultrapassar dezembro
+          mesVencimento = 0;
+          anoAtual += 1;
+        }
+      }
+
+      // Verifica se o dia de fechamento já passou
+      let mesFechamento = mesAtual;
+      if (diaAtual > diaFechamento && diaAtual > diaVencimento) {
+        mesFechamento = mesAtual + 1;
+        if (mesFechamento > 11) { // Se o mês ultrapassar dezembro
+          mesFechamento = 0;
+          anoAtual += 1;
+        }
+      }
+
       const cartaoDiv = document.createElement('div');
       cartaoDiv.classList.add('cartao');
       if (index === 0) {
@@ -43,19 +92,34 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
         cartaoDiv.style.transform = 'translateX(0)';
       }
 
+      // Calcular o limite disponível
+      const limiteTotal = parseFloat(cartao.limite_total);
+      
+      // Filtrar lançamentos relacionados ao cartão
+      const lancamentosCartao = lancamentosData.filter(lancamento => lancamento.id_cartao === cartao.id_cartao);
+      
+      // Somar os lançamentos (todos os lançamentos são valores positivos)
+      const totalLancamentos = lancamentosCartao.reduce((acc, lancamento) => acc + parseFloat(lancamento.valor), 0);
+      
+      // Calcular o limite disponível
+      const limiteDisponivel = limiteTotal - totalLancamentos;
+
       cartaoDiv.innerHTML = `
         <div class="logo">
-            <img src="../imagens/cartoes/${account.nome_conta}.jpg" alt="cartao de ${account.nome_conta}">
+            <img src="../imagens/cartoes/${nomeConta}.jpg" alt="Cartão de ${nomeConta}">
         </div>
         <div class="infos-cartao">
-            <h1> Cartão ${account.nome_conta}</h1>
-            <h2>Limite Total: R$ ${parseFloat(account.saldo_atual).toFixed(2).replace('.', ',')}</h2>
+            <h1> Cartão ${nomeConta}</h1>
+            <h2>Limite Total: R$ ${parseFloat(cartao.limite_total).toFixed(2).replace('.', ',')}</h2>
+            <h2>Disponível: R$ ${parseFloat(limiteDisponivel).toFixed(2).replace('.', ',')}</h2>
             <span class="infos-fatura">
-              <p>Fechamento: 12/01</p>
-              <p>Vencimento: 20/01</p>
+              <p>Fechamento: ${formatarDia(diaFechamento)}/${formatarMes(mesFechamento)}/${anoAtual}</p>
+              <p>Vencimento: ${formatarDia(diaVencimento)}/${formatarMes(mesVencimento)}/${anoAtual}</p>
             </span>
         </div>
-        `;
+      `;
+
+      
       carouselContainer.appendChild(cartaoDiv);
     });
 
@@ -203,16 +267,16 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
   });
 
 const body = document.querySelector('body');
-const selectConta = document.getElementById('conta'); //select de conta do formulário de adicionar conta
-const formConta = document.getElementById('form-add-cartao'); //formulário de adicionar conta
-const modalExcluir = document.getElementById('ModalexcluirCartao'); //modal de excluir conta
-const modalExcluirSucesso = document.getElementById('modalexcluirSucesso'); //modal de sucesso ao excluir conta
-const modalSucess = document.querySelector('#modalAddCartao'); //modal de sucesso ao adicionar conta
-const modalErrorAdd = document.querySelector('#errorModalAddCartoes'); //modal de erro ao adicionar conta
+const selectConta = document.getElementById('conta'); //select de conta do formulário de adicionar cartao
+const formCartao = document.getElementById('form-add-cartao'); //formulário de adicionar cartao
+const modalExcluir = document.getElementById('ModalexcluirCartao'); //modal de excluir cartao
+const modalExcluirSucesso = document.getElementById('modalexcluirSucesso'); //modal de sucesso ao excluir cartoes
+const modalSucess = document.querySelector('#modalAddCartoes'); //modal de sucesso ao adicionar cartoes
+const modalErrorAdd = document.querySelector('#errorModalAddCartoes'); //modal de erro ao adicionar cartoes
 const modalErrorPreencher = document.querySelector('#errorModalPreencher'); //modal de erro para preencher campos
-const modalConfirmarExcluir = document.querySelector('#modalConfirmarExcluir'); //modal de confirmação de exclusão de conta
-const msgConfirmarExcluir = document.querySelector('#modalConfirmarExcluir h2'); //mensagem de confirmação de exclusão de conta
-const tabelaBody = document.getElementById('cartaoes-tabela-body'); //tabela de contas para excluir
+const modalConfirmarExcluir = document.querySelector('#modalConfirmarExcluir'); //modal de confirmação de exclusão de cartoes
+const msgConfirmarExcluir = document.querySelector('#modalConfirmarExcluir h2'); //mensagem de confirmação de exclusão de cartoes
+const tabelaBody = document.getElementById('cartoes-tabela-body'); //tabela de cartoes para excluir
 
 
 // Função para formatar moeda
@@ -233,25 +297,27 @@ function formatarMoeda(input) {
   input.value = 'R$ ' + valor;
 }
 
-// Evento de submissão do formulário para adicionar conta
+// Evento de submissão do formulário para adicionar cartao
 
-formConta.addEventListener('submit', function (event) {
+formCartao.addEventListener('submit', function (event) {
     event.preventDefault();
-    const valueSelect = selectConta.value;
-    const saldoInicial = document.getElementById('saldo').value;
+    const valueSelectConta = selectConta.value;
+    const limiteCartao = document.getElementById('limite').value;
+    const diaFechamento = document.getElementById('fechamento').value;
+    const diaVencimento = document.getElementById('vencimento').value;
 
-    if (!valueSelect || !saldoInicial || saldoInicial <= 0) {
+    if (!valueSelectConta || !limiteCartao || !diaFechamento || !diaVencimento) {
         modalErrorPreencher.style.display = 'block';
     } else {
-        const formData = new FormData(formConta);
+        const formData = new FormData(formCartao);
 
-        fetch('../Paginas/configs/add-conta.php', {
+        fetch('../Paginas/configs/add-cartao.php', {
             method: 'POST',
             body: formData
         })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 'error_conta') {
+            if (data.status === 'error_cartao') {
                 showModalError(data); // Exibe o modal com erro
             } else if (data.status === 'success') {
                 handleSuccess(data);
@@ -271,7 +337,7 @@ document.getElementById('btnModalCampos').addEventListener('click', function () 
     modalErrorPreencher.style.display = 'none';
 });
 
-document.getElementById('btnModalConta').addEventListener('click', function () {
+document.getElementById('btnModalCartao').addEventListener('click', function () {
     modalErrorAdd.style.display = 'none';
 });
 
@@ -287,7 +353,7 @@ document.getElementById('fecharModalExcluir').addEventListener('click', function
 
 // Função para tratar o sucesso
 function handleSuccess(data) {
-    modalSucess.style.display = 'block';
+  modalSucess.style.display = 'block';
 }
 
 // Função para mostrar modal de erro
@@ -299,64 +365,74 @@ function formatarSaldo(valor) {
   return `R$ ${parseFloat(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 }
 
-document.getElementById('excluir-conta').addEventListener('click', function () {
+document.getElementById('excluir-cartao').addEventListener('click', function () {
   modalExcluir.style.display = 'block';
 
   window.scrollTo(0, 0); // Desloca a janela para o topo quando o formulário abre
 
 // Carregar os dados das contas
-fetch('../Paginas/configs/infos-contas.php')
+fetch('../Paginas/configs/infos-cartoes.php')
   .then(response => response.json())
   .then(data => {
-    const contas = data.contas; // Acessa a lista de contas retornada da resposta
+    const cartoes = data.cartoes; // Acessa a lista de contas retornada da resposta
+    const accountsData = data.contas; // Dados de contas
 
-    contas.forEach(conta => {
-        const row = document.createElement('tr');
-        row.id = conta.id_conta;
+    // Mapeia as contas por id_conta para acesso fácil
+    const contasMap = {};
+    accountsData.forEach(account => {
+      contasMap[account.id_conta] = account.nome_conta; // Mapeia o id_conta para o nome da conta
+    });
 
-        // Coluna da imagem (logo)
-        const logoCell = document.createElement('td');
-        const img = document.createElement('img');
-        img.src = `../imagens/logos/${conta.nome_conta}.png`; // Caminho para a imagem
-        img.alt = `Logo da ${conta.nome_conta}`;
-        img.width = 50;
-        img.height = 50;
-        img.style.borderRadius = '50%';
-        img.style.objectFit = 'cover';
-        logoCell.appendChild(img);
-        row.appendChild(logoCell);
+    cartoes.forEach(cartao => {
 
-        // Coluna do nome da conta
-        const nomeCell = document.createElement('td');
-        nomeCell.textContent = conta.nome_conta;
-        row.appendChild(nomeCell);
+      const row = document.createElement('tr');
+      row.id = cartao.id_cartao;
 
-        // Coluna do saldo atual (formatado como moeda)
-        const saldoCell = document.createElement('td');
-        saldoCell.textContent = formatarSaldo(conta.saldo_atual);
-        row.appendChild(saldoCell);
+      const nomeConta = contasMap[cartao.id_conta]; // Busca o nome da conta associado ao id_conta do cartão
 
-        // Coluna para o botão de exclusão
-        const acoesCell = document.createElement('td');
-        const excluirBtn = document.createElement('button');
-        excluirBtn.textContent = 'Excluir';
-        excluirBtn.className = 'btn-excluir'; // Adicione uma classe para estilizar se necessário
-        excluirBtn.addEventListener('click', () => {
-          modalConfirmarExcluir.style.display = 'block';
-          msgConfirmarExcluir.textContent = `Tem certeza de que deseja excluir a conta ${conta.nome_conta}?`;
-          document.getElementById('btnModalexcluir').addEventListener('click', function () {
-            modalConfirmarExcluir.style.display = 'none';
-            excluirConta(conta.id_conta, conta.id_usuario); // Chama a função de exclusão
-          });
-          document.getElementById('btnModalNao').addEventListener('click', function () {
-            modalConfirmarExcluir.style.display = 'none';
-          });
+      // Coluna da imagem (logo)
+      const logoCell = document.createElement('td');
+      const img = document.createElement('img');
+      img.src = `../imagens/cartoes/${nomeConta}.jpg`; // Caminho para a imagem
+      img.alt = `Logo da ${nomeConta}`;
+      img.width = 100;
+      img.height = 65;
+      img.style.objectFit = 'cover';
+      logoCell.appendChild(img);
+      row.appendChild(logoCell);
+
+      // Coluna do nome da conta
+      const nomeCell = document.createElement('td');
+      nomeCell.textContent = nomeConta;
+      row.appendChild(nomeCell);
+
+      // Coluna do saldo atual (formatado como moeda)
+      const saldoCell = document.createElement('td');
+      saldoCell.textContent = formatarSaldo(cartao.limite_total);
+      row.appendChild(saldoCell);
+
+      // Coluna para o botão de exclusão
+      const acoesCell = document.createElement('td');
+      const excluirBtn = document.createElement('button');
+      excluirBtn.textContent = 'Excluir';
+      excluirBtn.className = 'btn-excluir'; // Adicione uma classe para estilizar se necessário
+      excluirBtn.addEventListener('click', () => {
+        modalConfirmarExcluir.style.display = 'block';
+        console.log(cartao.id_cartao, cartao.id_usuario);
+        msgConfirmarExcluir.textContent = `Tem certeza de que deseja excluir o cartão ${nomeConta}?`;
+        document.getElementById('btnModalexcluir').addEventListener('click', function () {
+          modalConfirmarExcluir.style.display = 'none';
+          excluirCartao(cartao.id_cartao, cartao.id_usuario); // Chama a função de exclusão
         });
-        acoesCell.appendChild(excluirBtn);
-        row.appendChild(acoesCell);
+        document.getElementById('btnModalNao').addEventListener('click', function () {
+          modalConfirmarExcluir.style.display = 'none';
+        });
+      });
+      acoesCell.appendChild(excluirBtn);
+      row.appendChild(acoesCell);
 
-        // Adiciona a linha à tabela
-        tabelaBody.appendChild(row);
+      // Adiciona a linha à tabela
+      tabelaBody.appendChild(row);
     });
     
 
@@ -364,22 +440,21 @@ fetch('../Paginas/configs/infos-contas.php')
   .catch(error => console.error('Erro ao carregar os dados:', error));
 
 });
-// Função para excluir a conta
-function excluirConta(id_conta, id_usuario) {
+// Função para excluir o cartao
+function excluirCartao(id_cartao, id_usuario) {
   // Faz uma requisição para excluir a conta com os IDs fornecidos
-  fetch(`../Paginas/configs/excluir-conta.php?id_conta=${id_conta}&id_usuario=${id_usuario}`, {
+  fetch(`../Paginas/configs/excluir-cartao.php?id_cartao=${id_cartao}&id_usuario=${id_usuario}`, {
     method: 'DELETE', // ou 'POST', dependendo do método que você usa para exclusão
   })
   .then(response => response.json())
   .then(result => {
     if (result.sucesso) {
       modalExcluirSucesso.style.display = 'block';
-      //modalExcluir.style.display = 'none';
     } else {
-      console.error('Erro ao excluir a conta:', result);
+      console.error('Erro ao excluir o cartao:', result);
     }
   })
-  .catch(error => console.error('Erro ao excluir a conta:', error));
+  .catch(error => console.error('Erro ao excluir o cartao:', error));
 }
 
 

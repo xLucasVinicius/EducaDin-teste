@@ -38,7 +38,7 @@
     animation: exibir 0.8s forwards;
 }
 
-.excluir-conta-modal {
+.excluir-conta-modal, .excluir-cartao-modal {
     position: relative;
     padding: 5px;
     background-color: transparent;
@@ -46,7 +46,7 @@
     border: 1px solid red;
 }
 
-.modal-content.excluir-conta-modal i {
+.modal-content.excluir-conta-modal i, .modal-content.excluir-cartao-modal i {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,20 +64,20 @@
     transition: all .2s;
 }
 
-.modal-content.excluir-conta-modal i:hover {
+.modal-content.excluir-conta-modal i:hover, .modal-content.excluir-cartao-modal i:hover {
     color: white;
     background-color: rgba(194, 0, 0, 0.541);
 }
 
-.modal-content.excluir-conta-modal h2 {
+.modal-content.excluir-conta-modal h2, .modal-content.excluir-cartao-modal h2 {
     color: red;
 }
 
-.modal-content.excluir-conta-modal p {
+.modal-content.excluir-conta-modal p, .modal-content.excluir-cartao-modal p {
     color: white;
 }
 
-.modal-content.excluir-conta-modal table {
+.modal-content.excluir-conta-modal table, .modal-content.excluir-cartao-modal table {
     width: 100%;
     height: 360px;
     text-align: center;
@@ -86,28 +86,28 @@
     color: white;
 }
 
-.modal-content.excluir-conta-modal table thead {
+.modal-content.excluir-conta-modal table thead, .modal-content.excluir-cartao-modal table thead {
     text-align: center;
     color: red;
     border-bottom: 1px solid red;
 }
 
-.modal-content.excluir-conta-modal button {
+.modal-content.excluir-conta-modal button, .modal-content.excluir-cartao-modal button {
     background-color: red;
     width: 60px;
     padding: 5px;
     border-radius: 4px;
 }
 
-.modal-content.excluir-conta-modal button:hover {
+.modal-content.excluir-conta-modal button:hover, .modal-content.excluir-cartao-modal button:hover {
     background-color: rgb(194, 0, 0);
 }
 
-.modal-content.excluir-conta-modal table tbody tr:first-child {
+.modal-content.excluir-conta-modal table tbody tr:first-child, .modal-content.excluir-conta-modal table tbody tr:first-child, .modal-content.excluir-conta-modal table tbody tr:first-child {
     margin-top: 10px;
 }
 
-.modal-content.excluir-conta-modal table tbody tr:not(:last-child) {
+.modal-content.excluir-conta-modal table tbody tr:not(:last-child), .modal-content.excluir-conta-modal table tbody tr:not(:last-child), .modal-content.excluir-conta-modal table tbody tr:not(:last-child) {
     border-bottom: 1px solid red;
     margin-bottom: 5px;
 }
@@ -123,8 +123,6 @@
     transition: all .3s;
     cursor: pointer;
 }
-
-.modal-content button#btnModalNao
 
 .modal-content.error-conta button, .modal-content button#btnModalNao {
     background-color: red;
