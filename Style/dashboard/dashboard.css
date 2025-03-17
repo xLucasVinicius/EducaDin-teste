@@ -280,7 +280,7 @@ td {
 
 .section-lancamentos .lancar {
     width: 450px;
-    height: 700px;
+    height: 750px;
     background-color: var(--cor-fundo-content);
     border: 2px solid var(--cor-principal);
     box-shadow: 1px 1px 20px black;
@@ -464,16 +464,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 #btn-lancamentos-fechar {
     position: absolute;
-    top: 10px;
+    top: 15px;
     right: 15px;
     width: 30px;
     height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: none;
+    border-radius: 50%;
     background-color: transparent;
+    padding-bottom: 2px;
     color: white;
     font-size: 1.5rem;
     cursor: pointer;
+
+    transition: all .2s;
 }
+
+#btn-lancamentos-fechar:hover {
+    background-color: #f2a90098;
+}	
 
 .radio {
     display: inline-block;
