@@ -14,7 +14,7 @@
 }
 
 .navbar-vertical {
-    height: 100vh;
+    height: 100dvh;
     width: 200px;
     background-color: #3D3D3D; /* Cor de fundo cinza da navbar */
     position: fixed;
@@ -144,11 +144,11 @@
     border-radius: 50%;
     object-fit: cover;
     margin-right: 15px;
-    border: 1px solid var(--cor-principal);
+    border: 1px solid red;
 }
 .navbar-top .user-info h1 {
     color: #FFF;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 500;
     margin-right: 5px;
     margin-bottom: 0px;
@@ -167,6 +167,8 @@
     top: 60px; /* Ajusta para abaixo da barra superior */
     z-index: 0; /* Mantém o conteúdo abaixo das navbars */
     transition: width 0.3s ease; /* Animação suave ao colapsar a barra lateral */
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 /* Quando a barra lateral está colapsada */

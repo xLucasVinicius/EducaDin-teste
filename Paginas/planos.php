@@ -68,7 +68,11 @@
                         </span>
                         
                     </span>
-                    <button><a href="#">Assinar</a></button>
+                    <!-- Botão para iniciar o pagamento com Mercado Pago -->
+                    <form action="configs/iniciar-pagamento.php" method="post">
+                        <input type="hidden" name="plano" value="premium">
+                        <button type="submit">Assinar</button>
+                    </form>
                 </div>
             </div>
         </div>

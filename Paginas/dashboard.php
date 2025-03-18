@@ -91,13 +91,10 @@ $result = $mysqli->query($query);
                                     <td>R$ <?php echo number_format($lancamento['valor'], 2, ',', '.'); ?></td> <!-- Exibe o valor formatado -->
                                     <td><?php echo htmlspecialchars($lancamento['tipo']); ?></td> <!-- Exibe o tipo -->
                                     <td><?php echo htmlspecialchars($lancamento['metodo_pagamento']); ?></td> <!-- Exibe o metodo de pagamento -->
+                                    <td><?php echo htmlspecialchars($lancamento['nome_conta']); ?></td> <!-- Exibe o nome da conta -->
                                     <td><?php echo htmlspecialchars($lancamento['subcategoria']); ?></td> <!-- Exibe a subcategoria -->
                                     <td><?php echo date('d/m/Y', strtotime($lancamento['data'])); ?></td> <!-- Exibe a data formatada -->
                                     <td><?php echo htmlspecialchars($lancamento['parcelas']); ?></td> <!-- Exibe o numero de parcelas -->
-                                    <td>
-                                      <button id="btn-editar"><i class="bi bi-pencil"></i></button> <!-- Botão de edição -->
-                                      <button id="btn-excluir"><i class="bi bi-x-lg"></i></button>  <!-- Botão de exclusão -->
-                                    </td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
