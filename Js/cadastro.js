@@ -338,7 +338,7 @@ function mostrarConfirmarSenha() {
 }
 
 document.getElementById('btn-input1').addEventListener('click', function () {
-    window.location.href = 'http://localhost:3000/EducaDin-teste/index.html';
+    window.location.href = '../index.html';
 });
 
 function handleSuccess(response) {

@@ -1,12 +1,10 @@
 @media screen and (max-width: 675px){
-
-    body {
-        place-content: center;
+    #gradient, #pattern {
+        display: none;
     }
-
     .content {
         padding-top: 15%;
-        height: 97vh;
+        height: 90vh;
     }
 
     .content .introducao {
@@ -15,22 +13,22 @@
     }
 
     .img-edu {
-        bottom: -10px;
-        right: -275px;
+        bottom: 0;
+        right: 0;
     }
 
     p {
-        right: 340px;
-        bottom: 147px;
+        right: 101px;
+        bottom: 203px;
         position: absolute;
-        font-size: 0.60rem;
+        font-size: 0.80rem;
         color: white;
         font-family: 'Orbitron', sans-serif;
     }
 
     .img-content img {
 
-        width: 35%;
+        width: 200px;
         
     }
 

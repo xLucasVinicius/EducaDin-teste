@@ -20,6 +20,9 @@ include 'configs/infos-login.php'; // Inclui o arquivo de configuração
 
     <!-- Todo o conteúdo -->
     <div class="content">
+        <span class="icon-voltar">
+            <a href="../index.html"><i class="bi bi-x-lg"></i></a>
+        </span>
         <form action="" method="post" id="form" class="form"> <!-- Formulário de login -->
             <h1>Educa<span id="titulo">Din</span></h1> <!-- Logo -->
 

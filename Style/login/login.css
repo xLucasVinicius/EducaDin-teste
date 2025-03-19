@@ -47,6 +47,7 @@ html, body {
 }
 
 .content {
+    position: relative;
     width: 600px;
     height: 800px;
     display: flex;
@@ -58,7 +59,32 @@ html, body {
     backdrop-filter: blur(10px);
     border: 1px solid #f2a90011;
     border-radius: 25px;
+}
 
+.content .icon-voltar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: var(--cor-txt);
+    margin: 0;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.content .icon-voltar > a > i {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s;
+}
+
+.content .icon-voltar:hover > a > i {
+    background-color: #b88100;
+    color: white;
 }
 
 form {
@@ -269,3 +295,8 @@ p {
     right: 0;
 }
 
+@media screen and (max-width: 767px) {
+    .content {
+        width: 400px;
+    }
+}
