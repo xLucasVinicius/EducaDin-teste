@@ -77,10 +77,10 @@ $result = $mysqli->query($query);
                             <th>VALOR</th>
                             <th>TIPO</th>
                             <th>METODO DE PAGAMENTO</th>
+                            <th>CONTA</th>
                             <th>SUBCATEGORIA</th>
                             <th>DATA</th>
                             <th>PARCELAS</th>
-                            <th>OPÇÕES</th>
                         </tr>
                     </thead>
                     <tbody>

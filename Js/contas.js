@@ -147,7 +147,6 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
                 <th>Valor</th>
                 <th>Tipo</th>
                 <th>Método</th>
-                <th>Conta</th>
                 <th>Subcategoria</th>
                 <th>Data</th>
                 <th>Parcelas</th>
@@ -163,7 +162,6 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
               <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
               <td>${lancamento.tipo}</td>
               <td>${lancamento.metodo_pagamento}</td>
-              <td>${lancamento.nome_conta}</td>
               <td>${lancamento.subcategoria}</td>
               <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
               <td>${lancamento.parcelas}</td>
@@ -188,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
 
   });
 
-  const body = document.querySelector('body');
+const body = document.querySelector('body');
 const selectConta = document.getElementById('conta'); //select de conta do formulário de adicionar conta
 const imagemContent = document.querySelector('.imagem-conta'); //div da imagem da conta
 const imgConta = document.querySelector('.imagem-conta img'); //imagem da conta
@@ -299,9 +297,13 @@ function formatarSaldo(valor) {
 }
 
 document.getElementById('excluir-conta').addEventListener('click', function () {
+  const bodyGeral = document.querySelector('.conteudo')
+  const elementoFora = document.querySelector('.elemento-fora')
+  bodyGeral.style = ' overflow-y: initial;'; 
+  window.scrollTo(0, 0); // Desloca a janela para o topo quando o formulário abre
+  elementoFora.style = 'overflow: hidden; height: 100%;';
   modalExcluir.style.display = 'block';
 
-  window.scrollTo(0, 0); // Desloca a janela para o topo quando o formulário abre
 
 // Carregar os dados das contas
 fetch('../Paginas/configs/infos-contas.php')

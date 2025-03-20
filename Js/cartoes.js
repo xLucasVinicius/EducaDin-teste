@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
 
       cartaoDiv.innerHTML = `
         <div class="logo">
-            <img src="../imagens/cartoes/${nomeConta}.jpg" alt="Cartão de ${nomeConta}">
+            <img src="../imagens/cartoes/${nomeConta}.jpeg" alt="Cartão de ${nomeConta}">
         </div>
         <div class="infos-cartao">
             <h1> Cartão ${nomeConta}</h1>
@@ -225,7 +225,6 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
                 <th>Valor</th>
                 <th>Tipo</th>
                 <th>Método</th>
-                <th>Conta</th>
                 <th>Subcategoria</th>
                 <th>Data</th>
                 <th>Parcelas</th>
@@ -241,7 +240,6 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
               <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
               <td>${lancamento.tipo}</td>
               <td>${lancamento.metodo_pagamento}</td>
-              <td>${lancamento.nome_conta}</td>
               <td>${lancamento.subcategoria}</td>
               <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
               <td>${lancamento.parcelas}</td>
@@ -366,9 +364,12 @@ function formatarSaldo(valor) {
 }
 
 document.getElementById('excluir-cartao').addEventListener('click', function () {
-  modalExcluir.style.display = 'block';
-
+  const bodyGeral = document.querySelector('.conteudo')
+  const elementoFora = document.querySelector('.elemento-fora')
+  bodyGeral.style = ' overflow-y: initial;'; 
   window.scrollTo(0, 0); // Desloca a janela para o topo quando o formulário abre
+  elementoFora.style = 'overflow: hidden; height: 100%;';
+  modalExcluir.style.display = 'block';
 
 // Carregar os dados das contas
 fetch('../Paginas/configs/infos-cartoes.php')
