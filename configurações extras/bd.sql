@@ -43,7 +43,6 @@ CREATE TABLE lancamentos (
     valor DECIMAL(10,2),
     tipo ENUM('receita', 'despesa'),
     metodo_pagamento VARCHAR(50),
-    nome_conta VARCHAR(100),  -- Nova coluna como chave estrangeira para a tabela contas
     categoria VARCHAR(100),
     subcategoria VARCHAR(100),
     data DATE,
