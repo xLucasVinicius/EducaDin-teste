@@ -41,18 +41,40 @@ function verificarLarguraTela() { // Função para verificar a largura da tela
 verificarLarguraTela();
 
 // Seleciona todos os links da navbar
-const navLinks = document.querySelectorAll('.nav-link'); 
+const navLinks = document.querySelectorAll('.nav-link');
 
 // Função para ativar o link correto após a recarga da página
 function setActiveLink() {
-    const currentPage = new URLSearchParams(window.location.search).get('page'); // Obtem o nome da página atual
-    navLinks.forEach(link => { // Percorre todos os links
-        if (link.getAttribute('href') === `?page=${currentPage}`) { // Verifica se o href do link corresponde ao nome da página atual
-            link.classList.add('active'); // Adiciona a classe "active"
-        } else {
-            link.classList.remove('active'); // Remove a classe "active"
+    const currentPage = new URLSearchParams(window.location.search).get('page'); // Obtém o nome da página atual
+    const lastActiveLink = localStorage.getItem('lastActiveLink'); // Recupera o último link ativo armazenado no localStorage
+
+    if (lastActiveLink) {
+        // Se existir um último link ativo armazenado, verifica se ele corresponde a algum link
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === lastActiveLink) {
+                link.classList.add('active'); // Marca o link como ativo
+            } else {
+                link.classList.remove('active'); // Remove a classe "active" dos outros links
+            }
+        });
+    } else {
+        // Caso não exista no localStorage, verifica a página atual
+        let found = false;
+
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === `?page=${currentPage}`) {
+                link.classList.add('active');
+                found = true;
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        // Se nenhum link foi encontrado, o último link será marcado como ativo
+        if (!found && navLinks.length > 0) {
+            navLinks[navLinks.length - 1].classList.add('active');
         }
-    });
+    }
 }
 
 // Adiciona o listener de evento para cada link
@@ -67,6 +89,9 @@ navLinks.forEach(link => {
         // Adiciona a classe "active" ao link clicado
         this.classList.add('active');
 
+        // Armazena o link clicado no localStorage
+        localStorage.setItem('lastActiveLink', this.getAttribute('href'));
+
         // Redireciona para a nova página
         window.location.href = this.href;
     });
@@ -74,5 +99,7 @@ navLinks.forEach(link => {
 
 // Configura o link ativo na carga da página
 window.onload = setActiveLink;
+
+
 
 

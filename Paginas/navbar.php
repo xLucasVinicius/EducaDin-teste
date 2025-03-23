@@ -156,6 +156,9 @@ if (!isset($_SESSION['email'])) {
                 case "minigames":
                     include("minigames.php");
                 break;
+                case "letreco":
+                    include("minigames/letreco.php");
+                break;
                 case "planos":
                     include("planos.php");
                 break;

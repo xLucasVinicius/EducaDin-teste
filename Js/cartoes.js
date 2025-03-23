@@ -24,9 +24,7 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
 
     carouselContainer.innerHTML = '';
     lancamentosContainer.innerHTML = '';
-
-      
-    if (accountsData.length === 0) { 
+    if (cartoesData.length === 0) { 
       carouselContainer.innerHTML = '<z style="color: white;">Nenhum cartão encontrado.</z>';
     }
 
@@ -210,7 +208,6 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
     function renderLancamentos(accountId) {
       lancamentosContainer.innerHTML = ''; 
       const lancamentos = lancamentosData.filter(l => l.id_conta === accountId);
-
       if (lancamentos.length === 0) { 
         lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>'; 
         return;
@@ -394,7 +391,7 @@ fetch('../Paginas/configs/infos-cartoes.php')
       // Coluna da imagem (logo)
       const logoCell = document.createElement('td');
       const img = document.createElement('img');
-      img.src = `../imagens/cartoes/${nomeConta}.jpg`; // Caminho para a imagem
+      img.src = `../imagens/cartoes/${nomeConta}.jpeg`; // Caminho para a imagem
       img.alt = `Logo da ${nomeConta}`;
       img.width = 100;
       img.height = 65;
