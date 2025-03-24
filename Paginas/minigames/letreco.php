@@ -7,13 +7,38 @@
 </head>
 <body>
     <section class="conteudo-letreco">
+        <div class="modal-vitoria">
+            <div class="vitoria">
+                <h1>Vitória!</h1>
+                <p>Você descobriu a palavra!</p>
+                <p class="tempo"></p>
+                <p class="pontuacao"></p>
+                <button id="jogar-novamente">Jogar Novamente</button>
+            </div>
+        </div>
+        <div class="modal-derrota">
+            <div class="derrota">
+                <h1>Errou!</h1>
+                <p class="palavra"></p>
+                <p class="tempo"></p>
+                <p class="pontuacao"></p>
+                <button id="jogar-novamente-derrota">Jogar Novamente</button>
+            </div>
+        </div>
         <div class="ranking-container">
-            <h1>Ranking</h1>
-            <div class="ranking">
+            <div class="placar-ranking">
+                <i class="bi bi-x-circle" id="fechar-ranking"></i>
+                <h1>Ranking</h1>
+                <div class="ranking">
                 
+                </div>
             </div>
         </div>
         <div class="app-container">
+            <div class="botoes-navegar">
+                <i class="bi bi-arrow-left-circle" id="voltar" title="Voltar"></i>
+                <i class="bi bi-trophy" id="ranking" title="Ranking"></i>
+            </div>
             <div class="title-container">
                 <h1>
                     <span>L</span>

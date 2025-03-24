@@ -5,7 +5,7 @@ $error_email = false;
 $error_senha = false;
 
 if(isset($_POST['email'])){
-    include('configs/config.php');
+    include("./configs/config.php");
     
     // Sanitizando o input para prevenir SQL Injection
     $email = $mysqli->real_escape_string($_POST['email']);

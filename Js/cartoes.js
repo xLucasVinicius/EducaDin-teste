@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte para o evento de carregamento do DOM
-  fetch('../Paginas/configs/infos-cartoes.php')
+  fetch('../Paginas/consultas/infos-cartoes.php')
   .then(response => {
     if (!response.ok) {
       throw new Error('Erro ao carregar dados: ' + response.statusText);
@@ -369,7 +369,7 @@ document.getElementById('excluir-cartao').addEventListener('click', function () 
   modalExcluir.style.display = 'block';
 
 // Carregar os dados das contas
-fetch('../Paginas/configs/infos-cartoes.php')
+fetch('../Paginas/consultas/infos-cartoes.php')
   .then(response => response.json())
   .then(data => {
     const cartoes = data.cartoes; // Acessa a lista de contas retornada da resposta

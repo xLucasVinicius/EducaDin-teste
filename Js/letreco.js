@@ -16,6 +16,10 @@ const keyboardThirdRow = document.querySelector("#keyboardThirdRow");
 const keysFirstRow = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
 const keysSecondRow = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
 const keysThirdRow = ["Z", "X", "C", "V", "B", "N", "M"];
+const modalVitoria = document.querySelector(".modal-vitoria");
+const modalDerrota = document.querySelector(".modal-derrota");
+const textoPalavraCorreta = document.querySelector(".palavra");
+let jogoVencido = false;
 
 const rows = 6;
 const columns = 5;
@@ -52,38 +56,78 @@ for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
   tiles.append(tileRow);
 }
 
+let tentativas = 0;
+let pontuacao = 0;
+const tempoInicio = Date.now();
+
 const checkGuess = () => {
   const guess = guesses[currentRow].join("");
   if (guess.length !== columns) {
     return;
   }
 
+  tentativas++;
+
   var currentColumns = document.querySelectorAll(".typing");
   for (let index = 0; index < columns; index++) {
     const letter = guess[index];
+    const keyboardKey = document.getElementById(letter); // Captura o botão do teclado virtual
+
     if (letrecoMap[letter] === undefined) {
-        currentColumns[index].classList.add("wrong")
+      // Se a letra não está na palavra
+      currentColumns[index].classList.add("wrong");
+      if (keyboardKey) {
+        keyboardKey.style = "border: 1px solid black; color: white; background-color: #2e2b2b;";
+        keyboardKey.disabled = true; // Desativa o botão
+      }
     } else {
-        const correctIndexes = letrecoMap[letter];
-        if (correctIndexes.includes(index)) {
-            currentColumns[index].classList.add("right");
-        } else if (correctIndexes.length > 0) {
-            currentColumns[index].classList.add("displaced");
+      const correctIndexes = letrecoMap[letter];
+      if (correctIndexes.includes(index)) {
+        // Se a letra está na posição correta
+        currentColumns[index].classList.add("right");
+        if (keyboardKey) {
+          keyboardKey.style = "background-color: #51b36e; color: white;";
         }
+      } else if (correctIndexes.length > 0) {
+        // Se a letra está na palavra, mas em posição errada
+        currentColumns[index].classList.add("displaced");
+        if (keyboardKey) {
+          keyboardKey.style = "background-color: #c79c2e; color: white;";
+        }
+      }
     }
   }
 
+
+
+// Adiciona um delay antes de mover para a próxima ação
+setTimeout(() => {
   if (guess === letreco) {
-      window.alert("Tu é demais, simplesmente o detetivão do entretenimento!");
-      return;
+    const tempoFinal = (Date.now() - tempoInicio) / 1000;
+    pontuacao = Math.max(0, (7 - tentativas) * 60 - tempoFinal * 2);
+    if (pontuacao < 30) {
+      pontuacao = 30;
+    }
+    document.querySelector('.modal-vitoria .tempo').textContent = `Tempo: ${tempoFinal.toFixed(2)} segundos`;
+    document.querySelector('.modal-vitoria .pontuacao').textContent = `Pontuação: ${Math.round(pontuacao)}`;
+
+    modalVitoria.style = "display: flex"; // Exibe o modal de vitória
+
+    salvarPontos();
+    jogoVencido = true;
   } else {
-      if (currentRow === rows - 1) {
-          window.alert("Errrrrrou!");
-      } else {
-          moveToNextRow();
-      }
+    if (currentRow === rows - 1) {
+      palavraCorreta = letreco;
+      textoPalavraCorreta.textContent = `A palavra correta era: ${palavraCorreta}`;
+
+      modalDerrota.style = "display: flex";
+    } else {
+      moveToNextRow(); // Move para a próxima linha
+    }
   }
+}, 500);
 };
+
 
 const moveToNextRow = () => {
     var typingColumns = document.querySelectorAll(".typing")
@@ -150,12 +194,116 @@ enterButton.textContent = "ENTER";
 backspaceAndEnterRow.append(enterButton);
 
 document.onkeydown = function (evt) {
-    evt = evt || window.evt;
-    if (evt.key === "Enter") {
-        checkGuess();
-    } else if (evt.key === "Backspace") {
-        handleBackspace();
-    } else {
-        handleKeyboardOnClick(evt.key.toUpperCase());
+  evt = evt || window.evt;
+  const isAlphabetKey = /^[a-zA-Z]$/.test(evt.key); // Verifica se a tecla pressionada é uma letra
+
+  if (jogoVencido === true) {
+    // Impede qualquer ação de tecla quando o jogo for vencido
+    if (evt.key === "Enter" || evt.key === "Backspace") {
+      evt.preventDefault();
     }
+    return; // Impede o restante da execução quando o jogo foi vencido
+  }
+
+  if (evt.key === "Enter") {
+      checkGuess(); // Verifica a resposta quando Enter é pressionado
+  } else if (evt.key === "Backspace") {
+      handleBackspace(); // Permite a exclusão de caracteres
+  } else if (isAlphabetKey) {
+      handleKeyboardOnClick(evt.key.toUpperCase()); // Aceita apenas letras do alfabeto
+  }
 };
+
+const modalRanking = document.querySelector('.ranking-container');
+
+document.getElementById('voltar').addEventListener('click', function () { 
+  window.location.href = '?page=minigames';
+});
+
+document.getElementById('ranking').addEventListener('click', function () {
+  
+
+  fetch('../Paginas/consultas/ranking.php')
+    .then(response => response.json())
+    .then(data => {
+      // Verifica se há dados de ranking na resposta
+      if (data.ranking && data.ranking.length > 0) {
+        const rankingList = document.querySelector('.ranking');
+        rankingList.innerHTML = '';  // Limpa o conteúdo anterior, se houver
+
+        // Itera sobre os dados do ranking e cria os elementos para exibição
+        data.ranking.forEach((item, index) => {
+          const rankingItem = document.createElement('div');
+          rankingItem.classList.add('ranking-item');  // Adiciona uma classe para estilo
+
+          let positionContent;  // Variável para armazenar o conteúdo da posição (medalha ou número)
+
+          // Lógica para exibir medalhas ou o número da colocação
+          if (index === 0) {
+            positionContent = '<i class="bi bi-award" style="color: gold;"></i>';
+          } else if (index === 1) {
+            positionContent = '<i class="bi bi-award" style="color: silver;"></i>';
+          } else if (index === 2) {
+            positionContent = '<i class="bi bi-award" style="color: #cd7f32;"></i>';
+          } else if (index < 9) {
+            positionContent = `<span class="ranking-position">0${index + 1}</span>`;
+          } else {
+            positionContent = `<span class="ranking-position">${index + 1}</span>`;
+          }
+
+          // Conteúdo do ranking - posição (medalha ou número), nome e pontuação
+          rankingItem.innerHTML = `
+            ${positionContent}  <!-- Exibe a medalha ou a posição numérica -->
+            <span>
+              <span class="foto-perfil"><img src="${item.foto_perfil}" alt="Foto de Perfil"></span>
+              <span class="ranking-nome">${item.nome} ${item.sobrenome}</span> <!-- Nome do jogador -->
+              <span class="ranking-pontos">${item.recorde_pontos} pontos</span> <!-- Pontuação -->
+            </span>
+          `;
+
+          // Adiciona o item ao rankingList
+          rankingList.appendChild(rankingItem);
+        });
+      } else {
+        const rankingList = document.querySelector('.ranking');
+        rankingList.innerHTML = '<p>Nenhum recorde encontrado.</p>';  // Caso não haja ranking
+      }
+    })
+    .catch(error => console.error('Erro:', error));
+
+  modalRanking.style = 'display: flex';  // Mostra o modal com estilo 'flex'
+});
+
+document.getElementById('fechar-ranking').addEventListener('click', function () {
+  modalRanking.style = 'display: none';  // Oculta o modal com estilo 'none'
+});
+
+document.getElementById('jogar-novamente').addEventListener('click', function () {
+  modalVitoria.style = 'display: none';  // Oculta o modal com estilo 'none'
+  location.reload();
+});
+
+document.getElementById('jogar-novamente-derrota').addEventListener('click', function () {
+  modalDerrota.style = 'display: none';  // Oculta o modal com estilo 'none'
+  location.reload();
+});
+
+function salvarPontos() {
+  fetch('../Paginas/configs/salvar-pontos.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ pontuacao: pontuacao, id_minigame: 1, moedas_ganhas: (pontuacao / 10).toFixed(0) })
+  })
+  .then(response => response.json())
+  .then(data => {})
+  .catch(error => console.error('Erro:', error));
+}
+
+
+
+
+
+
+

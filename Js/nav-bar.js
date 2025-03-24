@@ -48,19 +48,22 @@ function setActiveLink() {
     const currentPage = new URLSearchParams(window.location.search).get('page'); // Obtém o nome da página atual
     const lastActiveLink = localStorage.getItem('lastActiveLink'); // Recupera o último link ativo armazenado no localStorage
 
+    let found = false;
+
     if (lastActiveLink) {
         // Se existir um último link ativo armazenado, verifica se ele corresponde a algum link
         navLinks.forEach(link => {
             if (link.getAttribute('href') === lastActiveLink) {
                 link.classList.add('active'); // Marca o link como ativo
+                found = true;
             } else {
                 link.classList.remove('active'); // Remove a classe "active" dos outros links
             }
         });
-    } else {
-        // Caso não exista no localStorage, verifica a página atual
-        let found = false;
+    }
 
+    if (!found && currentPage) {
+        // Caso não exista um link ativo armazenado, verifica a página atual
         navLinks.forEach(link => {
             if (link.getAttribute('href') === `?page=${currentPage}`) {
                 link.classList.add('active');
@@ -69,10 +72,15 @@ function setActiveLink() {
                 link.classList.remove('active');
             }
         });
+    }
 
-        // Se nenhum link foi encontrado, o último link será marcado como ativo
-        if (!found && navLinks.length > 0) {
-            navLinks[navLinks.length - 1].classList.add('active');
+    // Se nenhum link foi encontrado e a página não tem parâmetro, define o dashboard como ativo por padrão
+    if (!found && navLinks.length > 0) {
+        const dashboardLink = Array.from(navLinks).find(link => link.getAttribute('href').includes('dashboard'));
+        if (dashboardLink) {
+            dashboardLink.classList.add('active');
+        } else {
+            navLinks[0].classList.add('active'); // Marca o primeiro link como ativo caso não haja dashboard
         }
     }
 }
@@ -89,8 +97,13 @@ navLinks.forEach(link => {
         // Adiciona a classe "active" ao link clicado
         this.classList.add('active');
 
-        // Armazena o link clicado no localStorage
-        localStorage.setItem('lastActiveLink', this.getAttribute('href'));
+        // Verifica se o link clicado não é o de logout antes de salvar no localStorage
+        if (!this.getAttribute('href').includes('logout')) {
+            // Armazena o link clicado no localStorage
+            localStorage.setItem('lastActiveLink', this.getAttribute('href'));
+        } else {
+            localStorage.removeItem('lastActiveLink'); // Remove o link ativo ao fazer logout
+        }
 
         // Redireciona para a nova página
         window.location.href = this.href;
@@ -99,6 +112,7 @@ navLinks.forEach(link => {
 
 // Configura o link ativo na carga da página
 window.onload = setActiveLink;
+
 
 
 

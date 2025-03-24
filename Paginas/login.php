@@ -1,5 +1,5 @@
 <?php
-include 'configs/infos-login.php'; // Inclui o arquivo de configuração
+include 'consultas/infos-login.php'; // Inclui o arquivo de configuração
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
