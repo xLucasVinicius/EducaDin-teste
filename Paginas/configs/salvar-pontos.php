@@ -16,10 +16,33 @@ if (isset($data['pontuacao']) && isset($data['id_minigame']) && isset($data['moe
     $moedas_ganhas = $data['moedas_ganhas'];
 
     // Inserir sempre a pontuação atual na tabela pontuacoes_mg
-    $query_pontuacoes = "INSERT INTO pontuacoes_mg (id_usuario, id_minigame, pontuacao_rodada, moedas_ganhas) VALUES (?, ?, ?, ?)";
+    $query_pontuacoes = "INSERT INTO pontuacoes_mg (id_usuario, id_minigame, pontuacao_rodada) VALUES (?, ?, ?)";
     $stmt_pontuacoes = $mysqli->prepare($query_pontuacoes);
-    $stmt_pontuacoes->bind_param("iiii", $id_usuario, $id_minigame, $pontos, $moedas_ganhas);
+    $stmt_pontuacoes->bind_param("iii", $id_usuario, $id_minigame, $pontos);
     $stmt_pontuacoes->execute();
+
+    // Verificar se o usuário já possui moedas
+    $verificar_moedas = "SELECT * FROM moedas WHERE id_usuario = ?";
+    $smtm_moedas = $mysqli->prepare($verificar_moedas);
+    $smtm_moedas->bind_param("i", $id_usuario);
+    $smtm_moedas->execute();
+    $result_moedas = $smtm_moedas->get_result();
+
+    if ($result_moedas->num_rows == 0) {
+        // Se o usuário não tiver moedas, insira uma nova linha
+        $query_pontuacoes2 = "INSERT INTO moedas (id_usuario, moedas_ganhas) VALUES (?, ?)";
+        $stmt_pontuacoes2 = $mysqli->prepare($query_pontuacoes2);
+        $stmt_pontuacoes2->bind_param("ii", $id_usuario, $moedas_ganhas);
+        $stmt_pontuacoes2->execute();
+        $stmt_pontuacoes2->close();
+    } else {
+        // Caso contrário, atualize as moedas
+        $query_pontuacoes3 = "UPDATE moedas SET moedas_ganhas = moedas_ganhas + ? WHERE id_usuario = ?";
+        $stmt_pontuacoes3 = $mysqli->prepare($query_pontuacoes3);
+        $stmt_pontuacoes3->bind_param("ii", $moedas_ganhas, $id_usuario);
+        $stmt_pontuacoes3->execute();
+        $stmt_pontuacoes3->close();
+    }
 
     // Buscar os 10 melhores recordes do minigame atual
     $query_ranking = "SELECT id_usuario, recorde_pontos FROM recordes_mg WHERE id_minigame = ? ORDER BY recorde_pontos DESC LIMIT 10";
@@ -49,15 +72,15 @@ if (isset($data['pontuacao']) && isset($data['id_minigame']) && isset($data['moe
             $stmt_remove_ultimo = $mysqli->prepare($query_remove_ultimo);
             $stmt_remove_ultimo->bind_param("iii", $ultimoRecorde['id_usuario'], $id_minigame, $ultimoRecorde['recorde_pontos']);
             $stmt_remove_ultimo->execute();
+            $stmt_remove_ultimo->close();
         }
+        $stmt_insert->close();
     }
 
     // Fechar as conexões
     $stmt_pontuacoes->close();
     $stmt_ranking->close();
-    if ($entrouNoRanking) {
-        $stmt_insert->close();
-    }
+    $smtm_moedas->close();
 
     $mysqli->close();
 

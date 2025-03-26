@@ -108,8 +108,10 @@ setTimeout(() => {
     if (pontuacao < 30) {
       pontuacao = 30;
     }
+
+    pontuacao = Math.round(pontuacao);
     document.querySelector('.modal-vitoria .tempo').textContent = `Tempo: ${tempoFinal.toFixed(2)} segundos`;
-    document.querySelector('.modal-vitoria .pontuacao').textContent = `Pontuação: ${Math.round(pontuacao)}`;
+    document.querySelector('.modal-vitoria .pontuacao').textContent = `Pontuação: ${pontuacao}`;
 
     modalVitoria.style = "display: flex"; // Exibe o modal de vitória
 

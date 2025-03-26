@@ -48,15 +48,15 @@ CREATE TABLE lancamentos (
     data DATE,
     parcelas INT DEFAULT 1,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_conta) REFERENCES contas(id_conta) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (id_cartao) REFERENCES cartoes(id_cartao) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (id_conta) REFERENCES contas(id_conta) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_cartao) REFERENCES cartoes(id_cartao) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- 5. Tabela de Desempenho Anual (por mês)
 CREATE TABLE desempenho_anual (
     id_desempenho INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
-    mes ENUM('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'),
+    mes TINYINT, 
     total_receitas DECIMAL(10,2),
     total_despesas DECIMAL(10,2),
     sobra_mes DECIMAL(10,2),
@@ -90,7 +90,14 @@ CREATE TABLE recordes_mg (
     FOREIGN KEY (id_minigame) REFERENCES minigames(id_minigame) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- 9. Tabela de Prêmios de Troca
+-- 9. Tabela de Moedas
+CREATE TABLE moedas (
+    id_usuario INT PRIMARY KEY,
+    moedas_ganhas INT,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- 10. Tabela de Prêmios de Troca
 CREATE TABLE premios (
     id_premio INT AUTO_INCREMENT PRIMARY KEY,
     nome_premio VARCHAR(100),
@@ -98,7 +105,7 @@ CREATE TABLE premios (
     valor_moedas INT
 );
 
--- 10. Tabela de Trocas de Prêmios
+-- 11. Tabela de Trocas de Prêmios
 CREATE TABLE trocas_premios (
     id_troca INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
