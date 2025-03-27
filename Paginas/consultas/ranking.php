@@ -4,7 +4,10 @@ include("../configs/config.php");
 
 header('Content-Type: application/json');  // Defina o tipo de conteúdo como JSON
 
-$_SESSION['id_minigame'] = 1;
+// Decodificando o corpo JSON enviado pelo JavaScript
+$data = json_decode(file_get_contents('php://input'), true);
+
+$_SESSION['id_minigame'] = $data['id_minigame'];
 
 // Query SQL para buscar os 10 melhores recordes junto com as informações do usuário
 $sql = "

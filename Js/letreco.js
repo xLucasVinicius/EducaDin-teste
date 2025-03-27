@@ -1,128 +1,124 @@
+// Palavras para o jogo
 const palavras = [
     "LUCRO", "SALDO", "JUROS", "PAGAR", "CUSTO", "METAS", "VERBA", "TAXAS", "POUPE", "TROCO", "BOLSA", "RENDA", "DADOS", "AULAS", "NOTAS", "LIVRO", "GRANA", "BONUS", "CIFRA", "CHEFE", "LUCRA", "CONTA", "BANCO", "PRECO", "CAIXA", "TROCA", "SABER", "FICHA", "REAIS", "LIMPA", "MEDIA", "PLANO", "CERTO", "FALHA", "GRUPO", "PARTE", "FICAR", "GASTO", "CAROS", "CURSO", "DOADO", "ATIVO", "APURO", "DEVER", "ALUNO", "FUNDO", "TRAMA", "JOGAR", "RISCO", "SOMAR", "CAMPO", "PASSO", "COBRO", "GRATO", "TOCAR", "GUIAR", "GANHO", "REPOR", "SERIO", "MARCA", "PACTO", "SOMAR", "PAUTA", "FEIRA", "TENSA", "PLENA", "MUDAR", "SALTO", "CINCO", "TEMAS", "CEDER", "DEIXA", "VAGAR", "TIVER", "CENAR", "PEDIR", "VENDA", "ENFIM", "FASES", "SIGNO", "VERBO", "TOMAR", "CALMO"
 ];
 
-const indiceAleatorio = Math.floor(Math.random() * palavras.length);
-const palavraAleatoria = palavras[indiceAleatorio];
+const indiceAleatorio = Math.floor(Math.random() * palavras.length); // Cria um número aleatório com base nas palavras existentes
+const palavraAleatoria = palavras[indiceAleatorio]; // Seleciona a palavra aleatória
 console.log(palavraAleatoria);
-let letreco = palavraAleatoria;
+const tiles = document.querySelector(".tile-container"); // área de digitação do letreco
+const backspaceAndEnterRow = document.querySelector("#backspaceAndEnterRow"); // linha dos botões backspace e enter
+const keyboardFirstRow = document.querySelector("#keyboardFirstRow"); // primeira linha da teclado
+const keyboardSecondRow = document.querySelector("#keyboardSecondRow"); // segunda linha da teclado
+const keyboardThirdRow = document.querySelector("#keyboardThirdRow"); // terceira linha da teclado
+const keysFirstRow = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]; // Array com as letras da primeira linha
+const keysSecondRow = ["A", "S", "D", "F", "G", "H", "J", "K", "L"]; // Array com as letras da segunda linha
+const keysThirdRow = ["Z", "X", "C", "V", "B", "N", "M"]; // Array com as letras da terceira linha
+const modalVitoria = document.querySelector(".modal-vitoria"); // Modal de vitoria
+const modalDerrota = document.querySelector(".modal-derrota"); // Modal de derrota
+const textoPalavraCorreta = document.querySelector(".palavra"); //Armazena a palavra correta para exibição no modal de derrota
+const rows = 6; // Quantidade de tentativas do jogador
+const columns = 5; // Quantidade de caracteres da palavra
+const guesses = []; // Matriz para armazenar as tentativas
+const tempoInicio = Date.now(); // Tempo de inicio do jogo
+let jogoVencido = false; // Variável que verifica se o jogo foi vencido
+let letreco = palavraAleatoria; // Armazena a palavra aleatória
+let currentRow = 0; // Linha atual
+let currentColumn = 0; // Coluna atual
+let tentativas = 0; // Contador de tentativas
+let pontuacao = 0; // Contador de pontos
+const modalRanking = document.querySelector('.ranking-container'); // Modal de ranking de pontuaçõo
 
-const tiles = document.querySelector(".tile-container");
-const backspaceAndEnterRow = document.querySelector("#backspaceAndEnterRow");
-const keyboardFirstRow = document.querySelector("#keyboardFirstRow");
-const keyboardSecondRow = document.querySelector("#keyboardSecondRow");
-const keyboardThirdRow = document.querySelector("#keyboardThirdRow");
-
-const keysFirstRow = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
-const keysSecondRow = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
-const keysThirdRow = ["Z", "X", "C", "V", "B", "N", "M"];
-const modalVitoria = document.querySelector(".modal-vitoria");
-const modalDerrota = document.querySelector(".modal-derrota");
-const textoPalavraCorreta = document.querySelector(".palavra");
-let jogoVencido = false;
-
-const rows = 6;
-const columns = 5;
-let currentRow = 0;
-let currentColumn = 0;
-
-// Criando o letrecoMap que irá mapear a letra e a posição correta da palavra
+// Criando o letrecoMap que irá mapear as letras e a posição correta na palavra
 let letrecoMap = {};
+// Para cada letra da palavra
 for (let index = 0; index < letreco.length; index++) {
-  // Para cada letra da palavra aleatória, atribuímos a posição dessa letra
-  if (!letrecoMap[letreco[index]]) {
-    letrecoMap[letreco[index]] = [];
+  if (!letrecoMap[letreco[index]]) { // Se a letra ainda não foi mapeada
+    letrecoMap[letreco[index]] = []; // Cria um array para armazenar as posicoes
   }
-  letrecoMap[letreco[index]].push(index);
+  letrecoMap[letreco[index]].push(index); // Adiciona a posicao na palavra
 }
 
-const guesses = [];
-
+// Cria as linhas do letreco
 for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
-  guesses[rowIndex] = new Array(columns);
-  const tileRow = document.createElement("div");
-  tileRow.setAttribute("id", "row" + rowIndex);
-  tileRow.setAttribute("class", "tile-row");
-  for (let columnIndex = 0; columnIndex < columns; columnIndex++) {
-    const tileColumn = document.createElement("div");
-    tileColumn.setAttribute("id", "row" + rowIndex + "column" + columnIndex);
+  guesses[rowIndex] = new Array(columns); // Cria um array para armazenar as tentativas
+  const tileRow = document.createElement("div"); // Cria uma nova linha
+  tileRow.setAttribute("id", "row" + rowIndex); // Define o id da linha
+  tileRow.setAttribute("class", "tile-row"); // Define a classe da linha
+  for (let columnIndex = 0; columnIndex < columns; columnIndex++) { // Para cada coluna
+    const tileColumn = document.createElement("div"); // Cria uma nova coluna
+    tileColumn.setAttribute("id", "row" + rowIndex + "column" + columnIndex); // Define o id da coluna
+    // Define a classe da coluna
     tileColumn.setAttribute(
       "class",
-      rowIndex === 0 ? "tile-column typing" : "tile-column disabled"
+      rowIndex === 0 ? "tile-column typing" : "tile-column disabled" 
     );
-    tileRow.append(tileColumn);
-    guesses[rowIndex][columnIndex] = "";
+    tileRow.append(tileColumn); // Adiciona a coluna na linha
+    guesses[rowIndex][columnIndex] = ""; // Inicializa a tentativa
   }
-  tiles.append(tileRow);
+  tiles.append(tileRow); // Adiciona a linha na area de digitação
 }
 
-let tentativas = 0;
-let pontuacao = 0;
-const tempoInicio = Date.now();
 
+// Função para verificar a palavra
 const checkGuess = () => {
-  const guess = guesses[currentRow].join("");
-  if (guess.length !== columns) {
+  const guess = guesses[currentRow].join(""); // Junta as letras digitadas em uma string
+  if (guess.length !== columns) { // Verifica se a palavra digitada tem a quantidade correta de letras
     return;
   }
 
-  tentativas++;
+  tentativas++; // Incrementa o contador de tentativas
 
-  var currentColumns = document.querySelectorAll(".typing");
-  for (let index = 0; index < columns; index++) {
-    const letter = guess[index];
+  var currentColumns = document.querySelectorAll(".typing"); // Seleciona todas as colunas da linha atual
+  for (let index = 0; index < columns; index++) { // Para cada letra da palavra
+    const letter = guess[index]; // Armazena a letra
     const keyboardKey = document.getElementById(letter); // Captura o botão do teclado virtual
 
-    if (letrecoMap[letter] === undefined) {
-      // Se a letra não está na palavra
-      currentColumns[index].classList.add("wrong");
-      if (keyboardKey) {
-        keyboardKey.style = "border: 1px solid black; color: white; background-color: #2e2b2b;";
+    if (letrecoMap[letter] === undefined) { // Se a letra não está na palavra
+      currentColumns[index].classList.add("wrong"); // Adiciona a classe "wrong" (errado)
+      if (keyboardKey) { // Se o botão do teclado virtual foi encontrado
+        keyboardKey.style = "border: 1px solid black; color: white; background-color: #2e2b2b;"; // Define o estilo
         keyboardKey.disabled = true; // Desativa o botão
       }
     } else {
-      const correctIndexes = letrecoMap[letter];
-      if (correctIndexes.includes(index)) {
-        // Se a letra está na posição correta
-        currentColumns[index].classList.add("right");
-        if (keyboardKey) {
-          keyboardKey.style = "background-color: #51b36e; color: white;";
+      const correctIndexes = letrecoMap[letter]; // Armazena as posicoes da letra
+      if (correctIndexes.includes(index)) { // Verifica se a letra esta na posicao correta
+        currentColumns[index].classList.add("right"); // Adiciona a classe "right" (acertou)
+        if (keyboardKey) { // Se o botão do teclado virtual foi encontrado
+          keyboardKey.style = "background-color: #51b36e; color: white;"; // Define o estilo
         }
-      } else if (correctIndexes.length > 0) {
-        // Se a letra está na palavra, mas em posição errada
-        currentColumns[index].classList.add("displaced");
+      } else if (correctIndexes.length > 0) { // Verifica se a letra nao esta na posicao correta
+        currentColumns[index].classList.add("displaced"); // Adiciona a classe "displaced" (deslocada)
         if (keyboardKey) {
-          keyboardKey.style = "background-color: #c79c2e; color: white;";
+          keyboardKey.style = "background-color: #c79c2e; color: white;"; // Define o estilo
         }
       }
     }
   }
 
-
-
 // Adiciona um delay antes de mover para a próxima ação
 setTimeout(() => {
-  if (guess === letreco) {
-    const tempoFinal = (Date.now() - tempoInicio) / 1000;
-    pontuacao = Math.max(0, (7 - tentativas) * 60 - tempoFinal * 2);
-    if (pontuacao < 30) {
-      pontuacao = 30;
+  if (guess === letreco) { // Se o jogador acertou a palavra
+    const tempoFinal = (Date.now() - tempoInicio) / 1000; // Calcula o tempo de jogo
+    pontuacao = Math.max(0, (7 - tentativas) * 60 - tempoFinal * 2); // Calcula a pontuação
+    if (pontuacao < 30) { // Se a pontuação for menor que 30
+      pontuacao = 30; // Define a pontuação minima como 30
     }
 
-    pontuacao = Math.round(pontuacao);
-    document.querySelector('.modal-vitoria .tempo').textContent = `Tempo: ${tempoFinal.toFixed(2)} segundos`;
-    document.querySelector('.modal-vitoria .pontuacao').textContent = `Pontuação: ${pontuacao}`;
+    pontuacao = Math.round(pontuacao); // Arredonda a pontuação
+    document.querySelector('.modal-vitoria .tempo').textContent = `Tempo: ${tempoFinal.toFixed(2)} segundos`; // Exibe o tempo de jogo
+    document.querySelector('.modal-vitoria .pontuacao').textContent = `Pontuação: ${pontuacao}`; // Exibe a pontuação final
 
     modalVitoria.style = "display: flex"; // Exibe o modal de vitória
 
-    salvarPontos();
-    jogoVencido = true;
+    salvarPontos(); // Salva a pontuação
+    jogoVencido = true; // Define o jogo como vencido
   } else {
-    if (currentRow === rows - 1) {
-      palavraCorreta = letreco;
-      textoPalavraCorreta.textContent = `A palavra correta era: ${palavraCorreta}`;
+    if (currentRow === rows - 1) { // Se o jogador chegou ao fim das tentativas
+      palavraCorreta = letreco; // Armazena a palavra correta
+      textoPalavraCorreta.textContent = `A palavra correta era: ${palavraCorreta}`; // Exibe a palavra correta
 
-      modalDerrota.style = "display: flex";
+      modalDerrota.style = "display: flex"; // Exibe o modal de derrota
     } else {
       moveToNextRow(); // Move para a próxima linha
     }
@@ -130,7 +126,7 @@ setTimeout(() => {
 }, 500);
 };
 
-
+// Função para mover para a próxima linha ao verificar a palavra
 const moveToNextRow = () => {
     var typingColumns = document.querySelectorAll(".typing")
     for (let index = 0; index < typingColumns.length; index++) {
@@ -148,6 +144,7 @@ const moveToNextRow = () => {
     }
 };
 
+// Função para lidar com o clique no teclado
 const handleKeyboardOnClick = (key) => {
   if (currentColumn === columns) {
     return;
@@ -160,6 +157,7 @@ const handleKeyboardOnClick = (key) => {
   currentColumn++;
 };
 
+// Função para criar as linhas do teclado
 const createKeyboardRow = (keys, keyboardRow) => {
   keys.forEach((key) => {
     var buttonElement = document.createElement("button");
@@ -170,10 +168,12 @@ const createKeyboardRow = (keys, keyboardRow) => {
   });
 };
 
+// Cria as linhas do teclado
 createKeyboardRow(keysFirstRow, keyboardFirstRow);
 createKeyboardRow(keysSecondRow, keyboardSecondRow);
 createKeyboardRow(keysThirdRow, keyboardThirdRow);
 
+// Função para adicionar o botão de backspace no teclado
 const handleBackspace = () => {
   if (currentColumn === 0) {
     return;
@@ -185,12 +185,14 @@ const handleBackspace = () => {
   tile.textContent = "";
 };
 
-const backspaceButton = document.createElement("button");
+// Adiciona o botão de backspace no teclado
+const backspaceButton = document.createElement("button"); // Botão de backspace
 backspaceButton.addEventListener("click", handleBackspace);
 backspaceButton.textContent = "<";
 backspaceAndEnterRow.append(backspaceButton);
 
-const enterButton = document.createElement("button");
+// Adiciona o botão de enter no teclado
+const enterButton = document.createElement("button"); // Botão de enter
 enterButton.addEventListener("click", checkGuess);
 enterButton.textContent = "ENTER";
 backspaceAndEnterRow.append(enterButton);
@@ -216,16 +218,22 @@ document.onkeydown = function (evt) {
   }
 };
 
-const modalRanking = document.querySelector('.ranking-container');
 
+// Evento de clique no botão "Voltar", retornando para a tela de minigames
 document.getElementById('voltar').addEventListener('click', function () { 
   window.location.href = '?page=minigames';
 });
 
 document.getElementById('ranking').addEventListener('click', function () {
-  
 
-  fetch('../Paginas/consultas/ranking.php')
+  // Envia uma solicitação POST para o arquivo PHP para obter o ranking de pontuaçõo
+  fetch('../Paginas/consultas/ranking.php', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({id_minigame: 1})
+  })
     .then(response => response.json())
     .then(data => {
       // Verifica se há dados de ranking na resposta
@@ -273,23 +281,27 @@ document.getElementById('ranking').addEventListener('click', function () {
     })
     .catch(error => console.error('Erro:', error));
 
-  modalRanking.style = 'display: flex';  // Mostra o modal com estilo 'flex'
+  modalRanking.style = 'display: flex';  // Mostra o modal de ranking
 });
 
+// Evento para fechar o modal de ranking quando clicar no botão
 document.getElementById('fechar-ranking').addEventListener('click', function () {
-  modalRanking.style = 'display: none';  // Oculta o modal com estilo 'none'
+  modalRanking.style = 'display: none';
 });
 
+// Evento para fechar o modal de vitoria quando clicar no botão
 document.getElementById('jogar-novamente').addEventListener('click', function () {
-  modalVitoria.style = 'display: none';  // Oculta o modal com estilo 'none'
+  modalVitoria.style = 'display: none';
   location.reload();
 });
 
+// Evento para fechar o modal de derrota quando clicar no botão
 document.getElementById('jogar-novamente-derrota').addEventListener('click', function () {
-  modalDerrota.style = 'display: none';  // Oculta o modal com estilo 'none'
+  modalDerrota.style = 'display: none';
   location.reload();
 });
 
+// Função para salvar a pontuação no banco de dados
 function salvarPontos() {
   fetch('../Paginas/configs/salvar-pontos.php', {
     method: 'POST',
