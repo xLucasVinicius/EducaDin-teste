@@ -1,6 +1,6 @@
-const navbar = document.getElementById('navbar'); // Seleciona a navbar
+const navbar = document.getElementById('navbar'); // Seleciona a navbar lateral
 const navbarTop = document.getElementById('navbarTop'); // Seleciona a navbar superior
-const toggleBtn = document.getElementById('toggleBtn'); // Seleciona o botão de alternar
+const toggleBtn = document.getElementById('toggleBtn'); // Seleciona o botão de alternar entre a navbar lateral e a navbar superior
 const logo = document.getElementById('navbar-logo'); // Seleciona a logo
 const content = document.querySelector('.conteudo'); // Seleciona o conteúdo
 
@@ -74,7 +74,7 @@ function setActiveLink() {
     }
 }
 
-// Adiciona o listener de evento para cada link
+// Verifica qual link corresponde ao link clicado
 navLinks.forEach(link => {
     link.addEventListener('click', function(event) {
         // Previne o comportamento padrão do link

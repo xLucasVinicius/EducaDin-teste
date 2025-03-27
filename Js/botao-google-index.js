@@ -5,9 +5,9 @@ function handleCredentialResponse(response) {
     const nome = data.given_name;
     const sobrenome = data.family_name || '';
     const email = data.email;
-    const foto_perfil = data.picture; // Foto de perfil
-    const data_nascimento = data.birthday || ''; // Caso haja
-    const salario = ''; // 
+    const foto_perfil = data.picture;
+    const data_nascimento = data.birthday || '';
+    const salario = '';
 
     // Enviar os dados para o backend
     fetch('Paginas/configs/usuario-google.php', {
@@ -27,9 +27,9 @@ function handleCredentialResponse(response) {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
-            window.location.href = 'http://localhost:3000/EducaDin-teste/Paginas/navbar.php?page=dashboard'; // Redireciona para o dashboard
+            window.location.href = '?page=dashboard'; // Redireciona para o dashboard
         } else if (data.status === 'error_email') {
-            window.location.href = 'http://localhost:3000/EducaDin-teste/Paginas/navbar.php?page=dashboard'; // Caso o email já exista
+            window.location.href = '?page=dashboard'; // Caso o email já exista
         } else {
             // Tratar erro
         }

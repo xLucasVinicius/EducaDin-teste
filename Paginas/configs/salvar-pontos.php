@@ -36,7 +36,7 @@ if (isset($data['pontuacao']) && isset($data['id_minigame']) && isset($data['moe
         $stmt_pontuacoes2->execute();
         $stmt_pontuacoes2->close();
     } else {
-        // Caso contrário, atualize as moedas
+        // Caso contrário, atualiza as moedas
         $query_pontuacoes3 = "UPDATE moedas SET moedas_ganhas = moedas_ganhas + ? WHERE id_usuario = ?";
         $stmt_pontuacoes3 = $mysqli->prepare($query_pontuacoes3);
         $stmt_pontuacoes3->bind_param("ii", $moedas_ganhas, $id_usuario);

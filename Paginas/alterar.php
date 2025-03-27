@@ -108,7 +108,7 @@ if (isset($_SESSION['id'])) {
             </span>
     </div>
     <div class="btn-form">
-        <span id="btn-input1"><button type="button" onclick="cancelar()">Cancelar</button></span>
+        <span id="btn-input1"><button type="button" id="btn-cancelar">Cancelar</button></span>
         <span id="btn-input2"><input id="btn-salvar" type="submit" value="Salvar"></span>
     </div>
 

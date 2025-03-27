@@ -5,7 +5,7 @@ const mesAtual = new Date().toLocaleString('pt-BR', { month: 'short' }).replace(
 const labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']; // Rotulos do gráfico
 const values = [125, 129, 365, 235, 322, 563, 56, 134, 245, 232, 245, 245]; // Valores para cada mês(exemplo)
 
-// Converta os rótulos para o mesmo formato do mês atual (tudo em minúsculo)
+// Converte os rótulos para o mesmo formato do mês atual (tudo em minúsculo)
 const labelsFormatados = labels.map(label => label.toLowerCase());
 
 // Defina a cor branca para todas as barras e uma cor destacada para o mês atual

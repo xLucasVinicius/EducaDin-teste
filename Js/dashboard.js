@@ -2,100 +2,101 @@ const lancamentos = document.querySelector(".section-lancamentos"); // Seleciona
 const body = document.querySelector("body"); // Seleciona o body
 const parcelas = document.getElementById("parcelas"); // Seleciona o select de parcelas
 const labelParcelas = document.getElementById("label-parcelas"); // Seleciona o label de parcelas
+const subcategorias = { // Objeto com as subcategorias para cada categoria
+  moradia: [
+    "Aluguel", 
+    "Prestação do imóvel", 
+    "Condomínio", 
+    "Água", 
+    "Luz", 
+    "Internet/TV"
+  ],
+  alimentacao: [
+    "Supermercado", 
+    "Refeições fora de casa", 
+    "Delivery"
+  ],
+  transporte: [
+    "Aplicativos de transporte",
+    "Combustível", 
+    "Transporte público", 
+    "Manutenção de veículo", 
+    "Pedágios/estacionamento"
+  ],
+  educacao: [
+    "Mensalidade escolar/faculdade", 
+    "Cursos e workshops", 
+    "Material escolar"
+  ],
+  saude: [
+    "Plano de saúde", 
+    "Medicamentos", 
+    "Consultas médicas", 
+    "Tratamentos odontológicos"
+  ],
+  lazer: [
+    "Cinema", 
+    "Shows", 
+    "Viagens", 
+    "Assinaturas de streaming"
+  ],
+  vestuario: [
+    "Roupas", 
+    "Acessórios", 
+    "Calçados"
+  ],
+  impostos: [
+    "IPVA", 
+    "Imposto de Renda", 
+    "Multas"
+  ],
+  servicos: [
+    "Celular", 
+    "Assinaturas de software", 
+    "Apps"
+  ],
+  despesas_gerais: [
+    "Presentes", 
+    "Doações", 
+    "Outros"
+  ],
+  salario: [
+    "Salário fixo", 
+    "13º salário", 
+    "Bônus/PLR"
+  ],
+  freelance: [
+    "Serviços eventuais", 
+    "Consultorias"
+  ],
+  investimentos: [
+    "Juros de poupança", 
+    "Renda de ações", 
+    "Aluguéis recebidos"
+  ],
+  vendas: [
+    "Venda de bens", 
+    "Venda de produtos"
+  ],
+  outros: [
+    "Reembolsos", 
+    "Prêmios", 
+    "Doações recebidas"
+  ]
+};
 
-function exibirLancamentos() { // Abre o formulário de lançamentos
+// Abre o formulário de lançamentos
+function exibirLancamentos() { 
     lancamentos.style.display = "flex"; // Exibe o formulário
     window.scrollTo(0, 0); // Desloca a janela para o topo quando o formulário abre
     body.style.overflow = "hidden"; // Bloqueia a rolagem da janela
 }
 
-function fecharLancamentos() { // Fecha o formulário de lançamentos
+// Fecha o formulário de lançamentos
+function fecharLancamentos() { 
     lancamentos.style.display = "none";
     body.style.overflow = "auto";
   }
-
-const subcategorias = { // Objeto com as subcategorias para cada categoria
-    moradia: [
-      "Aluguel", 
-      "Prestação do imóvel", 
-      "Condomínio", 
-      "Água", 
-      "Luz", 
-      "Internet/TV"
-    ],
-    alimentacao: [
-      "Supermercado", 
-      "Refeições fora de casa", 
-      "Delivery"
-    ],
-    transporte: [
-      "Aplicativos de transporte",
-      "Combustível", 
-      "Transporte público", 
-      "Manutenção de veículo", 
-      "Pedágios/estacionamento"
-    ],
-    educacao: [
-      "Mensalidade escolar/faculdade", 
-      "Cursos e workshops", 
-      "Material escolar"
-    ],
-    saude: [
-      "Plano de saúde", 
-      "Medicamentos", 
-      "Consultas médicas", 
-      "Tratamentos odontológicos"
-    ],
-    lazer: [
-      "Cinema", 
-      "Shows", 
-      "Viagens", 
-      "Assinaturas de streaming"
-    ],
-    vestuario: [
-      "Roupas", 
-      "Acessórios", 
-      "Calçados"
-    ],
-    impostos: [
-      "IPVA", 
-      "Imposto de Renda", 
-      "Multas"
-    ],
-    servicos: [
-      "Celular", 
-      "Assinaturas de software", 
-      "Apps"
-    ],
-    despesas_gerais: [
-      "Presentes", 
-      "Doações", 
-      "Outros"
-    ],
-    salario: [
-      "Salário fixo", 
-      "13º salário", 
-      "Bônus/PLR"
-    ],
-    freelance: [
-      "Serviços eventuais", 
-      "Consultorias"
-    ],
-    investimentos: [
-      "Juros de poupança", 
-      "Renda de ações", 
-      "Aluguéis recebidos"
-    ],
-    vendas: [
-      "Venda de bens", 
-      "Venda de produtos"
-    ],
-    outros: [
-      "Reembolsos", 
-      "Prêmios", 
-      "Doações recebidas"
-    ]
-  };
 
   function mostrarSubcategorias() { // Função para mostrar as subcategorias
     const categoriaSelect = document.getElementById("categoria"); // Seleciona o select de categoria
@@ -127,16 +128,15 @@ const subcategorias = { // Objeto com as subcategorias para cada categoria
     }
   }
 
-  function mostrarParcelas() { // Função para mostrar as parcelas
+  // Função para mostrar as parcelas
+  function mostrarParcelas() { 
     parcelas.style.display = "block"; // Exibe o select
     labelParcelas.style.display = "block"; // Exibe o label
   }
 
-  function ocultarParcelas() { // Função para ocultar as parcelas
+  // Função para ocultar as parcelas
+  function ocultarParcelas() { 
     parcelas.style.display = "none"; // Oculta o select
     labelParcelas.style.display = "none"; // Oculta o label
   }
-
-const accountsData = JSON.parse(localStorage.getItem('accountsData'));
-console.log(accountsData);
   

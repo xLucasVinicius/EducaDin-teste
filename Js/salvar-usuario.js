@@ -1,10 +1,12 @@
-const form = document.querySelector('#form-salvar-usuario');
+const form = document.querySelector('#form-salvar-usuario');  // Captura o formulário
+const errorIcon = '<i class="bi bi-exclamation-circle"></i>';  // Icone de erro
 
 form.addEventListener('submit', function (e) {
     e.preventDefault();  // Impede o envio do formulário inicialmente
 
     let isFormValid = true;  // Variável para verificar se o formulário é válido
 
+    // Defina as regras de validação para cada campo
     const fields = [
         {
             id: 'nome',
@@ -43,34 +45,31 @@ form.addEventListener('submit', function (e) {
         }
     ];
 
-    const errorIcon = '<i class="bi bi-exclamation-circle"></i>';
+    fields.forEach(function (field) { // Verifica cada campo
+        const input = document.getElementById(field.id); // Captura o input
+        const inputBox = input.closest('.input-box'); // Captura o input-box
+        const inputValue = input.value; // Captura o valor
+        const errorSpan = inputBox.querySelector('.error'); // Captura o span que mostra o erro
+        errorSpan.innerHTML = ''; // Limpa o span
 
-    fields.forEach(function (field) {
-        const input = document.getElementById(field.id);
-        const inputBox = input.closest('.input-box');
-        const inputValue = input.value;
-        const errorSpan = inputBox.querySelector('.error');
-        errorSpan.innerHTML = '';
+        inputBox.classList.remove('invalid'); // Remove a classe de erro
+        inputBox.classList.add('valid'); // Adiciona a classe de sucesso
 
-        inputBox.classList.remove('invalid');
-        inputBox.classList.add('valid');
+        const fieldValidator = field.validator(inputValue); // Valida o campo
 
-        const fieldValidator = field.validator(inputValue);
-
-        if (fieldValidator && !fieldValidator.isValid) {
-            errorSpan.innerHTML = `${errorIcon} ${fieldValidator.errorMessage}`;
-            inputBox.classList.add('invalid');
-            inputBox.classList.remove('valid');
+        if (fieldValidator && !fieldValidator.isValid) { // Se o campo for inválido
+            errorSpan.innerHTML = `${errorIcon} ${fieldValidator.errorMessage}`; // atribui o texto de erro ao span
+            inputBox.classList.add('invalid'); // Adiciona a classe de erro
+            inputBox.classList.remove('valid'); // Remove a classe de sucesso
             isFormValid = false;  // Marca o formulário como inválido
-            console.log(document.getElementById('data-nasc').value);
         }
     });
     
+    // Verifica se o formulário é valido
     if (isFormValid) {
-        localStorage.removeItem('croppedImage');
+        localStorage.removeItem('croppedImage'); // Remove a imagem recortada do localStorage
         // Envio via AJAX
         const formData = new FormData(form); // Cria o objeto FormData com o conteúdo do formulário
-
         fetch('../Paginas/configs/salvar-usuario.php', {
             method: 'POST',
             body: formData
@@ -87,53 +86,60 @@ function isEmpty(value) {
     return value === '';
 }
 
+// Função para validar o nome
 function nameIsValid(value) {
-    const validator = {
+    const validator = { // Objeto para armazenar o resultado da validação
         isValid: true,
         errorMessage: null
     };
 
-    if (isEmpty(value)) {
+    if (isEmpty(value)) { // Verifica se o campo está vazio
         validator.isValid = false;
         validator.errorMessage = 'Insira um nome';
         return validator;
     }
 
-    const min = 3;
-    if (value.length < min) {
+    const min = 3; // Define o mínimo de caracteres
+
+    if (value.length < min) { // Verifica se o nome cumpre o requisito mínimo de caracteres
         validator.isValid = false;
         validator.errorMessage = `Insira pelo menos ${min} caracteres`;
         return validator;
     }
 
+    // Expressão regular para validar apenas letras
     const regex = /^[A-Za-z\s]+$/;
-    if (!regex.test(value)) {
+
+    if (!regex.test(value)) { // Verifica se o nome contém apenas letras
         validator.isValid = false;
         validator.errorMessage = 'Insira apenas letras';
         return validator;
     }
 
-    return validator;
+    return validator; // Retorna o resultado da validação
 }
 
+// Função para validar o email
 function emailIsValid(value) {
-    const validator = {
+    const validator = { // Objeto para armazenar o resultado da validação
         isValid: true,
         errorMessage: null
     };
 
-    // Adicione a validação do email aqui (exemplo simples)
+    // Expressão regular para validar o email
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!regex.test(value)) {
+
+    if (!regex.test(value)) { // Verifica se o email é valido
         validator.isValid = false;
         validator.errorMessage = 'Insira um email válido';
     }
 
-    return validator;
+    return validator; // Retorna o resultado da validação
 }
 
+// Função para validar a data
 function dataIsValid(value) {
-    const validator = {
+    const validator = { // Objeto para armazenar o resultado da validação
         isValid: true,
         errorMessage: null
     };
@@ -145,8 +151,8 @@ function dataIsValid(value) {
         return validator;
     }
 
-    const inputDate = new Date(value);
-    const today = new Date();
+    const inputDate = new Date(value); // Converte a data para um objeto Date
+    const today = new Date(); // Obtenha a data atual
 
     // Verifica se a data é válida
     if (isNaN(inputDate.getTime())) {
@@ -162,11 +168,12 @@ function dataIsValid(value) {
         return validator;
     }
 
-    return validator;
+    return validator; // Retorna o resultado da validação
 }
 
+// Função para validar se a senha é forte
 function passwordIsSecure(value) {
-    const validator = {
+    const validator = { // Objeto para armazenar o resultado da validação
         isValid: true,
         errorMessage: null
     };
@@ -180,7 +187,8 @@ function passwordIsSecure(value) {
 
     // Expressão regular para senha forte
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!regex.test(value)) {
+
+    if (!regex.test(value)) { // Verifica se a senha atende aos requisitos
         validator.isValid = false;
         // Mantemos a mensagem HTML
         validator.errorMessage = `
@@ -191,30 +199,31 @@ function passwordIsSecure(value) {
             <br>- Um número 
             <br>- E um caractere especial.
         `;
-        return validator;
+        return validator; // Retorna o resultado da validação
     }
-    return validator;
+    return validator; // Retorna o resultado da validação
 }
 
+// Função para validar se o campo de confirmação de senha é igual ao de senha
 function passwordMatch(value) {
-    const validator = {
+    const validator = { // Objeto para armazenar o resultado da validação
         isValid: true,
         errorMessage: null
     };
 
-    const passwordValue = document.getElementById('senha').value;
+    const passwordValue = document.getElementById('senha').value; // Obtenha o valor do campo de senha
 
-    if (value === '' || passwordValue !== value) {
+    if (value === '' || passwordValue !== value) { // Verifique se os valores são iguais
         validator.isValid = false;
         validator.errorMessage = 'As senhas devem ser iguais';
     }
 
-    return validator;
+    return validator; // Retorna o resultado da validação
 }
 
 // Função para validar o campo de salário
 function salaryIsValid(value) {
-    const validator = {
+    const validator = { // Objeto para armazenar o resultado da validação
         isValid: true,
         errorMessage: null
     };
@@ -222,8 +231,8 @@ function salaryIsValid(value) {
     // Remove os símbolos de formatação para validar apenas números
     const cleanedValue = value.replace(/\D/g, '');
 
-    if (isEmpty(cleanedValue)) {
-        validator.isValid = false;
+    if (isEmpty(cleanedValue)) { // Verifica se o campo está vazio
+        validator.isValid = false; 
         validator.errorMessage = 'Insira seu salário';
         return validator;
     }
@@ -235,7 +244,54 @@ function salaryIsValid(value) {
         return validator;
     }
 
-    return validator;
+    return validator; // Retorna o resultado da validação
+}
+
+// Função para alternar a visibilidade da senha e confirmar senha
+function mostrarSenha() {
+    // captura o input e o icone
+    var senhaInput = document.getElementById("senha");
+    var senhaIcon = document.getElementById("senha-icon");
+
+    if (senhaInput.type === "password") { // se o input estiver oculto
+        senhaInput.type = "text"; // alterna para exibir a senha
+        senhaIcon.classList.remove("bi-eye"); // remove o icone de ocultar senha
+        senhaIcon.classList.add("bi-eye-slash"); // adiciona o icone de senha visivel
+    } else {
+        senhaInput.type = "password"; // alterna o input para ocultar a senha
+        senhaIcon.classList.remove("bi-eye-slash"); // remove o icone de senha visivel
+        senhaIcon.classList.add("bi-eye"); // adiciona o icone de ocultar senha
+    }
+}
+function mostrarConfirmarSenha() {
+    // captura o input e o icone
+    var confirmarSenhaInput = document.getElementById("confirmar-senha");
+    var confirmarSenhaIcon = document.getElementById("confirmarsenha-icon");
+
+    if (confirmarSenhaInput.type === "password") { // se o input estiver oculto
+        confirmarSenhaInput.type = "text"; // alterna para exibir a senha
+        confirmarSenhaIcon.classList.remove("bi-eye"); // remove o icone de ocultar senha
+        confirmarSenhaIcon.classList.add("bi-eye-slash"); // adiciona o icone de senha visivel
+    } else {
+        confirmarSenhaInput.type = "password"; // alterna o input para ocultar a senha
+        confirmarSenhaIcon.classList.remove("bi-eye-slash"); // remove o icone de senha visivel
+        confirmarSenhaIcon.classList.add("bi-eye"); // adiciona o icone de ocultar senha
+    }
+}
+
+function handleSuccess(response) {
+    var modal = document.getElementById("successModal"); // Modal de sucesso
+    var closeModalBtn = document.getElementById("closeModalBtn"); // Botão para fechar o modal
+
+    // Mostrar o modal se a resposta for de sucesso
+    if (response.status === 'success') {
+        modal.style.display = "block";
+    }
+
+    // Quando o usuário clicar no botão, redireciona para a página inicial
+    closeModalBtn.onclick = function() {
+        window.location.href = "../index.html";
+    };
 }
 
 // Formatação automática do campo salário
@@ -246,10 +302,28 @@ document.getElementById('salario').addEventListener('input', function (e) {
     e.target.value = `R$ ${value}`; // Adiciona o símbolo R$
 });
 
+// Evento de envio do formulário
+document.querySelector('#form-salvar-usuario').addEventListener('submit', function (e) {
+    const base64ImageInput = document.querySelector('#base64-image'); // Campo oculto para armazenar a imagem
+    const croppedImage = localStorage.getItem('croppedImage'); // Recupera a imagem recortada
 
+    if (croppedImage) {
+        // Se houver uma imagem, enviamos ela em base64
+        base64ImageInput.value = croppedImage;
+    } else {
+        // Caso contrário, enviamos o valor padrão
+        base64ImageInput.value = '';
+    }
+});
 
+// Evento de clique no botão de cancelar
+document.querySelector('#btn-cancelar').addEventListener('click', function () {
+    window.location.href = "navbar.php?page=dashboard";
+});
+
+// Função para atualizar a preview da imagem de perfil
 document.addEventListener('DOMContentLoaded', function () {
-    const profilePic = document.querySelector('#imagem-perfil');
+    const profilePic = document.querySelector('#imagem-perfil'); // área da imagem de perfil
 
     // Recupera a imagem recortada do localStorage
     const croppedImage = localStorage.getItem('croppedImage');
@@ -264,67 +338,3 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-
-document.querySelector('#form-salvar-usuario').addEventListener('submit', function (e) {
-    const base64ImageInput = document.querySelector('#base64-image');
-    const croppedImage = localStorage.getItem('croppedImage');
-
-    if (croppedImage) {
-        // Se houver uma imagem, enviamos ela em base64
-        base64ImageInput.value = croppedImage;
-    } else {
-        // Caso contrário, enviamos o valor padrão
-        base64ImageInput.value = '';
-    }
-});
-
-// Evento de clique no botão de exibir senha
-function mostrarSenha() {
-    var senhaInput = document.getElementById("senha");
-    var senhaIcon = document.getElementById("senha-icon");
-
-    if (senhaInput.type === "password") {
-        senhaInput.type = "text";
-        senhaIcon.classList.remove("bi-eye");
-        senhaIcon.classList.add("bi-eye-slash");
-    } else {
-        senhaInput.type = "password";
-        senhaIcon.classList.remove("bi-eye-slash");
-        senhaIcon.classList.add("bi-eye");
-    }
-}
-
-function mostrarConfirmarSenha() {
-    var confirmarSenhaInput = document.getElementById("confirmar-senha");
-    var confirmarSenhaIcon = document.getElementById("confirmarsenha-icon");
-
-    if (confirmarSenhaInput.type === "password") {
-        confirmarSenhaInput.type = "text";
-        confirmarSenhaIcon.classList.remove("bi-eye");    
-        confirmarSenhaIcon.classList.add("bi-eye-slash");
-    } else {
-        confirmarSenhaInput.type = "password";
-        confirmarSenhaIcon.classList.remove("bi-eye-slash");
-        confirmarSenhaIcon.classList.add("bi-eye");
-    }
-}
-
-function cancelar() {
-    window.location.href = "navbar.php?page=dashboard";
-}
-
-
-function handleSuccess(response) {
-    var modal = document.getElementById("successModal");
-    var closeModalBtn = document.getElementById("closeModalBtn");
-
-    // Mostrar o modal se a resposta for de sucesso
-    if (response.status === 'success') {
-        modal.style.display = "block"; // Exibe o modal
-    }
-
-    // Quando o usuário clicar no botão, redireciona para a página inicial
-    closeModalBtn.onclick = function() {
-        window.location.href = "../index.html"; // Redireciona para a página inicial
-    };
-}

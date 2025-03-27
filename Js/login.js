@@ -1,7 +1,8 @@
+const input = document.querySelector('.error input'); // Seleciona o input
+const content = document.querySelector('.error'); // Seleciona o conteúdo
 
-
-
-function togglePassword() { // Função para alternar a visibilidade da senha
+// Função para alternar a visibilidade da senha
+function togglePassword() { 
     var passwordInput = document.getElementById("senha"); // Seleciona o input de senha
     var toggleIcon = document.querySelector(".toggle-password"); // Seleciona o botão de alternar visibilidade
 
@@ -14,24 +15,23 @@ function togglePassword() { // Função para alternar a visibilidade da senha
     }
 }
 
-const input = document.querySelector('.error input'); // Seleciona o input
-const content = document.querySelector('.error'); // Seleciona o conteúdo
-
 // Adiciona a classe "focused" quando o input recebe foco
 input.addEventListener('focus', () => {
-content.classList.add('focused'); 
+    content.classList.add('focused'); 
+});
+
+// Adiciona a classe "focused" quando o input recebe um valor
+input.addEventListener('input', () => {
+    content.classList.add('focused');
 });
 
 // Remove a classe "focused" ao perder o foco, somente se o campo estiver vazio
 input.addEventListener('blur', () => {
 if (input.value === '') {
-content.classList.remove('focused');
+    content.classList.remove('focused');
 }
 });
 
-// Adiciona a classe "focused" quando o input recebe um valor
-input.addEventListener('input', () => {
-content.classList.add('focused');
-});
+
 
 

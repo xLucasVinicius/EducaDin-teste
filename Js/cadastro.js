@@ -1,18 +1,22 @@
-const errorIcon = '<i class="bi bi-exclamation-circle"></i>';
+const form = document.querySelector('#form-cadastro'); // Captura o formulário
+const errorSpanEmail = document.querySelector('.email-error'); // Span de erro
+const inputEmailBox = document.querySelector('.login-email'); // Input de email
+const errorIcon = '<i class="bi bi-exclamation-circle"></i>'; // Icone de erro
 
+// Evento para atualizar a página e fazer com que a imagem de perfil seja atualizada
 window.onpageshow = function(event) {
   if (event.persisted) {
     window.location.reload();
   }
 };
 
-const form = document.querySelector('#form-cadastro');
-
+// Evento de envio do formulário
 form.addEventListener('submit', function (e) {
     e.preventDefault();  // Impede o envio do formulário inicialmente
 
     let isFormValid = true;  // Variável para verificar se o formulário é válido
 
+    // Defina as regras de validação para cada campo
     const fields = [
         {
             id: 'nome',
@@ -51,27 +55,28 @@ form.addEventListener('submit', function (e) {
         }
     ];
 
+    // Verifica cada campo
     fields.forEach(function (field) {
-        const input = document.getElementById(field.id);
-        const inputBox = input.closest('.input-box');
-        const inputValue = input.value;
-        const errorSpan = inputBox.querySelector('.error');
-        errorSpan.innerHTML = '';
+        const input = document.getElementById(field.id); // Captura o input
+        const inputBox = input.closest('.input-box'); // Captura o input-box
+        const inputValue = input.value; // Captura o valor
+        const errorSpan = inputBox.querySelector('.error'); // Captura o span que mostra o erro
+        errorSpan.innerHTML = ''; // Limpa o span
 
-        inputBox.classList.remove('invalid');
-        inputBox.classList.add('valid');
+        inputBox.classList.remove('invalid'); // Remove a classe de erro
+        inputBox.classList.add('valid'); // Adiciona a classe de sucesso
 
-        const fieldValidator = field.validator(inputValue);
+        const fieldValidator = field.validator(inputValue); // Valida o campo
 
-        if (fieldValidator && !fieldValidator.isValid) {
-            errorSpan.innerHTML = `${errorIcon} ${fieldValidator.errorMessage}`;
-            inputBox.classList.add('invalid');
-            inputBox.classList.remove('valid');
+        if (fieldValidator && !fieldValidator.isValid) { // Se o campo for inválido
+            errorSpan.innerHTML = `${errorIcon} ${fieldValidator.errorMessage}`; // atribui o texto de erro ao span
+            inputBox.classList.add('invalid'); // Adiciona a classe de erro
+            inputBox.classList.remove('valid'); // Remove a classe de sucesso
             isFormValid = false;  // Marca o formulário como inválido
-            console.log(document.getElementById('data-nasc').value);
         }
     });
 
+    // Verifica se o formulário é valido
     if (isFormValid) {
         localStorage.removeItem('croppedImage');
         // Envio via AJAX
@@ -97,12 +102,12 @@ form.addEventListener('submit', function (e) {
     }
 });
 
-
 // Função de verificação de campo vazio
 function isEmpty(value) {
     return value === '';
 }
 
+// Função para validar o nome
 function nameIsValid(value) {
     const validator = {
         isValid: true,
@@ -132,6 +137,7 @@ function nameIsValid(value) {
     return validator;
 }
 
+// Função para validar o email
 function emailIsValid(value) {
     const validator = {
         isValid: true,
@@ -148,6 +154,7 @@ function emailIsValid(value) {
     return validator;
 }
 
+// Função para validar a data
 function dataIsValid(value) {
     const validator = {
         isValid: true,
@@ -181,6 +188,7 @@ function dataIsValid(value) {
     return validator;
 }
 
+// Função para validar a senha
 function passwordIsSecure(value) {
     const validator = {
         isValid: true,
@@ -212,6 +220,7 @@ function passwordIsSecure(value) {
     return validator;
 }
 
+// Função para validar se o campo de confirmação de senha é igual ao de senha
 function passwordMatch(value) {
     const validator = {
         isValid: true,
@@ -262,7 +271,7 @@ document.getElementById('salario').addEventListener('input', function (e) {
     e.target.value = `R$ ${value}`; // Adiciona o símbolo R$
 });
 
-// Função para habilitar/desabilitar o botão de salvar e adicionar/remover a classe "disable"
+// Função para habilitar/desabilitar o botão de salvar e com base no checkbox de termos
 document.getElementById("termos").addEventListener("change", function() {
     const btnSalvar = document.getElementById("btn-salvar");
     if (this.checked) {
@@ -276,7 +285,7 @@ document.getElementById("termos").addEventListener("change", function() {
     }
 });
 
-
+// Função para atualizar a preview do perfil
 document.addEventListener('DOMContentLoaded', function () {
     const profilePic = document.querySelector('#imagem-perfil');
 
@@ -293,6 +302,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// Envio da imagem no evento de envio do formulário
 document.querySelector('#form-cadastro').addEventListener('submit', function (e) {
     const base64ImageInput = document.querySelector('#base64-image');
     const croppedImage = localStorage.getItem('croppedImage');
@@ -306,75 +316,78 @@ document.querySelector('#form-cadastro').addEventListener('submit', function (e)
     }
 });
 
-// Evento de clique no botão de exibir senha
+// Funções para mostrar/esconder a senha
 function mostrarSenha() {
-    var senhaInput = document.getElementById("senha");
-    var senhaIcon = document.getElementById("senha-icon");
+    var senhaInput = document.getElementById("senha"); // captura o input
+    var senhaIcon = document.getElementById("senha-icon"); // captura o icone
 
-    if (senhaInput.type === "password") {
-        senhaInput.type = "text";
-        senhaIcon.classList.remove("bi-eye");
-        senhaIcon.classList.add("bi-eye-slash");
+    if (senhaInput.type === "password") { // se o input estiver oculto
+        senhaInput.type = "text"; // alterna para exibir a senha
+        senhaIcon.classList.remove("bi-eye"); // remove o icone de ocultar senha
+        senhaIcon.classList.add("bi-eye-slash"); // adiciona o icone de senha visivel
     } else {
-        senhaInput.type = "password";
-        senhaIcon.classList.remove("bi-eye-slash");
-        senhaIcon.classList.add("bi-eye");
+        senhaInput.type = "password"; // alterna o input para ocultar a senha
+        senhaIcon.classList.remove("bi-eye-slash"); // remove o icone de senha visivel
+        senhaIcon.classList.add("bi-eye"); // adiciona o icone de ocultar senha
     }
 }
 
 function mostrarConfirmarSenha() {
-    var confirmarSenhaInput = document.getElementById("confirmar-senha");
-    var confirmarSenhaIcon = document.getElementById("confirmarsenha-icon");
+    var confirmarSenhaInput = document.getElementById("confirmar-senha"); // captura o input
+    var confirmarSenhaIcon = document.getElementById("confirmarsenha-icon"); // captura o icone
 
-    if (confirmarSenhaInput.type === "password") {
-        confirmarSenhaInput.type = "text";
-        confirmarSenhaIcon.classList.remove("bi-eye");    
-        confirmarSenhaIcon.classList.add("bi-eye-slash");
+    if (confirmarSenhaInput.type === "password") { // se o input estiver oculto
+        confirmarSenhaInput.type = "text"; // alterna para exibir a senha
+        confirmarSenhaIcon.classList.remove("bi-eye"); // remove o icone de ocultar senha
+        confirmarSenhaIcon.classList.add("bi-eye-slash"); // adiciona o icone de senha visivel
     } else {
-        confirmarSenhaInput.type = "password";
-        confirmarSenhaIcon.classList.remove("bi-eye-slash");
-        confirmarSenhaIcon.classList.add("bi-eye");
+        confirmarSenhaInput.type = "password"; // alterna o input para ocultar a senha
+        confirmarSenhaIcon.classList.remove("bi-eye-slash"); // remove o icone de senha visivel
+        confirmarSenhaIcon.classList.add("bi-eye"); // adiciona o icone de ocultar senha
     }
 }
 
+// Redireciona para a página inicial
 document.getElementById('btn-input1').addEventListener('click', function () {
     window.location.href = '../index.html';
 });
 
+// Função para exibir o modal de sucesso
 function handleSuccess(response) {
-    var modal2 = document.getElementById("successModal2");
-    var closeModalBtn = document.getElementById("closeModalBtn");
+    var modal2 = document.getElementById("successModal2"); // Modal de sucesso
+    var closeModalBtn = document.getElementById("closeModalBtn"); // Botão para fechar o modal
 
     // Mostrar o modal se a resposta for de sucesso
     if (response.status === 'success2') {
-        modal2.style.display = "block"; // Exibe o modal
+        modal2.style.display = "block";
+
         // Quando o usuário clicar no botão, redireciona para a página inicial
         closeModalBtn.onclick = function() {
-            window.location.href = "login.php"; // Redireciona para a página inicial
+            window.location.href = "login.php";
         };
     }
 }
 
-const errorSpanEmail = document.querySelector('.email-error');
-const inputEmailBox = document.querySelector('.login-email');
-
+// Função para exibir o modal de erro
 function showModalError(data) {
-    var modalerror = document.getElementById("errorModal");
-    var closeModalBtn2 = document.getElementById("closeModalBtn2");
+    var modalerror = document.getElementById("errorModal"); // Modal de erro
+    var closeModalBtn2 = document.getElementById("closeModalBtn2"); // Botão para fechar o modal
 
-    if (data.status === 'error_email') {
-        modalerror.style.display = "block";
-        errorSpanEmail.innerHTML = `${errorIcon} Insira um email válido`;
-        errorSpanEmail.style.display = "block";
-        inputEmailBox.classList.remove('valid');
-        inputEmailBox.classList.add('invalid');
+    if (data.status === 'error_email') { // Verifica o status de erro
+        modalerror.style.display = "block"; // Exibe o modal
+        errorSpanEmail.innerHTML = `${errorIcon} Insira um email válido`; // Atribui a mensagem de erro
+        errorSpanEmail.style.display = "block"; // Exibe a mensagem
+        inputEmailBox.classList.remove('valid'); // Remove a classe de sucesso
+        inputEmailBox.classList.add('invalid'); // Adiciona a classe de erro
 
+        // Quando o usuário clicar no botão, fecha o modal
         closeModalBtn2.onclick = function() {
             modalerror.style.display = "none";
         };
     }
 }
 
+// Remove o erro ao digitar no input
 inputEmailBox.addEventListener('input', function() {
     errorSpanEmail.style.display = "none";
     inputEmailBox.classList.remove('invalid');

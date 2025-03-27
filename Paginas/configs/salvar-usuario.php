@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verificar se uma nova imagem foi enviada
         if (isset($_POST['base64-image']) && !empty($_POST['base64-image'])) {
-            $base64Image = $_POST['base64-image'];
+            $base64Image = $_POST['base64-image']; // Salvar o base64 da nova imagem
 
             // Detecta o tipo de imagem (png, jpg, jpeg)
             if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $tipoImagem)) {

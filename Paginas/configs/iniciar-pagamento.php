@@ -9,7 +9,7 @@ use MercadoPago\Item;
 SDK::setAccessToken('APP_USR-5025392289696892-031815-76d692fa75852cfa3fb6d72523ff1a78-2335238967');
 
 // Verifique o ID do usuário na sessão
-$idUsuario = $_SESSION['id']; // O ID do usuário logado
+$id_Usuario = $_SESSION['id']; // ID do usuário logado
 
 // Verifique qual plano foi selecionado
 $plano = $_POST['plano'];
@@ -32,7 +32,7 @@ $preference->items = array($item);
 
 // URLs de redirecionamento
 $preference->back_urls = array(
-    "success" => "http://localhost:3000/EducaDin-teste/Paginas/configs/retorno-pagamento.php?id_usuario=" . $idUsuario,
+    "success" => "http://localhost:3000/EducaDin-teste/Paginas/configs/retorno-pagamento.php?id_usuario=" . $id_Usuario,
     "failure" => "http://localhost:3000/EducaDin-teste/Paginas/configs/falha.php",
     "pending" => "http://localhost:3000/EducaDin-teste/Paginas/configs/pendente.php"
 );

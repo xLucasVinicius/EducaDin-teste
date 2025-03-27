@@ -13,11 +13,6 @@ if (isset($_GET['status']) && $_GET['status'] == 'approved') {
     // Atualizar o plano do usuário para 'premium'
     $sql = "UPDATE usuarios SET plano = 'premium' WHERE id_usuario = ?";
     $stmt = $mysqli->prepare($sql);
-
-    if ($stmt === false) {
-        die("Erro ao preparar a consulta: " . $mysqli->error);
-    }
-
     $stmt->bind_param("i", $idUsuario);
     
     if ($stmt->execute()) {
@@ -28,12 +23,11 @@ if (isset($_GET['status']) && $_GET['status'] == 'approved') {
     } else {
         echo "Erro ao atualizar o plano: " . $stmt->error; // Usar $stmt->error ao invés de $conn->error
     }
-
     $stmt->close();
 } else {
     echo "Pagamento não aprovado.";
-    // Redirecionar para a página de erro
-    header("Location: planos.php?status=failure");
+    // Redirecionar para a página de pagamento novamente
+    header("Location: ?page=planos");
     exit;
 }
 

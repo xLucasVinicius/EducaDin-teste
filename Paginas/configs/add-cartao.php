@@ -4,7 +4,7 @@ include("config.php");
 
 // Receber dados do formulário
 $id_usuario = $_POST['id_usuario'];
-$id_conta = $_POST['conta'];  // Já é o id da conta
+$id_conta = $_POST['conta'];
 $limite_total = $_POST['limite'];
 $dia_fechamento = $_POST['fechamento'];
 $dia_vencimento = $_POST['vencimento'];
@@ -27,14 +27,14 @@ if ($result_cartao->num_rows == 0) {
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {
-        echo json_encode(['status' => 'success']);
+        echo json_encode(['status' => 'success']); // Retorna uma resposta de sucesso
     } else {
-        echo json_encode(['status' => 'error']);
+        echo json_encode(['status' => 'error']); // Retorna uma resposta de erro
     }
 
     $stmt->close();
 } else {
-    echo json_encode(['status' => 'error_cartao']);
+    echo json_encode(['status' => 'error_cartao']); // Retorna uma resposta de erro para cartão existente
 }
 
 $stmtTest->close();

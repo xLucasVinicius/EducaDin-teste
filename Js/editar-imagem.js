@@ -1,9 +1,6 @@
-const extensoes = { // array com as extensões permitidas
-    'image/png': 'png',
-    'image/jpeg': 'jpeg',
-    'image/jpg': 'jpg'
-};
-
+const avatarImagem = document.querySelector('#avatar-img'); // input de imagem
+const h2Avatar = document.querySelector('#h2-avatar'); // h2 de avatar
+const extensoes = {'image/png': 'png', 'image/jpeg': 'jpeg', 'image/jpg': 'jpg'}; // array com as extensões permitidas
 let cropperInstance = null; // variável para armazenar a instância do Cropper
 
 function createButton(textContent, id) { // função para criar um botão
@@ -24,9 +21,6 @@ function crop(image) { // função para criar uma instância do Cropper
         }
     });
 }
-
-const avatarImagem = document.querySelector('#avatar-img'); // input de imagem
-const h2Avatar = document.querySelector('#h2-avatar'); // h2 de avatar
 
 avatarImagem.addEventListener('change', event => { // evento de mudança de imagem
     const previousPreview = document.querySelector('#preview-img'); // preview anterior
@@ -71,12 +65,9 @@ avatarImagem.addEventListener('change', event => { // evento de mudança de imag
 
         uploadButton.addEventListener('click', () => { // evento de clique no botão de upload
             const dataUrl = cropperInstance.getCroppedCanvas().toDataURL('image/jpeg'); // Obtém a imagem recortada como Data URL
-            
             localStorage.setItem('croppedImage', dataUrl); // Salva a Data URL da imagem recortada no localStorage
-
-            history.back();
+            history.back(); // Volta para a tela anterior
         });
     };
-
     reader.readAsDataURL(avatarImagem.files[0]); // leitura da imagem
 });
