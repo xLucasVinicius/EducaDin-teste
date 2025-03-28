@@ -27,11 +27,7 @@ function handleCredentialResponse(response) {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
-            window.location.href = '?page=dashboard'; // Redireciona para o dashboard
-        } else if (data.status === 'error_email') {
-            window.location.href = '?page=dashboard'; // Caso o email já exista
-        } else {
-            //outro erro
+            window.location.href = 'navbar.php?page=dashboard'; // Redireciona para o dashboard
         }
     })
     .catch(error => console.error('Erro:', error));

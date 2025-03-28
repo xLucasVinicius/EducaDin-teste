@@ -16,7 +16,7 @@
     font-family: sans-serif;
 }
 
-.conteudo-total-minigames {
+.conteudo-total-minigames {  /* Seção que contém todo o conteudo */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,18 +27,18 @@
     width: 100%;
 }
 
-.topo-minigames h1 {
+.topo-minigames h1 {  /* Titulo minigames */
     color: var(--cor-principal);
     font-size: 2.5rem;
     font-weight: 600;
     font-family: 'Orbitron', sans-serif;
 }
 
-.conteudo-minigames {
+.conteudo-minigames {  /* Conteudo que contém todos os minigames */
     width: 100%;
 }
 
-.container-card-minigames {
+.container-card-minigames {  /* Conteudo que contém os cards dos minigames */
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -48,7 +48,7 @@
     margin-bottom: 40px;
 }
 
-.card-minigames {
+.card-minigames {  /* Card de cada minigames */
     position: relative;
     width: 250px;
     height: 500px;
@@ -64,20 +64,20 @@
     cursor: pointer;
 }
 
-.card-minigames:hover {
+.card-minigames:hover { /* Hover do card de cada minigames */
     transform: scale(1.1);
     transition: all .3s;
     box-shadow: 1px 1px 20px var(--cor-principal);
 }
 
-.card-minigames a {
+.card-minigames a {  /* Link do card de cada minigames */
     position: relative;
     text-decoration: none;
     width: 100%;
     height: 100%;
 }
 
-.card-minigames span {
+.card-minigames span {  /* Efeito escuro do card de cada minigames */
     position: absolute;
     top: 0;
     left: 0;
@@ -87,11 +87,11 @@
     border-radius: 20px;
 }
 
-.card-minigames:hover span,.card-minigames:hover h3 {
+.card-minigames:hover span,.card-minigames:hover h3 {  /* remove o efeito escuro o nome do minigame no card */
     display: none;
 }
 
-.card-minigames h3 {
+.card-minigames h3 {  /* Texto do card de cada minigames */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -102,20 +102,21 @@
     font-family: 'Orbitron', sans-serif;
 }
 
-.card-minigames img {
+.card-minigames img {  /* Imagem do card de cada minigames */
     width: 100%;
     height: 100%;
     object-fit: fill;
     border-radius: 20px;   
 }
 
-@media screen and (max-width: 767px) {
-    .card-minigames {
+/* Responsividade */
+@media screen and (max-width: 767px) { /* Responsividade para telas menores */
+    .card-minigames { /* Card de cada minigames */
         width: 130px;
         height: 250px;
     }
 
-    .card-minigames h3 {
+    .card-minigames h3 {  /* Texto do card de cada minigames */
         font-size: 1.2rem;
     }
 }

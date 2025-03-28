@@ -30,7 +30,7 @@ html, body {
     width: 100%;
 }
 
-.conteudo-total-sobrenos .quem-somos { /* Div que contém quem h1 e p */
+.conteudo-total-sobrenos .quem-somos { /* Div que contém h1 e p de quem somos */
     width: 100%;
     text-align: center;
 }
@@ -107,6 +107,6 @@ html, body {
     transition: all 0.3s;
 }
 
-.conteudo-total-sobrenos .apresentar-membros .membros .membro-container span a:hover {
+.conteudo-total-sobrenos .apresentar-membros .membros .membro-container span a:hover { /* Icones do membro ao passar o mouse */
     filter: brightness(0.7);
 }

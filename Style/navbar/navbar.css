@@ -13,71 +13,71 @@
     box-sizing: border-box;
 }
 
-.navbar-vertical {
+.navbar-vertical { /* Estilo da navbar vertical */
     height: 100dvh;
     width: 200px;
-    background-color: #3D3D3D; /* Cor de fundo cinza da navbar */
+    background-color: #3D3D3D; 
     position: fixed;
     left: 0;
     top: 0;
     overflow-y: auto;
     scrollbar-width: none;
-    border: 1px solid var(--cor-principal); /* Borda dourada */
-    transition: width 0.3s ease; /* Transição suave ao abrir/fechar */
+    border: 1px solid var(--cor-principal); 
+    transition: width 0.3s ease; 
     padding: 0;
     z-index: 9999;
     flex-wrap: nowrap;
 }
-.navbar-vertical.collapsed {
-    width: 60px; /* Largura da navbar quando recolhida */
+.navbar-vertical.collapsed { /* Estilo da navbar vertical recolhida */
+    width: 60px; 
 }
-.navbar-vertical .navbar-brand {
-    margin-left: 0px; /* Ajuste da logo próximo à borda */
+.navbar-vertical .navbar-brand { /* Estilo do container da logo na navbar vertical */
+    margin-left: 0px; 
 }
-.navbar-vertical .navbar-brand img {
-    max-width: 70%; /* Ajuste de tamanho para caber bem */
+.navbar-vertical .navbar-brand img { /* Estilo do logo na navbar vertical */
+    max-width: 70%; 
 }
-.navbar-vertical.collapsed .navbar-brand img {
-    width: 95px; /* Tamanho menor para a logo quando recolhida */
+.navbar-vertical.collapsed .navbar-brand img { /* Estilo do logo na navbar vertical recolhida */
+    width: 95px; 
     margin-left: 10px;
 }
-.navbar-vertical .nav-link {
-    color: white; /* Texto branco */
+.navbar-vertical .nav-link { /* Estilo dos links na navbar vertical */
+    color: white; 
     font-size: 1rem;
-    transition: all 0.3s ease; /* Transição suave */
-    padding: 10px 10px; /* Espaçamento interno */
-      white-space: nowrap; /*Prevenir quebra de linha no texto */
-    text-align: left; /* Alinhamento à esquerda */
+    transition: all 0.3s ease; 
+    padding: 10px 10px; 
+      white-space: nowrap; 
+    text-align: left; 
 }
-.navbar-vertical .nav-item {
+.navbar-vertical .nav-item { /* Estilo de cada itens da navbar vertical */
     display: block;
-    text-align: left; /* Garantir alinhamento à esquerda */
+    text-align: left;
 }
-.navbar-vertical.collapsed .nav-link {
-    padding: 10px; /* Menor padding para os ícones */
-    text-align: center; /* Centralizar ícones */
+.navbar-vertical.collapsed .nav-link { /* Estilo dos links na navbar vertical recolhida */
+    padding: 10px; 
+    text-align: center; 
 }
-.navbar-vertical .nav-link i {
+.navbar-vertical .nav-link i { /* Estilo dos icones na navbar vertical */
     margin-right: 10px;
-    color: #F2A900; /* Ícones dourados */
+    color: #F2A900; 
 }
-.navbar-vertical.collapsed .nav-link i {
-    margin-right: 0; /* Remover o espaço lateral dos ícones */
+.navbar-vertical.collapsed .nav-link i { /* Estilo dos icones na navbar vertical recolhida */
+    margin-right: 0; 
 }
-.navbar-vertical .nav-link:hover, .navbar-vertical .nav-link.active {
-    background-color: #F2A900; /* Fundo dourado ao passar o mouse */
-    color: black; /* Texto preto ao passar o mouse */
-    width: 100%; /* Largura total do link */
-    margin: 0; /* Remover margens */
+.navbar-vertical .nav-link:hover, .navbar-vertical .nav-link.active { /* Estilo dos links ao passar o mouse na navbar vertical e no link ativo */
+    background-color: #F2A900; 
+    color: black; 
+    width: 100%; 
+    margin: 0;
 }
-.navbar-vertical .nav-link:hover i, .navbar-vertical .nav-link.active i {
-    color: black; /* Ícones pretos ao passar o mouse ou quando ativo */
+.navbar-vertical .nav-link:hover i, .navbar-vertical .nav-link.active i { /* Estilo dos icones ao passar o mouse na navbar vertical e no link ativo */
+    color: black; 
 }
-.navbar-vertical.collapsed .nav-text {
-    display: none; /* Esconder texto dos links */
+.navbar-vertical.collapsed .nav-text { /* Estilo dos textos na navbar vertical recolhida */
+    display: none;
 }
-.navbar-top .toggle-btn {
-    position: absolute;
+.navbar-top .toggle-btn { /* Estilo do botao de alternar entre a navbar completa e recolhida */
+    position: absolute; 
     top: 15px;
     left: -15px;
     z-index: 10000;
@@ -93,20 +93,20 @@
     cursor: pointer;
     border-radius: 50%;
     transition: all 0.3s ease;
-    border: 1px solid #F2A900; /* Borda dourada no botão */
+    border: 1px solid #F2A900;
 }
-.navbar-vertical.collapsed ~ .navbar-top .toggle-btn i {
-    transform: rotate(180deg); /* Rotacionar a seta */
+.navbar-vertical.collapsed ~ .navbar-top .toggle-btn i { /* Estilo do botao de alternar entre a navbar completa e recolhida quando a navbar vertical recolhida */
+    transform: rotate(180deg); 
 }
-/* Garantir que os links fiquem logo abaixo da logo */
-.navbar-vertical ul.nav {
+
+.navbar-vertical ul.nav { /* Estilo da lista de links na navbar vertical */
     padding-left: 0;
 }
-.navbar-vertical ul.nav:first-of-type {
-    margin-top: 11px; /* Espaço logo abaixo da logo */
+.navbar-vertical ul.nav:first-of-type { /* Estilo da primeira lista de links na navbar vertical */
+    margin-top: 11px;
 }
-.navbar-vertical ul.nav.bottom-links {
-    margin-top: auto; /* Empurrar links inferiores para o final */
+.navbar-vertical ul.nav.bottom-links { /* Estilo da lista de links inferiores na navbar vertical */
+    margin-top: auto;
 }
 
 /* Estilos da Navbar Superior */
@@ -114,11 +114,11 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: calc(100vw - 200px); /* Ajuste para a largura do menu lateral */
+    width: calc(100vw - 200px);
     height: 60px;
     background-color: #3D3D3D;
     padding: 0 20px;
-    margin-left: 200px; /* Para alinhar corretamente com a navbar lateral */
+    margin-left: 200px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -126,19 +126,19 @@
     transition: all 0.3s ease;
     z-index: 9999;
 }
-.navbar-top.collapsed {
-    margin-left: 60px; /* Ajuste para quando a navbar lateral estiver recolhida */
+.navbar-top.collapsed { /* Estilo da navbar superior recolhida */
+    margin-left: 60px;
     width: calc(100% - 60px);
     height: 53px;
 }
-.navbar-top .user-info a{
+.navbar-top .user-info a{ /* Estilo do link do perfil na navbar superior */
     display: flex;
     text-decoration: none;
     align-items: center;
     color: rgb(255, 255, 255);
     object-fit: cover;
 }
-.navbar-top .user-info img {
+.navbar-top .user-info img { /* Estilo da imagem do perfil na navbar superior */
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -146,7 +146,7 @@
     margin-right: 15px;
     border: 1px solid var(--cor-principal);
 }
-.navbar-top .user-info h1 {
+.navbar-top .user-info h1 { /* Estilo do nome do perfil na navbar superior */
     color: #FFF;
     font-size: 1rem;
     font-weight: 500;
@@ -161,21 +161,21 @@
 .conteudo {
     position: absolute;
     background-color: var(--cor-fundo-content);
-    width: calc(100% - 200px); /* Ajusta para a largura da barra lateral */
-    height: calc(100dvh - 60px); /* Preenche a área abaixo da navbar superior */
+    width: calc(100% - 200px);
+    height: calc(100dvh - 60px);
     right: 0;
-    top: 60px; /* Ajusta para abaixo da barra superior */
-    z-index: 0; /* Mantém o conteúdo abaixo das navbars */
-    transition: width 0.3s ease; /* Animação suave ao colapsar a barra lateral */
+    top: 60px; 
+    z-index: 0; 
+    transition: width 0.3s ease; 
     overflow-y: scroll;
     scrollbar-width: none;
 }
 
-/* Quando a barra lateral está colapsada */
+/* Estilo do container de conteudo quando a barra lateral está fechada */
 .conteudo.collapsed {
-    width: calc(100% - 60px); /* Ajusta a largura quando a barra lateral é colapsada */
+    width: calc(100% - 60px);
     height: calc(100dvh - 53px);
-    top: 53px; /* Ajuste para quando a navbar superior também encolher */
+    top: 53px;
 }
 
 /* Fim estilização conteudo padrao */

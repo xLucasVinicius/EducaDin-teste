@@ -6,103 +6,102 @@
     --cor-txt: #FFFFFF;
 }
 
-@media screen and  (max-width: 767px){
+/* Responsividade */
+@media screen and (max-width: 767px) { /* Celular */
     html, body {
         overflow: scroll;
         height: auto;
         
     }
-
-    #pattern, #gradient {
+    
+    #pattern, #gradient { /* Esconder background */
         display: none;
     }
 
-    .form-container-cadastro {
+    .form-container-cadastro { /* Container do form de cadastro */
         width: 100vw;
         height: 100%;
         background-color: var(--cor-fundo-content);
         border-radius: 0px;
     }
 
-    form {
+    form { /* Form de cadastro */
         width: 300px; 
     }
 
-    form > h1 {
+    form > h1 { /* Título do form de cadastro */
         font-size: 1.3rem;
     }
 
-    label {
+    label { /* Label do form de cadastro */
         font-size: 15px;
     }
 
-    .img-perfil {
+    .img-perfil { /* Container da imagem de perfil */
         width: 100px;
         height: 100px;
     }
 
-    .img-perfil img {
+    .img-perfil img { /* Imagem de perfil */
         width: 130px;
         height: 130px;
     }
 
-    #nome, #sobrenome, #data-nasc, #salario {
+    #nome, #sobrenome, #data-nasc, #salario { /* Inputs do form de cadastro */
         width: 300px;
     }
 
-    .input-name, .input-outras-infos {
+    .input-name, .input-outras-infos { /* Container dos inputs do form de cadastro */
         display: flex;
         flex-direction: column;
         width: 300px;
     }
 }
 
-@media screen and (min-width: 768px) and (max-width: 930px){
-    form {
+@media screen and (min-width: 768px) and (max-width: 930px){ /* Tablet */
+    form { /* Form de cadastro */
         width: 600px; 
     } 
 }
 
-@media screen and (max-width: 930px){
-    form > h1 {
+@media screen and (max-width: 930px){ /* Desktop */
+    form > h1 { /* Título do form de cadastro */
         font-size: 2rem;
         margin-bottom: 1%;
     }
     
-    span {
+    span { /* Mensagem de erro dos inputs */
         display: block;
     }
     
-    .input-name, .input-outras-infos {
+    .input-name, .input-outras-infos { /* Container dos inputs do form de cadastro */
         display: block;
         width: 300px;
     }
     
-    .input-login {
+    .input-login { /* Container dos inputs do form de cadastro */
         width: 300px;
     }
     
-    #nome, #sobrenome, #data-nasc, #salario,#email, #senha, #confirmarsenha {
+    #nome, #sobrenome, #data-nasc, #salario,#email, #senha, #confirmarsenha { /* Inputs do form de cadastro */
         width: 300px;
     }
 
-    #senha-icon, #confirmarsenha-icon {
+    #senha-icon, #confirmarsenha-icon { /* Icones do form de cadastro */
         bottom: 18px;
     }
     
-    .btn-form {
+    .btn-form { /* Container dos botões do form de cadastro */
         gap: 10px;
     }
 
-    .termos-politicas {
+    .termos-politicas { /* Container dos links dos termos e politicas */
         flex-direction: row;
         gap: 20px;
     }
     
-    .input-termos-politicas {
+    .input-termos-politicas { /* Container do input de termos e politicas */
         width: 300px;
     }
-    
-    
-    }
+}
     

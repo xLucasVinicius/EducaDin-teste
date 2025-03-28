@@ -26,7 +26,7 @@
         text-align: center;
     }
 
-    .conteudo-total-sobrenos .apresentar-membros {
+    .conteudo-total-sobrenos .apresentar-membros { /* Div que contém todos os membros */
         gap: 0;
     }
 }

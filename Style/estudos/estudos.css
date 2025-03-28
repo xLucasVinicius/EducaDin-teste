@@ -99,7 +99,7 @@ body::-webkit-scrollbar-track, body::-webkit-scrollbar-thumb, body::-webkit-scro
     transition: all .3s;
 }
 
-.conteudo-total .conteudo-estudo .txt-explicacao a:hover {
+.conteudo-total .conteudo-estudo .txt-explicacao a:hover {   /* Botão que leva até o canal */
     background-color: var(--cor-principal);
     color: var(--cor-fundo-content);
 }

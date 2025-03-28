@@ -26,6 +26,7 @@ html, body {
     scrollbar-width: none;
 }
 
+/* background */
 #pattern {
     width: 100vw;
     height: 100dvh;
@@ -36,6 +37,7 @@ html, body {
     bottom: 0;
 }
 
+/* background */
 #gradient {
     background: radial-gradient(#F2A900, transparent 50%);
     width: 400px;
@@ -46,7 +48,7 @@ html, body {
     transform: translate(200px, 200px);
 }
 
-.form-container-cadastro {
+.form-container-cadastro { /* Container do form de cadastro */
     width: 100%;
     height: 100%;
     display: flex;
@@ -61,7 +63,7 @@ html, body {
     z-index: 1;
 }
 
-form {
+form { /* Form de cadastro */
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -72,19 +74,19 @@ form {
     align-items: center;
 }
 
-form > h1 {
+form > h1 { /* Título do form de cadastro */
     font-size: 3rem;
     font-family: 'orbitron';
     margin-bottom: 10px;
     color: #F5A900;
 }
 
-label {
+label { /* Label do form de cadastro */
     color: #F5A900;
     margin-top: 10px;
 }
 
-input {
+input { /* Input do form de cadastro */
     background-color: transparent;
     color: white;
     padding: 10px;
@@ -92,16 +94,16 @@ input {
     border-radius: 4px;
 }
 
-input:focus {
+input:focus { /* Input do form de cadastro */
     color: white;
     outline: none;
 }
 
-input::placeholder {
+input::placeholder { /* Placeholder do input do form de cadastro */
     color: white;
 }
 
-input:-webkit-autofill,
+input:-webkit-autofill, /* Input do form de cadastro quando for preenchido automaticamente */
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
     background-color: transparent !important;
@@ -112,40 +114,40 @@ input:-webkit-autofill:focus {
     caret-color: white;
 }
 
-.input-box.valid input:-webkit-autofill,
+.input-box.valid input:-webkit-autofill, /* Input do form de cadastro quando for preenchido automaticamente */
 .input-box.valid input:-webkit-autofill:hover,
 .input-box.valid input:-webkit-autofill:focus {
     border: 1px solid green !important;
 }
 
-.input-box.invalid input:-webkit-autofill,
+.input-box.invalid input:-webkit-autofill, /* Input do form de cadastro quando for preenchido automaticamente */
 .input-box.invalid input:-webkit-autofill:hover,
 .input-box.invalid input:-webkit-autofill:focus {
     border: 1px solid red !important;
 }
 
-.img-perfil {
+.img-perfil { /* Contêiner da imagem de perfil */
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 150px;  /* Definindo o tamanho fixo do contêiner */
+    width: 150px;
     height: 150px;
-    border-radius: 50%;  /* Garante que o contêiner seja circular */
+    border-radius: 50%;
     overflow: hidden;
 }
 
-.input-img-perfil {
+.input-img-perfil { /* Contêiner da imagem de perfil */
     position: relative;
 }
 
-.img-perfil img {
+.img-perfil img { /* Imagem de perfil */
     width: 200px;
     height: 200px;
-    object-fit: cover;  /* Garante que a imagem preencha o espaço sem distorção */
+    object-fit: cover;
     border-radius: 50%;
 }
 
-.file-label {
+.file-label { /* Label da imagem de perfil */
     justify-content: center;
     align-items: center;
     display: flex;
@@ -159,79 +161,79 @@ input:-webkit-autofill:focus {
     border-radius: 50%;
 }
 
-.file-label i {
+.file-label i { /* Icone da imagem de perfil */
     font-size: 20px;
 }
 
-.input-box.invalid input{
+.input-box.invalid input{ /* Input do form de cadastro com erro */
     border: 1px solid red;
 }
 
-.input-box.valid input{
+.input-box.valid input{ /* Input do form de cadastro com sucesso */
     border: 1px solid green;
 }
 
-.input-name, .input-outras-infos {
+.input-name, .input-outras-infos { /* Input do form de cadastro */
     display: flex;
     width: 100%;
     justify-content: space-between;
 }
 
-.input-name > span, .input-outras-infos > span {
+.input-name > span, .input-outras-infos > span { /* Input do form de cadastro */
     display: flex;
     flex-direction: column;
 }
 
-.error {
+.error { /* Mensagem de erro do form de cadastro */
     color: red;
     margin-top: 5px;
     flex-direction: row;
 }
 
-.input-login {
+.input-login { /* Input do form com infos de login */
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.input-login > .input-box > input {
+.input-login > .input-box > input { /* Input do form com infos de login */
     margin-bottom: 5px;
 }
 
-.input-login span {
+.input-login span { /* Input do form com infos de login */
     width: 100%;
 }
 
-#span-senha, #span-confirmarsenha {
+#span-senha, #span-confirmarsenha { /* Input do form com infos de login */
     position: relative;
 }
 
-#senha-icon, #confirmarsenha-icon {
+#senha-icon, #confirmarsenha-icon { /* Icone do input do form com infos de login */
     position: absolute;
     bottom: 15px;
     right: 10px;
     color: var(--cor-txt);
 }
 
-.invalid #senha-icon, .invalid #confirmarsenha-icon {
+.invalid #senha-icon, .invalid #confirmarsenha-icon { /* Icone do input do form com infos de login quando tiver erro */
     top: 39px;
     right: 10px;
 }
 
-.input-login span input {
+.input-login span input { /* Input do form com infos de login */
     width: 100%;
 }
 
-#nome, #sobrenome, #data-nasc, #salario {
+#nome, #sobrenome, #data-nasc, #salario { /* Input do form com infos de login */
     width: 300px;
 }
 
-span > label{
+span > label{ /* label do form de cadastro */
     display: block;
 
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
+input[type="date"]::-webkit-calendar-picker-indicator { /* icone padrao do input de data */
     opacity: 0;
     cursor: pointer;
 }
@@ -242,11 +244,11 @@ input[type="date"] {
     appearance: none;
 }
 
-.input-outras-infos .input-box:first-child {
+.input-outras-infos .input-box:first-child { /* primeiro input da ultima linha */
     position: relative;
 }
 
-.bi-calendar3 {
+.bi-calendar3 { /* Icone do input de data */
     position: absolute;
     top: 39px;
     right: 10px;
@@ -254,7 +256,7 @@ input[type="date"] {
     z-index: -1;
 }
 
-.btn-form {
+.btn-form { /* Container dos botões do form de cadastro */
     display: flex;
     justify-content: center;
     gap: 100px;
@@ -262,17 +264,17 @@ input[type="date"] {
     width: 100%;
 }
 
-.disabled {
+.disabled { /* Botão de salvar desabilitado */
     background-color: #8a6000;
     cursor: not-allowed;
 }
 
-.enable {
+.enable { /* Botão de salvar habilitado */
     background-color: #F5A900;
     cursor: pointer;
 }
 
-#btn-salvar {
+#btn-salvar { /* Botão de salvar */
     color: white;
     border: none;
     padding: 7px;
@@ -281,12 +283,12 @@ input[type="date"] {
     transition: all .2s;
 }
 
-#btn-salvar:hover {
+#btn-salvar:hover { /* Botão de salvar ao passar o mouse */
     background-color: #8a6000;
 }
 
 
-button {
+button { /* Botão de cancelar */
     background-color: white;
     color: #F5A900;
     padding: 7px;
@@ -297,21 +299,21 @@ button {
     transition: all .2s;
 }
 
-button:hover {
+button:hover { /* Botão de cancelar ao passar o mouse */
     background-color: rgb(184, 184, 184);
 }
 
-.input-termos-politicas {
+.input-termos-politicas { /* Input de termos e politicas */
     position: relative;
     width: 700px;
     margin-top: 10px;
 }
 
-.input-termos-politicas span {
+.input-termos-politicas span { /* Texto do input de termos e politicas */
     margin-top: 5px;
 }
 
-input[type="checkbox"] {
+input[type="checkbox"] { /* Checkbox do input de termos e politicas */
     appearance: none;
     -webkit-appearance: none;
     width: 20px;
@@ -339,7 +341,7 @@ input[type="checkbox"] {
     font-size: 16px;
   }
 
-  #termos-label {
+  #termos-label { /* Label do input de termos e politicas */
     position: absolute;
     top: 0;
     margin-top: 0;
@@ -347,7 +349,7 @@ input[type="checkbox"] {
     color: var(--cor-principal);
   }
 
-  .termos-politicas {
+  .termos-politicas { /* Container dos termos e politicas */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -357,13 +359,13 @@ input[type="checkbox"] {
     width: 700px;
   }
 
-  .termos-politicas a {
+  .termos-politicas a { /* Link dos termos e politicas */
     color: var(--cor-principal);
     text-decoration: none;
     transition: all .2s;
 }
 
-.termos-politicas a:hover {
+.termos-politicas a:hover { /* Link dos termos e politicas ao passar o mouse */
     color: #8a6000;
 }
 
