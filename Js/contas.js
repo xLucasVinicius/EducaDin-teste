@@ -11,6 +11,9 @@ const modalErrorPreencher = document.querySelector('#errorModalPreencher'); //mo
 const modalConfirmarExcluir = document.querySelector('#modalConfirmarExcluir'); //modal de confirmação de exclusão de conta
 const msgConfirmarExcluir = document.querySelector('#modalConfirmarExcluir h2'); //mensagem de confirmação de exclusão de conta
 const tabelaBody = document.getElementById('contas-tabela-body'); //tabela de contas para excluir
+const containerForm = document.querySelector('.add-contas'); // Seleciona o container do formulário
+const conteudoGeral = document.querySelector('.conteudo'); // Seleciona o body geral
+const btnAddConta = document.getElementById('adicionar-conta-icon'); // Seleciona o botão de adicionar conta
 
 document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte para o evento de carregamento do DOM
   fetch('../Paginas/consultas/infos-contas.php')
@@ -262,6 +265,7 @@ document.getElementById('excluir-conta').addEventListener('click', function () {
   window.scrollTo(0, 0); // Desloca a janela para o topo quando o formulário abre
   elementoFora.style = 'overflow: hidden; height: 100%;'; // Desativa a rolagem horizontal
   modalExcluir.style.display = 'block'; // Exibe o modal
+  containerForm.style.display = 'none'; // Oculta o formulário
 
 // Carregar os dados das contas
 fetch('../Paginas/consultas/infos-contas.php')
@@ -326,6 +330,20 @@ fetch('../Paginas/consultas/infos-contas.php')
 
 });
 
+window.addEventListener('resize', formularioContas);
+
+window.addEventListener('load', formularioContas);
+
+btnAddConta.addEventListener('click', function () {
+  containerForm.style.display = 'flex';
+  conteudoGeral.style = ' overflow: hidden;';
+});
+
+document.getElementById('fecharForm').addEventListener('click', function () {
+  containerForm.style.display = 'none';
+  conteudoGeral.style = ' overflow-y: initial;';
+});
+
 // Função para tratar o sucesso
 function handleSuccess(data) {
   modalSucess.style.display = 'block';
@@ -386,6 +404,19 @@ function excluirConta(id_conta, id_usuario) {
     }
   })
   .catch(error => console.error('Erro ao excluir a conta:', error));
+}
+
+// Função para exibir ou ocultar form de adicionar contas
+function formularioContas() { 
+  const larguraTela = window.innerWidth; // Obtem a largura da tela
+
+  if (larguraTela <= 1560) { // Verifica se a largura da tela é menor que 1560
+    containerForm.classList.add('collapsed'); // Adiciona a classe "collapsed"
+    btnAddConta.style.display = 'flex';
+  } else {
+    containerForm.classList.remove('collapsed'); // Remove a classe "collapsed"
+    btnAddConta.style.display = 'none';
+  }
 }
 
 

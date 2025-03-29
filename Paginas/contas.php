@@ -80,7 +80,7 @@
     </div>
     
     <section class="elemento-fora">
-        
+        <span id="adicionar-conta-icon" title="Adicionar Conta"><i class="bi bi-gear"></i></span>
         <section class="conteudo-total-contas"> <!-- Carrossel de Contas -->
 
             <section class="contas-carrossel">
@@ -103,6 +103,9 @@
         <!-- Formulário para adicionar novas contas -->
         <section class="add-contas">
             <div class="form-content">
+                <span class="fechar-form-icon">
+                <i class="bi bi-x-lg" id="fecharForm"></i>
+                </span>
                 <h1>Adicionar Conta</h1>
                 <form action="configs/add-conta.php" method="POST" id="form-add-conta">
                     <div class="form-conta">
@@ -131,10 +134,29 @@
                         <label for="saldo">Saldo Inicial</label>
                         <input type="text" name="saldo" id="saldo" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
                     </div>
-                    <button type="submit">Adicionar</button>
+                    <div class="tipo-conta"> <!-- Div para o campo de tipo da conta -->
+                        <label for="tipo">Tipo de Conta</label>
+                        <div class="opcoes-conta">
+                            <div class="opcao">
+                            <label for="corrente">Corrente</label>
+                            <input type="radio" name="tipo" value="0" id="corrente">
+                            </div>
+                            <div class="opcao">
+                            <label for="poupanca">Poupanca</label>
+                            <input type="radio" name="tipo" value="1" id="poupanca">
+                            </div>
+                            <div class="opcao">
+                            <label for="salario">Salario</label>
+                            <input type="radio" name="tipo" value="2" id="salario">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-form">
+                        <button type="submit">Adicionar</button>
+                        <button class="excluir-conta" id="excluir-conta" type="button">Excluir Conta</button>
+                    </div>
                     <input type="hidden" name="id_usuario" value="<?php echo $id; ?>">
                 </form>
-                <button class="excluir-conta" id="excluir-conta">Excluir Conta</button>
             </div>
         </section>
     </section>

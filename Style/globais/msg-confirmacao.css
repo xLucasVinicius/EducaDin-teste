@@ -5,6 +5,10 @@
     background-color: rgba(0, 0, 0, 0.4); /* Fundo escurecido */
 }
 
+#ModalexcluirContas {
+    z-index: 5;
+}
+
 .modal, .modal2 {
     position: absolute;
     z-index: 1;

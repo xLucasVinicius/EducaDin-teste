@@ -8,8 +8,9 @@ CREATE TABLE usuarios (
     senha VARCHAR(255) NOT NULL,
     data_nascimento DATE,
     salario DECIMAL(10,2),
-    plano ENUM('gratis', 'premium') DEFAULT 'gratis',
-    poder ENUM('administrador', 'usuario') DEFAULT 'usuario'
+    plano TINYINT(1) DEFAULT 0 COMMENT '0 = grátis, 1 = premium',
+    poder TINYINT(1) DEFAULT 0 COMMENT '0 = comum, 1 = admin',
+    moedas INT DEFAULT 0
 );
 
 -- 2. Tabela de Contas
@@ -18,6 +19,7 @@ CREATE TABLE contas (
     id_usuario INT,
     nome_conta VARCHAR(100) NOT NULL,
     saldo_atual DECIMAL(10,2) DEFAULT 0,
+    categoria TINYINT(1) DEFAULT 0 COMMENT '0 = conta-corrente, 1 = conta-poupança, 2 = conta-salário',
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -29,6 +31,8 @@ CREATE TABLE cartoes (
     limite_total DECIMAL(10,2),
     dia_fechamento INT,
     dia_vencimento INT,
+    anuidade DECIMAL(10,2),
+    pontos TINYINT(1) DEFAULT 0 COMMENT '0 = sim, 1 = nao',
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_conta) REFERENCES contas(id_conta) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -41,7 +45,7 @@ CREATE TABLE lancamentos (
     id_cartao INT NULL,  -- Somente se for despesa; pode ser NULL para receitas
     descricao VARCHAR(255),
     valor DECIMAL(10,2),
-    tipo ENUM('receita', 'despesa'),
+    tipo TINYINT(1) COMMENT '0 = receita, 1 = despesa',
     metodo_pagamento VARCHAR(50),
     categoria VARCHAR(100),
     subcategoria VARCHAR(100),
@@ -56,7 +60,7 @@ CREATE TABLE lancamentos (
 CREATE TABLE desempenho_anual (
     id_desempenho INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
-    mes TINYINT, 
+    mes TINYINT(2) NOT NULL COMMENT '1 a 12 para os meses do ano',
     total_receitas DECIMAL(10,2),
     total_despesas DECIMAL(10,2),
     sobra_mes DECIMAL(10,2),
@@ -90,14 +94,7 @@ CREATE TABLE recordes_mg (
     FOREIGN KEY (id_minigame) REFERENCES minigames(id_minigame) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- 9. Tabela de Moedas
-CREATE TABLE moedas (
-    id_usuario INT PRIMARY KEY,
-    moedas_ganhas INT,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
--- 10. Tabela de Prêmios de Troca
+-- 9. Tabela de Prêmios de Troca
 CREATE TABLE premios (
     id_premio INT AUTO_INCREMENT PRIMARY KEY,
     nome_premio VARCHAR(100),
@@ -105,7 +102,7 @@ CREATE TABLE premios (
     valor_moedas INT
 );
 
--- 11. Tabela de Trocas de Prêmios
+-- 10. Tabela de Trocas de Prêmios
 CREATE TABLE trocas_premios (
     id_troca INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
