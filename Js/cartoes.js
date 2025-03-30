@@ -64,9 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const tipoConta = tipoContaMap[account.categoria];
       const diaFechamento = cartao.dia_fechamento; // Busca o dia de fechamento do cartão
       const diaVencimento = cartao.dia_vencimento; // Busca o dia de vencimento do cartão
-      
-      
-
+      const respPontos = cartao.pontos; // Busca o dia de vencimento do cartão
       const dataAtual = new Date(); // Obtem a data atual
       const diaAtual = dataAtual.getDate(); // Obtem o dia atual
       let mesAtual = dataAtual.getMonth(); // Obtem o mês atual
@@ -104,24 +102,42 @@ document.addEventListener("DOMContentLoaded", () => {
       const totalLancamentos = lancamentosCartao.reduce((acc, lancamento) => acc + parseFloat(lancamento.valor), 0); // Somar os lançamentos (todos os lançamentos são valores positivos)
       const limiteDisponivel = limiteTotal - totalLancamentos; // Calcular o limite disponível
 
+      
+
       // Renderizar o cartão
       cartaoDiv.innerHTML = `
+        <span class="info-icon" id="infoIcon${cartao.id_cartao}">
+          <i class="bi bi-question"></i>
+          <p class="txt-pontos disable" id="txtPontos${cartao.id_cartao}"></p>
+        </span>
         <div class="logo">
-            <img src="../imagens/cartoes/${nomeConta}.jpeg" alt="Cartão de ${nomeConta}">
+          <img src="../imagens/cartoes/${nomeConta}.jpeg" alt="Cartão de ${nomeConta}">
         </div>
         <div class="infos-cartao">
-            <h1> Cartão ${nomeConta}</h1>
-            <h2 id="tipo-conta">Conta: ${nomeConta} (${tipoConta})</h2>
-            <h2>Limite Total: R$ ${parseFloat(cartao.limite_total).toFixed(2).replace('.', ',')}</h2>
-            <h2>Disponível: R$ ${parseFloat(limiteDisponivel).toFixed(2).replace('.', ',')}</h2>
-            <span class="infos-fatura">
-              <p>Fechamento: ${formatarDia(diaFechamento)}/${formatarMes(mesFechamento)}/${anoAtual}</p>
-              <p>Vencimento: ${formatarDia(diaVencimento)}/${formatarMes(mesVencimento)}/${anoAtual}</p>
-            </span>
+          <h1> Cartão ${nomeConta}</h1>
+          <h2 id="tipo-conta">Conta: ${nomeConta} (${tipoConta})</h2>
+          <h2>Limite Total: R$ ${parseFloat(cartao.limite_total).toFixed(2).replace('.', ',')}</h2>
+          <h2>Disponível: R$ ${parseFloat(limiteDisponivel).toFixed(2).replace('.', ',')}</h2>
+          <span class="infos-fatura">
+            <p>Fechamento: ${formatarDia(diaFechamento)}/${formatarMes(mesFechamento)}/${anoAtual}</p>
+            <p>Vencimento: ${formatarDia(diaVencimento)}/${formatarMes(mesVencimento)}/${anoAtual}</p>
+          </span>
         </div>
       `;
       
       carouselContainer.appendChild(cartaoDiv); // Adiciona o cartão ao carrossel
+      const txtPontos = document.getElementById(`txtPontos${cartao.id_cartao}`); //
+      if (respPontos == 0) {
+        txtPontos.innerHTML = 'Usar este cartão em compras pode gerar benefícios, entenda mais pesquisando sobre as vantagens proporcionadas pela sua bandeira.';
+      } else {
+        txtPontos.innerHTML = 'Este cartão não possui beneficios ao realizar compras, usar outro cartão pode ser a melhor opção.';
+        txtPontos.style.height = '45px';
+      }
+
+      const infoIcon = document.getElementById(`infoIcon${cartao.id_cartao}`);
+      infoIcon.addEventListener('click', () => {
+      txtPontos.classList.toggle('disable'); // Alterna a visibilidade do parágrafo
+    });
     });
 
     const selectConta = document.getElementById('conta'); // Seleciona o select de contas
@@ -243,11 +259,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Cria as linhas da tabela
       lancamentos.forEach(lancamento => {
+        let lancamentoTipo = parseInt(lancamento.tipo) === 1 ? 'Despesa' : 'Receita';
+
         tbody += `
           <tr>
               <td>${lancamento.descricao}</td>
               <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
-              <td>${lancamento.tipo}</td>
+              <td>${lancamentoTipo}</td>
               <td>${lancamento.metodo_pagamento}</td>
               <td>${lancamento.subcategoria}</td>
               <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
@@ -360,6 +378,8 @@ document.getElementById('fecharModalExcluir').addEventListener('click', function
   modalExcluir.style.display = 'none';
   location.reload();
 });
+
+// Evento para exibir info sobre o cartão 
 
 // Função para tratar o sucesso
 function handleSuccess(data) {

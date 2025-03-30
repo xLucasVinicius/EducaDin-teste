@@ -8,8 +8,11 @@ $id_conta = $_POST['conta'];
 $limite_total = $_POST['limite'];
 $dia_fechamento = $_POST['fechamento'];
 $dia_vencimento = $_POST['vencimento'];
-$anuidade = $_POST['anuidade'] ?? null;
+$anuidade = $_POST['anuidade-valor'] ?? null;
 $pontos = $_POST['pontos'];
+
+// Log para verificar a anuidade recebida
+error_log("Anuidade Recebida: " . $anuidade);
 
 // Formatar anuidade, se não for zero
 if (!empty($anuidade)) {
@@ -17,6 +20,9 @@ if (!empty($anuidade)) {
 } else {
     $anuidade = null;
 }
+
+// Log para verificar a anuidade formatada
+error_log("Anuidade Formatada: " . $anuidade);
 
 // Formatar o limite total
 $limite_total = formatarLimite($limite_total);

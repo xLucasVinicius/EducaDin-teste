@@ -48,7 +48,8 @@ const subcategorias = { // Objeto com as subcategorias para cada categoria
   impostos: [
     "IPVA", 
     "Imposto de Renda", 
-    "Multas"
+    "Multas",
+    "Anuidade"
   ],
   servicos: [
     "Celular", 
@@ -79,8 +80,8 @@ const subcategorias = { // Objeto com as subcategorias para cada categoria
     "Venda de produtos"
   ],
   outros: [
-    "Reembolsos", 
-    "Prêmios", 
+    "Reembolsos",
+    "Prêmios",
     "Doações recebidas"
   ]
 };

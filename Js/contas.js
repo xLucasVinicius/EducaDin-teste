@@ -181,11 +181,13 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
 
       // Cria as linhas da tabela
       lancamentos.forEach(lancamento => {
+        let lancamentoTipo = parseInt(lancamento.tipo) === 1 ? 'Despesa' : 'Receita';
+
         tbody += `
           <tr>
               <td>${lancamento.descricao}</td>
               <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
-              <td>${lancamento.tipo}</td>
+              <td>${lancamentoTipo}</td>
               <td>${lancamento.metodo_pagamento}</td>
               <td>${lancamento.subcategoria}</td>
               <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
