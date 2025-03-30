@@ -49,7 +49,8 @@
                     <thead>
                         <tr>
                             <th>Logo</th>
-                            <th>Nome da Conta</th>
+                            <th>Nome</th>
+                            <th>Tipo</th>
                             <th>Saldo Atual</th>
                             <th>Ação</th>
                         </tr>
@@ -152,8 +153,8 @@
                         </div>
                     </div>
                     <div class="btn-form">
-                        <button type="submit">Adicionar</button>
                         <button class="excluir-conta" id="excluir-conta" type="button">Excluir Conta</button>
+                        <button type="submit">Adicionar</button>
                     </div>
                     <input type="hidden" name="id_usuario" value="<?php echo $id; ?>">
                 </form>

@@ -190,10 +190,28 @@
                             <option value="31">31</option>
                         </select>
                     </div>
-                    <button type="submit">Adicionar</button>
+                    <div class="anuidade">
+                        <span>
+                            <label for="anuidade">Possui anuidade</label>
+                            <input type="checkbox" name="anuidade" id="anuidade">
+                        </span>
+                    </div>
+                    <div class="digitar-anuidade">
+                            <label for="anuidade-valor">Valor da parcela</label>
+                            <input type="text" name="anuidade-valor" id="anuidade-valor" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
+                    </div>
+                    <div class="pontos">
+                        <span>
+                            <label for="pontos">Compras geram pontos</label>
+                            <input type="checkbox" name="pontos" id="pontos">
+                        </span>
+                    </div>
+                    <div class="btn-form">
+                        <button class="excluir-cartao" id="excluir-cartao" type="button">Excluir Cartão</button>
+                        <button type="submit">Adicionar</button>
+                    </div>
                     <input type="hidden" name="id_usuario" value="<?php echo $id; ?>">
                 </form>
-                <button class="excluir-cartao" id="excluir-cartao">Excluir Cartão</button>
             </div>
         </section>
     </section>

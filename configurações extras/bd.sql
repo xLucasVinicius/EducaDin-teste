@@ -10,7 +10,8 @@ CREATE TABLE usuarios (
     salario DECIMAL(10,2),
     plano TINYINT(1) DEFAULT 0 COMMENT '0 = grátis, 1 = premium',
     poder TINYINT(1) DEFAULT 0 COMMENT '0 = comum, 1 = admin',
-    moedas INT DEFAULT 0
+    moedas INT DEFAULT 0,
+    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 2. Tabela de Contas
@@ -60,11 +61,12 @@ CREATE TABLE lancamentos (
 CREATE TABLE desempenho_anual (
     id_desempenho INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
+    id_conta INT,
     mes TINYINT(2) NOT NULL COMMENT '1 a 12 para os meses do ano',
     total_receitas DECIMAL(10,2),
     total_despesas DECIMAL(10,2),
-    sobra_mes DECIMAL(10,2),
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_conta) REFERENCES contas(id_conta) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- 6. Tabela de Mini Games

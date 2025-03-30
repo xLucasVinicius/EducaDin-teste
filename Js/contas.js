@@ -48,6 +48,13 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
 
     // Cria as contas dinamicamente
     accountsData.forEach((account, index) => {
+      const tipoContaMap = {
+        0: 'Conta Corrente',
+        1: 'Conta Poupança',
+        2: 'Conta Salário'
+      };
+    
+      const tipoConta = tipoContaMap[account.categoria] || 'Tipo de conta desconhecido';
       const contaDiv = document.createElement('div');
       contaDiv.classList.add('conta');
       if (index === 0) {
@@ -62,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
         </div>
         <div class="infos-conta">
             <h1>${account.nome_conta}</h1>
+            <h2 id="tipo-conta">${tipoConta}</h2>
             <h2>Saldo: R$ ${parseFloat(account.saldo_atual).toFixed(2).replace('.', ',')}</h2>
             <p>+5% ao mês anterior</p>
         </div>
@@ -208,8 +216,17 @@ formConta.addEventListener('submit', function (event) {
     event.preventDefault();
     const valueSelect = selectConta.value; // Obtenha a conta selecionada
     const saldoInicial = document.getElementById('saldo').value; // Obtenha o saldo inicial
+    const tipoContaRadio = document.getElementsByName('tipo');
 
-    if (!valueSelect || !saldoInicial || saldoInicial <= 0) { // Verifique se todos os campos foram preenchidos
+    let tipoContaSelecionado = false;
+
+    tipoContaRadio.forEach((radio) => {
+      if (radio.checked) {
+        tipoContaSelecionado = true;
+      }
+    });
+
+    if (!valueSelect || !saldoInicial || saldoInicial <= 0 || !tipoContaSelecionado) { // Verifique se todos os campos foram preenchidos
         modalErrorPreencher.style.display = 'block'; // Exiba o modal de erro de preenchimento de campos
     } else {
         const formData = new FormData(formConta); // Cria o objeto FormData com o conteúdo do formulário
@@ -274,56 +291,68 @@ fetch('../Paginas/consultas/infos-contas.php')
     const contas = data.contas; // Acessa a lista de contas retornada da resposta
 
     contas.forEach(conta => {
-        const row = document.createElement('tr'); // Cria uma nova linha
-        row.id = conta.id_conta; // Define o ID da linha como o ID da conta
+      const tipoContaMap = {
+        0: 'C',
+        1: 'P',
+        2: 'S'
+      };
+    
+      const tipoConta = tipoContaMap[conta.categoria];
+      const row = document.createElement('tr'); // Cria uma nova linha
+      row.id = conta.id_conta; // Define o ID da linha como o ID da conta
 
-        // Coluna da imagem (logo)
-        const logoCell = document.createElement('td');
-        const img = document.createElement('img');
-        img.src = `../imagens/logos/${conta.nome_conta}.png`; // Caminho para a imagem
-        img.alt = `Logo da ${conta.nome_conta}`; // Texto alternativo
-        img.width = 50; // Largura da imagem
-        img.height = 50; // Altura da imagem
-        img.style.borderRadius = '50%'; // Borda arredondada
-        img.style.objectFit = 'cover'; // Ajusta a imagem para cobrir o conteúdo
-        logoCell.appendChild(img); // Adiciona a imagem à celula
-        row.appendChild(logoCell); // Adiciona a celula à linha
+      // Coluna da imagem (logo)
+      const logoCell = document.createElement('td');
+      const img = document.createElement('img');
+      img.src = `../imagens/logos/${conta.nome_conta}.png`; // Caminho para a imagem
+      img.alt = `Logo da ${conta.nome_conta}`; // Texto alternativo
+      img.width = 50; // Largura da imagem
+      img.height = 50; // Altura da imagem
+      img.style.borderRadius = '50%'; // Borda arredondada
+      img.style.objectFit = 'cover'; // Ajusta a imagem para cobrir o conteúdo
+      logoCell.appendChild(img); // Adiciona a imagem à celula
+      row.appendChild(logoCell); // Adiciona a celula à linha
 
-        // Coluna do nome da conta
-        const nomeCell = document.createElement('td');
-        nomeCell.textContent = conta.nome_conta;
-        row.appendChild(nomeCell);
+      // Coluna do nome da conta
+      const nomeCell = document.createElement('td');
+      nomeCell.textContent = conta.nome_conta;
+      row.appendChild(nomeCell);
 
-        // Coluna do saldo atual (formatado como moeda)
-        const saldoCell = document.createElement('td');
-        saldoCell.textContent = formatarSaldo(conta.saldo_atual);
-        row.appendChild(saldoCell);
+      // Coluna com o tipo de conta
+      const tipoCell = document.createElement('td');
+      tipoCell.textContent = tipoConta;
+      row.appendChild(tipoCell);
 
-        // Coluna para o botão de exclusão
-        const acoesCell = document.createElement('td');
-        const excluirBtn = document.createElement('button');
-        excluirBtn.textContent = 'Excluir'; // Texto do botão
-        excluirBtn.className = 'btn-excluir'; // Adicione uma classe para estilizar se necessário
+      // Coluna do saldo atual (formatado como moeda)
+      const saldoCell = document.createElement('td');
+      saldoCell.textContent = formatarSaldo(conta.saldo_atual);
+      row.appendChild(saldoCell);
+
+      // Coluna para o botão de exclusão
+      const acoesCell = document.createElement('td');
+      const excluirBtn = document.createElement('button');
+      excluirBtn.textContent = 'Excluir'; // Texto do botão
+      excluirBtn.className = 'btn-excluir'; // Adicione uma classe para estilizar se necessário
+      
+      // Exibe o modal de exclusão ao clicar no botão de excluir
+      excluirBtn.addEventListener('click', () => {
+        modalConfirmarExcluir.style.display = 'block'; // Abre o modal
+        msgConfirmarExcluir.textContent = `Tem certeza de que deseja excluir a conta ${conta.nome_conta}?`; // Define o texto do modal
         
-        // Exibe o modal de exclusão ao clicar no botão de excluir
-        excluirBtn.addEventListener('click', () => {
-          modalConfirmarExcluir.style.display = 'block'; // Abre o modal
-          msgConfirmarExcluir.textContent = `Tem certeza de que deseja excluir a conta ${conta.nome_conta}?`; // Define o texto do modal
-          
-          // Confirma a exclusão ao clicar no botão "Sim"
-          document.getElementById('btnModalexcluir').addEventListener('click', function () {
-            modalConfirmarExcluir.style.display = 'none'; // Fecha o modal
-            excluirConta(conta.id_conta, conta.id_usuario); // Chama a função de exclusão
-          });
-
-          // Cancela a exclusão ao clicar no botão "Nao"
-          document.getElementById('btnModalNao').addEventListener('click', function () {
-            modalConfirmarExcluir.style.display = 'none';
-          });
+        // Confirma a exclusão ao clicar no botão "Sim"
+        document.getElementById('btnModalexcluir').addEventListener('click', function () {
+          modalConfirmarExcluir.style.display = 'none'; // Fecha o modal
+          excluirConta(conta.id_conta, conta.id_usuario); // Chama a função de exclusão
         });
-        acoesCell.appendChild(excluirBtn); // Adiciona o botão de exclusão à linha
-        row.appendChild(acoesCell); // Adiciona a linha à tabela
-        tabelaBody.appendChild(row); // Adiciona a linha à tabela
+
+        // Cancela a exclusão ao clicar no botão "Nao"
+        document.getElementById('btnModalNao').addEventListener('click', function () {
+          modalConfirmarExcluir.style.display = 'none';
+        });
+      });
+      acoesCell.appendChild(excluirBtn); // Adiciona o botão de exclusão à linha
+      row.appendChild(acoesCell); // Adiciona a linha à tabela
+      tabelaBody.appendChild(row); // Adiciona a linha à tabela
     });
   })
   .catch(error => console.error('Erro ao carregar os dados:', error));

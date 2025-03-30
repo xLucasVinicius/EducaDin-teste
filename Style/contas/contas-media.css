@@ -20,28 +20,25 @@
 
   .conta .infos-conta {
     width: 150px;
-    gap: 10px;
+    gap: 0;
   }
 
   .conta .infos-conta h1 {
     font-size: 1.3rem;
-    margin-bottom: 10px;
+  }
+  
+  .conta .infos-conta #tipo-conta {
+    font-size: 1rem;
+    margin-bottom: 20px;
   }
   
   .conta .infos-conta h2 {
-    font-size: 1rem;   
+    font-size: 1rem;
+    margin-bottom: 0px;
   }
   
   .conta .infos-conta p {
     font-size: 0.9rem;
-  }
-
-  .add-contas {
-    width: 100%;
-  }
-
-  .add-contas .form-content {
-    width: 100%;
   }
 }
 
@@ -57,17 +54,5 @@
     .fora-lancamentos {
       width: 100%;
       overflow: scroll;
-    }
-}
-
-@media screen and (max-width: 1560px) {
-    .elemento-fora {
-      flex-direction: column;
-      align-items: center;
-      height: auto;
-    }
-
-    .add-contas {
-      margin-top: 20px;
     }
 }

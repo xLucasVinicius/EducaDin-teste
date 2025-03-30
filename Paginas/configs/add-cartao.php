@@ -8,6 +8,15 @@ $id_conta = $_POST['conta'];
 $limite_total = $_POST['limite'];
 $dia_fechamento = $_POST['fechamento'];
 $dia_vencimento = $_POST['vencimento'];
+$anuidade = $_POST['anuidade'] ?? null;
+$pontos = $_POST['pontos'];
+
+// Formatar anuidade, se não for zero
+if (!empty($anuidade)) {
+    $anuidade = formatarLimite($anuidade);
+} else {
+    $anuidade = null;
+}
 
 // Formatar o limite total
 $limite_total = formatarLimite($limite_total);
@@ -21,9 +30,15 @@ $result_cartao = $stmtTest->get_result();
 
 if ($result_cartao->num_rows == 0) {
     // Inserir cartão se ainda não existir
-    $sql = "INSERT INTO cartoes (id_conta, id_usuario, limite_total, dia_fechamento, dia_vencimento) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("iidii", $id_conta, $id_usuario, $limite_total, $dia_fechamento, $dia_vencimento);
+    if (is_null($anuidade)) {
+        $sql = "INSERT INTO cartoes (id_conta, id_usuario, limite_total, dia_fechamento, dia_vencimento, pontos) VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("iidiii", $id_conta, $id_usuario, $limite_total, $dia_fechamento, $dia_vencimento, $pontos);
+    } else {
+        $sql = "INSERT INTO cartoes (id_conta, id_usuario, limite_total, dia_fechamento, dia_vencimento, anuidade, pontos) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("iidiidi", $id_conta, $id_usuario, $limite_total, $dia_fechamento, $dia_vencimento, $anuidade, $pontos);
+    }
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {

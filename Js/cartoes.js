@@ -9,6 +9,9 @@ const modalErrorPreencher = document.querySelector('#errorModalPreencher'); //mo
 const modalConfirmarExcluir = document.querySelector('#modalConfirmarExcluir'); //modal de confirmação de exclusão de cartoes
 const msgConfirmarExcluir = document.querySelector('#modalConfirmarExcluir h2'); //mensagem de confirmação de exclusão de cartoes
 const tabelaBody = document.getElementById('cartoes-tabela-body'); //tabela de cartoes para excluir
+const checkboxAnuidade = document.getElementById('anuidade'); //checkbox de anuidade
+const anuidade = document.querySelector('.digitar-anuidade'); //div do input de digitar anuidade
+const inputAnuidade = document.getElementById('anuidade-valor'); //input de digitar anuidade
 
 // Função para carregar os dados iniciais dos cartões quando a página for carregada
 document.addEventListener("DOMContentLoaded", () => {
@@ -31,6 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('accountsData', JSON.stringify(accountsData)); // Armazena os dados de contas no localStorage
     const carouselContainer = document.querySelector('.cartoes-carrossel'); // Carrossel de cartões
     const lancamentosContainer = document.querySelector('.lancamentos'); // Container de lançamentos
+    let tipoContaMap = {
+      0: 'Corrente',
+      1: 'Poupança',
+      2: 'Salário'
+    };
 
     carouselContainer.innerHTML = ''; // Limpa o carrossel
     lancamentosContainer.innerHTML = ''; // Limpa o container de lançamentos
@@ -52,9 +60,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cartoesData.forEach((cartao, index) => {
       const nomeConta = contasMap[cartao.id_conta]; // Busca o nome da conta associado ao id_conta do cartão
-
+      const account = accountsData.find(account => account.id_conta === cartao.id_conta); // Encontra a conta correspondente ao cartão
+      const tipoConta = tipoContaMap[account.categoria];
       const diaFechamento = cartao.dia_fechamento; // Busca o dia de fechamento do cartão
       const diaVencimento = cartao.dia_vencimento; // Busca o dia de vencimento do cartão
+      
+      
 
       const dataAtual = new Date(); // Obtem a data atual
       const diaAtual = dataAtual.getDate(); // Obtem o dia atual
@@ -100,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <div class="infos-cartao">
             <h1> Cartão ${nomeConta}</h1>
+            <h2 id="tipo-conta">Conta: ${nomeConta} (${tipoConta})</h2>
             <h2>Limite Total: R$ ${parseFloat(cartao.limite_total).toFixed(2).replace('.', ',')}</h2>
             <h2>Disponível: R$ ${parseFloat(limiteDisponivel).toFixed(2).replace('.', ',')}</h2>
             <span class="infos-fatura">
@@ -116,9 +128,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Loop separado para adicionar as contas ao select
     accountsData.forEach(account => {
+      let tipoContaMap = {
+        0: 'C',
+        1: 'P',
+        2: 'S'
+      };
+    
+      const tipoConta = tipoContaMap[account.categoria];
       const option = document.createElement('option');
       option.value = account.id_conta; // Valor da conta
-      option.text = account.nome_conta; // Nome da conta para exibir
+      option.text = `${account.nome_conta} ${tipoConta} `; // Nome da conta para exibir
       selectConta.appendChild(option);
     });
 
@@ -258,6 +277,21 @@ document.addEventListener("DOMContentLoaded", () => {
 // Evento de submissão do formulário para adicionar cartao
 formCartao.addEventListener('submit', function (event) {
     event.preventDefault();
+    console.log(inputAnuidade.value);
+    let respAnuidade = null;
+    if (!checkboxAnuidade.checked) {
+      respAnuidade = 0;
+    } else {
+      respAnuidade = inputAnuidade.value;
+    }
+    const pontosCheck = document.getElementById('pontos');
+    let respPontos = null;
+    if (pontosCheck.checked) {
+      respPontos = 0;
+    } else {
+      respPontos = 1;
+    }
+    
     const valueSelectConta = selectConta.value; // Obtenha a conta selecionada
     const limiteCartao = document.getElementById('limite').value; // Obtenha o limite do cartão
     const diaFechamento = document.getElementById('fechamento').value; // Obtenha o dia de fechamento
@@ -266,11 +300,15 @@ formCartao.addEventListener('submit', function (event) {
     if (!valueSelectConta || !limiteCartao || !diaFechamento || !diaVencimento) { // Verifique se todos os campos foram preenchidos
         modalErrorPreencher.style.display = 'block'; // Exiba o modal de erro de preenchimento de campos
     } else {
+      if (checkboxAnuidade.checked && !inputAnuidade.value) {
+        modalErrorPreencher.style.display = 'block'; // Exiba o modal de erro de preenchimento de campos
+      } else {
         const formData = new FormData(formCartao); // Cria o objeto FormData com o conteúdo do formulário
+        formData.append('pontos', respPontos);
 
         fetch('../Paginas/configs/add-cartao.php', {
             method: 'POST',
-            body: formData
+            body: formData,
         })
         .then(response => response.json())
         .then(data => {
@@ -282,6 +320,17 @@ formCartao.addEventListener('submit', function (event) {
         })
         .catch(error => console.error('Erro:', error));
     }
+  }
+});
+
+
+// Evento de alteração do checkbox para exibir ou ocultar o campo de anuidade
+checkboxAnuidade.addEventListener('change', function() {
+  if (checkboxAnuidade.checked) {
+    anuidade.style.display = 'block';
+  } else {
+    anuidade.style.display = 'none';
+  }
 });
 
 // Fechar modal de sucesso ao clicar no botão
@@ -372,8 +421,14 @@ document.getElementById('excluir-cartao').addEventListener('click', function () 
 
         const row = document.createElement('tr');
         row.id = cartao.id_cartao;
-
+        const tipoContaMap = {
+          0: 'C',
+          1: 'P',
+          2: 'S'
+        };
         const nomeConta = contasMap[cartao.id_conta]; // Busca o nome da conta associado ao id_conta do cartão
+        const account = accountsData.find(account => account.id_conta === cartao.id_conta); // Encontra a conta correspondente ao cartão
+        const tipoConta = tipoContaMap[account.categoria];
 
         // Coluna da imagem (logo)
         const logoCell = document.createElement('td');
@@ -388,7 +443,7 @@ document.getElementById('excluir-cartao').addEventListener('click', function () 
 
         // Coluna do nome da conta
         const nomeCell = document.createElement('td');
-        nomeCell.textContent = nomeConta;
+        nomeCell.textContent = nomeConta + ` ${tipoConta}`;
         row.appendChild(nomeCell);
 
         // Coluna do saldo atual (formatado como moeda)
@@ -453,6 +508,9 @@ function formatarMes(mes) {
 function formatarDia(dia) {
   return dia < 10 ? `0${dia}` : dia;
 }
+
+
+
 
 
 

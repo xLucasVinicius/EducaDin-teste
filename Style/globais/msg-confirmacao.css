@@ -3,9 +3,6 @@
     display: none; /* O modal fica oculto por padrão */
     backdrop-filter: blur(10px);
     background-color: rgba(0, 0, 0, 0.4); /* Fundo escurecido */
-}
-
-#ModalexcluirContas {
     z-index: 5;
 }
 

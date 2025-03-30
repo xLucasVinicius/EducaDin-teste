@@ -120,7 +120,12 @@ body::-webkit-scrollbar {
 .conta .infos-conta h1 {
   font-size: 2.8rem;
   color: var(--cor-principal);
-  margin-bottom: 30px;
+  margin-bottom: 0;
+}
+
+.conta .infos-conta #tipo-conta {
+  font-size: 1.5rem;
+  margin-bottom: 25px;
 }
 
 .conta .infos-conta h2 {
@@ -264,7 +269,6 @@ z {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 0;
   background-color: transparent;
   backdrop-filter: blur(5px);
   z-index: 2;
@@ -283,6 +287,12 @@ z {
   border: 1px solid var(--cor-principal);
   border-radius: 50%;
   cursor: pointer;
+  transition: all .2s;
+}
+
+.add-contas.collapsed .fechar-form-icon:hover {
+  background-color: var(--cor-principal);
+  color: var(--cor-txt);
 }
 
 .add-contas .form-content {

@@ -5,15 +5,16 @@
     $id_usuario = $_POST['id_usuario']; // ID do usuário
     $nome_conta = $_POST['conta']; // Nome da conta
     $saldo = $_POST['saldo']; // Saldo da conta
+    $tipo = $_POST['tipo']; // Tipo da conta
 
     $saldo = formatarSalario($saldo); // Formata o saldo
 
-    $sqlTest = "SELECT * FROM contas WHERE nome_conta = '$nome_conta'"; // Verifica se a conta ja existe
+    $sqlTest = "SELECT * FROM contas WHERE nome_conta = '$nome_conta' AND categoria = '$tipo'"; // Verifica se a conta ja existe
 
     if ($mysqli->query($sqlTest)->num_rows == 0) { // Se a conta nao existir
-        $sql = "INSERT INTO contas (id_usuario, nome_conta, saldo_atual) VALUES (?, ?, ?)"; // Insere a conta
+        $sql = "INSERT INTO contas (id_usuario, nome_conta, saldo_atual, categoria) VALUES (?, ?, ?, ?)"; // Insere a conta
         $stmt = $mysqli->prepare($sql); 
-        $stmt->bind_param("iss", $id_usuario, $nome_conta, $saldo);
+        $stmt->bind_param("issi", $id_usuario, $nome_conta, $saldo, $tipo);
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {

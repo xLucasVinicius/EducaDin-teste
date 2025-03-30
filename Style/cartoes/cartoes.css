@@ -88,7 +88,6 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 10px;
   width: 250px;
 }
 
@@ -97,7 +96,11 @@ body::-webkit-scrollbar {
   text-align: center;
   width: 100%;
   color: var(--cor-principal);
-  margin: 30px 0 35px 0;
+}
+
+.cartao .infos-cartao #tipo-conta {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
 }
 
 .cartao .infos-cartao h2 {
@@ -235,7 +238,7 @@ align-items: center;
 
 .add-cartoes .form-content {
 width: 400px;
-height: 550px;
+height: 670px;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -305,6 +308,64 @@ border: 1px solid var(--cor-principal);
   background-color: var(--cor-fundo-content);
 }
 
+.add-cartoes .form-content form .anuidade, .add-cartoes .form-content form .pontos {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.add-cartoes .form-content form span {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 5px;
+}
+
+.add-cartoes .form-content form span label {
+  font-size: 1rem;
+}
+
+.add-cartoes .form-content form span input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid #333;
+  border-radius: 4px;
+  position: relative;
+  transition: all .2s;
+}
+
+/* Estilo do checkbox quando está marcado */
+.add-cartoes .form-content form span input[type="checkbox"]:checked {
+  background-color: var(--cor-principal);
+  border-color: var(--cor-principal);
+}
+
+/* Adiciona um "check" dentro do checkbox */
+.add-cartoes .form-content form span input[type="checkbox"]:checked::before {
+  content: "✔";
+  color: white;
+  position: absolute;
+  left: 1px;
+  top: -3px;
+  font-size: 13px;
+}
+
+.add-cartoes .form-content .digitar-anuidade {
+  display: none;
+}
+
+.add-cartoes .form-content form .btn-form {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 .add-cartoes .form-content form button {
   width: 100px;
   height: 35px;
@@ -322,11 +383,10 @@ border: 1px solid var(--cor-principal);
   transform: scale(0.97);
 }
 
-.excluir-cartao {
+.add-cartoes .form-content form .excluir-cartao {
   background-color: transparent;
   width: 100px;
   height: 35px;
-  margin-top: 15px;
   border: 1px solid red;
   border-radius: 25px;
   font-size: 0.9rem;
@@ -335,7 +395,7 @@ border: 1px solid var(--cor-principal);
   transition: all .2s;
 }
 
-.excluir-cartao:hover {
+.add-cartoes .form-content form .excluir-cartao:hover {
   background-color: red;
   color: var(--cor-txt);
   transform: scale(0.97);
