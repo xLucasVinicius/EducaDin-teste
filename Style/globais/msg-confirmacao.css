@@ -13,6 +13,7 @@
     top: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 .modal2 {
@@ -138,13 +139,18 @@
     background-color: rgb(194, 0, 0);
 }
 
+.btn-confirmar-excluir {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
 @keyframes exibir {
     0% {
         display: none;
         transform: translate(-50%, -25%);
     }
     100% {
-        display: block;
+        display: flex;
         transform: translate(-50%, -50%);
     }
 }

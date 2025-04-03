@@ -65,8 +65,10 @@
         <div class="modal-content">
             <h2></h2>
             <p>Esta operaçao nao pode ser desfeita.</p>
-            <button id="btnModalexcluir">Sim</button>
-            <button id="btnModalNao">Não</button>
+            <span class="btn-confirmar-excluir">
+                <button id="btnModalexcluir">Sim</button>
+                <button id="btnModalNao">Não</button>
+            </span>
         </div>
     </div>
     <!-- Modal de Sucesso ao excluir conta -->
@@ -75,6 +77,57 @@
             <h2>Sucesso!</h2>
             <p>Cartão removido com sucesso.</p>
             <button id="btnModalexcluirSucesso">Ok</button>
+        </div>
+    </div>
+    <div class="modal" id="modalEditarCartao">
+        <div class="modal-content editar-form-content">
+            <span id="fecharModalEditar"><i class="bi bi-x-lg"></i></span>
+            <h1>Editar Cartão</h1>
+            <form action="configs/add-cartao.php" method="POST" id="form-Editar-Cartao">
+                <div class="limite-cartao">
+                    <label for="limite-editar">Limite total do Cartão</label>
+                    <input type="text" name="limite-editar" id="limite-editar" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
+                </div>
+
+                <div class="data-fechamento">
+                    <label for="fechamento-editar">Dia de fechamento</label>
+                    <select name="fechamento-editar" id="fechamento-editar">
+                        <option value="">Selecione o dia</option>
+                    </select>
+                </div>
+                    
+                <div class="data-vencimento">
+                    <label for="vencimento-editar">Dia de vencimento</label>
+                    <select name="vencimento-editar" id="vencimento-editar">
+                        <option value="">Selecione o dia</option>
+                    </select>
+                </div>
+
+                <div class="anuidade">
+                    <span>
+                        <label for="anuidade-editar">Possui anuidade</label>
+                        <input type="checkbox" name="anuidade-editar" id="anuidade-editar">
+                    </span>
+                </div>
+
+                <div class="digitar-anuidade-editar">
+                    <label for="anuidade-valor-editar">Valor da parcela</label>
+                    <input type="text" name="anuidade-valor-editar" id="anuidade-valor-editar" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
+                </div>
+
+                <div class="pontos">
+                    <span>
+                        <label for="pontos-editar">Compras geram pontos</label>
+                        <input type="checkbox" name="pontos-editar" id="pontos-editar">
+                    </span>
+                </div>
+
+                <div class="btn-form">
+                    <button class="adicionar-excluir-cartao" id="adicionar-excluir-cartao" type="button">Add/Excluir</button>
+                    <button type="submit">Salvar</button>
+                </div>
+                <input type="hidden" name="id_cartao" id="id-cartao-editar">
+            </form>
         </div>
     </div>
     
@@ -119,37 +172,6 @@
                         <label for="fechamento">Dia de fechamento</label>
                         <select name="fechamento" id="fechamento">
                             <option value="">Selecione o dia</option>
-                            <option value="01">01</option>
-                            <option value="02">02</option>
-                            <option value="03">03</option>
-                            <option value="04">04</option>    
-                            <option value="05">05</option>
-                            <option value="06">06</option>
-                            <option value="07">07</option>
-                            <option value="08">08</option>    
-                            <option value="09">09</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>    
-                            <option value="13">13</option>
-                            <option value="14">14</option>
-                            <option value="15">15</option>
-                            <option value="16">16</option>    
-                            <option value="17">17</option>
-                            <option value="18">18</option>
-                            <option value="19">19</option>
-                            <option value="20">20</option>    
-                            <option value="21">21</option>
-                            <option value="22">22</option>
-                            <option value="23">23</option>
-                            <option value="24">24</option>    
-                            <option value="25">25</option>
-                            <option value="26">26</option>
-                            <option value="27">27</option>
-                            <option value="28">28</option>    
-                            <option value="29">29</option>
-                            <option value="30">30</option>
-                            <option value="31">31</option>
                         </select>
                     </div>
                     
@@ -157,37 +179,6 @@
                         <label for="vencimento">Dia de vencimento</label>
                         <select name="vencimento" id="vencimento">
                             <option value="">Selecione o dia</option>
-                            <option value="01">01</option>
-                            <option value="02">02</option>
-                            <option value="03">03</option>
-                            <option value="04">04</option>    
-                            <option value="05">05</option>
-                            <option value="06">06</option>
-                            <option value="07">07</option>
-                            <option value="08">08</option>    
-                            <option value="09">09</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>    
-                            <option value="13">13</option>
-                            <option value="14">14</option>
-                            <option value="15">15</option>
-                            <option value="16">16</option>    
-                            <option value="17">17</option>
-                            <option value="18">18</option>
-                            <option value="19">19</option>
-                            <option value="20">20</option>    
-                            <option value="21">21</option>
-                            <option value="22">22</option>
-                            <option value="23">23</option>
-                            <option value="24">24</option>    
-                            <option value="25">25</option>
-                            <option value="26">26</option>
-                            <option value="27">27</option>
-                            <option value="28">28</option>    
-                            <option value="29">29</option>
-                            <option value="30">30</option>
-                            <option value="31">31</option>
                         </select>
                     </div>
                     <div class="anuidade">
@@ -198,7 +189,7 @@
                     </div>
                     <div class="digitar-anuidade">
                             <label for="anuidade-valor">Valor da parcela</label>
-                            <input type="text" name="anuidade-valor" id="anuidade-valor" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
+                            <input type="text" name="anuidade-valor" id="anuidade-valor" placeholder="R$ 0,00" oninput="formatarMoeda(this)" autocomplete="off">
                     </div>
                     <div class="pontos">
                         <span>

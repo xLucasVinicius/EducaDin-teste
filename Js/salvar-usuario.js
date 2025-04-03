@@ -318,6 +318,7 @@ document.querySelector('#form-salvar-usuario').addEventListener('submit', functi
 
 // Evento de clique no botão de cancelar
 document.querySelector('#btn-cancelar').addEventListener('click', function () {
+    localStorage.removeItem('croppedImage');
     window.location.href = "navbar.php?page=dashboard";
 });
 

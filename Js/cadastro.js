@@ -349,6 +349,7 @@ function mostrarConfirmarSenha() {
 
 // Redireciona para a página inicial
 document.getElementById('btn-input1').addEventListener('click', function () {
+    localStorage.removeItem('croppedImage');
     window.location.href = '../index.html';
 });
 

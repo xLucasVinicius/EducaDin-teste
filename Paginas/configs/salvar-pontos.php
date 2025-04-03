@@ -22,7 +22,7 @@ if (isset($data['pontuacao']) && isset($data['id_minigame']) && isset($data['moe
     $stmt_pontuacoes->execute();
 
     // Atualizar as moedas na tabela usuarios
-    $query_moedas = "UPDATE usuarios SET moedas = moedas + ? WHERE id = ?";
+    $query_moedas = "UPDATE usuarios SET moedas = moedas + ? WHERE id_usuario = ?";
     $stmt_moedas = $mysqli->prepare($query_moedas);
     $stmt_moedas->bind_param("ii", $moedas_ganhas, $id_usuario);
     $stmt_moedas->execute();

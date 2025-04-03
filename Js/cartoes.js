@@ -1,6 +1,7 @@
 const body = document.querySelector('body');
 const selectConta = document.getElementById('conta'); //select de conta do formulário de adicionar cartao
 const formCartao = document.getElementById('form-add-cartao'); //formulário de adicionar cartao
+const formCartaoEditar = document.getElementById('form-Editar-Cartao'); //formulário de editar cartao
 const modalExcluir = document.getElementById('ModalexcluirCartao'); //modal de excluir cartao
 const modalExcluirSucesso = document.getElementById('modalexcluirSucesso'); //modal de sucesso ao excluir cartoes
 const modalSucess = document.querySelector('#modalAddCartoes'); //modal de sucesso ao adicionar cartoes
@@ -10,8 +11,13 @@ const modalConfirmarExcluir = document.querySelector('#modalConfirmarExcluir'); 
 const msgConfirmarExcluir = document.querySelector('#modalConfirmarExcluir h2'); //mensagem de confirmação de exclusão de cartoes
 const tabelaBody = document.getElementById('cartoes-tabela-body'); //tabela de cartoes para excluir
 const checkboxAnuidade = document.getElementById('anuidade'); //checkbox de anuidade
+const modalEditarCartao = document.getElementById('modalEditarCartao'); //modal de editar cartao
+const checkboxAnuidadeEditar = document.getElementById('anuidade-editar'); //checkbox de anuidade para editar o cartão
 const anuidade = document.querySelector('.digitar-anuidade'); //div do input de digitar anuidade
+const anuidadeEditar = document.querySelector('.digitar-anuidade-editar'); //div do input de digitar anuidade para editar o cartão
 const inputAnuidade = document.getElementById('anuidade-valor'); //input de digitar anuidade
+const inputAnuidadeEditar = document.getElementById('anuidade-valor-editar'); //input de digitar anuidade para editar o cartão
+const btnAddExcluirCartao = document.getElementById('adicionar-excluir-cartao'); //botão para exibir form de adicionar cartao
 
 // Função para carregar os dados iniciais dos cartões quando a página for carregada
 document.addEventListener("DOMContentLoaded", () => {
@@ -123,6 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>Vencimento: ${formatarDia(diaVencimento)}/${formatarMes(mesVencimento)}/${anoAtual}</p>
           </span>
         </div>
+        <button class="btn-editar-cartao" data-id-cartao="${cartao.id_cartao}"><i class="bi bi-gear"></i></button>
       `;
       
       carouselContainer.appendChild(cartaoDiv); // Adiciona o cartão ao carrossel
@@ -286,6 +293,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // Formatando exibição da tabela corretamente
     const lancamentosFora = document.getElementById('fora-lancamentos');
     lancamentosFora.style.display = 'flex';
+
+    // Evento de clique no botão de edição
+    document.querySelectorAll('.btn-editar-cartao').forEach(botao => {
+      botao.addEventListener('click', function () {
+          const idCartao = this.dataset.idCartao;
+          const cartaoSelecionado = cartoesData.find(cartao => cartao.id_cartao == idCartao);
+          if (cartaoSelecionado) {
+              abrirModalEdicaoCartao(cartaoSelecionado);
+          }
+      });
+    });
+
   })
   .catch(error => {
     console.error('Erro ao carregar os dados:', error);
@@ -295,7 +314,6 @@ document.addEventListener("DOMContentLoaded", () => {
 // Evento de submissão do formulário para adicionar cartao
 formCartao.addEventListener('submit', function (event) {
     event.preventDefault();
-    console.log(inputAnuidade.value);
     let respAnuidade = null;
     if (!checkboxAnuidade.checked) {
       respAnuidade = 0;
@@ -323,6 +341,7 @@ formCartao.addEventListener('submit', function (event) {
       } else {
         const formData = new FormData(formCartao); // Cria o objeto FormData com o conteúdo do formulário
         formData.append('pontos', respPontos);
+        formData.append('anuidade-valor', respAnuidade);
 
         fetch('../Paginas/configs/add-cartao.php', {
             method: 'POST',
@@ -330,24 +349,32 @@ formCartao.addEventListener('submit', function (event) {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 'error_cartao') {
-                showModalError(data); // Exibe o modal com erro
-            } else if (data.status === 'success') {
-                handleSuccess(data); // Exibe o modal de sucesso
-            }
+          if (data.status === 'error_cartao') {
+              showModalError(data); // Exibe o modal com erro
+          } else if (data.status === 'success') {
+              handleSuccess(data); // Exibe o modal de sucesso
+          }
         })
         .catch(error => console.error('Erro:', error));
     }
   }
 });
 
-
 // Evento de alteração do checkbox para exibir ou ocultar o campo de anuidade
 checkboxAnuidade.addEventListener('change', function() {
   if (checkboxAnuidade.checked) {
-    anuidade.style.display = 'block';
+    anuidade.style.display = 'flex';
   } else {
     anuidade.style.display = 'none';
+  }
+});
+
+// Evento de alteração do checkbox para exibir ou ocultar o campo de anuidade para editar o cartão
+checkboxAnuidadeEditar.addEventListener('change', function() {
+  if (checkboxAnuidadeEditar.checked) {
+    anuidadeEditar.style.display = 'flex';
+  } else {
+    anuidadeEditar.style.display = 'none';
   }
 });
 
@@ -379,7 +406,44 @@ document.getElementById('fecharModalExcluir').addEventListener('click', function
   location.reload();
 });
 
-// Evento para exibir info sobre o cartão 
+// Eventos para cancelar a edição
+document.getElementById('fecharModalEditar').addEventListener('click', function () {
+  modalEditarCartao.style.display = 'none';
+  location.reload();
+})
+
+// Evento de edição do cartão
+formCartaoEditar.addEventListener('submit', function (event) {
+  event.preventDefault();
+  let respAnuidade = null;
+    if (!checkboxAnuidadeEditar.checked) {
+      respAnuidade = null;
+    } else {
+      respAnuidade = inputAnuidadeEditar.value;
+    }
+  const pontosCheck = document.getElementById('pontos-editar');
+    let respPontos = null;
+    if (pontosCheck.checked) {
+      respPontos = 0;
+    } else {
+      respPontos = 1;
+    }
+  const formData = new FormData(formCartaoEditar);
+  formData.append('pontos-editar', respPontos);
+  formData.append('anuidade-valor-editar', respAnuidade);
+
+  fetch('../Paginas/configs/add-cartao.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 'updat') {
+      
+    }
+  })
+  .catch(error => console.error('Erro:', error))
+})
 
 // Função para tratar o sucesso
 function handleSuccess(data) {
@@ -529,6 +593,44 @@ function formatarDia(dia) {
   return dia < 10 ? `0${dia}` : dia;
 }
 
+// Preencher os selects com os dias de 1 a 31 dinamicamente
+function preencherSelectDias(id) {
+  let select = document.getElementById(id);
+  for (let i = 1; i <= 31; i++) {
+      let option = document.createElement("option");
+      option.value = i.toString().padStart(2, '0');
+      option.textContent = i.toString().padStart(2, '0');
+      select.appendChild(option);
+  }
+}
+
+function abrirModalEdicaoCartao(cartao) {
+  const inputLimite = document.getElementById('limite-editar');
+  document.querySelector('.conteudo').style = 'overflow: hidden;';
+
+  if (window.innerWidth > 1560) {
+    btnAddExcluirCartao.style.display = 'none';
+  }
+
+  modalEditarCartao.style.display = 'block';
+  console.log(cartao);
+
+  // Preencher os inputs com os dados do cartão
+  inputLimite.value = cartao.limite_total;
+  formatarMoeda(inputLimite);
+  document.getElementById('fechamento-editar').value = formatarDia(cartao.dia_fechamento);
+  document.getElementById('vencimento-editar').value = formatarDia(cartao.dia_vencimento);
+  if (cartao.anuidade !== null) {
+    checkboxAnuidadeEditar.checked = true;
+    inputAnuidadeEditar.value = cartao.anuidade;
+    formatarMoeda(inputAnuidadeEditar);
+    anuidadeEditar.style.display = 'flex';
+  }
+  if (cartao.pontos == 0) {
+    document.getElementById('pontos-editar').checked = true;
+  }
+  document.getElementById('id-cartao-editar').value = cartao.id_cartao;
+}
 
 
 
@@ -537,3 +639,13 @@ function formatarDia(dia) {
 
 
 
+
+
+
+
+
+
+preencherSelectDias("fechamento");
+preencherSelectDias("vencimento");
+preencherSelectDias("fechamento-editar");
+preencherSelectDias("vencimento-editar");

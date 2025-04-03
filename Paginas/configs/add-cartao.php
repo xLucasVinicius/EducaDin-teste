@@ -2,64 +2,84 @@
 
 include("config.php");
 
-// Receber dados do formulário
-$id_usuario = $_POST['id_usuario'];
-$id_conta = $_POST['conta'];
+// Percorrer $_POST e corrigir os nomes dos atributos
+foreach ($_POST as $key => $value) {
+  $newKey = str_replace('-editar', '', $key);
+  $_POST[$newKey] = $value; // Substitui no array $_POST
+}
+
+// Agora os nomes dos campos estarão corretos ao serem usados abaixo:
+$id_usuario = $_POST['id_usuario'] ?? null;
+$id_conta = $_POST['conta'] ?? null;
 $limite_total = $_POST['limite'];
 $dia_fechamento = $_POST['fechamento'];
 $dia_vencimento = $_POST['vencimento'];
-$anuidade = $_POST['anuidade-valor'] ?? null;
+$anuidade = $_POST['anuidade-valor'];
 $pontos = $_POST['pontos'];
-
-// Log para verificar a anuidade recebida
-error_log("Anuidade Recebida: " . $anuidade);
+$id_cartao = $_POST['id_cartao'] ?? null;
 
 // Formatar anuidade, se não for zero
-if (!empty($anuidade)) {
-    $anuidade = formatarLimite($anuidade);
-} else {
-    $anuidade = null;
-}
-
-// Log para verificar a anuidade formatada
-error_log("Anuidade Formatada: " . $anuidade);
+$anuidade = (!empty($anuidade)) ? formatarLimite($anuidade) : null;
 
 // Formatar o limite total
 $limite_total = formatarLimite($limite_total);
 
-// Verificar se já existe um cartão associado à conta
-$sqlTest = "SELECT * FROM cartoes WHERE id_conta = ?";
-$stmtTest = $mysqli->prepare($sqlTest);
-$stmtTest->bind_param("i", $id_conta);
-$stmtTest->execute();
-$result_cartao = $stmtTest->get_result();
+if (!isset($_POST['id_cartao']) || empty($_POST['id_cartao'])) {  
+    // Verificar se já existe um cartão associado à conta
+    $sqlTest = "SELECT * FROM cartoes WHERE id_conta = ?";
+    $stmtTest = $mysqli->prepare($sqlTest);
+    $stmtTest->bind_param("i", $id_conta);
+    $stmtTest->execute();
+    $result_cartao = $stmtTest->get_result();
 
-if ($result_cartao->num_rows == 0) {
-    // Inserir cartão se ainda não existir
-    if (is_null($anuidade)) {
-        $sql = "INSERT INTO cartoes (id_conta, id_usuario, limite_total, dia_fechamento, dia_vencimento, pontos) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param("iidiii", $id_conta, $id_usuario, $limite_total, $dia_fechamento, $dia_vencimento, $pontos);
+    if ($result_cartao->num_rows == 0) { 
+        // Inserir novo cartão
+        if (is_null($anuidade)) {
+            $sql = "INSERT INTO cartoes (id_conta, id_usuario, limite_total, dia_fechamento, dia_vencimento, pontos) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param("iidiii", $id_conta, $id_usuario, $limite_total, $dia_fechamento, $dia_vencimento, $pontos);
+        } else {
+            $sql = "INSERT INTO cartoes (id_conta, id_usuario, limite_total, dia_fechamento, dia_vencimento, anuidade, pontos) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param("iidiidi", $id_conta, $id_usuario, $limite_total, $dia_fechamento, $dia_vencimento, $anuidade, $pontos);
+        }
+
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            echo json_encode(['status' => 'success']); 
+        } else {
+            echo json_encode(['status' => 'error']); 
+        }
+
+        $stmt->close();
     } else {
-        $sql = "INSERT INTO cartoes (id_conta, id_usuario, limite_total, dia_fechamento, dia_vencimento, anuidade, pontos) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param("iidiidi", $id_conta, $id_usuario, $limite_total, $dia_fechamento, $dia_vencimento, $anuidade, $pontos);
+        echo json_encode(['status' => 'error_cartao']); 
     }
+} else {
+    // Atualizar cartão existente
+    $id_cartao = $_POST['id_cartao'];
+    
+    if (is_null($anuidade)) {
+        $sql = "UPDATE cartoes SET limite_total = ?, dia_fechamento = ?, dia_vencimento = ?, pontos = ? WHERE id_cartao = ?";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("diiii", $limite_total, $dia_fechamento, $dia_vencimento, $pontos, $id_cartao);
+    } else {
+        $sql = "UPDATE cartoes SET limite_total = ?, dia_fechamento = ?, dia_vencimento = ?, anuidade = ?, pontos = ? WHERE id_cartao = ?";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("diiidi", $limite_total, $dia_fechamento, $dia_vencimento, $anuidade, $pontos, $id_cartao);
+    }
+
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {
-        echo json_encode(['status' => 'success']); // Retorna uma resposta de sucesso
+        echo json_encode(['status' => 'updated']); 
     } else {
-        echo json_encode(['status' => 'error']); // Retorna uma resposta de erro
+        echo json_encode(['status' => 'no_changes']); 
     }
 
     $stmt->close();
-} else {
-    echo json_encode(['status' => 'error_cartao']); // Retorna uma resposta de erro para cartão existente
 }
-
-$stmtTest->close();
-$mysqli->close();
 
 // Função para formatar o limite
 function formatarLimite($limite_total) {
