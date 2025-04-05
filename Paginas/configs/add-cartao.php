@@ -8,7 +8,6 @@ foreach ($_POST as $key => $value) {
   $_POST[$newKey] = $value; // Substitui no array $_POST
 }
 
-// Agora os nomes dos campos estarão corretos ao serem usados abaixo:
 $id_usuario = $_POST['id_usuario'] ?? null;
 $id_conta = $_POST['conta'] ?? null;
 $limite_total = $_POST['limite'];

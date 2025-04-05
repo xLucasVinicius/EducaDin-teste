@@ -144,6 +144,10 @@
     flex-direction: row-reverse;
 }
 
+#modalAlterarCartao, #modalNenhumaAlteracao {
+    z-index: 9;
+}
+
 @keyframes exibir {
     0% {
         display: none;

@@ -37,6 +37,24 @@
             <button id="btnModalCartao">Ok</button>
         </div>
     </div>
+    <!-- Modal de sucesso na alteração -->
+    <div class="modal" id="modalAlterarCartao">
+        <div class="modal-content">
+            <h2>Sucesso!</h2>
+            <p>Alteração realizada com sucesso.</p>
+            <button id="btnModalAlterarSucesso">Ok</button>
+        </div>
+    </div>
+
+    <!-- Modal de nenhuma alteração realizada -->
+    <div class="modal" id="modalNenhumaAlteracao">
+        <div class="modal-content">
+            <h2>Sucesso!</h2>
+            <p>Nenhuma alteração foi necessária</p>
+            <button id="btnModalNenhumaAlteracao">Ok</button>
+        </div>
+    </div>
+
     <!-- Modal de excluir conta -->
     <div id="ModalexcluirCartao" class="modal">
         <div class="modal-content excluir-cartao-modal">

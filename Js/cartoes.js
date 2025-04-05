@@ -18,6 +18,8 @@ const anuidadeEditar = document.querySelector('.digitar-anuidade-editar'); //div
 const inputAnuidade = document.getElementById('anuidade-valor'); //input de digitar anuidade
 const inputAnuidadeEditar = document.getElementById('anuidade-valor-editar'); //input de digitar anuidade para editar o cartão
 const btnAddExcluirCartao = document.getElementById('adicionar-excluir-cartao'); //botão para exibir form de adicionar cartao
+const modalEditarSucesso = document.getElementById('modalAlterarCartao'); //modal de sucesso ao editar cartao
+const ModalNenhumaAlteracao = document.getElementById('modalNenhumaAlteracao');
 
 // Função para carregar os dados iniciais dos cartões quando a página for carregada
 document.addEventListener("DOMContentLoaded", () => {
@@ -350,9 +352,9 @@ formCartao.addEventListener('submit', function (event) {
         .then(response => response.json())
         .then(data => {
           if (data.status === 'error_cartao') {
-              showModalError(data); // Exibe o modal com erro
+              exibirModalErro(data); // Exibe o modal com erro
           } else if (data.status === 'success') {
-              handleSuccess(data); // Exibe o modal de sucesso
+              exibirSucessoAdd(data); // Exibe o modal de sucesso
           }
         })
         .catch(error => console.error('Erro:', error));
@@ -393,6 +395,18 @@ document.getElementById('btnModalCampos').addEventListener('click', function () 
 document.getElementById('btnModalCartao').addEventListener('click', function () {
     modalErrorAdd.style.display = 'none';
 });
+
+// Fechar modal de sucesso ao atualizar cartão ao clicar no botão
+document.getElementById('btnModalAlterarSucesso').addEventListener('click', function () {
+  modalEditarSucesso.style.display = 'none';
+  location.reload();
+});
+
+// Fechar modal de nenhuma alteração ao editar o cartão ao clicar no botão
+document.getElementById('btnModalNenhumaAlteracao').addEventListener('click', function () {
+  ModalNenhumaAlteracao.style.display = 'none';
+  location.reload();
+})
 
 // Fechar o modal de sucesso ao clicar no botão
 document.getElementById('btnModalexcluirSucesso').addEventListener('click', function () {
@@ -438,21 +452,33 @@ formCartaoEditar.addEventListener('submit', function (event) {
   })
   .then(response => response.json())
   .then(data => {
-    if (data.status === 'updat') {
-      
+    if (data.status === 'updated') {
+      exibirSucessoEditar(data);
+    } else if (data.status === 'no_changes') {
+      exibirNenhumaAlteracao(data);
     }
   })
   .catch(error => console.error('Erro:', error))
 })
 
 // Função para tratar o sucesso
-function handleSuccess(data) {
+function exibirSucessoAdd(data) {
   modalSucess.style.display = 'block';
 }
 
 // Função para mostrar modal de erro
-function showModalError(data) {
+function exibirModalErro(data) {
     modalErrorAdd.style.display = 'block';
+}
+
+// Função para exibir modal de sucesso ao editar o cartão
+function exibirSucessoEditar(data) {
+  modalEditarSucesso.style.display = 'flex';
+}
+
+// Função para exibir modal de nenhuma alteração ao editar o cartão
+function exibirNenhumaAlteracao(data) {
+  ModalNenhumaAlteracao.style.display = 'flex';
 }
 
 // Função para formatar o saldo como moeda
