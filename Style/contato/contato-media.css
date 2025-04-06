@@ -1,76 +1,30 @@
-@media screen and (max-width: 800px) {
-
-    .conteudo-contato .infos-contato .texto-infos p {
-        font-size: 1rem;
-    }
-
-    section.conteudo-contato .infos-contato {
-        height: 30%;
-        margin-bottom: 100px;
-    }
-
-    section.conteudo-contato .form-contato {
-        width: 100%;
-        height: 30%;
-    }
-
-    section.conteudo-contato .form-contato {
-        margin-top: 45px;
-    }
-    
-    .conteudo-contato .infos-contato .texto-infos .redes-contato a {
-        font-size: 1rem;
-    }
-
-    section.conteudo-contato .form-contato form {
-        width: auto;
-        height: 500px;
-    }
-
-    section.conteudo-contato .form-contato form label {
-        margin-top: 5px;
-    }
-
-    section.conteudo-contato .form-contato form input,
-    section.conteudo-contato .form-contato form textarea {
-        width: 300px;
-    }
-
-    section.conteudo-contato .form-contato form textarea {
-        height: 100px;
+@media screen and (max-width: 768px) {
+    section.conteudo-contato .infos-contato, section.conteudo-contato .form-contato {
+        width: 310px;
     }
 }
 
-@media screen and (max-width: 1200px) {
-
+@media screen and (max-width: 1450px) {
     section.conteudo-contato {
         flex-direction: column;
-        justify-content: flex-start;
+        height: auto;
+        gap: 5px;
     }
 
-    section.conteudo-contato .infos-contato, section.conteudo-contato .form-contato {
-        width: 100%;
-    }
-
-    .conteudo-contato .infos-contato .texto-infos {
-        width: 100%;
-        gap: 0px;
-        align-items: center;
-    }
-
-    .conteudo-contato .infos-contato .texto-infos h1 {
-        font-size: 2rem;
+    section.conteudo-contato .infos-contato .texto-infos {
         text-align: center;
     }
 
-    .conteudo-contato .infos-contato .texto-infos .redes-contato {
-        width: 100%;
-        height: 40%;
-        align-items: center;
+    section.conteudo-contato .infos-contato .texto-infos .redes-contato {
+        text-align: start;
+    }
+
+    section.conteudo-contato .infos-contato, section.conteudo-contato .form-contato {
+        height: auto;
     }
 
     section.conteudo-contato .form-contato form {
-        height: 400px;
+        width: 100%;
+        height: auto;
     }
-
 }

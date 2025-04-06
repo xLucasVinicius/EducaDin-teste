@@ -159,8 +159,17 @@ if (!isset($_SESSION['email'])) {
                 case "letreco":
                     include("minigames/letreco.php");
                 break;
+                case "snake":
+                    include("minigames/snake.php");
+                break;
+                case "forca":
+                    include("minigames/forca.php");
+                break;
+                case "jogo4":
+                    include("minigames/jogo4.php");
+                break;
                 case "planos":
-                    include("planos.php");
+                    include("planos.html");
                 break;
                 case "investimentos":
                     include("investimentos.php");
@@ -190,7 +199,7 @@ if (!isset($_SESSION['email'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- JS Personalizado -->
-    <script src="../Js/nav-bar.js"></script>
+    <script src="../Js/paginas/nav-bar.js"></script>
 
 </body>
 </html>

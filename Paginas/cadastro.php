@@ -115,8 +115,8 @@
     </form>
 </main>
 
-<script src="../Js/background.js"></script> <!-- Js de background -->
-<script src="../Js/cadastro.js"></script> <!-- Js de cadastro -->
+<script src="../Js/paginas/background.js"></script> <!-- Js de background -->
+<script src="../Js/login/cadastro.js"></script> <!-- Js de cadastro -->
 </body>
 </html>
 

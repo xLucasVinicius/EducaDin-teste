@@ -79,6 +79,17 @@ html, body {
     padding: 10px;
     text-align: center;
     color: white;
+    transition: all 0.3s;
+}
+
+.conteudo-total-sobrenos .apresentar-membros .membros .membro-container:hover { /* Div que contém um membro ao passar o mouse */
+    transform: scale(1.05);
+    box-shadow: 0px 0px 20px var(--cor-principal);
+}
+
+.conteudo-total-sobrenos .apresentar-membros .membros .membro-container:not(:hover) { /* Div que contém um membro ao nao passar o mouse */
+    transform: scale(0.95);
+    box-shadow: none;
 }
 
 .conteudo-total-sobrenos .apresentar-membros .membros .membro-container img { /* Imagem do membro */

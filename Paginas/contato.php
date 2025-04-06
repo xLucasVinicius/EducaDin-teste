@@ -29,29 +29,57 @@
                 </div>
             </div>   
         </section>
-        <section class="form-contato"> <!-- section com formulario de contato -->
-            <form action="https://api.staticforms.xyz/submit" method="post">
 
+        <section class="form-contato"> <!-- section com formulario de contato -->
+            <form id="form-contato" action="https://api.staticforms.xyz/submit" method="post">
+
+                <!-- StaticForms accessKey -->
                 <input type="hidden" name="accessKey" value="9043c0d8-f2d5-410a-8614-52252954f318">
 
                 <!-- Campo de Nome -->
                 <label for="nome">Nome</label>
-                <input type="text" name="nome" id="nome" placeholder="Digite seu nome">
+                <input type="text" name="nome" id="nome" placeholder="Digite seu nome" required>
 
                 <!-- Campo de Email -->
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="Digite seu email">
+                <input type="email" name="email" id="email" placeholder="Digite seu email" required>
 
                 <!-- Campo da Mensagem -->
                 <label for="mensagem">Mensagem</label>
-                <textarea name="mensagem" id="mensagem" cols="30" rows="10" placeholder="Digite sua mensagem"></textarea>
+                <textarea name="mensagem" id="mensagem" cols="30" rows="5" placeholder="Digite sua mensagem" required></textarea>
 
-                <!-- Campo de enviar -->
-                <input type="submit" value="Enviar">
+                <!-- Honeypot (antispam) -->
                 <input type="text" name="honeypot" style="display: none;">
-                <input type="hidden" name="redirectTo" value="http://localhost:3000/EducaDin-teste/Paginas/navbar.php?page=contato">
+
+                <!-- Redirect após envio -->
+                <input type="hidden" name="redirectTo" value="http://localhost/Paginas/navbar.php?page=contato">
+
+                <!-- Botão Enviar -->
+                <button type="submit">Enviar</button>
             </form>
         </section>
     </section>
+
+    <!-- reCAPTCHA v3 Script -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcRYAsrAAAAAL7kzoTcIaUwgwjvf_T_bEkorZRd"></script>
+    <script>
+        document.getElementById('form-contato').addEventListener('submit', function (e) {
+            e.preventDefault(); // Impede envio imediato
+
+            grecaptcha.ready(function () {
+                grecaptcha.execute('6LcRYAsrAAAAAL7kzoTcIaUwgwjvf_T_bEkorZRd', { action: 'submit' }).then(function (token) {
+                    // Adiciona o token ao formulário
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'g-recaptcha-response';
+                    input.value = token;
+                    document.getElementById('form-contato').appendChild(input);
+
+                    // Agora envia o formulário
+                    document.getElementById('form-contato').submit();
+                });
+            });
+        });
+    </script>
 </body>
 </html>

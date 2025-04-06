@@ -447,6 +447,7 @@ function formularioContas() {
   } else {
     containerForm.classList.remove('collapsed'); // Remove a classe "collapsed"
     btnAddConta.style.display = 'none';
+    containerForm.style = 'opacity: 1;';
   }
 }
 

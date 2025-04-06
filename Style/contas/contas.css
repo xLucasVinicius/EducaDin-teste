@@ -27,8 +27,8 @@ body::-webkit-scrollbar {
 
 #adicionar-conta-icon {
   position: absolute;
-  top: 25px;
-  right: 35px;
+  top: 15px;
+  right: -10px;
   color: var(--cor-principal);
   width: 30px;
   height: 30px;
@@ -253,6 +253,7 @@ z {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  opacity: 0;
 }
 
 .add-contas .fechar-form-icon {
@@ -293,6 +294,10 @@ z {
 .add-contas.collapsed .fechar-form-icon:hover {
   background-color: var(--cor-principal);
   color: var(--cor-txt);
+}
+
+.add-contas.collapsed .fechar-form-icon i {
+  padding: 0 7px;
 }
 
 .add-contas .form-content {

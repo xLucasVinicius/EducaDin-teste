@@ -120,7 +120,7 @@ if (isset($_SESSION['id'])) {
 </form>
 
 
-<script src="../Js/salvar-usuario.js"></script>
+<script src="../Js/login/salvar-usuario.js"></script>
 
 </body>
 </html>

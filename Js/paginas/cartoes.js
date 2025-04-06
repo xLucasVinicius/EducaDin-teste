@@ -1,5 +1,7 @@
 const body = document.querySelector('body');
 const selectConta = document.getElementById('conta'); //select de conta do formulário de adicionar cartao
+const conteudoGeral = document.querySelector('.conteudo'); //body geral
+const containerForm = document.querySelector('.add-cartoes'); //container do formulário de adicionar cartao
 const formCartao = document.getElementById('form-add-cartao'); //formulário de adicionar cartao
 const formCartaoEditar = document.getElementById('form-Editar-Cartao'); //formulário de editar cartao
 const modalExcluir = document.getElementById('ModalexcluirCartao'); //modal de excluir cartao
@@ -424,7 +426,7 @@ document.getElementById('fecharModalExcluir').addEventListener('click', function
 document.getElementById('fecharModalEditar').addEventListener('click', function () {
   modalEditarCartao.style.display = 'none';
   location.reload();
-})
+});
 
 // Evento de edição do cartão
 formCartaoEditar.addEventListener('submit', function (event) {
@@ -459,50 +461,7 @@ formCartaoEditar.addEventListener('submit', function (event) {
     }
   })
   .catch(error => console.error('Erro:', error))
-})
-
-// Função para tratar o sucesso
-function exibirSucessoAdd(data) {
-  modalSucess.style.display = 'block';
-}
-
-// Função para mostrar modal de erro
-function exibirModalErro(data) {
-    modalErrorAdd.style.display = 'block';
-}
-
-// Função para exibir modal de sucesso ao editar o cartão
-function exibirSucessoEditar(data) {
-  modalEditarSucesso.style.display = 'flex';
-}
-
-// Função para exibir modal de nenhuma alteração ao editar o cartão
-function exibirNenhumaAlteracao(data) {
-  ModalNenhumaAlteracao.style.display = 'flex';
-}
-
-// Função para formatar o saldo como moeda
-function formatarSaldo(valor) {
-  return `R$ ${parseFloat(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-}
-
-// Função para formatar moeda
-function formatarMoeda(input) {
-  // Remove todos os caracteres que não são dígitos
-  let valor = input.value.replace(/\D/g, '');
-
-  // Adiciona os centavos
-  valor = (valor / 100).toFixed(2) + '';
-
-  // Substitui o ponto por uma vírgula (para casas decimais)
-  valor = valor.replace(".", ",");
-
-  // Adiciona um ponto a cada três números antes da vírgula
-  valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
-  // Adiciona o símbolo R$
-  input.value = 'R$ ' + valor;
-}
+});
 
 // Funcionalidade para excluir um cartão
 document.getElementById('excluir-cartao').addEventListener('click', function () {
@@ -592,6 +551,66 @@ document.getElementById('excluir-cartao').addEventListener('click', function () 
     .catch(error => console.error('Erro ao carregar os dados:', error));
 });
 
+// Evento para exibir formulario de adicionar cartao em telas menores
+btnAddExcluirCartao.addEventListener('click', function () {
+  containerForm.style.display = 'flex';
+  modalEditarCartao.style.display = 'none';
+  conteudoGeral.style = ' overflow: hidden;';
+});
+
+// Evento para fechar formulario de adicionar cartao em telas menores
+document.getElementById('fecharForm').addEventListener('click', function () {
+  containerForm.style.display = 'none';
+  location.reload();
+});
+
+window.addEventListener('resize', formularioCartoes);
+
+window.addEventListener('load', formularioCartoes);
+
+// Função para tratar o sucesso
+function exibirSucessoAdd(data) {
+  modalSucess.style.display = 'block';
+}
+
+// Função para mostrar modal de erro
+function exibirModalErro(data) {
+    modalErrorAdd.style.display = 'block';
+}
+
+// Função para exibir modal de sucesso ao editar o cartão
+function exibirSucessoEditar(data) {
+  modalEditarSucesso.style.display = 'flex';
+}
+
+// Função para exibir modal de nenhuma alteração ao editar o cartão
+function exibirNenhumaAlteracao(data) {
+  ModalNenhumaAlteracao.style.display = 'flex';
+}
+
+// Função para formatar o saldo como moeda
+function formatarSaldo(valor) {
+  return `R$ ${parseFloat(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+}
+
+// Função para formatar moeda
+function formatarMoeda(input) {
+  // Remove todos os caracteres que não são dígitos
+  let valor = input.value.replace(/\D/g, '');
+
+  // Adiciona os centavos
+  valor = (valor / 100).toFixed(2) + '';
+
+  // Substitui o ponto por uma vírgula (para casas decimais)
+  valor = valor.replace(".", ",");
+
+  // Adiciona um ponto a cada três números antes da vírgula
+  valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  // Adiciona o símbolo R$
+  input.value = 'R$ ' + valor;
+}
+
 // Função para excluir o cartao
 function excluirCartao(id_cartao, id_usuario) {
   // Faz uma requisição para excluir a conta com os IDs fornecidos
@@ -639,7 +658,6 @@ function abrirModalEdicaoCartao(cartao) {
   }
 
   modalEditarCartao.style.display = 'block';
-  console.log(cartao);
 
   // Preencher os inputs com os dados do cartão
   inputLimite.value = cartao.limite_total;
@@ -656,6 +674,17 @@ function abrirModalEdicaoCartao(cartao) {
     document.getElementById('pontos-editar').checked = true;
   }
   document.getElementById('id-cartao-editar').value = cartao.id_cartao;
+}
+
+function formularioCartoes() { 
+  const larguraTela = window.innerWidth; // Obtem a largura da tela
+
+  if (larguraTela <= 1560) { // Verifica se a largura da tela é menor que 1560
+    containerForm.classList.add('collapsed'); // Adiciona a classe "collapsed"
+  } else {
+    containerForm.classList.remove('collapsed'); // Remove a classe "collapsed"
+    containerForm.style = 'opacity: 1;';
+  }
 }
 
 

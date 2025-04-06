@@ -58,8 +58,8 @@ include 'consultas/infos-login.php'; // Inclui o arquivo de configuração
         <a href="cadastro.php">Realizar cadastro</a>
     </div>
 
-<script src="../Js/login.js"></script> <!-- JS Personalizado -->
-<script src="../Js/background.js"></script> <!-- JS Personalizado -->
-<script src="../Js//botao-google-login.js"></script>
+<script src="../Js/login/login.js"></script> <!-- JS Personalizado -->
+<script src="../Js/paginas/background.js"></script> <!-- JS Personalizado -->
+<script src="../Js/botaogoogle/botao-google-login.js"></script>
 </body>
 </html>

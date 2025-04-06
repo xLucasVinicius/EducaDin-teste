@@ -1,6 +1,5 @@
 <?php
     $id = $_SESSION['id'];
-
 ?>
 
 <!DOCTYPE html>
@@ -81,8 +80,10 @@
     </div>
     
     <section class="elemento-fora">
-        <span id="adicionar-conta-icon" title="Adicionar Conta"><i class="bi bi-gear"></i></span>
         <section class="conteudo-total-contas"> <!-- Carrossel de Contas -->
+            <span id="adicionar-conta-icon" title="Adicionar Conta">
+                <i class="bi bi-gear"></i>
+            </span>
 
             <section class="contas-carrossel">
                 <!-- As divs de conta serão inseridas aqui dinamicamente -->
@@ -162,6 +163,6 @@
         </section>
     </section>
 
-    <script src="../Js/contas.js"></script> <!-- JS Personalizado -->
+    <script src="../Js/paginas/contas.js"></script> <!-- JS Personalizado -->
 </body>
 </html>

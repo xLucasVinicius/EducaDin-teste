@@ -135,7 +135,7 @@
 
                 <div class="pontos">
                     <span>
-                        <label for="pontos-editar">Compras geram pontos</label>
+                        <label for="pontos-editar">Possui pontuação</label>
                         <input type="checkbox" name="pontos-editar" id="pontos-editar">
                     </span>
                 </div>
@@ -173,6 +173,9 @@
         <!-- Formulário para adicionar novas contas -->
         <section class="add-cartoes">
             <div class="form-content">
+                <span class="fechar-form-icon">
+                    <i class="bi bi-x-lg" id="fecharForm"></i>
+                </span>
                 <h1>Adicionar Cartão</h1>
                 <form action="configs/add-cartao.php" method="POST" id="form-add-cartao">
                     <div class="form-conta">
@@ -211,7 +214,7 @@
                     </div>
                     <div class="pontos">
                         <span>
-                            <label for="pontos">Compras geram pontos</label>
+                            <label for="pontos">Possui pontuação</label>
                             <input type="checkbox" name="pontos" id="pontos">
                         </span>
                     </div>
@@ -225,6 +228,6 @@
         </section>
     </section>
 
-    <script src="../Js/cartoes.js"></script> <!-- JS Personalizado -->
+    <script src="../Js/paginas/cartoes.js"></script> <!-- JS Personalizado -->
 </body>
 </html>

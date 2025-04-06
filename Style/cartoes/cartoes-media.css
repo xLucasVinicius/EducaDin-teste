@@ -50,9 +50,24 @@
   .add-cartoes .form-content {
     width: 100%;
   }
+
+  .add-cartoes .form-content form, .modal-content.editar-form-content form {
+    gap: 10px;
+  }
+
+  .modal-content.editar-form-content form {
+    width: 70%;
+  }
+
+  .modal-content.editar-form-content, .add-cartoes.collapsed .form-content {
+    width: 315px;
+  }
 }
 
 @media screen and (max-width: 1090px) {
+  .elemento-fora {
+    height: auto;
+  }
   .conteudo-total-cartoes, .cartoes-carrossel {
     width: 100%;
   }
@@ -71,17 +86,5 @@
   .fora-lancamentos {
     width: 100%;
     overflow: scroll;
-  }
-}
-
-@media screen and (max-width: 1560px) {
-  .elemento-fora {
-    flex-direction: column;
-    align-items: center;
-    height: auto;
-  }
-
-  .add-cartoes {
-    margin-top: 20px;
   }
 }

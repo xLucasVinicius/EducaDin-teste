@@ -61,6 +61,6 @@
         </div>
     </section>
 
-    <script src="../Js/letreco.js"></script>
+    <script src="../Js/minigames/letreco.js"></script>
 </body>
 </html>

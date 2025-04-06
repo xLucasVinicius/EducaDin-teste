@@ -1,5 +1,5 @@
 <?php
-include 'configs/config.php';
+include("./configs/config.php");
 
 //declarações para teste
 $categorias = "['cartao de credito','pix','debito','laser','viagem']";
@@ -198,8 +198,8 @@ $result = $mysqli->query($query);
             </button>
           </div>
         </section>
-    <script src="../Js/apexcharts.min.js"></script> <!-- Biblioteca ApexCharts -->
-    <script src="../Js/dashboard.js"></script> <!-- JS Personalizado -->
-    <script src="../Js/graficos.js"></script> <!-- JS Personalizado -->
+    <script src="../Js/libs/apexcharts.min.js"></script> <!-- Biblioteca ApexCharts -->
+    <script src="../Js/paginas/dashboard.js"></script> <!-- JS Personalizado -->
+    <script src="../Js/libs/graficos.js"></script> <!-- JS Personalizado -->
 </body>
 </html>

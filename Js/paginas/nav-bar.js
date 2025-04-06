@@ -45,31 +45,43 @@ const navLinks = document.querySelectorAll('.nav-link');
 
 // Função para ativar o link correto com base no parâmetro da URL
 function setActiveLink() {
-    const urlParams = new URLSearchParams(window.location.search); // Obtém os parâmetros da URL
-    const currentPage = urlParams.get('page'); // Obtém o valor do parâmetro 'page' da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentPage = urlParams.get('page');
+    console.log(currentPage);
 
     let found = false;
 
     if (currentPage) {
-        // Verifica qual link corresponde à página atual
+        // Verifica se algum link corresponde ao parâmetro 'page'
         navLinks.forEach(link => {
-            const hrefPage = new URL(link.href).searchParams.get('page'); // Obtém o valor do parâmetro 'page' do link
+            const hrefPage = new URL(link.href).searchParams.get('page');
             if (hrefPage === currentPage) {
-                link.classList.add('active'); // Ativa o link correspondente
+                link.classList.add('active');
                 found = true;
             } else {
-                link.classList.remove('active'); // Remove a classe 'active' dos outros links
+                link.classList.remove('active');
             }
         });
-    }
 
-    // Se nenhum link foi encontrado e a página não tem parâmetro, define o dashboard como ativo por padrão
-    if (!found && navLinks.length > 0) {
+        // Se nenhum link corresponde ao page da URL, ativa o link de minigame
+        if (!found) {
+            const minigameLink = Array.from(navLinks).find(link => {
+                const hrefPage = new URL(link.href).searchParams.get('page');
+                return hrefPage === 'minigames';
+            });
+
+            if (minigameLink) {
+                minigameLink.classList.add('active');
+            }
+        }
+
+    } else {
+        // Se não há parâmetro 'page', ativa o dashboard por padrão
         const dashboardLink = Array.from(navLinks).find(link => link.getAttribute('href').includes('dashboard'));
         if (dashboardLink) {
             dashboardLink.classList.add('active');
-        } else {
-            navLinks[0].classList.add('active'); // Marca o primeiro link como ativo caso não haja dashboard
+        } else if (navLinks.length > 0) {
+            navLinks[0].classList.add('active');
         }
     }
 }
@@ -77,19 +89,13 @@ function setActiveLink() {
 // Verifica qual link corresponde ao link clicado
 navLinks.forEach(link => {
     link.addEventListener('click', function(event) {
-        // Previne o comportamento padrão do link
         event.preventDefault();
-
-        // Remove a classe "active" de todos os links
         navLinks.forEach(item => item.classList.remove('active'));
-
-        // Adiciona a classe "active" ao link clicado
         this.classList.add('active');
-
-        // Redireciona para a nova página
         window.location.href = this.href;
     });
 });
 
 // Configura o link ativo na carga da página
 window.onload = setActiveLink;
+

@@ -3,7 +3,7 @@
     display: none; /* O modal fica oculto por padrão */
     backdrop-filter: blur(10px);
     background-color: rgba(0, 0, 0, 0.4); /* Fundo escurecido */
-    z-index: 5;
+    z-index: 999;
 }
 
 .modal, .modal2 {
@@ -144,7 +144,7 @@
     flex-direction: row-reverse;
 }
 
-#modalAlterarCartao, #modalNenhumaAlteracao {
+#modalAlterarCartao, #modalNenhumaAlteracao, #ModalexcluirCartao {
     z-index: 9;
 }
 
