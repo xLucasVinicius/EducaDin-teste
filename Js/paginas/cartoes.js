@@ -553,7 +553,7 @@ document.getElementById('excluir-cartao').addEventListener('click', function () 
 
 // Evento para exibir formulario de adicionar cartao em telas menores
 btnAddExcluirCartao.addEventListener('click', function () {
-  containerForm.style.display = 'flex';
+  containerForm.style = 'display: flex; opacity: 1;';
   modalEditarCartao.style.display = 'none';
   conteudoGeral.style = ' overflow: hidden;';
 });

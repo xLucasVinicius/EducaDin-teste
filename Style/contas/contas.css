@@ -28,7 +28,7 @@ body::-webkit-scrollbar {
 #adicionar-conta-icon {
   position: absolute;
   top: 15px;
-  right: -10px;
+  right: 5px;
   color: var(--cor-principal);
   width: 30px;
   height: 30px;

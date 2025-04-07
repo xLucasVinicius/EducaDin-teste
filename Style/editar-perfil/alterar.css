@@ -263,8 +263,8 @@ button:hover {
 
 form {
     width: 350px;
-    height: 720px;
-    padding: 2px;
+    height: auto;
+    padding: 20px;
 }
 
 form > h1 {
@@ -304,18 +304,18 @@ label {
 
 #senha-icon, #confirmarsenha-icon {
     bottom: 3px;
-    right: 25px;
+    right: 15px;
 }
 
 .invalid #senha-icon, .invalid #confirmarsenha-icon {
     top: 33px;
-    right: 25px;
+    right: 15px;
 }
 
 #nome, #sobrenome, #data-nasc, #salario,#email, #senha, #confirmar-senha {
     padding: 5px;
     font-size: 0.9rem;
-    width: 290px;
+    width: 100%;
 }
 
 #btn-input1, #btn-input2 {
@@ -324,7 +324,7 @@ label {
 
 .bi-calendar3 {
     top: 34px;
-    right: 25px;
+    right: 15px;
 }
 }
 
@@ -335,8 +335,8 @@ label {
 }
 
 form {
-    width: 300px;
-    height: 700px;
+    width: 315px;
+    height: 840px;
     padding: 15px 2px;
 }
 
@@ -374,7 +374,7 @@ border-radius: 50%;
 #nome, #sobrenome, #data-nasc, #salario, #email, #senha, #confirmar-senha {
     padding: 7px;
     font-size: 0.95rem;
-    width: 280px;
+    width: 100%;
 }
 
 #btn-input1, #btn-input2 {

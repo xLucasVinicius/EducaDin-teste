@@ -444,10 +444,10 @@ function formularioContas() {
   if (larguraTela <= 1560) { // Verifica se a largura da tela é menor que 1560
     containerForm.classList.add('collapsed'); // Adiciona a classe "collapsed"
     btnAddConta.style.display = 'flex';
+    containerForm.style = 'opacity: 1;';
   } else {
     containerForm.classList.remove('collapsed'); // Remove a classe "collapsed"
     btnAddConta.style.display = 'none';
-    containerForm.style = 'opacity: 1;';
   }
 }
 
