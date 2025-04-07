@@ -1,0 +1,159 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+:root {
+    --cor-principal: #F2A900;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
+
+.botoes-navegar {  /* Container dos botões de navegação do jogo */
+    width: 100%;
+    position: relative;
+}
+
+.botoes-navegar i {  /* Botões de navegação do jogo (voltar e ranking)*/
+    position: absolute;
+    top: 50px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: var(--cor-principal);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.botoes-navegar i:hover {  /* Hover dos botões de navegação do jogo */
+    background-color: #f2a900;
+    color: #f4f3f1;
+}
+
+.botoes-navegar i:nth-child(1) { /* Botão de voltar */
+    left: 10px;
+}
+
+.botoes-navegar i:nth-child(2) { /* Botão de ranking */
+    right: 10px;
+}
+
+.ranking-container {  /* Modal de ranking */
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+
+    backdrop-filter: blur(25px);
+}
+
+.placar-ranking {  /* Conteudo do modal de ranking */
+    position: relative;
+    width: 350px;
+    height: 650px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    border: 1px solid var(--cor-principal);
+    border-radius: 20px;
+    box-shadow: 0px 2px 18px 2px var(--cor-txt);
+
+}
+
+.placar-ranking > i {  /* Botão de fechar */
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    color: var(--cor-principal);
+    font-size: 1.7rem;
+    transition: all .2s;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.placar-ranking > i:hover {  /* Hover do botão de fechar */
+    background-color: var(--cor-principal);
+    color: var(--cor-txt);
+}
+
+.placar-ranking h1 {  /* Titulo do modal de ranking */
+    font-family: 'Orbitron', sans-serif;
+    color: var(--cor-principal);
+    margin: 20px 0px;
+}
+
+.placar-ranking .ranking {  /* Conteudo do ranking */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+}
+
+.placar-ranking .ranking .ranking-item {  /* Cada linha do ranking */
+    width: 100%;
+    height: 50px;
+    display: flex;
+    gap: 20px;
+
+    border-bottom: 1px solid var(--cor-principal);
+}
+
+.placar-ranking .ranking .ranking-item:first-child {  /* Primeira linha do ranking */
+    border-top: 1px solid var(--cor-principal);
+}
+
+.placar-ranking .ranking .ranking-item i, .placar-ranking .ranking .ranking-item .ranking-position {  /* Posição da linha do ranking */
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.placar-ranking .ranking .ranking-item > span {  /* Conteudo da linha do ranking */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.placar-ranking .ranking .ranking-item span .foto-perfil {  /* Container da foto de perfil da linha do ranking */
+    margin-right: 10px;
+}
+
+.foto-perfil img {  /* Foto de perfil da linha do ranking */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+@media screen and (max-width: 767px) {
+    .botoes-navegar i {
+        top: 15px;
+    }
+
+    .botoes-navegar i:nth-child(1) { /* Botão de voltar */
+        left: 20px;
+    }
+    
+    .botoes-navegar i:nth-child(2) { /* Botão de ranking */
+        right: 20px;
+    }
+}

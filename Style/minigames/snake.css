@@ -1,0 +1,159 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --cor-principal: #F2A900;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+
+.game-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--cor-txt);
+}
+
+.game {
+    position: relative;
+    width: 640px;
+    height: 765px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    background-color: black;
+    border: 1px solid rgba(255, 255, 255, 0.555);
+    box-shadow: 0px 0px 10px 0px rgb(255, 255, 255);
+}
+
+.score {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+}
+
+.score-value {
+    font-weight: 700;
+    font-size: 3.5rem;
+    margin-top: -30px;
+}
+
+.menu-screen {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(20px);
+}
+
+.game-over {
+    text-transform: uppercase;
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 20px 0;
+}
+.final-score, .final-coins {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.play-again {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    background-color: transparent;
+    border: 1px solid var(--cor-principal);
+    color: var(--cor-principal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    cursor: pointer;
+    transition: all .45s;
+}
+
+.play-again:hover {
+    background-color: var(--cor-principal);
+    color: var(--cor-txt);
+}
+
+.btns-movimentar {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 5px;
+}
+
+.btns-movimentar .btn-movimento {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: 1px solid var(--cor-principal);
+    color: var(--cor-principal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .45s;
+}
+
+.btns-movimentar .btn-movimento i {
+    padding: 15px;
+}
+
+.btns-movimentar .btn-movimento:hover {
+    background-color: var(--cor-principal);
+    color: var(--cor-txt);
+}
+
+.btns-movimentar .btn-movimento-lateral {
+    display: flex;
+    gap: 60px;
+}
+
+@media (max-width: 767px) {
+    .game {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    canvas {
+        width: 300px;
+        height: 300px;
+    }
+
+    .score {
+        font-size: 1rem;
+    }
+
+    .score-value {    
+        font-size: 2.5rem;
+        margin-top: -15px;
+    }
+}

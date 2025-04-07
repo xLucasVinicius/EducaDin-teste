@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../Style/minigames/letreco.css">
+    <link rel="stylesheet" href="../Style/globais/ranking-minigames.css">
 </head>
 <body>
     <section class="conteudo-letreco">
@@ -34,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="app-container">
+        <div class="app-container" id="minigame" data-id-mg="1">
             <div class="botoes-navegar">
                 <i class="bi bi-arrow-left-circle" id="voltar" title="Voltar"></i>
                 <i class="bi bi-trophy" id="ranking" title="Ranking"></i>
@@ -62,5 +63,6 @@
     </section>
 
     <script src="../Js/minigames/letreco.js"></script>
+    <script src="../Js/minigames/ranking.js"></script>
 </body>
 </html>

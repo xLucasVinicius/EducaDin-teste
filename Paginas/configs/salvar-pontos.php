@@ -16,9 +16,9 @@ if (isset($data['pontuacao']) && isset($data['id_minigame']) && isset($data['moe
     $moedas_ganhas = $data['moedas_ganhas'];
 
     // Inserir sempre a pontuação atual na tabela pontuacoes_mg
-    $query_pontuacoes = "INSERT INTO pontuacoes_mg (id_usuario, id_minigame, pontuacao_rodada) VALUES (?, ?, ?)";
+    $query_pontuacoes = "INSERT INTO pontuacoes_mg (id_usuario, id_minigame, pontuacao_rodada, moedas_ganhas) VALUES (?, ?, ?, ?)";
     $stmt_pontuacoes = $mysqli->prepare($query_pontuacoes);
-    $stmt_pontuacoes->bind_param("iii", $id_usuario, $id_minigame, $pontos);
+    $stmt_pontuacoes->bind_param("iiii", $id_usuario, $id_minigame, $pontos, $moedas_ganhas);
     $stmt_pontuacoes->execute();
 
     // Atualizar as moedas na tabela usuarios
