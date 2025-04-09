@@ -12,7 +12,7 @@
 </head>
 <body>
 <div id="gradient"></div>
-    <div id="pattern"></div>    
+<div id="pattern"></div>    
     
 <main class="form-container-cadastro">
     <!-- Modal de Sucesso -->

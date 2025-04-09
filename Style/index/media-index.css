@@ -18,17 +18,17 @@
     }
 
     p {
-        right: 101px;
-        bottom: 203px;
+        right: 76px;
+        bottom: 156px;
         position: absolute;
-        font-size: 0.80rem;
+        font-size: 0.60rem;
         color: white;
         font-family: 'Orbitron', sans-serif;
     }
 
     .img-content img {
 
-        width: 200px;
+        width: 150px;
         
     }
 

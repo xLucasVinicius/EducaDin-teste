@@ -1,51 +1,67 @@
-generateHexagons();
-function generateHexagons() { // Função para gerar os hexágonos
+function generateHexagons() {
+    const patternElement = document.getElementById("pattern");
 
-const patternElement = document.getElementById("pattern"); // Seleciona o elemento do fundo
+    // Limpa hexágonos antigos
+    patternElement.innerHTML = '';
 
-const countY = Math.ceil(patternElement.clientHeight / 40) + 1; // Calcula o número de linhas
-const countX = Math.ceil(patternElement.clientWidth / 48) + 1; // Calcula o número de colunas
+    // Calcula a altura máxima entre a tela e o conteúdo da página
+    const maxHeight = Math.max(
+        document.documentElement.clientHeight,
+        document.documentElement.scrollHeight
+    );
 
-for (let i = 0; i < countY; i++) { // Contador para criar os hexágonos em todo o fundo
-    for (let j = 0; j < countX; j++) {
-        const hexagon = document.createElement("div"); // Cria um novo hexágono
+    patternElement.style.height = `${maxHeight}px`;
 
-        // Define o estilo do hexágono
-        hexagon.style = ` 
-        background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODciIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgODcgMTAwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMi4xOTg3MyAyNi4xNTQ3TDQzLjUgMi4zMDk0TDg0LjgwMTMgMjYuMTU0N1Y3My44NDUzTDQzLjUgOTcuNjkwNkwyLjE5ODczIDczLjg0NTNWMjYuMTU0N1oiIGZpbGw9IiMxRjFGMUYiIHN0cm9rZT0iIzFGMUYxRiIgc3Ryb2tlLXdpZHRoPSI0Ii8+Cjwvc3ZnPgo=') no-repeat;
-        width: 44px;
-        height: 50px;
-        background-size: contain;
-        position: absolute;
-        top: ${i * 40}px;
-        left: ${j * 48 + ((i * 24) % 48)}px;
-        `;
+    const countY = Math.ceil(maxHeight / 40) + 1;
+    const countX = Math.ceil(patternElement.clientWidth / 48) + 1;
 
-        patternElement.appendChild(hexagon); // Adiciona o hexágono ao elemento do fundo
+    for (let i = 0; i < countY; i++) {
+        for (let j = 0; j < countX; j++) {
+            const hexagon = document.createElement("div");
+            hexagon.style = `
+                background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODciIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgODcgMTAwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMi4xOTg3MyAyNi4xNTQ3TDQzLjUgMi4zMDk0TDg0LjgwMTMgMjYuMTU0N1Y3My44NDUzTDQzLjUgOTcuNjkwNkwyLjE5ODczIDczLjg0NTNWMjYuMTU0N1oiIGZpbGw9IiMxRjFGMUYiIHN0cm9rZT0iIzFGMUYxRiIgc3Ryb2tlLXdpZHRoPSI0Ii8+Cjwvc3ZnPgo=') no-repeat;
+                width: 44px;
+                height: 50px;
+                background-size: contain;
+                position: absolute;
+                top: ${i * 40}px;
+                left: ${j * 48 + ((i * 24) % 48)}px;
+            `;
+            patternElement.appendChild(hexagon);
+        }
     }
 }
 
+// Regenerar sempre que o conteúdo mudar
+const observer = new ResizeObserver(() => {
+    generateHexagons();
+});
+observer.observe(document.body);
 
-let mousePosition = { // Objeto para armazenar a posição do mouse
-    x: 0,
-    y: 0
-};
+// Também regenerar no resize
+window.addEventListener('resize', generateHexagons);
 
-document.addEventListener("mousemove", (mouse) => { // Evento para atualizar a posição do mouse
+// Gradiente que acompanha o mouse e o scroll
+let mousePosition = { x: 0, y: 0 };
+
+document.addEventListener("mousemove", (mouse) => {
     mousePosition = {
-        x: mouse.clientX,
+        x: mouse.clientX, // clientX/Y pegam posição relativa à viewport
         y: mouse.clientY
     };
 });
 
-const loop = () => { // Função para atualizar a posição do gradiente e sempre seguir o mouse
-    const gradientElement = document.getElementById("gradient"); // Seleciona o elemento de gradiente
-    gradientElement.style.transform = `translate(${mousePosition.x}px, ${mousePosition.y}px)`; // Define a posição do gradiente
-    window.requestAnimationFrame(loop); // Chama a próxima iteração
+const loop = () => {
+    const gradientElement = document.getElementById("gradient");
+
+    // Limita o X e Y à área visível da tela
+    const limitedX = Math.min(mousePosition.x, window.innerWidth);
+    const limitedY = Math.min(mousePosition.y, window.innerHeight);
+
+    gradientElement.style.transform = `translate(${limitedX}px, ${limitedY}px)`;
+    window.requestAnimationFrame(loop);
 };
 
-window.requestAnimationFrame(loop); // Chama a primeira iteração
 
-}
-
-window.addEventListener('resize', generateHexagons); // Adiciona um ouvinte para o evento de redimensionamento da janela
+generateHexagons();
+window.requestAnimationFrame(loop);

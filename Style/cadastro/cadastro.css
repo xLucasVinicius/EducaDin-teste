@@ -18,12 +18,16 @@
 html, body {
     background-color: var(--cor-fundo-content);
     width: 100vw;
-    height: 100dvh;
+    min-height: 100dvh;
     position: relative;
     display: grid;
     place-content: center;
-    overflow: hidden;
+    overflow: auto;
     scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 /* background */
@@ -42,10 +46,12 @@ html, body {
     background: radial-gradient(#F2A900, transparent 50%);
     width: 400px;
     height: 400px;
-    position: absolute;
+    position: fixed;
     top: -200px;
     left: -200px;
     transform: translate(200px, 200px);
+    pointer-events: none;
+    will-change: transform;
 }
 
 .form-container-cadastro { /* Container do form de cadastro */
