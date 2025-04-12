@@ -360,7 +360,7 @@ function handleSuccess(response) {
 
     // Mostrar o modal se a resposta for de sucesso
     if (response.status === 'success2') {
-        modal2.style.display = "block";
+        modal2.style.display = "flex";
 
         // Quando o usuário clicar no botão, redireciona para a página inicial
         closeModalBtn.onclick = function() {
@@ -375,7 +375,7 @@ function showModalError(data) {
     var closeModalBtn2 = document.getElementById("closeModalBtn2"); // Botão para fechar o modal
 
     if (data.status === 'error_email') { // Verifica o status de erro
-        modalerror.style.display = "block"; // Exibe o modal
+        modalerror.style.display = "flex"; // Exibe o modal
         errorSpanEmail.innerHTML = `${errorIcon} Insira um email válido`; // Atribui a mensagem de erro
         errorSpanEmail.style.display = "block"; // Exibe a mensagem
         inputEmailBox.classList.remove('valid'); // Remove a classe de sucesso

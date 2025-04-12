@@ -1,0 +1,269 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+:root {
+    --cor-principal: #F2A900;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+    --cor-receita: rgb(0, 190, 0);
+    --cor-despesa: rgb(190, 0, 0);
+}
+
+.conteudo-total {  /* Seção que contém todo o conteudo */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 30px;
+}
+
+.infos-topo {  /* Informações do topo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.infos-topo h1 {  /* Titulo */
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.3rem;
+    color: var(--cor-principal);
+}
+
+.infos-topo .desempenho-mes {  /* Desempenho do mês */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+}
+
+.infos-topo .desempenho-mes span {  /* Desempenho do mês individual */
+    font-size: 1.1rem;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 8px 10px;
+    border-radius: 10px;
+}
+
+.infos-topo .desempenho-mes span.receita {  /* Desempenho do mês individual */
+    border:2px solid var(--cor-receita);
+}
+
+.infos-topo .desempenho-mes span.despesa {  /* Desempenho do mês individual */
+    border:2px solid var(--cor-despesa);
+}
+
+.infos-topo .desempenho-mes span.receita p {  /* Valor da receita do mês */
+    color: var(--cor-receita);
+    margin: 0;
+}
+
+.infos-topo .desempenho-mes span.despesa p {  /* Valor da despesa do mês */
+    color: var(--cor-despesa);
+    margin: 0;
+}
+
+.infos-topo .meses {  /* Meses */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 65px;
+    width: 100%;
+}
+
+.infos-topo .meses button {  /* Botão para trocar o mês */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: transparent;
+    color: var(--cor-principal);
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.infos-topo .meses button:hover {
+    background-color: #333333;
+}
+
+.infos-topo .meses p {  /* nome do mês */
+    color: var(--cor-principal);
+    font-size: 1.6rem;
+    margin: 0;
+}
+
+.lancamentos {
+    width: 100%;
+    border: 1px solid var(--cor-principal);
+    border-radius: 10px;
+    height: 560px;
+}
+
+.form-container{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.form-container .form-add-lancamento {
+    position: relative;
+    background-color: var(--cor-fundo-content);
+    width: 400px;
+    height: 730px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    border: 1px solid var(--cor-principal);
+}
+
+.form-add-lancamento .fechar-form-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--cor-principal);
+    border: 1px solid var(--cor-principal);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.form-container .form-add-lancamento h1 {
+    color: var(--cor-principal);
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.form-add-lancamento form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-add-lancamento form .input-box {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-add-lancamento form .input-box label {
+    color: var(--cor-txt);
+    font-size: 1.1rem;
+}
+
+.form-add-lancamento form .input-box input,
+.form-add-lancamento form .input-box select {
+    width: 100%;
+    height: 30px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 5px;
+    padding: 0 10px;
+    background-color: transparent;
+    color: var(--cor-txt);
+    font-size: 1rem;
+}
+
+.form-add-lancamento form .input-box input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    background-color: var(--cor-txt);
+    border-radius: 50%;
+    position: relative;
+    transition: all .2s;
+}
+
+.form-add-lancamento form .input-box input[type="radio"]:checked {
+    background-color: var(--cor-principal);
+}
+
+.form-add-lancamento form .input-box input[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--cor-principal);
+}
+
+.form-add-lancamento form .input-box input:focus,
+.form-add-lancamento form .input-box select:focus {
+    outline: none;
+    border-color: var(--cor-principal);
+}
+
+.form-add-lancamento form .input-box input:-webkit-autofill,
+.form-add-lancamento form .input-box input:-webkit-autofill:hover,
+.form-add-lancamento form .input-box input:-webkit-autofill:focus,
+.form-add-lancamento form .input-box input:-internal-autofill-selected {
+    background-color: transparent !important;
+    color: white !important;
+    border: 1px solid var(--cor-principal) !important;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white  !important;
+    caret-color: white !important;
+}
+
+
+.form-add-lancamento form .input-box input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+.form-add-lancamento form .input-box input[type="number"],
+.form-add-lancamento form .input-box input[type="number"]::-webkit-outer-spin-button,
+.form-add-lancamento form .input-box input[type="number"]::-webkit-inner-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.form-add-lancamento form input[type="submit"] {
+    width: 100px;
+    background-color: var(--cor-principal);
+    color: var(--cor-txt);
+    border: none;
+    border-radius: 5px;
+    margin: 30px auto 0 auto;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.form-add-lancamento form input[type="submit"]:hover {
+    background-color: #b88100;
+}

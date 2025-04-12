@@ -101,7 +101,7 @@ $result = $mysqli->query($query);
                             <?php endwhile; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="7">Nenhum lançamento encontrado.</td> <!-- Mensagem de nenhum lançamento encontrado -->
+                                <td colspan="8">Nenhum lançamento encontrado.</td> <!-- Mensagem de nenhum lançamento encontrado -->
                             </tr>
                         <?php endif; ?>
                     </tbody>
