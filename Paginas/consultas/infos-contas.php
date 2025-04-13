@@ -5,7 +5,7 @@ include("../configs/config.php");
 header('Content-Type: application/json');  // Defina o tipo de conteúdo como JSON
 
 $sql = "SELECT * FROM contas WHERE id_usuario = " . $_SESSION['id']; // Consulta para obter as contas
-$sql2 = "SELECT * FROM lancamentos WHERE id_usuario = " . $_SESSION['id']; // Consulta para obter os lançamentos
+$sql2 = "SELECT * FROM lancamentos WHERE id_usuario = " . $_SESSION['id'] . " AND metodo_pagamento = 'conta'"; // Consulta para obter os lançamentos
 $result = $mysqli->query($sql); // Executa a consulta
 $result2 = $mysqli->query($sql2); // Executa a consulta
 

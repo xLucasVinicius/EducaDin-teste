@@ -169,10 +169,9 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
                 <th>Descrição</th>
                 <th>Valor</th>
                 <th>Tipo</th>
-                <th>Método</th>
+                <th>Categoria</th>
                 <th>Subcategoria</th>
                 <th>Data</th>
-                <th>Parcelas</th>
             </tr>
         </thead>`;
       
@@ -188,11 +187,9 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
               <td>${lancamento.descricao}</td>
               <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
               <td>${lancamentoTipo}</td>
-              <td>${lancamento.metodo_pagamento}</td>
+              <td>${lancamento.categoria}</td>
               <td>${lancamento.subcategoria}</td>
               <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
-              <td>${lancamento.parcelas}</td>
-              
           </tr>`;
       });
 

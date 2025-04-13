@@ -15,6 +15,8 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 10px;
     padding: 10px 30px;
 }
@@ -74,13 +76,30 @@
     margin: 0;
 }
 
-.infos-topo .meses {  /* Meses */
+.meses {
     display: flex;
-    flex-direction: row;
     align-items: center;
+    justify-content: space-around;
+    position: relative;
+    overflow: hidden;
+    width: 315px;
+}
+
+.mes-wrapper {
+    position: relative;
+    width: 130px;
+    height: 30px;
+    overflow: hidden;
+    display: flex;
     justify-content: center;
-    gap: 65px;
-    width: 100%;
+    align-items: center;
+}
+
+.mes-atual {
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .infos-topo .meses button {  /* Botão para trocar o mês */
@@ -102,6 +121,27 @@
     color: var(--cor-principal);
     font-size: 1.6rem;
     margin: 0;
+    width: 140px;
+    text-align: center;
+}
+
+.abrir-form-icon {
+    width: 200px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--cor-principal);
+    border: 1px solid var(--cor-principal);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .35s;
+}
+
+.abrir-form-icon:hover {
+    background-color: var(--cor-principal);
+    color: var(--cor-txt);
+    transform: scale(0.97);
 }
 
 .lancamentos {
@@ -119,7 +159,7 @@
     left: 0;
     background-color: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(5px);
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 
@@ -170,10 +210,15 @@
 }
 
 .form-add-lancamento form .input-box {
-    width: 200px;
+    width: 220px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.form-add-lancamento form .input-box#subcategoria-container,
+.form-add-lancamento form .input-box#parcelas-container {
+    display: none;
 }
 
 .form-add-lancamento form .input-box label {
@@ -239,6 +284,12 @@
     caret-color: white !important;
 }
 
+.form-add-lancamento form .input-box optgroup,
+.form-add-lancamento form .input-box select {
+    background-color: var(--cor-fundo-content);
+    color: var(--cor-txt);
+}
+
 
 .form-add-lancamento form .input-box input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
@@ -267,3 +318,9 @@
 .form-add-lancamento form input[type="submit"]:hover {
     background-color: #b88100;
 }
+
+
+
+
+
+

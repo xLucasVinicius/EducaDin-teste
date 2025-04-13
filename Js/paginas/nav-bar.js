@@ -47,7 +47,6 @@ const navLinks = document.querySelectorAll('.nav-link');
 function setActiveLink() {
     const urlParams = new URLSearchParams(window.location.search);
     const currentPage = urlParams.get('page');
-    console.log(currentPage);
 
     let found = false;
 
