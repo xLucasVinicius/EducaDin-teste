@@ -18,43 +18,87 @@ window.addEventListener('DOMContentLoaded', function () {
         if (!Array.isArray(data.contas) || !Array.isArray(data.cartoes)) {
             throw new Error('Dados inválidos ou não encontrados.');
         }
-
-        const selectMetodo = document.getElementById("metodo");
-        const optgroupContas = selectMetodo.querySelector('optgroup[label="Contas"]');
-        const optgroupCartoes = selectMetodo.querySelector('optgroup[label="Cartões"]');
-
-        optgroupContas.innerHTML = '';
-        optgroupCartoes.innerHTML = '';
-
+    
+        const metodoSelect = document.getElementById("metodo");
+        const meioPagamento = document.getElementById("meio-pagamento");
+    
         const categoriaMap = {
             "0": "C", // Corrente
             "1": "P", // Poupança
             "2": "S"  // Salário
         };
-
+    
         const contasMap = new Map();
-
+    
         data.contas.forEach(conta => {
             const sigla = categoriaMap[conta.categoria] || "?";
             const nomeComCategoria = `${conta.nome_conta} ${sigla}`;
-
             contasMap.set(conta.id_conta, nomeComCategoria);
-
-            const option = document.createElement("option");
-            option.value = `conta-${conta.id_conta}`;
-            option.textContent = nomeComCategoria;
-            optgroupContas.appendChild(option);
         });
-
-        data.cartoes.forEach(cartao => {
-            const nomeComCategoria = contasMap.get(cartao.id_conta) || '[?] Conta desconhecida';
-
-            const option = document.createElement("option");
-            option.value = `cartao-${cartao.id_cartao}`;
-            option.textContent = nomeComCategoria;
-            optgroupCartoes.appendChild(option);
+    
+        metodoSelect.addEventListener("change", () => {
+            const metodoSelecionado = metodoSelect.value;
+            meioPagamento.innerHTML = ""; // Limpa o campo extra
+    
+            if (metodoSelecionado === "Credito" || metodoSelecionado === "Debito") {
+                // Cartões
+                const label = document.createElement("label");
+                label.textContent = "Selecione o cartão";
+    
+                const select = document.createElement("select");
+                select.name = "cartao";
+                select.id = "cartao";
+    
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.textContent = "Selecione o cartão";
+                select.appendChild(defaultOption);
+    
+                data.cartoes.forEach(cartao => {
+                    const nomeConta = contasMap.get(cartao.id_conta) || "Conta desconhecida";
+    
+                    const option = document.createElement("option");
+                    option.value = cartao.id_cartao;
+                    option.textContent = `${nomeConta} - ${cartao.nome_cartao || "Cartão"}`;
+                    select.appendChild(option);
+                });
+    
+                meioPagamento.appendChild(label);
+                meioPagamento.appendChild(select);
+    
+            } else if (
+                metodoSelecionado === "Transferencia" ||
+                metodoSelecionado === "Boleto" ||
+                metodoSelecionado === "Pix"
+            ) {
+                // Contas
+                const label = document.createElement("label");
+                label.textContent = "Selecione a conta";
+    
+                const select = document.createElement("select");
+                select.name = "conta";
+                select.id = "conta";
+    
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.textContent = "Selecione a conta";
+                select.appendChild(defaultOption);
+    
+                data.contas.forEach(conta => {
+                    const sigla = categoriaMap[conta.categoria] || "?";
+                    const nomeComCategoria = `${conta.nome_conta} ${sigla}`;
+    
+                    const option = document.createElement("option");
+                    option.value = conta.id_conta;
+                    option.textContent = nomeComCategoria;
+                    select.appendChild(option);
+                });
+    
+                meioPagamento.appendChild(label);
+                meioPagamento.appendChild(select);
+            }
         });
-    })
+    })  
     .catch(error => {
         console.error('Erro ao carregar os dados:', error);
     });
@@ -142,16 +186,16 @@ window.addEventListener('DOMContentLoaded', function () {
     // Categorias/Subcategorias
     const subcategorias = {
         moradia: ["Aluguel", "Prestação do imóvel", "Condomínio", "Água", "Luz", "Internet/TV"],
-        alimentacao: ["Supermercado", "Refeições fora de casa", "Delivery"],
+        alimentação: ["Supermercado", "Refeições fora de casa", "Delivery"],
         transporte: ["Aplicativos de transporte", "Combustível", "Transporte público", "Manutenção de veículo", "Pedágios/estacionamento"],
-        educacao: ["Mensalidade escolar/faculdade", "Cursos e workshops", "Material escolar"],
-        saude: ["Plano de saúde", "Medicamentos", "Consultas médicas", "Tratamentos odontológicos"],
+        educação: ["Mensalidade escolar/faculdade", "Cursos e workshops", "Material escolar"],
+        saúde: ["Plano de saúde", "Medicamentos", "Consultas médicas", "Tratamentos odontológicos"],
         lazer: ["Cinema", "Shows", "Viagens", "Assinaturas de streaming"],
-        vestuario: ["Roupas", "Acessórios", "Calçados"],
+        vestuário: ["Roupas", "Acessórios", "Calçados"],
         impostos: ["IPVA", "Imposto de Renda", "Multas", "Anuidade"],
-        servicos: ["Celular", "Assinaturas de software", "Apps"],
+        serviços: ["Celular", "Assinaturas de software", "Apps"],
         despesas_gerais: ["Presentes", "Doações", "Outros"],
-        salario: ["Salário fixo", "13º salário", "Bônus/PLR"],
+        salário: ["Salário fixo", "13º salário", "Bônus/PLR"],
         freelance: ["Serviços eventuais", "Consultorias"],
         investimentos: ["Juros de poupança", "Renda de ações", "Aluguéis recebidos"],
         vendas: ["Venda de bens", "Venda de produtos"],
@@ -220,6 +264,7 @@ function formatarMoeda(input) {
   formLancamento.addEventListener("submit", (event) => {
     event.preventDefault();
     const formData = new FormData(formLancamento);
+    console.log(formData);
     fetch("../paginas/configs/add-lancamento.php", {
         method: "POST",
         body: formData
@@ -237,11 +282,23 @@ function formatarMoeda(input) {
 });
 
 function exibirSucessoAdd(data) {
-    const modalSucesso = document.getElementById("modal-sucesso-add");
+    const modalSucesso = document.getElementById("modalAddLancamento");
     modalSucesso.style.display = "flex";
 }
 
 function exibirErroAdd(data) {
-    const modalErro = document.getElementById("modal-erro-add");
+    const modalErro = document.getElementById("modalErroLancamento");
     modalErro.style.display = "flex";
 }
+
+document.getElementById("btnModalAdd").addEventListener("click", () => {
+    const modalSucesso = document.getElementById("modalAddLancamento");
+    modalSucesso.style.display = "none";
+    location.reload();
+});
+
+document.getElementById("btnModalErro").addEventListener("click", () => {
+    const modalErro = document.getElementById("modalErroLancamento");
+    modalErro.style.display = "none";
+    location.reload();
+});

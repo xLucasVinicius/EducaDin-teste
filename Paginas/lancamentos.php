@@ -5,8 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EducaDin</title>
     <link rel="stylesheet" href="../Style/lancamentos/lancamentos.css">
+    <link rel="stylesheet" href="../Style/lancamentos/lancamentos-media.css">
+    <link rel="stylesheet" href="../Style/globais/msg-confirmacao.css">
 </head>
 <body>
+    <div class="modal" id="modalAddLancamento">
+        <div class="modal-content">
+            <h1>Sucesso!</h1>
+            <p id="msg-modal">Lançamento adicionado com sucesso.</p>
+            <button id="btnModalAdd">Ok</button>
+        </div>
+    </div>
+    <div class="modal" id="modalErroLancamento">
+        <div class="modal-content">
+            <h1>Erro!</h1>
+            <p id="msg-modal">Erro ao adicionar lançamento.</p>
+            <button id="btnModalErro">Ok</button>
+        </div>
+    </div>
     <section class="conteudo-total">
         <div class="infos-topo">
             <h1>LANÇAMENTOS</h1>
@@ -58,15 +74,18 @@
                     </span>
                 </span>
                 <span class="input-box">
-                    <label for="metodo">Metodo de Pagamento</label>
+                    <label for="metodo">Método de Pagamento</label>
                     <select name="metodo" id="metodo">
                         <option value="">Selecione o metodo</option>
-                        <optgroup label="Contas">
-                        </optgroup>
-                        <optgroup label="Cartões">
-                        </optgroup>
+                        <option value="Dinheiro">Dinheiro</option>
+                        <option value="Crédito">Crédito</option>
+                        <option value="Débito">Débito</option>
+                        <option value="Transferência">Transferência</option>
+                        <option value="Boleto">Boleto</option>
+                        <option value="Pix">Pix</option>
                     </select>
                 </span>
+                <span class="input-box" id="meio-pagamento"></span>
                 <span class="input-box">
                     <label for="categoria">Categoria</label>
                     <select name="categoria" id="categoria">

@@ -6,7 +6,7 @@ header('Content-Type: application/json');  // Defina o tipo de conteúdo como JS
 
 $sql = "SELECT * FROM contas WHERE id_usuario = " . $_SESSION['id']; // Seleciona todas as contas do usuário
 $sql2 = "SELECT * FROM cartoes WHERE id_usuario = " . $_SESSION['id']; // Seleciona todos os cartões do usuário
-$sql3 = "SELECT * FROM lancamentos WHERE id_usuario = " . $_SESSION['id'] . " AND metodo_pagamento = 'cartao'"; // Seleciona todos os lançamentos do usuário
+$sql3 = "SELECT * FROM lancamentos WHERE id_usuario = " . $_SESSION['id'] . " AND metodo_pagamento = 'Crédito' OR metodo_pagamento = 'Débito'"; // Seleciona todos os lançamentos do usuário
 // Executa as consultas
 $result = $mysqli->query($sql);
 $result2 = $mysqli->query($sql2);

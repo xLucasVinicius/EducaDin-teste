@@ -4,8 +4,8 @@ include('config.php');
 
 $id_usuario = $_POST['id_usuario'];
 $metodo = $_POST['metodo'];
-$tipo_pagamento = explode("-", $metodo)[0];
-$id_metodo = explode("-", $metodo)[1];
+$id_conta = $_POST['conta'] ?? null;
+$id_cartao = $_POST['cartao'] ?? null;
 $descricao = $_POST['descricao'];
 $valor = $_POST['valor'];
 $tipo = $_POST['tipo'];
@@ -16,23 +16,17 @@ $parcelas = $_POST['parcelas'];
 $valor = formatarValor($valor);
 
 
-if ($parcelas > 0) {
-    $parcelas = $parcelas;
+if ($tipo == 0) {
+    $parcelas = 0;
 } else {
-    $parcelas = null;
+    $parcelas = $parcelas;
 }
 
-if ($tipo_pagamento == "cartao") {
-    $query = "INSERT INTO lancamentos (id_usuario, id_conta, id_cartao, descricao, valor, tipo, metodo_pagamento, categoria, subcategoria, data, parcelas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $mysqli->prepare($query);
-    $stmt->bind_param("iiississssi", $id_usuario, $id_metodo, $id_metodo, $descricao, $valor, $tipo, $tipo_pagamento, $categoria, $subcategoria, $data, $parcelas);
-    $stmt->execute();
-} else {
-    $query = "INSERT INTO lancamentos (id_usuario, id_conta, descricao, valor, tipo, metodo_pagamento, categoria, subcategoria, data, parcelas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $mysqli->prepare($query);
-    $stmt->bind_param("iississssi", $id_usuario, $id_metodo, $descricao, $valor, $tipo, $tipo_pagamento, $categoria, $subcategoria, $data, $parcelas);
-    $stmt->execute();
-}
+$query = "INSERT INTO lancamentos (id_usuario, id_conta, id_cartao, descricao, valor, tipo, metodo_pagamento, categoria, subcategoria, data, parcelas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$stmt = $mysqli->prepare($query);
+$stmt->bind_param("iiisssssssi", $id_usuario, $id_conta, $id_cartao, $descricao, $valor, $tipo, $metodo, $categoria, $subcategoria, $data, $parcelas);
+$stmt->execute();
+
 
 
 if ($stmt->affected_rows > 0) {

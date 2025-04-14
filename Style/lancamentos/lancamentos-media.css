@@ -1,0 +1,24 @@
+@media screen and (max-width: 767px) {
+    .conteudo-total {
+        padding: 10px;
+    }
+
+    .infos-topo {
+        padding: 0;
+    }
+
+    .infos-topo h1 {
+        font-size: 1.7rem;
+    }
+
+    .infos-topo .desempenho-mes span {
+        font-size: 0.8rem;
+        padding: 8px 0;
+        width: 150px;
+    }
+
+    .form-container .form-add-lancamento {
+        height: 100%;
+        border-radius: 0;
+    }
+}

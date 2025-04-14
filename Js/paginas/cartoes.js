@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentIndex = newIndex;
 
       // Atualiza os lançamentos de acordo com a conta selecionada
-      renderLancamentos(accountsData[newIndex].id_conta);
+      renderLancamentos(cartoesData[newIndex].id_cartao);
     }
 
     // Função para aplicar efeito bounce quando não houver mudança
@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Função para renderizar os lançamentos em formato de tabela
     function renderLancamentos(accountId) {
       lancamentosContainer.innerHTML = ''; // Limpa o container de lançamentos
-      const lancamentos = lancamentosData.filter(l => l.id_conta === accountId); // Filtra os lançamentos da conta selecionada
+      const lancamentos = lancamentosData.filter(l => l.id_cartao === accountId); // Filtra os lançamentos da conta selecionada
       if (lancamentos.length === 0) { // Se nenhuma conta foi encontrada
         lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>'; 
         return;
@@ -258,8 +258,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <tr>
                 <th>Descrição</th>
                 <th>Valor</th>
-                <th>Tipo</th>
                 <th>Método</th>
+                <th>Categoria</th>
                 <th>Subcategoria</th>
                 <th>Data</th>
                 <th>Parcelas</th>
@@ -270,17 +270,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Cria as linhas da tabela
       lancamentos.forEach(lancamento => {
-        let lancamentoTipo = parseInt(lancamento.tipo) === 1 ? 'Despesa' : 'Receita';
+        let lancamentoParcela = parseInt(lancamento.parcelas) === 0 ? 'A vista' : lancamento.parcelas;
 
         tbody += `
           <tr>
               <td>${lancamento.descricao}</td>
               <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
-              <td>${lancamentoTipo}</td>
               <td>${lancamento.metodo_pagamento}</td>
+              <td>${lancamento.categoria}</td>
               <td>${lancamento.subcategoria}</td>
               <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
-              <td>${lancamento.parcelas}</td>
+              <td>${lancamentoParcela}</td>
               
           </tr>`;
       });
@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Renderiza os lançamentos iniciais
-    renderLancamentos(accountsData[currentIndex].id_conta);
+    renderLancamentos(cartoesData[currentIndex].id_cartao);
     // Formatando exibição da tabela corretamente
     const lancamentosFora = document.getElementById('fora-lancamentos');
     lancamentosFora.style.display = 'flex';
@@ -686,19 +686,6 @@ function formularioCartoes() {
     containerForm.style = 'opacity: 1;';
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 preencherSelectDias("fechamento");
 preencherSelectDias("vencimento");
