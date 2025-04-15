@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded', function () {
             const metodoSelecionado = metodoSelect.value;
             meioPagamento.innerHTML = ""; // Limpa o campo extra
     
-            if (metodoSelecionado === "Credito" || metodoSelecionado === "Debito") {
+            if (metodoSelecionado === "Crédito" || metodoSelecionado === "Débito") {
                 // Cartões
                 const label = document.createElement("label");
                 label.textContent = "Selecione o cartão";
@@ -67,7 +67,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 meioPagamento.appendChild(select);
     
             } else if (
-                metodoSelecionado === "Transferencia" ||
+                metodoSelecionado === "Transferência" ||
                 metodoSelecionado === "Boleto" ||
                 metodoSelecionado === "Pix"
             ) {

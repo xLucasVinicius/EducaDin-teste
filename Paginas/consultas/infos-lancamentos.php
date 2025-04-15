@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include("../configs/config.php");
 
 $query = "SELECT * FROM lancamentos WHERE id_usuario = 1 ORDER BY data DESC LIMIT 5";

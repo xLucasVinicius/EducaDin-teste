@@ -65,6 +65,7 @@ CREATE TABLE desempenho_anual (
     mes TINYINT(2) NOT NULL COMMENT '1 a 12 para os meses do ano',
     total_receitas DECIMAL(10,2),
     total_despesas DECIMAL(10,2),
+    saldo_final DECIMAL(10,2),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_conta) REFERENCES contas(id_conta) ON DELETE CASCADE ON UPDATE CASCADE
 );

@@ -61,21 +61,73 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
         contaDiv.classList.add('active');
         contaDiv.style.transform = 'translateX(0)';
       }
-
-      // Cria o HTML para a conta
+    
+      // HTML da conta com <p> para desempenho
       contaDiv.innerHTML = `
         <div class="logo">
-            <img src="../imagens/logos/${account.nome_conta}.png" alt="Logo ${account.nome_conta}">
+          <img src="../imagens/logos/${account.nome_conta}.png" alt="Logo ${account.nome_conta}">
         </div>
         <div class="infos-conta">
-            <h1>${account.nome_conta}</h1>
-            <h2 id="tipo-conta">${tipoConta}</h2>
-            <h2>Saldo: R$ ${parseFloat(account.saldo_atual).toFixed(2).replace('.', ',')}</h2>
-            <p>+5% ao mês anterior</p>
+          <h1>${account.nome_conta}</h1>
+          <h2 id="tipo-conta">${tipoConta}</h2>
+          <h2>Saldo: R$ ${parseFloat(account.saldo_atual).toFixed(2).replace('.', ',')}</h2>
+          <p><span id="desempenho-${account.id_conta}"></span>ao mês anterior</p>
         </div>
-        `;
-      carouselContainer.appendChild(contaDiv); // Adiciona a conta ao carrossel
+      `;
+    
+      // Adiciona a conta ao carrossel
+      carouselContainer.appendChild(contaDiv);
+    
+      // Faz a requisição do desempenho ANUAL dessa conta
+      fetch(`../Paginas/consultas/infos-desempenho-anual.php?id_conta=${account.id_conta}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erro ao carregar desempenho: ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(dados => {
+        const p = document.getElementById(`desempenho-${account.id_conta}`);
+
+        const receitasAnterior = parseFloat(dados.total_receitas_anterior) || 0;
+        const despesasAnterior = parseFloat(dados.total_despesas_anterior) || 0;
+        const receitasAtual = parseFloat(dados.total_receitas_atual) || 0;
+        const despesasAtual = parseFloat(dados.total_despesas_atual) || 0;
+
+        const saldoAnterior = receitasAnterior - despesasAnterior;
+        const saldoAtual = receitasAtual - despesasAtual;
+
+        let desempenho;
+
+        if (saldoAnterior === 0) {
+          if (saldoAtual > 0) {
+            desempenho = 100;
+          } else if (saldoAtual < 0) {
+            desempenho = -100;
+          } else {
+            desempenho = 0;
+          }
+        } else {
+          desempenho = ((saldoAtual - saldoAnterior) / Math.abs(saldoAnterior)) * 100;
+        }
+
+        const desempenhoFormatado = desempenho.toFixed(2).replace('.', ',');
+
+        if (desempenho >= 0) {
+          p.textContent = `+${desempenhoFormatado}% `;
+          p.style.color = 'green';
+        } else if (desempenho < 0) {
+          p.textContent = `-${desempenhoFormatado}% `;
+          p.style.color = 'red';
+        }
+      })
+      .catch(error => {
+        const p = document.getElementById(`desempenho-${account.id_conta}`);
+        p.textContent = 'Erro ao carregar desempenho';
+        console.error(error);
+      });
     });
+    
 
     // Seleciona todas as slides de contas após a criação dinâmica
     const slides = document.querySelectorAll('.conta');
