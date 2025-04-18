@@ -47,7 +47,7 @@
     width: 100%;
 }
 
-.infos-topo .desempenho-mes span {  /* Desempenho do mês individual */
+.infos-topo .desempenho-mes .receita, .infos-topo .desempenho-mes .despesa {  /* Desempenho do mês individual */
     font-size: 1.1rem;
     color: white;
     display: flex;
@@ -59,20 +59,20 @@
     border-radius: 10px;
 }
 
-.infos-topo .desempenho-mes span.receita {  /* Desempenho do mês individual */
+.infos-topo .desempenho-mes .receita {  /* Desempenho do mês individual */
     border:2px solid var(--cor-receita);
 }
 
-.infos-topo .desempenho-mes span.despesa {  /* Desempenho do mês individual */
+.infos-topo .desempenho-mes .despesa {  /* Desempenho do mês individual */
     border:2px solid var(--cor-despesa);
 }
 
-.infos-topo .desempenho-mes span.receita p {  /* Valor da receita do mês */
+.infos-topo .desempenho-mes .receita p {  /* Valor da receita do mês */
     color: var(--cor-receita);
     margin: 0;
 }
 
-.infos-topo .desempenho-mes span.despesa p {  /* Valor da despesa do mês */
+.infos-topo .desempenho-mes .despesa p {  /* Valor da despesa do mês */
     color: var(--cor-despesa);
     margin: 0;
 }
@@ -166,7 +166,8 @@
 
 }
 
-.form-container .form-add-lancamento {
+.form-container .form-add-lancamento,
+.form-container .form-edit-lancamento {
     position: relative;
     background-color: var(--cor-fundo-content);
     width: 400px;
@@ -179,7 +180,12 @@
     border: 1px solid var(--cor-principal);
 }
 
-.form-add-lancamento .fechar-form-icon {
+.form-container .form-edit-lancamento {
+    height: 830px;
+}
+
+.form-add-lancamento .fechar-form-icon,
+.form-edit-lancamento .fechar-form-icon {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -195,13 +201,21 @@
     transition: all .2s;
 }
 
-.form-container .form-add-lancamento h1 {
+.form-add-lancamento .fechar-form-icon:hover,
+.form-edit-lancamento .fechar-form-icon:hover {
+    background-color: var(--cor-principal);
+    color: var(--cor-txt);
+}
+
+.form-container .form-add-lancamento h1,
+.form-container .form-edit-lancamento h1 {
     color: var(--cor-principal);
     font-size: 2rem;
     margin-bottom: 20px;
 }
 
-.form-add-lancamento form {
+.form-add-lancamento form,
+.form-edit-lancamento form {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -210,7 +224,8 @@
     gap: 10px;
 }
 
-.form-add-lancamento form .input-box {
+.form-add-lancamento form .input-box,
+.form-edit-lancamento form .input-box {
     width: 220px;
     display: flex;
     flex-direction: column;
@@ -218,17 +233,22 @@
 }
 
 .form-add-lancamento form .input-box#subcategoria-container,
-.form-add-lancamento form .input-box#parcelas-container {
+.form-add-lancamento form .input-box#parcelas-container,
+.form-edit-lancamento form .input-box#subcategoria-container-editar,
+.form-edit-lancamento form .input-box#parcelas-container-editar {
     display: none;
 }
 
-.form-add-lancamento form .input-box label {
+.form-add-lancamento form .input-box label,
+.form-edit-lancamento form .input-box label {
     color: var(--cor-txt);
     font-size: 1.1rem;
 }
 
 .form-add-lancamento form .input-box input,
-.form-add-lancamento form .input-box select {
+.form-add-lancamento form .input-box select,
+.form-edit-lancamento form .input-box input,
+.form-edit-lancamento form .input-box select {
     width: 100%;
     height: 30px;
     border: 1px solid var(--cor-principal);
@@ -239,7 +259,8 @@
     font-size: 1rem;
 }
 
-.form-add-lancamento form .input-box input[type="radio"] {
+.form-add-lancamento form .input-box input[type="radio"],
+.form-edit-lancamento form .input-box input[type="radio"] {
     appearance: none;
     -webkit-appearance: none;
     width: 10px;
@@ -251,11 +272,13 @@
     transition: all .2s;
 }
 
-.form-add-lancamento form .input-box input[type="radio"]:checked {
+.form-add-lancamento form .input-box input[type="radio"]:checked,
+.form-edit-lancamento form .input-box input[type="radio"]:checked {
     background-color: var(--cor-principal);
 }
 
-.form-add-lancamento form .input-box input[type="radio"]:checked::after {
+.form-add-lancamento form .input-box input[type="radio"]:checked::after,
+.form-edit-lancamento form .input-box input[type="radio"]:checked::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -268,7 +291,9 @@
 }
 
 .form-add-lancamento form .input-box input:focus,
-.form-add-lancamento form .input-box select:focus {
+.form-add-lancamento form .input-box select:focus,
+.form-edit-lancamento form .input-box input:focus,
+.form-edit-lancamento form .input-box select:focus {
     outline: none;
     border-color: var(--cor-principal);
 }
@@ -276,7 +301,11 @@
 .form-add-lancamento form .input-box input:-webkit-autofill,
 .form-add-lancamento form .input-box input:-webkit-autofill:hover,
 .form-add-lancamento form .input-box input:-webkit-autofill:focus,
-.form-add-lancamento form .input-box input:-internal-autofill-selected {
+.form-add-lancamento form .input-box input:-internal-autofill-selected,
+.form-edit-lancamento form .input-box input:-webkit-autofill,
+.form-edit-lancamento form .input-box input:-webkit-autofill:hover,
+.form-edit-lancamento form .input-box input:-webkit-autofill:focus,
+.form-edit-lancamento form .input-box input:-internal-autofill-selected {
     background-color: transparent !important;
     color: white !important;
     border: 1px solid var(--cor-principal) !important;
@@ -286,25 +315,32 @@
 }
 
 .form-add-lancamento form .input-box optgroup,
-.form-add-lancamento form .input-box select {
+.form-add-lancamento form .input-box select,
+.form-edit-lancamento form .input-box optgroup,
+.form-edit-lancamento form .input-box select {
     background-color: var(--cor-fundo-content);
     color: var(--cor-txt);
 }
 
 
-.form-add-lancamento form .input-box input[type="date"]::-webkit-calendar-picker-indicator {
+.form-add-lancamento form .input-box input[type="date"]::-webkit-calendar-picker-indicator,
+.form-edit-lancamento form .input-box input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
     cursor: pointer;
 }
 
 .form-add-lancamento form .input-box input[type="number"],
 .form-add-lancamento form .input-box input[type="number"]::-webkit-outer-spin-button,
-.form-add-lancamento form .input-box input[type="number"]::-webkit-inner-spin-button {
+.form-add-lancamento form .input-box input[type="number"]::-webkit-inner-spin-button,
+.form-edit-lancamento form .input-box input[type="number"],
+.form-edit-lancamento form .input-box input[type="number"]::-webkit-outer-spin-button,
+.form-edit-lancamento form .input-box input[type="number"]::-webkit-inner-spin-button {
     appearance: none;
     -webkit-appearance: none;
 }
 
-.form-add-lancamento form input[type="submit"] {
+.form-add-lancamento form input[type="submit"],
+.form-edit-lancamento form input[type="submit"] {
     width: 100px;
     background-color: var(--cor-principal);
     color: var(--cor-txt);
@@ -316,12 +352,71 @@
     transition: all .3s;
 }
 
-.form-add-lancamento form input[type="submit"]:hover {
+.form-add-lancamento form input[type="submit"]:hover,
+.form-edit-lancamento form input[type="submit"]:hover {
     background-color: #b88100;
 }
 
+.lancamentos {
+    overflow-x: scroll;
+    height: 100%;
+  }
+  
+  .lancamentos table {
+    min-width: 1066px;
+    width: 100%;
+  }
+  
+  .lancamentos table th {
+    color: var(--cor-txt);
+    padding: 10px 0;
+    text-align: center;
+    position: sticky;
+    background-color: var(--cor-principal);
+  }
+  
+  .lancamentos table tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.363);
+    text-align: center;
+    color: white;
+  
+  }
+  
+  .lancamentos table td {
+    padding: 1% 0;
+  }
 
+  .lancamentos table td.despesa {
+    color: rgb(190, 0, 0);
+  }
+  
+  .lancamentos table td.receita {
+    color: rgb(0, 190, 0);
+  }
 
+  .lancamentos table td button {
+    width: 40px;
+    height: 30px;
+    color: white;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all .3s;
+  }
 
+  .lancamentos table td #editar {
+    background-color: blue;
+  }
 
+  .lancamentos table td #editar:hover {
+    background-color: rgb(0, 0, 153);
+  }
 
+  .lancamentos table td #excluir {
+    background-color: red;
+  }
+
+  .lancamentos table td #excluir:hover {    
+    background-color: rgb(153, 0, 0);
+  }
+  

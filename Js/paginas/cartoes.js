@@ -40,10 +40,13 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const accountsData = data.contas; // Dados de contas
     const cartoesData = data.cartoes; // Dados de cartões
-    const lancamentosData = data.lancamentos; // Dados de lançamentos
+    const lancamentosCreditoData = data.lancamentos_credito; // Dados de lançamentos de crédito
+    const lancamentosDebitoData = data.lancamentos_debito; // Dados de lançamentos de debito
+    const lancamentosData = [...lancamentosCreditoData, ...lancamentosDebitoData]; // Dados de lançamentos
     localStorage.setItem('accountsData', JSON.stringify(accountsData)); // Armazena os dados de contas no localStorage
     const carouselContainer = document.querySelector('.cartoes-carrossel'); // Carrossel de cartões
     const lancamentosContainer = document.querySelector('.lancamentos'); // Container de lançamentos
+    console.log(lancamentosData);
     let tipoContaMap = {
       0: 'Corrente',
       1: 'Poupança',
@@ -57,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
       carouselContainer.innerHTML = '<z style="color: white;">Nenhum cartão encontrado.</z>';
     }
 
-    if (lancamentosData.length === 0) { // Se nenhum lançamento for encontrada
+    if (lancamentosCreditoData.length === 0 || lancamentosDebitoData.length === 0) { // Se nenhum lançamento for encontrada
       lancamentosContainer.style.height = '100%';
       lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>'; 
     }
@@ -108,8 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const limiteTotal = parseFloat(cartao.limite_total); // Calcular o limite disponível
-      const lancamentosCartao = lancamentosData.filter(lancamento => lancamento.id_cartao === cartao.id_cartao); // Filtrar lançamentos relacionados ao cartão 
-      const totalLancamentos = lancamentosCartao.reduce((acc, lancamento) => acc + parseFloat(lancamento.valor), 0); // Somar os lançamentos (todos os lançamentos são valores positivos)
+      const totalLancamentos = lancamentosCreditoData.reduce((acc, lancamentos_credito) => acc + parseFloat(lancamentos_credito.valor), 0); // Somar os lançamentos (todos os lançamentos são valores positivos)
       const limiteDisponivel = limiteTotal - totalLancamentos; // Calcular o limite disponível
 
       

@@ -56,7 +56,7 @@ if (!isset($_SESSION['email'])) {
             <!-- link Contas -->
             <li class="nav-item">
                 <a href="?page=contas" class="nav-link">
-                <i class="bi bi-credit-card-2-back"></i> <span class="nav-text">Contas</span>
+                <i class="bi bi-bank"></i> <span class="nav-text">Contas</span>
                 </a>
             </li>
             <!-- link Cartões -->
@@ -78,11 +78,11 @@ if (!isset($_SESSION['email'])) {
                 </a>
             </li>
             <!-- link Investimentos -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="?page=investimentos" class="nav-link">
                 <i class="bi bi-cash-coin"></i> <span class="nav-text">Investimentos</span>
                 </a>
-            </li>
+            </li> -->
             <!-- link Estudos -->
             <li class="nav-item">
                 <a href="?page=estudos" class="nav-link">

@@ -1,90 +1,182 @@
 <?php 
-
 include('config.php');
 
-$id_usuario = $_POST['id_usuario'];
-$metodo = $_POST['metodo'];
-$id_conta = $_POST['conta'] ?? null;
-$id_cartao = $_POST['cartao'] ?? null;
-$descricao = $_POST['descricao'];
-$valor = $_POST['valor'];
-$tipo = $_POST['tipo'];
-$categoria = $_POST['categoria'];
-$subcategoria = $_POST['subcategoria'];
-$data = $_POST['data'];
-$parcelas = $_POST['parcelas'];
+// Verifica se é edição ou inserção
+$id_lancamento = $_POST['id-lancamento'] ?? null;
+$ehEdicao = isset($_POST['descricao-editar']);
+$prefixo = $ehEdicao ? '-editar' : '';
+
+// Pega os dados com base no prefixo
+$id_usuario = $_POST['id_usuario' . $prefixo];
+$metodo = $_POST['metodo' . $prefixo];
+$id_conta = $_POST['conta' . $prefixo] ?? null;
+$id_cartao = $_POST['cartao' . $prefixo] ?? null;
+$descricao = $_POST['descricao' . $prefixo];
+$valor = $_POST['valor' . $prefixo];
+$tipo = $_POST['tipo' . $prefixo];
+$categoria = $_POST['categoria' . $prefixo];
+$subcategoria = $_POST['subcategoria' . $prefixo];
+$data = $_POST['data' . $prefixo];
+$parcelas = $_POST['parcelas' . $prefixo];
 $valor = formatarValor($valor);
 
-if ($tipo == 0) {
-    $parcelas = 0;
-}
+if ($tipo == 0) $parcelas = 0;
 
-// Inserir o lançamento
-$query = "INSERT INTO lancamentos (id_usuario, id_conta, id_cartao, descricao, valor, tipo, metodo_pagamento, categoria, subcategoria, data, parcelas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-$stmt = $mysqli->prepare($query);
-$stmt->bind_param("iiisssssssi", $id_usuario, $id_conta, $id_cartao, $descricao, $valor, $tipo, $metodo, $categoria, $subcategoria, $data, $parcelas);
-$stmt->execute();
+$data_ref = date('Y-m-01', strtotime($data));
 
-// Se inseriu com sucesso, atualizar saldo_atual e desempenho
-if ($stmt->affected_rows > 0) {
+if ($id_lancamento) {
+    // ====== EDIÇÃO ======
+    
+    // 1. Buscar dados antigos do lançamento
+    $query_old = "SELECT valor, tipo, id_conta, data FROM lancamentos WHERE id_lancamento = ? AND id_usuario = ?";
+    $stmt_old = $mysqli->prepare($query_old);
+    $stmt_old->bind_param("ii", $id_lancamento, $id_usuario);
+    $stmt_old->execute();
+    $stmt_old->bind_result($valor_antigo, $tipo_antigo, $id_conta_antiga, $data_antiga);
+    $stmt_old->fetch();
+    $stmt_old->close();
 
-    // Atualizar o saldo atual da conta
-    if (!is_null($id_conta)) {
-        if ($tipo == 0) {
-            // Receita: somar ao saldo
-            $query_saldo = "UPDATE contas SET saldo_atual = saldo_atual + ? WHERE id_conta = ? AND id_usuario = ?";
-        } else {
-            // Despesa: subtrair do saldo
-            $query_saldo = "UPDATE contas SET saldo_atual = saldo_atual - ? WHERE id_conta = ? AND id_usuario = ?";
-        }
+    $data_ref_antiga = date('Y-m-01', strtotime($data_antiga));
 
-        $stmt_saldo = $mysqli->prepare($query_saldo);
-        $stmt_saldo->bind_param("dii", $valor, $id_conta, $id_usuario);
-        $stmt_saldo->execute();
+    // 2. Atualiza lançamento
+    $query = "UPDATE lancamentos SET id_conta=?, id_cartao=?, descricao=?, valor=?, tipo=?, metodo_pagamento=?, categoria=?, subcategoria=?, data=?, parcelas=? WHERE id_lancamento=? AND id_usuario=?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("iissssssssii", $id_conta, $id_cartao, $descricao, $valor, $tipo, $metodo, $categoria, $subcategoria, $data, $parcelas, $id_lancamento, $id_usuario);
+    $stmt->execute();
+    $stmt->close();
+
+    // 3. Corrige o saldo da conta antiga
+    if (!is_null($id_conta_antiga)) {
+        $ajuste = ($tipo_antigo == 0) ? -$valor_antigo : $valor_antigo;
+        $query_saldo_old = "UPDATE contas SET saldo_atual = saldo_atual + ? WHERE id_conta = ? AND id_usuario = ?";
+        $stmt_saldo_old = $mysqli->prepare($query_saldo_old);
+        $stmt_saldo_old->bind_param("dii", $ajuste, $id_conta_antiga, $id_usuario);
+        $stmt_saldo_old->execute();
+        $stmt_saldo_old->close();
     }
 
-    $mes = date('n', strtotime($data)); // Extrai o mês (1 a 12)
+    // 4. Corrige o desempenho anual da referência antiga
+    if (!is_null($id_conta_antiga)) {
+        if ($tipo_antigo == 0) {
+            $query = "UPDATE desempenho_anual SET total_receitas = total_receitas - ?, saldo_final = saldo_final - ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+        } else {
+            $query = "UPDATE desempenho_anual SET total_despesas = total_despesas - ?, saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+        }
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("ddiis", $valor_antigo, $valor_antigo, $id_usuario, $id_conta_antiga, $data_ref_antiga);
+        $stmt->execute();
+        $stmt->close();
+    }
 
-    // Verifica se já existe um registro de desempenho para esse usuário, conta e mês
-    $query_check = "SELECT id_desempenho FROM desempenho_anual WHERE id_usuario = ? AND id_conta = ? AND mes = ?";
+    // 5. Aplica novo saldo com base no lançamento novo
+    if (!is_null($id_conta)) {
+        $ajuste = ($tipo == 0) ? $valor : -$valor;
+        $query_saldo_new = "UPDATE contas SET saldo_atual = saldo_atual + ? WHERE id_conta = ? AND id_usuario = ?";
+        $stmt_saldo_new = $mysqli->prepare($query_saldo_new);
+        $stmt_saldo_new->bind_param("dii", $ajuste, $id_conta, $id_usuario);
+        $stmt_saldo_new->execute();
+        $stmt_saldo_new->close();
+    }
+
+    // 6. Atualiza ou insere novo desempenho anual
+    $query_check = "SELECT id_desempenho FROM desempenho_anual WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
     $stmt_check = $mysqli->prepare($query_check);
-    $stmt_check->bind_param("iii", $id_usuario, $id_conta, $mes);
+    $stmt_check->bind_param("iis", $id_usuario, $id_conta, $data_ref);
     $stmt_check->execute();
     $stmt_check->store_result();
 
     if ($stmt_check->num_rows > 0) {
-        // Atualiza o valor dependendo do tipo
+        $stmt_check->close();
         if ($tipo == 0) {
-            // Receita
-            $query_update = "UPDATE desempenho_anual SET total_receitas = total_receitas + ? WHERE id_usuario = ? AND id_conta = ? AND mes = ?";
+            $query = "UPDATE desempenho_anual SET total_receitas = total_receitas + ?, saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
         } else {
-            // Despesa
-            $query_update = "UPDATE desempenho_anual SET total_despesas = total_despesas + ? WHERE id_usuario = ? AND id_conta = ? AND mes = ?";
+            $query = "UPDATE desempenho_anual SET total_despesas = total_despesas + ?, saldo_final = saldo_final - ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
         }
-        $stmt_update = $mysqli->prepare($query_update);
-        $stmt_update->bind_param("diii", $valor, $id_usuario, $id_conta, $mes);
+        $stmt_update = $mysqli->prepare($query);
+        $stmt_update->bind_param("ddiis", $valor, $valor, $id_usuario, $id_conta, $data_ref);
         $stmt_update->execute();
+        $stmt_update->close();
     } else {
-        // Cria novo registro com os valores corretos
-        if ($tipo == 0) {
-            $total_receitas = $valor;
-            $total_despesas = 0;
-        } else {
-            $total_receitas = 0;
-            $total_despesas = $valor;
-        }
+        $stmt_check->close();
 
-        $query_insert = "INSERT INTO desempenho_anual (id_usuario, id_conta, mes, total_receitas, total_despesas) VALUES (?, ?, ?, ?, ?)";
-        $stmt_insert = $mysqli->prepare($query_insert);
-        $stmt_insert->bind_param("iiidd", $id_usuario, $id_conta, $mes, $total_receitas, $total_despesas);
+        // saldo atual da conta
+        $query_saldo_atual = "SELECT saldo_atual FROM contas WHERE id_conta = ? AND id_usuario = ?";
+        $stmt = $mysqli->prepare($query_saldo_atual);
+        $stmt->bind_param("ii", $id_conta, $id_usuario);
+        $stmt->execute();
+        $stmt->bind_result($saldo_atual);
+        $stmt->fetch();
+        $stmt->close();
+
+        $total_receitas = ($tipo == 0) ? $valor : 0;
+        $total_despesas = ($tipo == 1) ? $valor : 0;
+
+        $query = "INSERT INTO desempenho_anual (id_usuario, id_conta, data_ref, total_receitas, total_despesas, saldo_final) VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt_insert = $mysqli->prepare($query);
+        $stmt_insert->bind_param("iissdd", $id_usuario, $id_conta, $data_ref, $total_receitas, $total_despesas, $saldo_atual);
         $stmt_insert->execute();
+        $stmt_insert->close();
     }
 
     echo json_encode(['status' => 'success']);
 } else {
-    echo json_encode(['status' => 'error']);
+    // ====== INSERÇÃO ======
+    $query = "INSERT INTO lancamentos (id_usuario, id_conta, id_cartao, descricao, valor, tipo, metodo_pagamento, categoria, subcategoria, data, parcelas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("iiisssssssi", $id_usuario, $id_conta, $id_cartao, $descricao, $valor, $tipo, $metodo, $categoria, $subcategoria, $data, $parcelas);
+    $stmt->execute();
+    $stmt->close();
+
+    if (!is_null($id_conta)) {
+        $ajuste = ($tipo == 0) ? $valor : -$valor;
+        $query_saldo = "UPDATE contas SET saldo_atual = saldo_atual + ? WHERE id_conta = ? AND id_usuario = ?";
+        $stmt_saldo = $mysqli->prepare($query_saldo);
+        $stmt_saldo->bind_param("dii", $ajuste, $id_conta, $id_usuario);
+        $stmt_saldo->execute();
+        $stmt_saldo->close();
+    }
+
+    $query_check = "SELECT id_desempenho FROM desempenho_anual WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+    $stmt_check = $mysqli->prepare($query_check);
+    $stmt_check->bind_param("iis", $id_usuario, $id_conta, $data_ref);
+    $stmt_check->execute();
+    $stmt_check->store_result();
+
+    if ($stmt_check->num_rows > 0) {
+        $stmt_check->close();
+        if ($tipo == 0) {
+            $query = "UPDATE desempenho_anual SET total_receitas = total_receitas + ?, saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+        } else {
+            $query = "UPDATE desempenho_anual SET total_despesas = total_despesas + ?, saldo_final = saldo_final - ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+        }
+        $stmt_update = $mysqli->prepare($query);
+        $stmt_update->bind_param("ddiis", $valor, $valor, $id_usuario, $id_conta, $data_ref);
+        $stmt_update->execute();
+        $stmt_update->close();
+    } else {
+        $stmt_check->close();
+        $total_receitas = ($tipo == 0) ? $valor : 0;
+        $total_despesas = ($tipo == 1) ? $valor : 0;
+
+        $query_saldo_atual = "SELECT saldo_atual FROM contas WHERE id_conta = ? AND id_usuario = ?";
+        $stmt = $mysqli->prepare($query_saldo_atual);
+        $stmt->bind_param("ii", $id_conta, $id_usuario);
+        $stmt->execute();
+        $stmt->bind_result($saldo_atual);
+        $stmt->fetch();
+        $stmt->close();
+
+        $query_insert = "INSERT INTO desempenho_anual (id_usuario, id_conta, data_ref, total_receitas, total_despesas, saldo_final) VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt_insert = $mysqli->prepare($query_insert);
+        $stmt_insert->bind_param("iissdd", $id_usuario, $id_conta, $data_ref, $total_receitas, $total_despesas, $saldo_atual);
+        $stmt_insert->execute();
+        $stmt_insert->close();
+    }
+
+    echo json_encode(['status' => 'success']);
 }
 
+// Função para formatar o valor
 function formatarValor($valor) {
     $valor = str_replace("R$", "", $valor);
     $valor = str_replace(".", "", $valor);

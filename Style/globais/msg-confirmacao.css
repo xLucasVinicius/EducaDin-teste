@@ -127,7 +127,7 @@
     cursor: pointer;
 }
 
-.modal-content.error-conta button, .modal-content button#btnModalNao {
+.modal-content.error-conta button, .modal-content button#btnModalNao, #btnModalExcluirLancamento {
     background-color: red;
 }
 
@@ -136,7 +136,7 @@
     background-color: #45a049;
 }
 
-.modal-content.error-conta button:hover, .modal-content button#btnModalNao:hover {
+.modal-content.error-conta button:hover, .modal-content button#btnModalNao:hover, #btnModalExcluirLancamento:hover {
     background-color: rgb(194, 0, 0);
 }
 

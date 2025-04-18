@@ -3,11 +3,11 @@ session_start();
 include("../configs/config.php");
 
 $id_usuario = $_SESSION['id'];
-$data_atual = date('Y-m-d');
+$data_atual = date('Y-m-1');
 $id_conta = $_GET['id_conta'];
 
 // Dados do mês atual
-$query = "SELECT * FROM desempenho_anual WHERE id_usuario = ? AND id_conta = ? AND mes = MONTH(CURRENT_DATE())";
+$query = "SELECT * FROM desempenho_anual WHERE id_usuario = ? AND id_conta = ? AND data_ref = MONTH(CURRENT_DATE())";
 $stmt = $mysqli->prepare($query);
 $stmt->bind_param("ii", $id_usuario, $id_conta);
 $stmt->execute();
@@ -25,7 +25,7 @@ if ($result->num_rows > 0) {
 }
 
 // Dados do mês anterior
-$query_mes_anterior = "SELECT * FROM desempenho_anual WHERE id_usuario = ? AND id_conta = ? AND mes = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))";
+$query_mes_anterior = "SELECT * FROM desempenho_anual WHERE id_usuario = ? AND id_conta = ? AND data_ref = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))";
 $stmt_mes_anterior = $mysqli->prepare($query_mes_anterior);
 $stmt_mes_anterior->bind_param("ii", $id_usuario, $id_conta);
 $stmt_mes_anterior->execute();
