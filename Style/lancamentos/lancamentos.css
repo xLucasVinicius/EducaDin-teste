@@ -171,17 +171,13 @@
     position: relative;
     background-color: var(--cor-fundo-content);
     width: 400px;
-    height: 730px;
+    height: 830px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 20px;
     border: 1px solid var(--cor-principal);
-}
-
-.form-container .form-edit-lancamento {
-    height: 830px;
 }
 
 .form-add-lancamento .fechar-form-icon,
