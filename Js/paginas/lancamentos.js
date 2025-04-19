@@ -2,7 +2,6 @@ const containerParcelas = document.getElementById('parcelas-container'); //Selec
 const containerParcelasEditar = document.getElementById('parcelas-container-editar'); //Seleciona o container de parcelas
 const formLancamento = document.getElementById('form-add-lancamento'); // Seleciona o formulário de lançamentos
 const formLancamentoEditar = document.getElementById('form-edit-lancamento'); // Seleciona o formulário de lançamentos
-
 const formEditar = document.getElementById('form-edit-container'); // Seleciona o container do formulário de edição
 
 // Categorias/Subcategorias
@@ -27,8 +26,6 @@ const subcategorias = {
 const selectSubcategoriaEditar = document.getElementById("subcategoria-editar");
 const selectCategoriaEditar = document.getElementById("categoria-editar");
 const containerSubcategoriasEditar = document.getElementById("subcategoria-container-editar");
-
-
 
 window.addEventListener('DOMContentLoaded', function () {
     const btnAbrirForm = document.querySelector('.abrir-form-icon');
@@ -347,14 +344,10 @@ window.addEventListener('DOMContentLoaded', function () {
     btnAbrirForm.addEventListener('click', () => containerForm.style.display = 'flex');
     btnFecharForm.addEventListener('click', () => containerForm.style.display = 'none');
 
-    
-
     const selectCategoria = document.getElementById("categoria");
     const selectSubcategoria = document.getElementById("subcategoria");
-    
     const containerSubcategorias = document.getElementById("subcategoria-container");
     
-
     // Preenche categorias ao carregar
     for (const categoria in subcategorias) {
         const option = document.createElement("option");
@@ -399,7 +392,6 @@ window.addEventListener('DOMContentLoaded', function () {
 });
 
 mostrarParcelasEditar();
-
 
 function mostrarSubcategoriasEditar() {
     const categoriaSelecionada = selectCategoriaEditar.value;
@@ -488,9 +480,9 @@ function exibirErroAdd(data) {
 
 function formatarSaldo(valor) {
     return `R$ ${parseFloat(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-  }
+}
 
-  function editarLancamento(id) {
+function editarLancamento(id) {
     const inputIdLancamento = document.getElementById(`id-lancamento-editar`);
     inputIdLancamento.value = id;
 
@@ -505,7 +497,7 @@ function formatarSaldo(valor) {
     .then(data => {
 
         formEditar.style.display = "flex";
-        fetch(`../paginas/consultas/infos-lancamentos.php?id_lancamento=${id}`)
+        fetch(`../paginas/consultas/infos-lancamento-unico.php?id_lancamento=${id}`)
         .then(response => response.json())
         .then(data => {
             const inputDescricao = document.getElementById("descricao-editar");
@@ -636,7 +628,6 @@ function formatarSaldo(valor) {
     .catch(error => {
         console.error('Erro ao carregar os dados (editar):', error);
     });
-    
 }
 
 function exibirSucessoEditar() {
@@ -682,7 +673,6 @@ function excluirLancamento(id) {
         });
     });
 }
-
 
 document.getElementById("btnModalAdd").addEventListener("click", () => {
     const modalSucesso = document.getElementById("modalAddLancamento");

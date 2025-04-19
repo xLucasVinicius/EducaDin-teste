@@ -148,9 +148,69 @@
 .lancamentos {
     width: 100%;
     border: 1px solid var(--cor-principal);
-    border-radius: 10px;
-    height: 560px;
+    border-radius: 10px 10px 0 0;
+    overflow-x: scroll;
+    height: 100%;
+    scrollbar-color: var(--cor-txt) var(--cor-principal);
 }
+
+.lancamentos table {
+    min-width: 1066px;
+    width: 100%;
+}
+
+.lancamentos table th {
+    color: var(--cor-txt);
+    padding: 10px 0;
+    text-align: center;
+    position: sticky;
+    background-color: var(--cor-principal);
+}
+
+.lancamentos table tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.363);
+    text-align: center;
+    color: white;
+}
+
+.lancamentos table td {
+    padding: 1% 0;
+}
+
+.lancamentos table td.despesa {
+    color: rgb(190, 0, 0);
+}
+
+.lancamentos table td.receita {
+    color: rgb(0, 190, 0);
+}
+
+.lancamentos table td button {
+    width: 40px;
+    height: 30px;
+    color: white;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all .3s;
+}
+
+.lancamentos table td #editar {
+    background-color: blue;
+}
+
+.lancamentos table td #editar:hover {
+    background-color: rgb(0, 0, 153);
+}
+
+.lancamentos table td #excluir {
+    background-color: red;
+}
+
+.lancamentos table td #excluir:hover {    
+    background-color: rgb(153, 0, 0);
+}
+  
 
 .form-container{
     width: 100%;
@@ -352,67 +412,4 @@
 .form-edit-lancamento form input[type="submit"]:hover {
     background-color: #b88100;
 }
-
-.lancamentos {
-    overflow-x: scroll;
-    height: 100%;
-  }
-  
-  .lancamentos table {
-    min-width: 1066px;
-    width: 100%;
-  }
-  
-  .lancamentos table th {
-    color: var(--cor-txt);
-    padding: 10px 0;
-    text-align: center;
-    position: sticky;
-    background-color: var(--cor-principal);
-  }
-  
-  .lancamentos table tr {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.363);
-    text-align: center;
-    color: white;
-  
-  }
-  
-  .lancamentos table td {
-    padding: 1% 0;
-  }
-
-  .lancamentos table td.despesa {
-    color: rgb(190, 0, 0);
-  }
-  
-  .lancamentos table td.receita {
-    color: rgb(0, 190, 0);
-  }
-
-  .lancamentos table td button {
-    width: 40px;
-    height: 30px;
-    color: white;
-    border: none;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: all .3s;
-  }
-
-  .lancamentos table td #editar {
-    background-color: blue;
-  }
-
-  .lancamentos table td #editar:hover {
-    background-color: rgb(0, 0, 153);
-  }
-
-  .lancamentos table td #excluir {
-    background-color: red;
-  }
-
-  .lancamentos table td #excluir:hover {    
-    background-color: rgb(153, 0, 0);
-  }
   

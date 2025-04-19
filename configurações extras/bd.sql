@@ -62,7 +62,7 @@ CREATE TABLE desempenho_anual (
     id_desempenho INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
     id_conta INT,
-    mes TINYINT(2) NOT NULL COMMENT '1 a 12 para os meses do ano',
+    data_ref DATE NOT NULL,
     total_receitas DECIMAL(10,2),
     total_despesas DECIMAL(10,2),
     saldo_final DECIMAL(10,2),
