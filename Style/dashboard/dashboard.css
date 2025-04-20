@@ -378,47 +378,47 @@ td {
 /* Remove as setas para navegadores WebKit (Chrome, Safari, Edge) */
 input[type="number"]::-webkit-inner-spin-button, 
 input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Remove as setas para o Firefox */
 input[type="number"] {
-  -moz-appearance: textfield;
-  appearance: none;
+    -moz-appearance: textfield;
+    appearance: none;
 
 }
   
 input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0;
     cursor: pointer;
-  }
+}
 
-  /* Esconde o ícone nativo para o Firefox */
-  input[type="date"] {
+/* Esconde o ícone nativo para o Firefox */
+input[type="date"] {
     -moz-appearance: textfield;
     appearance: none;
     position: relative;
     padding-right: 40px; /* Espaço para o ícone personalizado */
-  }
+}
 
-  /* Estilo básico para o input de data */
-  .date-container {
+/* Estilo básico para o input de data */
+.date-container {
     position: relative;
     display: inline-block;
-  }
+}
 
-  /* Input de data */
-  .date-container input[type="date"] {
+/* Input de data */
+.date-container input[type="date"] {
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
     border: 2px solid #ccc;
     width: 100%;
-  }
+}
 
-  /* Ícone personalizado (usando FontAwesome como exemplo ou qualquer outro ícone) */
-  .date-container::after {
+/* Ícone personalizado (usando FontAwesome como exemplo ou qualquer outro ícone) */
+.date-container::after {
     content: "\f073"; /* Código do ícone de calendário do FontAwesome */
     font-family: "FontAwesome";
     position: absolute;
@@ -428,7 +428,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     pointer-events: none;
     color: white;
     font-size: 15px;
-  }
+}
 
 .section-lancamentos .lancar #form-lancamentos span.btns button {
     width: 80px;

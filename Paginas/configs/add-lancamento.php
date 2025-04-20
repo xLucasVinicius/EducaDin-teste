@@ -25,6 +25,20 @@ if ($tipo == 0) $parcelas = 0;
 $data_ref = date('Y-m-01', strtotime($data));
 $mesAtual = date('Y-m'); // Mês atual
 
+// Se for cartão de débito e a conta não tiver sido definida, buscar a conta vinculada ao cartão
+if ($metodo === 'Débito' && empty($id_conta) && !empty($id_cartao)) {
+    $query = "SELECT id_conta FROM cartoes WHERE id_cartao = ? AND id_usuario = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("ii", $id_cartao, $id_usuario);
+    $stmt->execute();
+    $stmt->bind_result($id_conta_vinculada);
+    if ($stmt->fetch()) {
+        $id_conta = $id_conta_vinculada;
+    }
+    $stmt->close();
+}
+
+
 if ($id_lancamento) {
     // ====== EDIÇÃO ======
     
@@ -133,10 +147,7 @@ if ($id_lancamento) {
     $stmt->execute();
     $stmt->close();
 
-    $mesAtual = date('Y-m');
-    $mesLancamento = date('Y-m', strtotime($data));
-
-    if (!is_null($id_conta) && $mesAtual === $mesLancamento) {
+    if (isset($id_conta) || $tipo  && $mesAtual == $data_ref) {
         $ajuste = ($tipo == 0) ? $valor : -$valor;
         $query_saldo = "UPDATE contas SET saldo_atual = saldo_atual + ? WHERE id_conta = ? AND id_usuario = ?";
         $stmt_saldo = $mysqli->prepare($query_saldo);
@@ -176,11 +187,11 @@ if ($id_lancamento) {
         $stmt->close();
 
         // Verificar se o mês do lançamento é diferente do mês atual
-        if ($mesLancamento !== $mesAtual) {
+        if ($data_ref !== $mesAtual) {
             // Verificar se já existe o registro de desempenho para o mês do lançamento
             $query_check = "SELECT id_desempenho FROM desempenho_anual WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
             $stmt_check = $mysqli->prepare($query_check);
-            $stmt_check->bind_param("iis", $id_usuario, $id_conta, $mesLancamento);
+            $stmt_check->bind_param("iis", $id_usuario, $id_conta, $data_ref);
             $stmt_check->execute();
             $stmt_check->store_result();
 
@@ -193,15 +204,20 @@ if ($id_lancamento) {
                     $query = "UPDATE desempenho_anual SET total_despesas = total_despesas + ?, saldo_final = saldo_final - ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
                 }
                 $stmt_update = $mysqli->prepare($query);
-                $stmt_update->bind_param("ddiis", $valor, $valor, $id_usuario, $id_conta, $mesLancamento);
+                $stmt_update->bind_param("ddiis", $valor, $valor, $id_usuario, $id_conta, $data_ref);
                 $stmt_update->execute();
                 $stmt_update->close();
             } else {
-                $stmt_check->close();
+                if ($tipo == 0) {
+                    $saldo_atual = $total_receitas;
+                } else {
+                    $saldo_atual = -$total_despesas;
+                }
+
                 // Inserir novo registro de desempenho anual para o mês do lançamento
                 $query_insert = "INSERT INTO desempenho_anual (id_usuario, id_conta, data_ref, total_receitas, total_despesas, saldo_final) VALUES (?, ?, ?, ?, ?, ?)";
                 $stmt_insert = $mysqli->prepare($query_insert);
-                $stmt_insert->bind_param("iissdd", $id_usuario, $id_conta, $mesLancamento, $total_receitas, $total_despesas, $saldo_atual);
+                $stmt_insert->bind_param("iisddd", $id_usuario, $id_conta, $data_ref, $total_receitas, $total_despesas, $saldo_atual);
                 $stmt_insert->execute();
                 $stmt_insert->close();
             }
@@ -209,7 +225,7 @@ if ($id_lancamento) {
             // Inserir desempenho anual com o mês atual se for o mesmo
             $query_insert = "INSERT INTO desempenho_anual (id_usuario, id_conta, data_ref, total_receitas, total_despesas, saldo_final) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt_insert = $mysqli->prepare($query_insert);
-            $stmt_insert->bind_param("iissdd", $id_usuario, $id_conta, $data_ref, $total_receitas, $total_despesas, $saldo_atual);
+            $stmt_insert->bind_param("iisddd", $id_usuario, $id_conta, $data_ref, $total_receitas, $total_despesas, $saldo_atual);
             $stmt_insert->execute();
             $stmt_insert->close();
         }

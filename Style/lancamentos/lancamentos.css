@@ -297,7 +297,7 @@
 
 .form-add-lancamento form .input-box label,
 .form-edit-lancamento form .input-box label {
-    color: var(--cor-txt);
+    color: var(--cor-principal);
     font-size: 1.1rem;
 }
 
@@ -307,7 +307,7 @@
 .form-edit-lancamento form .input-box select {
     width: 100%;
     height: 30px;
-    border: 1px solid var(--cor-principal);
+    border: 1px solid var(--cor-txt);
     border-radius: 5px;
     padding: 0 10px;
     background-color: transparent;
@@ -351,7 +351,7 @@
 .form-edit-lancamento form .input-box input:focus,
 .form-edit-lancamento form .input-box select:focus {
     outline: none;
-    border-color: var(--cor-principal);
+    border-color: var(--cor-txt);
 }
 
 .form-add-lancamento form .input-box input:-webkit-autofill,
@@ -364,18 +364,22 @@
 .form-edit-lancamento form .input-box input:-internal-autofill-selected {
     background-color: transparent !important;
     color: white !important;
-    border: 1px solid var(--cor-principal) !important;
+    border: 1px solid var(--cor-txt) !important;
     transition: background-color 5000s ease-in-out 0s;
     -webkit-text-fill-color: white  !important;
     caret-color: white !important;
 }
 
-.form-add-lancamento form .input-box optgroup,
 .form-add-lancamento form .input-box select,
-.form-edit-lancamento form .input-box optgroup,
 .form-edit-lancamento form .input-box select {
-    background-color: var(--cor-fundo-content);
+    background-color: transparent;
     color: var(--cor-txt);
+}
+
+.form-add-lancamento form .input-box option,
+.form-edit-lancamento form .input-box option {
+    background-color: var(--cor-txt);
+    color: var(--cor-fundo-content);
 }
 
 

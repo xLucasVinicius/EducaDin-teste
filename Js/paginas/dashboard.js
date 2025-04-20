@@ -7,6 +7,7 @@ fetch('../Paginas/consultas/infos-lancamentos-total.php')
 
     const values = data.valoresMensais || Array(12).fill(0); // garante que tenha 12 valores
     const barColors = labels.map((_, index) => index === mesAtual ? '#F2A900' : 'rgb(255, 255, 255)');
+    console.log(data);
 
     const chartElement = document.querySelector('#chart1');
 

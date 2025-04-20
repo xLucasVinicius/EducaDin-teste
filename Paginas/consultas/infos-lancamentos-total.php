@@ -16,15 +16,11 @@ $plano = 0; // valor padrão: grátis
 if ($resultPlano && $resultPlano->num_rows > 0) {
     $plano = (int)$resultPlano->fetch_assoc()['plano'];
 }
+
 $resposta['plano'] = $plano === 1 ? 'premium' : 'gratis';
 
 // Consulta: Dados do desempenho anual
-$sqlDesempenho = "SELECT 
-                    MONTH(data_ref) AS mes, 
-                    YEAR(data_ref) AS ano, 
-                    saldo_final 
-                  FROM desempenho_anual 
-                  WHERE id_usuario = $id_usuario";
+$sqlDesempenho = "SELECT MONTH(data_ref) AS mes, YEAR(data_ref) AS ano, saldo_final FROM desempenho_anual WHERE id_usuario = $id_usuario";
 
 $resultDesempenho = $mysqli->query($sqlDesempenho);
 
@@ -34,12 +30,17 @@ $anoAtual = date('Y');
 if ($resultDesempenho && $resultDesempenho->num_rows > 0) {
     while ($row = $resultDesempenho->fetch_assoc()) {
         $mesIndex = (int)$row['mes'] - 1;
-        $valoresMensais[$mesIndex] = (float)$row['saldo_final'];
-        $anoAtual = $row['ano'];
+        $anoRegistro = $row['ano'];
+
+        // Só soma os dados do ano atual
+        if ($anoRegistro == $anoAtual) {
+            $valoresMensais[$mesIndex] += (float)$row['saldo_final'];
+        }
     }
 }
 
-// Filtro: apenas 3 meses se for plano grátis (0)
+
+// Filtro: apenas 3 meses se for plano grátis
 $mesAtual = (int)date('n'); // de 1 a 12
 if ($plano === 0) {
     $mesesPermitidos = [
@@ -58,21 +59,14 @@ $resposta['ano'] = $anoAtual;
 $resposta['valoresMensais'] = $valoresMensais;
 
 // Consulta: Categorias dos lançamentos
-$sqlCategorias = "SELECT categoria, COUNT(*) as quantidade 
-                  FROM lancamentos 
-                  WHERE id_usuario = $id_usuario 
-                  AND categoria IS NOT NULL AND categoria != ''
-                  GROUP BY categoria";
+$sqlCategorias = "SELECT categoria, COUNT(*) as quantidade FROM lancamentos WHERE id_usuario = $id_usuario AND categoria IS NOT NULL AND categoria != '' AND tipo = 1 GROUP BY categoria";
 
 $resultCategorias = $mysqli->query($sqlCategorias);
 $resposta['categorias'] = [];
 
 if ($resultCategorias && $resultCategorias->num_rows > 0) {
     while ($row = $resultCategorias->fetch_assoc()) {
-        $resposta['categorias'][] = [
-            'nome' => $row['categoria'],
-            'quantidade' => (int)$row['quantidade']
-        ];
+        $resposta['categorias'][] = ['nome' => $row['categoria'], 'quantidade' => (int)$row['quantidade']];
     }
 }
 

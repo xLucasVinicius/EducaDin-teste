@@ -40,7 +40,7 @@
     <div class="modal" id="modalConfirmarExcluir">
         <div class="modal-content">
             <h1>Atenção!</h1>
-            <p id="msg-modal">Esta operaçao nao pode ser desfeita. <br> Tem certeza que deseja excluir?</p>
+            <p id="msg-modal">A operação nao pode ser desfeita. <br> Tem certeza que deseja excluir?</p>
             <span>
                 <button id="btnModalCancelarExcluir">Cancelar</button>
                 <button id="btnModalExcluirLancamento">Excluir</button>
