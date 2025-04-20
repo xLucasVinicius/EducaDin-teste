@@ -147,7 +147,7 @@ body::-webkit-scrollbar, .conteudo::-webkit-scrollbar {
 }
 
 .cartao .infos-cartao h1 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   text-align: center;
   width: 100%;
   color: var(--cor-principal);

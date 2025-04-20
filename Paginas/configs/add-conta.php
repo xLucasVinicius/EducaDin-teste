@@ -22,15 +22,15 @@ if ($mysqli->query($sqlTest)->num_rows == 0) { // Se a conta nao existir
         $id_conta = $stmt->insert_id;
 
         // Dados para desempenho
-        $mes = date('n');
+        $mes = date('Y-m-01');
         $total_receitas = 0;
         $total_despesas = 0;
         $saldo_final = $saldo;
 
         // Inserir desempenho inicial
-        $query_insert = "INSERT INTO desempenho_anual (id_usuario, id_conta, mes, total_receitas, total_despesas, saldo_final) VALUES (?, ?, ?, ?, ?, ?)";
+        $query_insert = "INSERT INTO desempenho_anual (id_usuario, id_conta, data_ref, total_receitas, total_despesas, saldo_final) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt_insert = $mysqli->prepare($query_insert);
-        $stmt_insert->bind_param("iiiddd", $id_usuario, $id_conta, $mes, $total_receitas, $total_despesas, $saldo_final);
+        $stmt_insert->bind_param("iisddd", $id_usuario, $id_conta, $mes, $total_receitas, $total_despesas, $saldo_final);
         $stmt_insert->execute();
         $stmt_insert->close();
 

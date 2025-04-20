@@ -31,8 +31,8 @@ $result = $mysqli->query($query);
                 </span>
                 <span class="infos">
                   <h1>Entradas</h1>
-                  <h2>R$ 1.000</h2>
-                  <p>+5% ao mês anterior</p>
+                  <h2 id="txtEntradas">R$ 1.000</h2>
+                  <p id="porcentagemEntradas">+5% ao mês anterior</p>
                 </span>
                 <span class="barra"></span>
               </div>
@@ -45,8 +45,8 @@ $result = $mysqli->query($query);
                 </span>
                 <span class="infos">
                   <h1>Saidas</h1>
-                  <h2>R$ 1.000</h2>
-                  <p>-5% ao mês anterior</p>
+                  <h2 id="txtSaidas">R$ 1.000</h2>
+                  <p id="porcentagemSaidas">-5% ao mês anterior</p>
                 </span>
                 <span class="barra"></span>
               </div>
@@ -56,17 +56,18 @@ $result = $mysqli->query($query);
                 </span>
                 <span class="infos">
                   <h1>Total</h1>
-                  <h2>R$ 1.000</h2>
-                  <p>+5% ao mês anterior</p>
+                  <h2 id="txtSaldo">R$ 1.000</h2>
+                  <p id="porcentagemSaldo">+5% ao mês anterior</p>
                 </span>
               </div>
             </div>
           </section>
           <section class="secao2"> <!-- section com o grafico 1 -->
+              Desempenho Mensal
               <div id="chart1"></div> <!-- div que armazena o grafico -->
           </section>
           <section class="secao3"> <!-- section com o grafico 2 -->
-              <div id="chart2"></div> <!-- div que armazena o grafico -->
+              <div id="chart2">Categorias</div> <!-- div que armazena o grafico -->
           </section>
           <section class="secao4"> <!-- section com a tabela de lancamentos -->
           <div class="table-lancamentos"> <!-- div que armazena tudo relativo a tabela -->

@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
       carouselContainer.appendChild(contaDiv);
     
       // Faz a requisição do desempenho ANUAL dessa conta
-      fetch(`../Paginas/consultas/infos-desempenho-anual.php?id_conta=${account.id_conta}`)
+      fetch(`../Paginas/consultas/desempenho-conta-anterior-atual.php?id_conta=${account.id_conta}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Erro ao carregar desempenho: ' + response.statusText);
@@ -88,17 +88,12 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
       })
       .then(dados => {
         const p = document.getElementById(`desempenho-${account.id_conta}`);
-
-        const receitasAnterior = parseFloat(dados.total_receitas_anterior) || 0;
-        const despesasAnterior = parseFloat(dados.total_despesas_anterior) || 0;
-        const receitasAtual = parseFloat(dados.total_receitas_atual) || 0;
-        const despesasAtual = parseFloat(dados.total_despesas_atual) || 0;
-
-        const saldoAnterior = receitasAnterior - despesasAnterior;
-        const saldoAtual = receitasAtual - despesasAtual;
-
+      
+        const saldoAnterior = parseFloat(dados.saldo_final_anterior) || 0;
+        const saldoAtual = parseFloat(dados.saldo_final_atual) || 0;
+      
         let desempenho;
-
+      
         if (saldoAnterior === 0) {
           if (saldoAtual > 0) {
             desempenho = 100;
@@ -110,14 +105,14 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
         } else {
           desempenho = ((saldoAtual - saldoAnterior) / Math.abs(saldoAnterior)) * 100;
         }
-
+      
         const desempenhoFormatado = desempenho.toFixed(2).replace('.', ',');
-
+      
         if (desempenho >= 0) {
           p.textContent = `+${desempenhoFormatado}% `;
           p.style.color = 'green';
-        } else if (desempenho < 0) {
-          p.textContent = `-${desempenhoFormatado}% `;
+        } else {
+          p.textContent = `${desempenhoFormatado}% `;
           p.style.color = 'red';
         }
       })

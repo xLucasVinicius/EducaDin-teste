@@ -66,8 +66,10 @@
         <div class="modal-content">
             <h2></h2>
             <p>Esta operaçao nao pode ser desfeita.</p>
-            <button id="btnModalexcluir">Sim</button>
-            <button id="btnModalNao">Não</button>
+            <span class="btns-operacoes">
+                <button id="btnModalexcluir">Sim</button>
+                <button id="btnModalNao">Não</button>
+            </span>
         </div>
     </div>
     <!-- Modal de Sucesso ao excluir conta -->

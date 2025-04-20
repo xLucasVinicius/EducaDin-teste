@@ -6,21 +6,21 @@ const formEditar = document.getElementById('form-edit-container'); // Seleciona 
 
 // Categorias/Subcategorias
 const subcategorias = {
-    moradia: ["Aluguel", "Prestação do imóvel", "Condomínio", "Água", "Luz", "Internet/TV"],
-    alimentação: ["Supermercado", "Refeições fora de casa", "Delivery"],
-    transporte: ["Aplicativos de transporte", "Combustível", "Transporte público", "Manutenção de veículo", "Pedágios/estacionamento"],
-    educação: ["Mensalidade escolar/faculdade", "Cursos e workshops", "Material escolar"],
-    saúde: ["Plano de saúde", "Medicamentos", "Consultas médicas", "Tratamentos odontológicos"],
-    lazer: ["Cinema", "Shows", "Viagens", "Assinaturas de streaming"],
-    vestuário: ["Roupas", "Acessórios", "Calçados"],
-    impostos: ["IPVA", "Imposto de Renda", "Multas", "Anuidade"],
-    serviços: ["Celular", "Assinaturas de software", "Apps"],
-    despesas_gerais: ["Presentes", "Doações", "Outros"],
-    salário: ["Salário fixo", "13º salário", "Bônus/PLR"],
-    freelance: ["Serviços eventuais", "Consultorias"],
-    investimentos: ["Juros de poupança", "Renda de ações", "Aluguéis recebidos"],
-    vendas: ["Venda de bens", "Venda de produtos"],
-    outros: ["Reembolsos", "Prêmios", "Doações recebidas"]
+    Moradia: ["Aluguel", "Prestação do imóvel", "Condomínio", "Água", "Luz", "Internet/TV"],
+    Alimentação: ["Supermercado", "Refeições fora de casa", "Delivery"],
+    Transporte: ["Aplicativos de transporte", "Combustível", "Transporte público", "Manutenção de veículo", "Pedágios/estacionamento"],
+    Educação: ["Mensalidade escolar/faculdade", "Cursos e workshops", "Material escolar"],
+    Saúde: ["Plano de saúde", "Medicamentos", "Consultas médicas", "Tratamentos odontológicos"],
+    Lazer: ["Cinema", "Shows", "Viagens", "Assinaturas de streaming"],
+    Vestuário: ["Roupas", "Acessórios", "Calçados"],
+    Impostos: ["IPVA", "Imposto de Renda", "Multas", "Anuidade"],
+    Serviços: ["Celular", "Assinaturas de software", "Apps"],
+    Despesas_Gerais: ["Presentes", "Doações", "Outros"],
+    Salário: ["Salário fixo", "13º salário", "Bônus/PLR"],
+    Freelance: ["Serviços eventuais", "Consultorias"],
+    Investimentos: ["Juros de poupança", "Renda de ações", "Aluguéis recebidos"],
+    Vendas: ["Venda de bens", "Venda de produtos"],
+    Outros: ["Reembolsos", "Prêmios", "Doações recebidas"]
 };
 
 const selectSubcategoriaEditar = document.getElementById("subcategoria-editar");
@@ -212,7 +212,7 @@ window.addEventListener('DOMContentLoaded', function () {
         const mesCorrigido = (mesAtual + 1).toString().padStart(2, '0'); // "01" a "12"
         const mesAno = `${anoAtual}-${mesCorrigido}`; // "2025-01", por exemplo
 
-        fetch('../Paginas/consultas/infos-lancamentos-pagina.php', {
+        fetch('../Paginas/consultas/infos-pagina-lancamentos.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
