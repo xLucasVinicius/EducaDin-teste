@@ -114,6 +114,7 @@ fetch('../Paginas/consultas/infos-dashboard.php')
 fetch('../Paginas/consultas/infos-pagina-lancamentos.php')
 .then(response => response.json())
 .then(data => {
+    console.log(data);
     renderLancamentos(data.lancamentos);
 })
 .catch(error => console.error('Erro ao carregar lançamentos:', error));
@@ -123,7 +124,6 @@ fetch('../Paginas/consultas/infos-pagina-lancamentos.php')
 fetch('../Paginas/consultas/desempenho-geral-anterior-atual.php')
 .then(response => response.json())
 .then(data => {
-    console.log(data);
     const txtEntradas = document.getElementById('txtEntradas');
     const txtSaidas = document.getElementById('txtSaidas');
     const txtSaldo = document.getElementById('txtSaldo');
@@ -149,9 +149,9 @@ fetch('../Paginas/consultas/desempenho-geral-anterior-atual.php')
         
 
     // Arredondar com duas casas
-    valorPorcentagemEntradas = valorPorcentagemEntradas.toFixed(2);
-    valorPorcentagemSaidas = valorPorcentagemSaidas.toFixed(2);
-    valorPorcentagemSaldo = valorPorcentagemSaldo.toFixed(2);
+    valorPorcentagemEntradas = Math.round(valorPorcentagemEntradas);
+    valorPorcentagemSaidas = Math.round(valorPorcentagemSaidas);
+    valorPorcentagemSaldo = Math.round(valorPorcentagemSaldo);
 
     // Adiciona o sinal '+' se for positivo
     const sinal = valor => (valor > 0 ? `+${valor}` : `${valor}`);
@@ -178,46 +178,91 @@ fetch('../Paginas/consultas/desempenho-geral-anterior-atual.php')
 
 
 function renderLancamentos(lancamentos) {
-    lancamentosContainer.innerHTML = ''; // Limpa o container
-  
-    if (lancamentos.length === 0) {
-      lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>';
-      return;
-    }
-  
-    const table = document.createElement('table');
-  
-    const thead = `
-      <thead>
-        <tr>
-          <th>Descrição</th>
-          <th>Valor</th>
-          <th>Método</th>
-          <th>Categoria</th>
-          <th>Subcategoria</th>
-          <th>Data</th>
-          <th>Parcelas</th>
-        </tr>
-      </thead>`;
-  
-    let tbody = '<tbody>';
-  
-    lancamentos.forEach(lancamento => {
-      let lancamentoParcela = parseInt(lancamento.parcelas) === 0 ? 'À vista' : lancamento.parcelas;
-  
-      tbody += `
-        <tr>
-          <td>${lancamento.descricao}</td>
-          <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
-          <td>${lancamento.metodo_pagamento}</td>
-          <td>${lancamento.categoria}</td>
-          <td>${lancamento.subcategoria}</td>
-          <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
-          <td>${lancamentoParcela}</td>
-        </tr>`;
-    });
-  
-    tbody += '</tbody>';
-    table.innerHTML = thead + tbody;
-    lancamentosContainer.appendChild(table);
+    fetch ('../Paginas/consultas/infos-cartoes.php')
+    .then(response => response.json())
+    .then(data => {
+        const contasData = data.contas;
+        const cartoesData = data.cartoes;
+    
+        lancamentosContainer.innerHTML = ''; // Limpa o container
+    
+        if (lancamentos.length === 0) {
+            lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>';
+            return;
+        }
+    
+        const table = document.createElement('table');
+    
+        const thead = `
+        <thead>
+            <tr>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Tipo</th>
+            <th>Método</th>
+            <th>Conta/Cartão</th>
+            <th>Categoria</th>
+            <th>Subcategoria</th>
+            <th>Data</th>
+            <th>Parcelas</th>
+            </tr>
+        </thead>`;
+    
+        let tbody = '<tbody>';
+    
+        lancamentos.forEach(lancamento => {
+            const tipo = lancamento.tipo === 0 ? 'Receita' : 'Despesa';
+            const classeValor = tipo === 'Despesa' ? 'despesa' : 'receita';
+            let contaCartao = '';
+    
+            // Verifica se o lançamento tem id_cartao
+            if (lancamento.id_cartao) {
+                const cartao = cartoesData.find(c => c.id_cartao == lancamento.id_cartao);
+                if (cartao) {
+                    const conta = contasData.find(ct => ct.id_conta == cartao.id_conta);
+                    if (conta) {
+                        let categoriaInicial = '';
+                        switch (conta.categoria) {
+                            case 0: categoriaInicial = 'C'; break;
+                            case 1: categoriaInicial = 'P'; break;
+                            case 2: categoriaInicial = 'S'; break;
+                        }
+                        contaCartao = `${conta.nome_conta} (${categoriaInicial}) - Cartão`;
+                    }
+                }
+            } else {
+                const conta = contasData.find(ct => ct.id_conta == lancamento.id_conta);
+                if (conta) {
+                    let categoriaInicial = '';
+                    switch (conta.categoria) {
+                        case "0": categoriaInicial = 'C'; break;
+                        case "1": categoriaInicial = 'P'; break;
+                        case "2": categoriaInicial = 'S'; break;
+                    }
+                    contaCartao = `${conta.nome_conta} (${categoriaInicial})`;
+                }
+            }
+    
+            let lancamentoParcela = parseInt(lancamento.parcelas) === 0 ? 'À vista' : lancamento.parcelas;
+    
+            tbody += `
+            <tr>
+                <td>${lancamento.descricao}</td>
+                <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
+                <td class="${classeValor}">${tipo}</td>
+                <td>${lancamento.metodo_pagamento}</td>
+                <td>${contaCartao}</td>
+                <td>${lancamento.categoria}</td>
+                <td>${lancamento.subcategoria}</td>
+                <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
+                <td>${lancamentoParcela}</td>
+            </tr>`;
+        });
+    
+        tbody += '</tbody>';
+        table.innerHTML = thead + tbody;
+        lancamentosContainer.appendChild(table);
+    })
+    
+    .catch(error => console.error('Erro ao carregar cartões:', error));
 }

@@ -217,6 +217,7 @@ body::-webkit-scrollbar {
 
 .fora-lancamentos .lancamentos table {
   width: 100%;
+  min-width: 868px;
 }
 
 .fora-lancamentos .lancamentos table th {

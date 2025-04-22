@@ -11,10 +11,10 @@
         font-size: 1.7rem;
     }
 
-    .infos-topo .desempenho-mes span {
+    .infos-topo .desempenho-mes .receita, .infos-topo .desempenho-mes .despesa {  /* Desempenho do mês individual */
         font-size: 0.8rem;
-        padding: 8px 0;
-        width: 150px;
+        padding: 10px;
+        gap: 5px;
     }
 
     .form-container .form-add-lancamento {

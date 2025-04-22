@@ -67,7 +67,8 @@ $result = $mysqli->query($query);
               <div id="chart1"></div> <!-- div que armazena o grafico -->
           </section>
           <section class="secao3"> <!-- section com o grafico 2 -->
-              <div id="chart2">Categorias</div> <!-- div que armazena o grafico -->
+            Categorias Despesas
+            <div id="chart2"></div> <!-- div que armazena o grafico -->
           </section>
           <section class="secao4"> <!-- section com a tabela de lancamentos -->
           <div class="table-lancamentos"> <!-- div que armazena tudo relativo a tabela -->

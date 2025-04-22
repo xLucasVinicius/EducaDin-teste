@@ -9,7 +9,7 @@
 
     .secao1, .secao2, .secao3, .secao4 {
         grid-column: 1 / span 1; /* Cada seção ocupa 100% da largura */
-        justify-self: stretch; /* Opcional: Se quiser que as seções ocupem toda a largura */
+        justify-self: stretch;
         margin-top: 20px;
     }
 
@@ -21,6 +21,7 @@
     
     .desempenho-fluxo > div { /* cada uma das 3 divs dos desempenhos */
         gap: 10px;
+        justify-content: flex-start;
     }
     
     
@@ -57,18 +58,18 @@
     }
     
     .desempenho-fluxo > div > .infos > h2 {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         font-weight: bolder;
         color: white;
     }
     
     .desempenho-fluxo > div > .infos > p {
-        font-size: 0.55rem;
+        font-size: 0.4rem;
         color: white;
         margin: 0;
         text-align: start;
         position: absolute;
-        bottom: 20px;
+        bottom: 27px;
         left: 45px;
     }
 
@@ -91,15 +92,7 @@
     }
     
     .secao4 {
-        width: 417px;
-    }
-    
-    .table-container {
-        overflow-x: auto; /* Habilita a rolagem horizontal */
-    }
-
-    table {
-        min-width: 550px; /* Largura mínima para a tabela, ativando a rolagem */
+        width: 350px;
     }
 
     th {
@@ -182,10 +175,6 @@
     .secao4 {
         min-width: 600px;
         width: 70vw;
-    }
-
-    table {
-        min-width: 550px; /* Largura mínima para a tabela, ativando a rolagem */
     }
 
     th {

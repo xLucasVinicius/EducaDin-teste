@@ -413,6 +413,8 @@ window.addEventListener('resize', formularioContas);
 window.addEventListener('load', formularioContas);
 
 btnAddConta.addEventListener('click', function () {
+  const containerFormCollapsed = document.querySelector('.add-contas.collapsed');
+  containerFormCollapsed.style = 'opacity: 1;';
   containerForm.style.display = 'flex';
   conteudoGeral.style = ' overflow: hidden;';
 });
