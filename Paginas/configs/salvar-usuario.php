@@ -158,16 +158,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Inserção dos dados do usuário
-        $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario) 
-                       VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt_insert = $mysqli->prepare($sql_insert);
         $stmt_insert->bind_param("sssssss", $path_relativo, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario);
 
-        if ($stmt_insert->execute()) {
+        if ($stmt_insert->execute()) { // Executa logo!
+            // Agora sim, o usuário foi inserido
+
+            // Pode pegar o id diretamente:
+            $id_usuario = $mysqli->insert_id;
+
+            // E agora inserção na tabela contas
+            $sql_insert2 = "INSERT INTO contas (id_usuario, nome_conta, categoria) VALUES (?, 'Carteira', 3)";
+            $stmt_insert2 = $mysqli->prepare($sql_insert2);
+            $stmt_insert2->bind_param("i", $id_usuario);
+            $stmt_insert2->execute();
+
             echo json_encode(['status' => 'success2']);
         } else {
             echo json_encode(['status' => 'error']);
         }
+
     }
 }
 ?>

@@ -25,6 +25,26 @@ body::-webkit-scrollbar, .conteudo::-webkit-scrollbar {
   display: none;
 }
 
+#adicionar-excluir-cartao {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: none;
+  background-color: transparent;
+  color: var(--cor-principal);
+  border: 1px solid var(--cor-principal);
+  border-radius: 25px;
+  padding: 5px;
+  transition: all .3s;
+  cursor: pointer;
+  z-index: 1;
+}
+
+#adicionar-excluir-cartao:hover {
+  background-color: var(--cor-principal);
+  color: var(--cor-txt);
+}
+
 .elemento-fora {
   display: flex;
   flex-direction: row;
@@ -142,7 +162,7 @@ body::-webkit-scrollbar, .conteudo::-webkit-scrollbar {
 .cartao .infos-cartao {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   width: 250px;
 }
 
@@ -334,7 +354,7 @@ z {
 .add-cartoes .form-content, .modal-content.editar-form-content {
   position: relative;
   width: 400px;
-  height: 670px;
+  height: 690px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -409,12 +429,44 @@ z {
 .modal-content.editar-form-content form input:-webkit-autofill,
 .modal-content.editar-form-content form input:-webkit-autofill:hover,
 .modal-content.editar-form-content form input:-webkit-autofill:focus {
-    background-color: transparent !important;
-    color: white !important;
-    border: 1px solid white !important;
-    transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: white  !important;
-    caret-color: white;
+  background-color: transparent !important;
+  color: white !important;
+  border: 1px solid white !important;
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: white  !important;
+  caret-color: white;
+}
+
+.add-cartoes .form-content form .tipo-cartao {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.add-cartoes .form-content form .opcoes-credito {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-cartoes .form-content form .tipo-cartao .opcoes {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.add-cartoes .form-content form .tipo-cartao .opcao {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+}
+
+.add-cartoes .form-content form .tipo-cartao input[type="radio"] {
+  width: 13px;
+  height: 13px;
+  accent-color: var(--cor-principal);
 }
 
 .add-cartoes .form-content form option {
@@ -439,35 +491,16 @@ z {
 }
 
 .add-cartoes .form-content form span input[type="checkbox"], .modal-content.editar-form-content form span input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   padding: 0;
-  border: 1px solid #333;
   border-radius: 4px;
+  accent-color: var(--cor-principal);
   position: relative;
   transition: all .2s;
 }
 
-/* Estilo do checkbox quando está marcado */
-.add-cartoes .form-content form span input[type="checkbox"]:checked,
-.modal-content.editar-form-content form span input[type="checkbox"]:checked {
-  background-color: var(--cor-principal);
-  border-color: var(--cor-principal);
-}
-
-/* Adiciona um "check" dentro do checkbox */
-.add-cartoes .form-content form span input[type="checkbox"]:checked::before,
-.modal-content.editar-form-content form span input[type="checkbox"]:checked::before {
-  content: "✔";
-  color: white;
-  position: absolute;
-  left: 1px;
-  top: -3px;
-  font-size: 13px;
-}
-
+/* .add-cartoes .form-content form .opcoes-credito, */
 .add-cartoes .form-content .digitar-anuidade,
 .modal-content.editar-form-content .digitar-anuidade-editar {
   display: none;

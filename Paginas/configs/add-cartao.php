@@ -10,9 +10,10 @@ foreach ($_POST as $key => $value) {
 
 $id_usuario = $_POST['id_usuario'] ?? null;
 $id_conta = $_POST['conta'] ?? null;
-$limite_total = $_POST['limite'];
-$dia_fechamento = $_POST['fechamento'];
-$dia_vencimento = $_POST['vencimento'];
+$tipo = $_POST['tipo'];
+$limite_total = $_POST['limite'] ?? null;
+$dia_fechamento = $_POST['fechamento'] ?? null;
+$dia_vencimento = $_POST['vencimento'] ?? null;
 $anuidade = $_POST['anuidade-valor'];
 $pontos = $_POST['pontos'];
 $id_cartao = $_POST['id_cartao'] ?? null;
@@ -34,13 +35,13 @@ if (!isset($_POST['id_cartao']) || empty($_POST['id_cartao'])) {
     if ($result_cartao->num_rows == 0) { 
         // Inserir novo cartão
         if (is_null($anuidade)) {
-            $sql = "INSERT INTO cartoes (id_conta, id_usuario, limite_total, dia_fechamento, dia_vencimento, pontos) VALUES (?, ?, ?, ?, ?, ?)";
-            $stmt = $mysqli->prepare($sql);
-            $stmt->bind_param("iidiii", $id_conta, $id_usuario, $limite_total, $dia_fechamento, $dia_vencimento, $pontos);
+                $sql = "INSERT INTO cartoes (id_conta, id_usuario, tipo, limite_total, dia_fechamento, dia_vencimento, pontos) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $stmt = $mysqli->prepare($sql);
+                $stmt->bind_param("iiidiii", $id_conta, $id_usuario, $tipo, $limite_total, $dia_fechamento, $dia_vencimento, $pontos);
         } else {
-            $sql = "INSERT INTO cartoes (id_conta, id_usuario, limite_total, dia_fechamento, dia_vencimento, anuidade, pontos) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $mysqli->prepare($sql);
-            $stmt->bind_param("iidiidi", $id_conta, $id_usuario, $limite_total, $dia_fechamento, $dia_vencimento, $anuidade, $pontos);
+                $sql = "INSERT INTO cartoes (id_conta, id_usuario, tipo, limite_total, dia_fechamento, dia_vencimento, anuidade, pontos) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                $stmt = $mysqli->prepare($sql);
+                $stmt->bind_param("iiidiidi", $id_conta, $id_usuario, $tipo, $limite_total, $dia_fechamento, $dia_vencimento, $anuidade, $pontos);
         }
 
         $stmt->execute();

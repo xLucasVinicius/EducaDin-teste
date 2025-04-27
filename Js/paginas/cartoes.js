@@ -46,11 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('accountsData', JSON.stringify(accountsData)); // Armazena os dados de contas no localStorage
     const carouselContainer = document.querySelector('.cartoes-carrossel'); // Carrossel de cartões
     const lancamentosContainer = document.querySelector('.lancamentos'); // Container de lançamentos
-    console.log(lancamentosData);
     let tipoContaMap = {
       0: 'Corrente',
       1: 'Poupança',
-      2: 'Salário'
+      2: 'Salário',
+      3: 'Digital'
     };
 
     carouselContainer.innerHTML = ''; // Limpa o carrossel
@@ -114,10 +114,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const totalLancamentos = lancamentosCreditoData.reduce((acc, lancamentos_credito) => acc + parseFloat(lancamentos_credito.valor), 0); // Somar os lançamentos (todos os lançamentos são valores positivos)
       const limiteDisponivel = limiteTotal - totalLancamentos; // Calcular o limite disponível
 
-      
-
-      // Renderizar o cartão
-      cartaoDiv.innerHTML = `
+      if (cartao.tipo == 1) {
+        // Renderizar o cartão crédito
+        cartaoDiv.innerHTML = `
         <span class="info-icon" id="infoIcon${cartao.id_cartao}">
           <i class="bi bi-question"></i>
           <p class="txt-pontos disable" id="txtPontos${cartao.id_cartao}"></p>
@@ -137,6 +136,24 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <button class="btn-editar-cartao" data-id-cartao="${cartao.id_cartao}"><i class="bi bi-gear"></i></button>
       `;
+      } else {
+        // Renderizar o cartão de débito
+        cartaoDiv.innerHTML = `
+        <span class="info-icon" id="infoIcon${cartao.id_cartao}">
+          <i class="bi bi-question"></i>
+          <p class="txt-pontos disable" id="txtPontos${cartao.id_cartao}"></p>
+        </span>
+        <div class="logo">
+          <img src="../imagens/cartoes/${nomeConta}.jpeg" alt="Cartão de ${nomeConta}">
+        </div>
+        <div class="infos-cartao">
+          <h1> Cartão ${nomeConta}</h1>
+          <h2 id="tipo-conta">Conta: ${nomeConta} (${tipoConta})</h2>
+          <h2>Apenas débito</h2>
+        </div>
+      `;
+      }
+      
       
       carouselContainer.appendChild(cartaoDiv); // Adiciona o cartão ao carrossel
       const txtPontos = document.getElementById(`txtPontos${cartao.id_cartao}`); //
@@ -144,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
         txtPontos.innerHTML = 'Usar este cartão em compras pode gerar benefícios, entenda mais pesquisando sobre as vantagens proporcionadas pela sua bandeira.';
       } else {
         txtPontos.innerHTML = 'Este cartão não possui beneficios ao realizar compras, usar outro cartão pode ser a melhor opção.';
-        txtPontos.style.height = '45px';
+        txtPontos.style.height = '60px';
       }
 
       const infoIcon = document.getElementById(`infoIcon${cartao.id_cartao}`);
@@ -157,10 +174,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Loop separado para adicionar as contas ao select
     accountsData.forEach(account => {
+      // Se o nome da conta for "carteira", não adiciona
+      if (account.nome_conta.toLowerCase() === "carteira") {
+        return; // pula para o próximo item do forEach
+      }
       let tipoContaMap = {
         0: 'C',
         1: 'P',
-        2: 'S'
+        2: 'S',
+        3: 'D'
       };
     
       const tipoConta = tipoContaMap[account.categoria];
@@ -306,7 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const idCartao = this.dataset.idCartao;
           const cartaoSelecionado = cartoesData.find(cartao => cartao.id_cartao == idCartao);
           if (cartaoSelecionado) {
-              abrirModalEdicaoCartao(cartaoSelecionado);
+            abrirModalEdicaoCartao(cartaoSelecionado);
           }
       });
     });
@@ -319,52 +341,73 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Evento de submissão do formulário para adicionar cartao
 formCartao.addEventListener('submit', function (event) {
-    event.preventDefault();
-    let respAnuidade = null;
-    if (!checkboxAnuidade.checked) {
-      respAnuidade = 0;
-    } else {
-      respAnuidade = inputAnuidade.value;
-    }
-    const pontosCheck = document.getElementById('pontos');
-    let respPontos = null;
-    if (pontosCheck.checked) {
-      respPontos = 0;
-    } else {
-      respPontos = 1;
-    }
-    
-    const valueSelectConta = selectConta.value; // Obtenha a conta selecionada
-    const limiteCartao = document.getElementById('limite').value; // Obtenha o limite do cartão
-    const diaFechamento = document.getElementById('fechamento').value; // Obtenha o dia de fechamento
-    const diaVencimento = document.getElementById('vencimento').value; // Obtenha o dia de vencimento
+  event.preventDefault();
 
-    if (!valueSelectConta || !limiteCartao || !diaFechamento || !diaVencimento) { // Verifique se todos os campos foram preenchidos
-        modalErrorPreencher.style.display = 'block'; // Exiba o modal de erro de preenchimento de campos
-    } else {
-      if (checkboxAnuidade.checked && !inputAnuidade.value) {
-        modalErrorPreencher.style.display = 'block'; // Exiba o modal de erro de preenchimento de campos
-      } else {
-        const formData = new FormData(formCartao); // Cria o objeto FormData com o conteúdo do formulário
-        formData.append('pontos', respPontos);
-        formData.append('anuidade-valor', respAnuidade);
+  const valueSelectConta = selectConta.value;
+  const inputDebito = document.getElementById('debito');
+  const inputCredito = document.getElementById('credito');
+  const limiteCartao = document.getElementById('limite').value;
+  const diaFechamento = document.getElementById('fechamento').value;
+  const diaVencimento = document.getElementById('vencimento').value;
+  const checkboxAnuidade = document.getElementById('checkbox-anuidade');
+  const inputAnuidade = document.getElementById('anuidade');
+  const pontosCheck = document.getElementById('pontos');
 
-        fetch('../Paginas/configs/add-cartao.php', {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.status === 'error_cartao') {
-              exibirModalErro(data); // Exibe o modal com erro
-          } else if (data.status === 'success') {
-              exibirSucessoAdd(data); // Exibe o modal de sucesso
+  // Primeiro: verificar se selecionou uma conta
+  if (!valueSelectConta) {
+      modalErrorPreencher.style.display = 'block';
+      return;
+  }
+
+  let respPontos = pontosCheck.checked ? 0 : 1;
+  let respAnuidade = 0; // Inicializa
+
+  if (inputDebito.checked) {
+      // Débito: não valida nada extra
+      enviarFormulario(respPontos, respAnuidade);
+  } else if (inputCredito.checked) {
+      // Crédito: valida os campos obrigatórios
+      if (!limiteCartao || !diaFechamento || !diaVencimento) {
+          modalErrorPreencher.style.display = 'block';
+          return;
+      }
+
+      if (checkboxAnuidade.checked) {
+          if (!inputAnuidade.value) {
+              modalErrorPreencher.style.display = 'block';
+              return;
+          } else {
+              respAnuidade = inputAnuidade.value;
           }
-        })
-        .catch(error => console.error('Erro:', error));
-    }
+      }
+
+      // Se passou todas validações
+      enviarFormulario(respPontos, respAnuidade);
+  }
+
+  // Função de envio do formulário
+  function enviarFormulario(respPontos, respAnuidade) {
+      const formData = new FormData(formCartao);
+      formData.append('pontos', respPontos);
+      formData.append('anuidade-valor', respAnuidade);
+
+      fetch('../Paginas/configs/add-cartao.php', {
+          method: 'POST',
+          body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.status === 'error_cartao') {
+              exibirModalErro(data);
+          } else if (data.status === 'success') {
+              exibirSucessoAdd(data);
+          }
+      })
+      .catch(error => console.error('Erro:', error));
   }
 });
+
+
 
 // Evento de alteração do checkbox para exibir ou ocultar o campo de anuidade
 checkboxAnuidade.addEventListener('change', function() {
@@ -495,7 +538,8 @@ document.getElementById('excluir-cartao').addEventListener('click', function () 
         const tipoContaMap = {
           0: 'C',
           1: 'P',
-          2: 'S'
+          2: 'S',
+          3: 'D'
         };
         const nomeConta = contasMap[cartao.id_conta]; // Busca o nome da conta associado ao id_conta do cartão
         const account = accountsData.find(account => account.id_conta === cartao.id_conta); // Encontra a conta correspondente ao cartão
@@ -572,7 +616,7 @@ window.addEventListener('load', formularioCartoes);
 
 // Função para tratar o sucesso
 function exibirSucessoAdd(data) {
-  modalSucess.style.display = 'block';
+  modalSucess.style = 'display: block; z-index: 3;';
 }
 
 // Função para mostrar modal de erro
@@ -655,10 +699,6 @@ function abrirModalEdicaoCartao(cartao) {
   const inputLimite = document.getElementById('limite-editar');
   document.querySelector('.conteudo').style = 'overflow: hidden;';
 
-  if (window.innerWidth > 1560) {
-    btnAddExcluirCartao.style.display = 'none';
-  }
-
   modalEditarCartao.style.display = 'block';
 
   // Preencher os inputs com os dados do cartão
@@ -683,10 +723,22 @@ function formularioCartoes() {
 
   if (larguraTela <= 1560) { // Verifica se a largura da tela é menor que 1560
     containerForm.classList.add('collapsed'); // Adiciona a classe "collapsed"
+    btnAddExcluirCartao.style.display = 'block';
   } else {
     containerForm.classList.remove('collapsed'); // Remove a classe "collapsed"
     containerForm.style = 'opacity: 1;';
+    btnAddExcluirCartao.style.display = 'none';
   }
+}
+
+function mostrarCamposCredito() {
+  const camposCredito = document.querySelector('.opcoes-credito');
+  camposCredito.style.display = 'flex';
+}
+
+function ocultarCamposCredito() {
+  const camposCredito = document.querySelector('.opcoes-credito');
+  camposCredito.style.display = 'none';
 }
 
 preencherSelectDias("fechamento");

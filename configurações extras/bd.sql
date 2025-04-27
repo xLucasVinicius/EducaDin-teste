@@ -20,7 +20,7 @@ CREATE TABLE contas (
     id_usuario INT,
     nome_conta VARCHAR(100) NOT NULL,
     saldo_atual DECIMAL(10,2) DEFAULT 0,
-    categoria TINYINT(1) DEFAULT 0 COMMENT '0 = conta-corrente, 1 = conta-poupança, 2 = conta-salário',
+    categoria TINYINT(1) DEFAULT 0 COMMENT '0 = conta-corrente, 1 = conta-poupança, 2 = conta-salário, 3= conta-digital',
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -29,6 +29,7 @@ CREATE TABLE cartoes (
     id_cartao INT AUTO_INCREMENT PRIMARY KEY,
     id_conta INT,
     id_usuario INT,
+    tipo TINYINT(1) COMMENT '0 = debito, 1 = credito',
     limite_total DECIMAL(10,2),
     dia_fechamento INT,
     dia_vencimento INT,

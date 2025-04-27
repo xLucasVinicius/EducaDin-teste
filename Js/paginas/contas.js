@@ -49,12 +49,14 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
     // Cria as contas dinamicamente
     accountsData.forEach((account, index) => {
       const tipoContaMap = {
-        0: 'Conta Corrente',
-        1: 'Conta Poupança',
-        2: 'Conta Salário'
+        0: 'Corrente',
+        1: 'Poupança',
+        2: 'Salário',
+        3: 'Digital'
       };
     
       const tipoConta = tipoContaMap[account.categoria] || 'Tipo de conta desconhecido';
+      let ContaCarteira = account.nome_conta === 'Carteira' ? 'Carteira' : 'Conta';
       const contaDiv = document.createElement('div');
       contaDiv.classList.add('conta');
       if (index === 0) {
@@ -62,14 +64,13 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
         contaDiv.style.transform = 'translateX(0)';
       }
     
-      // HTML da conta com <p> para desempenho
       contaDiv.innerHTML = `
         <div class="logo">
           <img src="../imagens/logos/${account.nome_conta}.png" alt="Logo ${account.nome_conta}">
         </div>
         <div class="infos-conta">
           <h1>${account.nome_conta}</h1>
-          <h2 id="tipo-conta">${tipoConta}</h2>
+          <h2 id="tipo-conta">${ContaCarteira} ${tipoConta}</h2>
           <h2>Saldo: R$ ${parseFloat(account.saldo_atual).toFixed(2).replace('.', ',')}</h2>
           <p><span id="desempenho-${account.id_conta}"></span>ao mês anterior</p>
         </div>
@@ -340,6 +341,10 @@ fetch('../Paginas/consultas/infos-contas.php')
     const contas = data.contas; // Acessa a lista de contas retornada da resposta
 
     contas.forEach(conta => {
+      if (conta.nome_conta.toLowerCase() === "carteira") {
+        return;
+      }
+      
       const tipoContaMap = {
         0: 'C',
         1: 'P',

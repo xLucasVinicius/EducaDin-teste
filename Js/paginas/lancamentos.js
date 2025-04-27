@@ -50,7 +50,8 @@ window.addEventListener('DOMContentLoaded', function () {
         const categoriaMap = {
             "0": "C", // Corrente
             "1": "P", // Poupança
-            "2": "S"  // Salário
+            "2": "S",  // Salário
+            "3": "D"  // Digital
         };
     
         const contasMap = new Map();
@@ -104,6 +105,10 @@ window.addEventListener('DOMContentLoaded', function () {
                 select.appendChild(defaultOption);
     
                 data.contas.forEach(conta => {
+                    // Se o nome da conta for "carteira", não adiciona
+                    if (conta.nome_conta.toLowerCase() === "carteira") {
+                        return; // pula para o próximo item do forEach
+                    }
                     const sigla = categoriaMap[conta.categoria] || "?";
                     const nomeComCategoria = `${conta.nome_conta} ${sigla}`;
     

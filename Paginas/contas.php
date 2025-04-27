@@ -142,16 +142,20 @@
                         <label for="tipo">Tipo de Conta</label>
                         <div class="opcoes-conta">
                             <div class="opcao">
-                            <label for="corrente">Corrente</label>
-                            <input type="radio" name="tipo" value="0" id="corrente">
+                                <label for="corrente">Corrente</label>
+                                <input type="radio" name="tipo" value="0" id="corrente">
                             </div>
                             <div class="opcao">
-                            <label for="poupanca">Poupanca</label>
-                            <input type="radio" name="tipo" value="1" id="poupanca">
+                                <label for="poupanca">Poupanca</label>
+                                <input type="radio" name="tipo" value="1" id="poupanca">
                             </div>
                             <div class="opcao">
-                            <label for="salario">Salario</label>
-                            <input type="radio" name="tipo" value="2" id="salario">
+                                <label for="salario">Salario</label>
+                                <input type="radio" name="tipo" value="2" id="salario">
+                            </div>
+                            <div class="opcao">
+                                <label for="digital">Digital</label>
+                                <input type="radio" name="tipo" value="3" id="digital">
                             </div>
                         </div>
                     </div>

@@ -65,10 +65,10 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Logo</th>
+                            <th>Imagem</th>
                             <th>Conta</th>
                             <th>Limite</th>
-                            <th>Ação</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="cartoes-tabela-body">
@@ -141,13 +141,14 @@
                 </div>
 
                 <div class="btn-form">
-                    <button class="adicionar-excluir-cartao" id="adicionar-excluir-cartao" type="button">Add/Excluir</button>
                     <button type="submit">Salvar</button>
                 </div>
                 <input type="hidden" name="id_cartao" id="id-cartao-editar">
             </form>
         </div>
     </div>
+
+    <button class="adicionar-excluir-cartao" id="adicionar-excluir-cartao" type="button">Add/Excluir</button>
     
     <section class="elemento-fora">
         
@@ -182,35 +183,49 @@
                         <label for="conta">Instituição</label>
                         <select name="conta" id="conta">
                             <option value="">Selecione a conta</option>
-                            
                         </select>
                     </div>
-                    <div class="limite-cartao">
-                        <label for="limite">Limite total do Cartão</label>
-                        <input type="text" name="limite" id="limite" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
+                    <div class="tipo-cartao">
+                        <label for="tipo">Tipo de Cartão</label>
+                        <div class="opcoes">
+                            <div class="opcao">
+                                <input type="radio" name="tipo" value="0" id="debito" onchange="ocultarCamposCredito()">
+                                <label for="debito">Débito</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="tipo" value="1" id="credito" onchange="mostrarCamposCredito()">
+                                <label for="credito">Crédito</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="data-fechamento">
-                        <label for="fechamento">Dia de fechamento</label>
-                        <select name="fechamento" id="fechamento">
-                            <option value="">Selecione o dia</option>
-                        </select>
-                    </div>
-                    
-                    <div class="data-vencimento">
-                        <label for="vencimento">Dia de vencimento</label>
-                        <select name="vencimento" id="vencimento">
-                            <option value="">Selecione o dia</option>
-                        </select>
-                    </div>
-                    <div class="anuidade">
-                        <span>
-                            <label for="anuidade">Possui anuidade</label>
-                            <input type="checkbox" name="anuidade" id="anuidade">
-                        </span>
-                    </div>
-                    <div class="digitar-anuidade">
-                            <label for="anuidade-valor">Valor da parcela</label>
-                            <input type="text" name="anuidade-valor" id="anuidade-valor" placeholder="R$ 0,00" oninput="formatarMoeda(this)" autocomplete="off">
+                    <div class="opcoes-credito">
+                        <div class="limite-cartao">
+                            <label for="limite">Limite total do Cartão</label>
+                            <input type="text" name="limite" id="limite" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
+                        </div>
+                        <div class="data-fechamento">
+                            <label for="fechamento">Dia de fechamento</label>
+                            <select name="fechamento" id="fechamento">
+                                <option value="">Selecione o dia</option>
+                            </select>
+                        </div>
+                        
+                        <div class="data-vencimento">
+                            <label for="vencimento">Dia de vencimento</label>
+                            <select name="vencimento" id="vencimento">
+                                <option value="">Selecione o dia</option>
+                            </select>
+                        </div>
+                        <div class="anuidade">
+                            <span>
+                                <label for="anuidade">Possui anuidade</label>
+                                <input type="checkbox" name="anuidade" id="anuidade">
+                            </span>
+                        </div>
+                        <div class="digitar-anuidade">
+                                <label for="anuidade-valor">Valor da parcela</label>
+                                <input type="text" name="anuidade-valor" id="anuidade-valor" placeholder="R$ 0,00" oninput="formatarMoeda(this)" autocomplete="off">
+                        </div>
                     </div>
                     <div class="pontos">
                         <span>
