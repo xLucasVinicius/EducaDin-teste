@@ -48,9 +48,11 @@ fetch('../Paginas/consultas/infos-dashboard.php')
         },
         yaxis: {
             labels: {
+                formatter: (value) => `R$ ${value.toFixed(0).replace('.', '')}`,
                 show: true,
                 style: {
-                    colors: 'white'
+                    colors: 'white',
+                    fontSize: '12px'
                 }
             }
         },
@@ -63,7 +65,8 @@ fetch('../Paginas/consultas/infos-dashboard.php')
             show: false
         },
         tooltip: {
-            enabled: true
+            enabled: true,
+            theme: 'dark'
         }
     };
 
@@ -131,6 +134,10 @@ fetch('../Paginas/consultas/desempenho-geral-anterior-atual.php')
     const porcentagemSaidas = document.getElementById('porcentagemSaidas');
     const porcentagemSaldo = document.getElementById('porcentagemSaldo');
 
+    let saldoFinal = data.saldo_final_anterior + data.saldo_final_atual;
+    let totalReceitas = data.total_receitas_atual == 0 ? data.total_receitas_anterior : data.total_receitas_atual;
+    let totalDespesas = data.total_despesas_atual == 0 ? data.total_despesas_anterior : data.total_despesas_atual;
+
     // Cálculo das porcentagens
     let valorPorcentagemEntradas = data.total_receitas_anterior !== 0
         ? ((data.total_receitas_atual - data.total_receitas_anterior) / data.total_receitas_anterior) * 100
@@ -142,7 +149,11 @@ fetch('../Paginas/consultas/desempenho-geral-anterior-atual.php')
 
     let valorPorcentagemSaldo;
         if (data.saldo_final_anterior !== 0) {
-            valorPorcentagemSaldo = ((data.saldo_final_atual - data.saldo_final_anterior) / Math.abs(data.saldo_final_anterior)) * 100;
+            if (data.saldo_final_atual == 0) {
+                valorPorcentagemSaldo = 0;
+            } else {
+                valorPorcentagemSaldo = ((saldoFinal - data.saldo_final_anterior) / Math.abs(data.saldo_final_anterior)) * 100;
+            }
         } else {
             valorPorcentagemSaldo = data.saldo_final_atual > 0 ? 100 : 0;
         }
@@ -164,7 +175,7 @@ fetch('../Paginas/consultas/desempenho-geral-anterior-atual.php')
     // Preenche os valores nos elementos
     txtEntradas.textContent = `R$ ${data.total_receitas_atual.toFixed(2).replace('.', ',')}`;
     txtSaidas.textContent = `R$ ${data.total_despesas_atual.toFixed(2).replace('.', ',')}`;
-    txtSaldo.textContent = `R$ ${data.saldo_final_atual.toFixed(2).replace('.', ',')}`;
+    txtSaldo.textContent = `R$ ${saldoFinal.toFixed(2).replace('.', ',')}`;
 
     porcentagemEntradas.innerHTML = `<span style="color: ${corPorcentagemE};">${sinal(valorPorcentagemEntradas)}%</span> ao mês anterior`;
     porcentagemSaidas.innerHTML = `<span style="color: ${corPorcentagemS};">${sinal(valorPorcentagemSaidas)}%</span> ao mês anterior`;

@@ -8,6 +8,7 @@ const modalExcluirSucesso = document.getElementById('modalexcluirSucesso'); //mo
 const modalSucess = document.querySelector('#modalAddContas'); //modal de sucesso ao adicionar conta
 const modalErrorAdd = document.querySelector('#errorModalAddContas'); //modal de erro ao adicionar conta
 const modalErrorPreencher = document.querySelector('#errorModalPreencher'); //modal de erro para preencher campos
+const modalErrorLimite = document.querySelector('#errorModalLimiteContas'); //modal de erro para preencher campos
 const modalConfirmarExcluir = document.querySelector('#modalConfirmarExcluir'); //modal de confirmação de exclusão de conta
 const msgConfirmarExcluir = document.querySelector('#modalConfirmarExcluir h2'); //mensagem de confirmação de exclusão de conta
 const tabelaBody = document.getElementById('contas-tabela-body'); //tabela de contas para excluir
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
     }
     
     const accountsData = data.contas; // Atribuir os dados de contas da resposta
-    const lancamentosData = data.lancamentos; // Atribuir os dados de lançamentos da resposta
+    const lancamentosData = data.lancamentos ; // Atribuir os dados de lançamentos da resposta
     localStorage.setItem('accountsData', JSON.stringify(accountsData)); // Armazena os dados de contas no localStorage
     const carouselContainer = document.querySelector('.contas-carrossel'); // Carrossel de contas
     const lancamentosContainer = document.querySelector('.lancamentos'); // Container de lançamentos
@@ -104,7 +105,11 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
             desempenho = 0;
           }
         } else {
-          desempenho = ((saldoAtual - saldoAnterior) / Math.abs(saldoAnterior)) * 100;
+          if (saldoAtual == 0) {
+            desempenho = 0;
+          } else {
+            desempenho = (saldoAtual / Math.abs(saldoAnterior)) * 100;
+          }
         }
       
         const desempenhoFormatado = desempenho.toFixed(2).replace('.', ',');
@@ -200,17 +205,34 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
 
     // Função para renderizar os lançamentos em formato de tabela
     function renderLancamentos(accountId) {
-      lancamentosContainer.innerHTML = '';  // Limpa o container de lançamentos
-      const lancamentos = lancamentosData.filter(l => l.id_conta === accountId); // Filtra os lançamentos da conta selecionada
+      lancamentosContainer.innerHTML = ''; // Limpa o container de lançamentos
+    
+      const hoje = new Date();
+      const hojeAnoMes = hoje.toISOString().slice(0, 7); // "2025-05"
+    
+      // Filtra os lançamentos da conta selecionada E do mês atual
+      const lancamentos = lancamentosData.filter(l => {
+        if (parseInt(l.id_conta) != parseInt(accountId) || !l.data) return false;
+      
+        const dataLanc = new Date(l.data);
+        const lancAnoMes = dataLanc.toISOString().slice(0, 7);
 
-      if (lancamentos.length === 0) { // Se nenhum lançamento for encontrado
-        lancamentosContainer.innerHTML = '<z style="color: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Nenhum lançamento encontrado.</z>'; 
+        return (
+          parseInt(l.id_conta) === parseInt(accountId) &&
+          lancAnoMes === hojeAnoMes
+        );
+
+      });
+      
+      console.log(lancamentos);
+    
+      if (lancamentos.length === 0) {
+        lancamentosContainer.innerHTML = '<z style="color: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Nenhum lançamento encontrado.</z>';
         return;
       }
-
-      const table = document.createElement('table'); // Cria uma tabela
-
-      // Cria o cabeçalho da tabela
+    
+      const table = document.createElement('table');
+    
       const thead = `
         <thead>
             <tr>
@@ -223,15 +245,13 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
                 <th>Data</th>
             </tr>
         </thead>`;
-      
-      // Cria as linhas da tabela
+    
       let tbody = '<tbody>';
-
-      // Cria as linhas da tabela
+    
       lancamentos.forEach(lancamento => {
         let lancamentoTipo = parseInt(lancamento.tipo) === 1 ? 'Despesa' : 'Receita';
         let classeValor = lancamentoTipo === 'Despesa' ? 'despesa' : 'receita';
-
+    
         tbody += `
           <tr>
               <td>${lancamento.descricao}</td>
@@ -243,13 +263,13 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
               <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
           </tr>`;
       });
-
-      // Finaliza o corpo da tabela
+    
       tbody += '</tbody>';
-
-      table.innerHTML = thead + tbody; // Insere o cabeçalho e o corpo na tabela
-      lancamentosContainer.appendChild(table); // Adiciona a tabela ao container
+    
+      table.innerHTML = thead + tbody;
+      lancamentosContainer.appendChild(table);
     }
+    
 
     // Renderiza os lançamentos iniciais
     renderLancamentos(accountsData[currentIndex].id_conta);
@@ -291,6 +311,8 @@ formConta.addEventListener('submit', function (event) {
                 showModalError(data); // Exibe o modal com erro
             } else if (data.status === 'success') {
                 handleSuccess(data); // Exibe o modal de sucesso
+            } else if (data.status === 'limite_contas') {
+                modalErrorLimite.style.display = 'block'; // Exibe o modal de erro de limite de contas
             }
         })
         .catch(error => console.error('Erro:', error));
@@ -311,6 +333,11 @@ document.getElementById('btnModalCampos').addEventListener('click', function () 
 // Evento para fechar o modal de erro de conta existente
 document.getElementById('btnModalConta').addEventListener('click', function () {
     modalErrorAdd.style.display = 'none';
+});
+
+// Evento para fechar o modal de erro de limite de contas
+document.getElementById('btnModalLimite').addEventListener('click', function () {
+    modalErrorLimite.style.display = 'none';
 });
 
 // Evento para fechar o modal de sucesso

@@ -25,6 +25,16 @@ if ($tipo == 0) $parcelas = 0;
 $data_ref = date('Y-m-01', strtotime($data));
 $mesAtual = date('Y-m'); // Mês atual
 
+if ($metodo == 'Dinheiro') {
+    $sql_buscar_conta_dinheiro = "SELECT id_conta FROM contas WHERE id_usuario = ? AND nome_conta = 'Carteira'";
+    $stmt_buscar_conta_dinheiro = $mysqli->prepare($sql_buscar_conta_dinheiro);
+    $stmt_buscar_conta_dinheiro->bind_param("i", $id_usuario);
+    $stmt_buscar_conta_dinheiro->execute();
+    $stmt_buscar_conta_dinheiro->bind_result($id_conta);
+    $stmt_buscar_conta_dinheiro->fetch();
+    $stmt_buscar_conta_dinheiro->close();
+}
+
 // Se for cartão de débito e a conta não tiver sido definida, buscar a conta vinculada ao cartão
 if ($metodo === 'Débito' && empty($id_conta) && !empty($id_cartao)) {
     $query = "SELECT id_conta FROM cartoes WHERE id_cartao = ? AND id_usuario = ?";

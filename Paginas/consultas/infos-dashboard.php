@@ -7,12 +7,20 @@ header('Content-Type: application/json');
 $id_usuario = $_SESSION['id'];
 $resposta = [];
 
+if (isset($_GET['data']) && preg_match('/^\d{2}\/\d{4}$/', $_GET['data'])) {
+    [$mesSelecionado, $anoSelecionado] = explode('/', $_GET['data']);
+    $mesSelecionado = (int)$mesSelecionado;
+    $anoSelecionado = (int)$anoSelecionado;
+} else {
+    $mesSelecionado = (int)date('n');
+    $anoSelecionado = (int)date('Y');
+}
+
 // Consulta: Obter o plano (como TINYINT: 0 = grátis, 1 = premium)
 $sqlPlano = "SELECT plano FROM usuarios WHERE id_usuario = $id_usuario LIMIT 1";
 $resultPlano = $mysqli->query($sqlPlano);
 
-$plano = 0; // valor padrão: grátis
-
+$plano = 0; // padrão: grátis
 if ($resultPlano && $resultPlano->num_rows > 0) {
     $plano = (int)$resultPlano->fetch_assoc()['plano'];
 }
@@ -24,14 +32,13 @@ $sqlDesempenho = "SELECT MONTH(data_ref) AS mes, YEAR(data_ref) AS ano, saldo_fi
 $resultDesempenho = $mysqli->query($sqlDesempenho);
 
 $valoresMensais = array_fill(0, 12, 0);
-$anoAtual = date('Y');
+$anoAtual = (int)date('Y');
 
 if ($resultDesempenho && $resultDesempenho->num_rows > 0) {
     while ($row = $resultDesempenho->fetch_assoc()) {
         $mesIndex = (int)$row['mes'] - 1;
-        $anoRegistro = $row['ano'];
+        $anoRegistro = (int)$row['ano'];
 
-        // Só soma os dados do ano atual
         if ($anoRegistro == $anoAtual) {
             $valoresMensais[$mesIndex] += (float)$row['saldo_final'];
         }
@@ -56,20 +63,46 @@ if ($plano === 0) {
 $resposta['ano'] = $anoAtual;
 $resposta['valoresMensais'] = $valoresMensais;
 
-// Consulta: Categorias dos lançamentos
-$sqlCategorias = "SELECT categoria, COUNT(*) as quantidade FROM lancamentos WHERE id_usuario = $id_usuario AND categoria IS NOT NULL AND categoria != '' AND tipo = 1 GROUP BY categoria";
-$resultCategorias = $mysqli->query($sqlCategorias);
-$resposta['categorias'] = [];
+// Verifica se o plano gratuito está acessando meses fora dos permitidos
+$bloquearCategorias = false;
+if ($plano === 0) {
+    $dataAtual = new DateTime();
+    $dataSelecionada = DateTime::createFromFormat('m/Y', str_pad($mesSelecionado, 2, '0', STR_PAD_LEFT) . '/' . $anoSelecionado);
 
-if ($resultCategorias && $resultCategorias->num_rows > 0) {
-    while ($row = $resultCategorias->fetch_assoc()) {
-        $resposta['categorias'][] = ['nome' => $row['categoria'], 'quantidade' => (int)$row['quantidade']];
+    // Pega 2 meses anteriores
+    $dataLimite = (clone $dataAtual)->modify('-2 months');
+
+    if ($dataSelecionada < $dataLimite) {
+        $bloquearCategorias = true;
     }
 }
 
-//Consulta dos 5 lançamentos mais recentes
-$sqlLancamentos = "SELECT descricao, valor, metodo_pagamento, categoria, subcategoria, data, parcelas FROM lancamentos WHERE id_usuario = $id_usuario ORDER BY data DESC LIMIT 5";
+// Consulta: Categorias dos lançamentos (somente se não bloqueado)
+$resposta['categorias'] = [];
+if (!$bloquearCategorias) {
+    $sqlCategorias = "SELECT categoria, COUNT(*) as quantidade FROM lancamentos 
+                      WHERE id_usuario = $id_usuario 
+                      AND categoria IS NOT NULL AND categoria != '' 
+                      AND MONTH(data) = $mesSelecionado AND YEAR(data) = $anoSelecionado  
+                      AND tipo = 1 
+                      GROUP BY categoria";
+    $resultCategorias = $mysqli->query($sqlCategorias);
 
+    if ($resultCategorias && $resultCategorias->num_rows > 0) {
+        while ($row = $resultCategorias->fetch_assoc()) {
+            $resposta['categorias'][] = [
+                'nome' => $row['categoria'],
+                'quantidade' => (int)$row['quantidade']
+            ];
+        }
+    }
+}
+
+// Consulta dos 5 lançamentos mais recentes
+$sqlLancamentos = "SELECT descricao, valor, metodo_pagamento, categoria, subcategoria, data, parcelas 
+                   FROM lancamentos 
+                   WHERE id_usuario = $id_usuario 
+                   ORDER BY data DESC LIMIT 5";
 $resultLancamentos = $mysqli->query($sqlLancamentos);
 $resposta['lancamentos'] = [];
 

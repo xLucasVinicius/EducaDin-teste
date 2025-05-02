@@ -1,0 +1,162 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+:root {
+    --cor-principal: #F2A900;
+    --cor-fundo: #3D3D3D;
+    --cor-fundo-content: #1F1F1F;
+    --cor-txt: #FFFFFF;
+}
+
+.container-total-desempenho {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.container-total-desempenho > h1 {
+    color: var(--cor-principal);
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 20px;
+}
+
+.conteudo-total {
+    width: 100%;
+    max-width: 1400px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+}
+
+.grafico-desempenho {
+    border-radius: 15px;
+    border: 1px solid var(--cor-principal);
+    display: flex;
+    flex-direction: column;
+    font-family: "Lato", serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--cor-principal);
+}
+
+.chart1 {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    padding: 10px;
+    position: relative;
+}
+
+.chart1 > h2 {
+    color: var(--cor-txt);
+}
+
+.chart1 select {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: transparent;
+    border: 1px solid var(--cor-principal);
+    border-radius: 35px;
+    color: var(--cor-txt);
+    padding: 5px;
+    cursor: pointer
+}
+
+.chart1 option {
+    background-color: var(--cor-fundo-content);
+}
+
+#chart1 {
+    width: 100%;
+}
+
+.chart2 {
+    grid-column: 3;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    font-size: 1.5rem;
+}
+
+.chart2 > table {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: var(--cor-txt);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: scroll;
+    scrollbar-color: var(--cor-principal) var(--cor-fundo-content);
+    scrollbar-width: thin;
+}
+
+.chart2 > table tr {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    border: 1px solid rgb(85, 85, 85);
+    border-radius: 30px;
+    padding: 5px;
+}
+
+.chart3 {
+    grid-column: 1;
+    grid-row: 2;
+    
+}
+
+.chart4 {
+    grid-column: 2;
+    grid-row: 2;
+    position: relative;
+    height: 252px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.chart4 .seletor-data {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.chart4 .seletor-data select {
+    background-color: transparent;
+    border: 1px solid var(--cor-principal);
+    border-radius: 35px;
+    color: var(--cor-txt);
+    padding: 5px;
+    cursor: pointer;
+}
+
+.chart4 .seletor-data option {
+    background-color: var(--cor-fundo-content);
+}
+
+.chart5 {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+select:focus {
+    outline: none;
+}

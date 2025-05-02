@@ -7,6 +7,24 @@ $nome_conta = $_POST['conta']; // Nome da conta
 $saldo = $_POST['saldo']; // Saldo da conta
 $tipo = $_POST['tipo']; // Tipo da conta
 
+$sql_buscar_plano = "SELECT plano FROM usuarios WHERE id_usuario = ?";
+$stmt_buscar_plano = $mysqli->prepare($sql_buscar_plano);
+$stmt_buscar_plano->bind_param("i", $id_usuario);
+$stmt_buscar_plano->execute();
+$result_buscar_plano = $stmt_buscar_plano->get_result();
+$plano = $result_buscar_plano->fetch_assoc()['plano'] ?? 0;
+
+if ($plano == 0) {
+    $sql_qntd_contas = "SELECT COUNT(*) FROM contas WHERE id_usuario = '$id_usuario'"; // Conta quantas contas o usuário tem
+    $result_qntd_contas = $mysqli->query($sql_qntd_contas);
+    $qntd_contas = $result_qntd_contas->fetch_row()[0];
+
+    if ($qntd_contas >= 4) {
+        echo json_encode(['status' => 'limite_contas']);
+        exit();
+    }
+}
+
 $saldo = formatarSalario($saldo); // Formata o saldo
 
 $sqlTest = "SELECT * FROM contas WHERE nome_conta = '$nome_conta' AND categoria = '$tipo'"; // Verifica se a conta ja existe

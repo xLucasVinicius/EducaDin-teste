@@ -6,6 +6,28 @@ include("../configs/config.php");
 $id_usuario = $_SESSION['id'];
 $mes_escolhido = $_POST['mes'] ?? date('Y-m');
 
+// Buscar o plano do usuário
+$query_plano = "SELECT plano FROM usuarios WHERE id_usuario = ?";
+$stmt_plano = $mysqli->prepare($query_plano);
+$stmt_plano->bind_param("i", $id_usuario);
+$stmt_plano->execute();
+$result_plano = $stmt_plano->get_result();
+$plano = $result_plano->fetch_assoc()['plano'] ?? 0;
+
+// Verificar acesso baseado no plano
+if ($plano == 0) {
+    $data_limite = new DateTime(); // Data atual
+    $data_limite->modify('-2 months'); // Limite: 2 meses atrás
+    $data_escolhida = DateTime::createFromFormat('Y-m', $mes_escolhido);
+
+    if ($data_escolhida < $data_limite) {
+        echo json_encode([
+            'error' => 'Plano gratuito permite acesso apenas aos últimos 3 meses.'
+        ]);
+        exit;
+    }
+}
+
 // Buscar lançamentos do mês específico
 $query = "SELECT * FROM lancamentos WHERE id_usuario = ? AND data LIKE CONCAT(?, '%')";
 $stmt = $mysqli->prepare($query);
@@ -46,3 +68,4 @@ echo json_encode([
 ], JSON_UNESCAPED_UNICODE);
 
 ?>
+

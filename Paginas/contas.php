@@ -37,6 +37,14 @@
             <button id="btnModalConta">Ok</button>
         </div>
     </div>
+    <!-- Modal de Erro -->
+    <div id="errorModalLimiteContas" class="modal">
+        <div class="modal-content error-conta">
+            <h2>Erro!</h2>
+            <p>Você atingiu o limite de contas.<br> Atualize seu plano para adicionar mais contas.</p>
+            <button id="btnModalLimite">Ok</button>
+        </div>
+    </div>
     <!-- Modal de excluir conta -->
     <div id="ModalexcluirContas" class="modal">
         <div class="modal-content excluir-conta-modal">
