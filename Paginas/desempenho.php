@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EducaDin</title>
     <link rel="stylesheet" href="../Style/desempenho/desempenho.css">
+    <link rel="stylesheet" href="../Style/desempenho/media-desempenho.css">
 </head>
 <body>
     <section class="container-total-desempenho">
@@ -27,7 +28,9 @@
                 </table>
             </div>
             <div class="grafico-desempenho chart3">
-                Gráfico 3
+                <h3>Categorias por mês</h3>
+                <div id="checkbox-categorias"></div>
+                <select id="select-ano"></select>
                 <div id="chart2"></div>
             </div>
             <div class="grafico-desempenho chart4">
@@ -40,8 +43,25 @@
                 <div id="chart3"></div>
             </div>
             <div class="grafico-desempenho chart5">
-                Gráfico 5
-                <div id="chart4"></div>
+                Controle de Gastos
+                <select name="data-essencial" id="data-essencial"></select>
+                <div id="grafico-categorias">
+                    <div class="barra-container">
+                        <span style="color: rgb(0, 255, 0);">GastosEssenciais</span>
+                        <div class="progress-bar">
+                        <div id="barra-essenciais" class="progresso"></div>
+                        </div>
+                        <span id="porcentagem-essenciais" style="color:rgb(0, 255, 0)">0%</span>
+                    </div>
+
+                    <div class="barra-container">
+                        <span style="color: rgb(255, 0, 0);">Gastos Desnecessárias</span>
+                        <div class="progress-bar">
+                        <div id="barra-desnecessarias" class="progresso"></div>
+                        </div>
+                        <span id="porcentagem-desnecessarias" style="color:rgb(255, 0, 0)">0%</span>
+                    </div>
+                </div>
             </div>
         </section>
     </section>
