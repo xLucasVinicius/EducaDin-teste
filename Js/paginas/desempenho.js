@@ -63,8 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         labels: {formatter: val => `R$ ${val.toFixed(2).replace('.', ',')}`, style: {colors: 'white'}}
                     },
                     grid: {borderColor: 'rgba(255, 255, 255, 0.1)' },
+                    dataLabels: {enabled: false},
                     plotOptions: {
-                        bar: {horizontal: false, columnWidth: '60%', endingShape: 'rounded', borderRadius: 3}
+                        bar: {horizontal: false, columnWidth: '65%', endingShape: 'rounded', borderRadius: 3}
                     },
                     legend: {position: 'bottom', labels: {colors: 'white'}},
                     tooltip: {theme: 'dark', y: {formatter: val => `R$ ${val.toFixed(2).replace('.', ',')}`}}
@@ -141,37 +142,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch(error => console.error('Erro ao carregar os dados:', error));
 
     //===============================================================================================
-
-    function renderCheckboxes(data, anoSelecionado) {
-        const container = document.getElementById('checkbox-categorias');
-        container.innerHTML = ''; // Limpa os checkboxes existentes
-    
-        const categoriasUnicas = new Set();
-    
-        if (data.dados[anoSelecionado]) {
-            for (const mes in data.dados[anoSelecionado]) {
-                for (const categoria in data.dados[anoSelecionado][mes]) {
-                    categoriasUnicas.add(categoria);
-                }
-            }
-        }
-    
-        categoriasUnicas.forEach(categoria => {
-            const checkboxWrapper = document.createElement('label');
-            checkboxWrapper.style.display = 'flex';
-    
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.name = 'categoria';
-            checkbox.value = categoria;
-            checkbox.checked = true;
-    
-            checkboxWrapper.appendChild(checkbox);
-            checkboxWrapper.appendChild(document.createTextNode(' ' + categoria));
-            container.appendChild(checkboxWrapper);
-        });
-    }
-    
 
     // Função para inicializar e renderizar o gráfico
     function renderGrafico(data, categoriasSelecionadas, anoSelecionado) {
