@@ -9,6 +9,10 @@
         grid-row: 2;
     }
 
+    .chart3 #checkbox-categorias {
+        width: 70%;
+    }
+
     .chart4 {
         grid-column: 1 / span 3;
         grid-row: 4;
@@ -30,7 +34,6 @@
     .chart3 {
         grid-column: 1 / span 2;
         grid-row: 2;
-        
     }
 
     .chart4 {

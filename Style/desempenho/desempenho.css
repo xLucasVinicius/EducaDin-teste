@@ -125,8 +125,10 @@ option {
 }
 
 .chart3 #checkbox-categorias {
+    max-width: 450px;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     gap: 7px;
     font-size: 0.7rem;
