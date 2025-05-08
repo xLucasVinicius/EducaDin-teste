@@ -4,7 +4,7 @@ session_start();
 include("../configs/config.php");
 header('Content-Type: application/json');
 
-$id_usuario = $_SESSION['id'];
+$id_usuario = $_SESSION['id_usuario'];
 $resposta = [];
 
 if (isset($_GET['data']) && preg_match('/^\d{2}\/\d{4}$/', $_GET['data'])) {

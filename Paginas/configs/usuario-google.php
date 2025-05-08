@@ -44,23 +44,26 @@ function salvarImagemGoogle($url, $novo_nome) {
 session_start();
 
 // Verifica se o email já está cadastrado
-$stmt_check_email = $mysqli->prepare("SELECT id_usuario, nome, sobrenome, email, foto_perfil, salario, data_nascimento FROM usuarios WHERE email = ?");
+$stmt_check_email = $mysqli->prepare("SELECT id_usuario, foto_perfil, nome, sobrenome, email, salario, plano, poder, moedas, data_nascimento FROM usuarios WHERE email = ?");
 $stmt_check_email->bind_param("s", $email);
 $stmt_check_email->execute();
 $stmt_check_email->store_result();
 
 if ($stmt_check_email->num_rows > 0) { // O email já existe no banco de dados, logar o usuário
     
-    $stmt_check_email->bind_result($id_usuario, $nome_usuario, $sobrenome_usuario, $email_usuario, $foto_perfil_usuario, $salario_usuario, $data_nascimento_usuario);
+    $stmt_check_email->bind_result($id_usuario, $foto_perfil_usuario, $nome_usuario, $sobrenome_usuario, $email_usuario, $salario_usuario, $plano_usuario, $poder_usuario, $moedas_usuario, $data_nascimento_usuario);
     $stmt_check_email->fetch();
 
     // Salvar as informações do usuário nas variáveis de sessão
-    $_SESSION['id'] = $id_usuario;
+    $_SESSION['id_usuario'] = $id_usuario;
+    $_SESSION['foto_perfil'] = $foto_perfil_usuario;
     $_SESSION['nome'] = $nome_usuario;
     $_SESSION['sobrenome'] = $sobrenome_usuario;
     $_SESSION['email'] = $email_usuario;
-    $_SESSION['file'] = $foto_perfil_usuario;
     $_SESSION['salario'] = $salario_usuario;
+    $_SESSION['plano'] = $plano_usuario;
+    $_SESSION['poder'] = $poder_usuario;
+    $_SESSION['moedas'] = $moedas_usuario;
     $_SESSION['data_nascimento'] = $data_nascimento_usuario;
 
     echo json_encode(['status' => 'success']);
@@ -85,21 +88,24 @@ if ($stmt_check_email->num_rows > 0) { // O email já existe no banco de dados, 
 
         if ($stmt_insert->execute()) {
             // Buscar as informações do usuário no banco de dados após o cadastro
-            $stmt_check_email = $mysqli->prepare("SELECT id_usuario, nome, sobrenome, email, foto_perfil, salario, data_nascimento FROM usuarios WHERE email = ?");
+            $stmt_check_email = $mysqli->prepare("SELECT id_usuario, foto_perfil, nome, sobrenome, email, salario, plano, poder, moedas, data_nascimento FROM usuarios WHERE email = ?");
             $stmt_check_email->bind_param("s", $email);
             $stmt_check_email->execute();
             $stmt_check_email->store_result();
 
             // Salvar as informações do usuário nas variáveis de sessão
-            $stmt_check_email->bind_result($id_usuario, $nome_usuario, $sobrenome_usuario, $email_usuario, $foto_perfil_usuario, $salario_usuario, $data_nascimento_usuario);
+            $stmt_check_email->bind_result($id_usuario, $foto_perfil_usuario, $nome_usuario, $sobrenome_usuario, $email_usuario, $salario_usuario, $plano_usuario, $poder_usuario, $moedas_usuario, $data_nascimento_usuario);
             $stmt_check_email->fetch();
 
             $_SESSION['id'] = $id_usuario;
+            $_SESSION['foto_perfil'] = $foto_perfil_usuario;
             $_SESSION['nome'] = $nome_usuario;
             $_SESSION['sobrenome'] = $sobrenome_usuario;
             $_SESSION['email'] = $email_usuario;
-            $_SESSION['file'] = $foto_perfil_usuario;
             $_SESSION['salario'] = $salario_usuario;
+            $_SESSION['plano'] = $plano_usuario;
+            $_SESSION['poder'] = $poder_usuario;
+            $_SESSION['moedas'] = $moedas_usuario;
             $_SESSION['data_nascimento'] = $data_nascimento_usuario;
 
             echo json_encode(['status' => 'success']);

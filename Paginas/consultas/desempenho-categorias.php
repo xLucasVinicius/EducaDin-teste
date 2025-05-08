@@ -3,7 +3,7 @@ session_start();
 include("../configs/config.php");
 header('Content-Type: application/json');
 
-$id_usuario = $_SESSION['id'];
+$id_usuario = $_SESSION['id_usuario'];
 if (!$id_usuario) {
     echo json_encode(['erro' => 'Usuário não autenticado']);
     exit;

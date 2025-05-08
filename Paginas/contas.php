@@ -1,7 +1,3 @@
-<?php
-    $id = $_SESSION['id'];
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -171,7 +167,7 @@
                         <button class="excluir-conta" id="excluir-conta" type="button">Excluir Conta</button>
                         <button type="submit">Adicionar</button>
                     </div>
-                    <input type="hidden" name="id_usuario" value="<?php echo $id; ?>">
+                    <input type="hidden" name="id_usuario" value="<?php echo $_SESSION['id_usuario']; ?>">
                 </form>
             </div>
         </section>

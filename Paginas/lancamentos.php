@@ -145,7 +145,7 @@
                     <input type="number" name="parcelas" id="parcelas" placeholder="Quantidade de parcelas" value="0">
                 </span>
                 <input type="submit" value="Adicionar" id="adicionar-lancamento">
-                <input type="hidden" name="id_usuario" value="<?php echo $_SESSION['id']; ?>">
+                <input type="hidden" name="id_usuario" value="<?php echo $_SESSION['id_usuario']; ?>">
             </form>
         </div>
     </div>
@@ -211,7 +211,7 @@
                 </span>
                 <input type="submit" value="Salvar" id="editar-lancamento">
                 <input type="hidden" name="id-lancamento" id="id-lancamento-editar">
-                <input type="hidden" name="id_usuario-editar" value="<?php echo $_SESSION['id']; ?>">
+                <input type="hidden" name="id_usuario-editar" value="<?php echo $_SESSION['id_usuario']; ?>">
             </form>
         </div>
     </div>

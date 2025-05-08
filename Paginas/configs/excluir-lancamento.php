@@ -7,12 +7,12 @@ header('Content-Type: application/json');
 
 $response = ['status' => 'error', 'message' => 'Ocorreu um erro.'];
 
-if (!isset($_SESSION['id']) || !isset($_GET['id_lancamento'])) {
+if (!isset($_SESSION['id_usuario']) || !isset($_GET['id_lancamento'])) {
     echo json_encode(['status' => 'error', 'message' => 'Dados incompletos.']);
     exit;
 }
 
-$id_usuario = $_SESSION['id'];
+$id_usuario = $_SESSION['id_usuario'];
 $id_lancamento = $_GET['id_lancamento'];
 
 $query_valor = "SELECT valor, id_conta, tipo, data FROM lancamentos WHERE id_lancamento = ? AND id_usuario = ?";

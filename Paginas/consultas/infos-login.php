@@ -22,8 +22,8 @@ if(isset($_POST['email'])){
         // Verifica a senha
         if (password_verify($senha, $usuario['senha'])) {
             // Armazenando os dados do usuário na sessão
-            $_SESSION['id'] = $usuario['id_usuario'];
-            $_SESSION['file'] = $usuario['foto_perfil'];
+            $_SESSION['id_usuario'] = $usuario['id_usuario'];
+            $_SESSION['foto_perfil'] = $usuario['foto_perfil'];
             $_SESSION['nome'] = $usuario['nome'];
             $_SESSION['sobrenome'] = $usuario['sobrenome'];
             $_SESSION['email'] = $usuario['email'];
@@ -40,7 +40,7 @@ if(isset($_POST['email'])){
             }
             // Redireciona para a página inicial
             header('location: navbar.php?page=dashboard');
-            exit(); // Certifique-se de sair após o redirecionamento
+            exit();
         } else {
             $error_senha = true;
         }

@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 // Verificar se o usuário está logado
 if (!isset($_SESSION['email'])) {
@@ -99,6 +100,18 @@ if (!isset($_SESSION['email'])) {
         </ul>
         <!-- Links Inferiores -->
         <ul class="nav flex-column w-100 bottom-links">
+            <?php 
+                if ($_SESSION['poder'] == 1) {
+                    echo '
+                        <!-- link Admin -->
+                        <li class="nav-item">
+                            <a href="?page=admin" class="nav-link">
+                            <i class="bi bi-code-slash"></i> <span class="nav-text">Admin</span>
+                            </a>
+                        </li>
+                    ';
+                }
+            ?>
             <!-- link Suporte -->
             <li class="nav-item">
                 <a href="?page=contato" class="nav-link">
@@ -128,7 +141,7 @@ if (!isset($_SESSION['email'])) {
         </button>
         <div class="user-info"> <!-- Informações do usuário -->
         <a href="?page=alterar" class="link-perfil">
-                <img src='<?php echo $_SESSION['file'] ?>' alt="">
+                <img src='<?php echo $_SESSION['foto_perfil'] ?>' alt="">
                 <h1><?php echo $_SESSION['nome']. ' ' .$_SESSION['sobrenome'] ?></h1>
             </a>
         </div>
@@ -175,7 +188,10 @@ if (!isset($_SESSION['email'])) {
                     include("investimentos.php");
                 break;
                 case "estudos":
-                    include("estudos.php");
+                    include("estudos.html");
+                break;
+                case "admin":
+                    include("administrar.php");
                 break;
                 case "contato":
                     include("contato.php");

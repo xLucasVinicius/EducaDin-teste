@@ -1,7 +1,7 @@
 <?php
 // Verifica se o 'id' foi fornecido via GET ou POST
-if (isset($_SESSION['id'])) {
-    $id = $_SESSION['id'];
+if (isset($_SESSION['id_usuario'])) {
+    $id = $_SESSION['id_usuario'];
 
     // Verifica se o valor do 'id' é numérico para evitar SQL injection
     if (is_numeric($id)) {
@@ -52,7 +52,7 @@ if (isset($_SESSION['id'])) {
     <h1>Editar <e style="color: #F5A900; font-family:orbitron">perfil</e></h1>
     <div class="input-img-perfil">
         <div class="img-perfil">
-            <img id="imagem-perfil" src="<?php echo $_SESSION['file']; ?>" alt="">
+            <img id="imagem-perfil" src="<?php echo $_SESSION['foto_perfil']; ?>" alt="">
         </div>
         <a href="editar-imagem.html" class="file-label">
             <i class="bi bi-pencil"></i>

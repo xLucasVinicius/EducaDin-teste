@@ -55,7 +55,7 @@ include 'consultas/infos-login.php'; // Inclui o arquivo de configuração
             <div id="buttonDiv"></div>
         </div>
 
-        <a href="cadastro.php">Realizar cadastro</a>
+        <a href="cadastro.html">Realizar cadastro</a>
     </div>
 
 <script src="../Js/login/login.js"></script> <!-- JS Personalizado -->

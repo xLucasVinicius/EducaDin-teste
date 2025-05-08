@@ -10,7 +10,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 if (isset($data['pontuacao']) && isset($data['id_minigame']) && isset($data['moedas_ganhas'])) {
     
     // Dados recebidos
-    $id_usuario = $_SESSION['id']; // Pega o ID do usuário da sessão
+    $id_usuario = $_SESSION['id_usuario']; // Pega o ID do usuário da sessão
     $pontos = $data['pontuacao'];
     $id_minigame = $data['id_minigame'];
     $moedas_ganhas = $data['moedas_ganhas'];

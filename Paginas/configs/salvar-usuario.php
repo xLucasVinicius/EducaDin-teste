@@ -162,10 +162,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_insert = $mysqli->prepare($sql_insert);
         $stmt_insert->bind_param("sssssss", $path_relativo, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario);
 
-        if ($stmt_insert->execute()) { // Executa logo!
-            // Agora sim, o usuário foi inserido
-
-            // Pode pegar o id diretamente:
+        if ($stmt_insert->execute()) {
+            
+            // Recuperar o ID do usuário inserido
             $id_usuario = $mysqli->insert_id;
 
             // E agora inserção na tabela contas

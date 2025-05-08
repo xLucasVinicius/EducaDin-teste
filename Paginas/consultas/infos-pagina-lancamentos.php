@@ -3,7 +3,7 @@
 session_start();
 include("../configs/config.php");
 
-$id_usuario = $_SESSION['id'];
+$id_usuario = $_SESSION['id_usuario'];
 $mes_escolhido = $_POST['mes'] ?? date('Y-m');
 
 // Buscar o plano do usuário

@@ -3,7 +3,7 @@ session_start();
 include("../configs/config.php");
 header('Content-Type: application/json');
 
-$id_usuario = $_SESSION['id'];
+$id_usuario = $_SESSION['id_usuario'];
 $resposta = [];
 
 // Buscar salário e plano do usuário

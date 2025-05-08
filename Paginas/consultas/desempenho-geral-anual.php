@@ -3,7 +3,7 @@
 session_start();
 include("../configs/config.php");
 
-$id_usuario = $_SESSION['id'];
+$id_usuario = $_SESSION['id_usuario'];
 
 // Verifica se o ano foi passado como parâmetro, se não, assume o ano atual
 $ano_usuario = isset($_GET['ano']) ? $_GET['ano'] : date('Y');

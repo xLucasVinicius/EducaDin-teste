@@ -4,11 +4,11 @@ include("../configs/config.php");
 
 header('Content-Type: application/json');  // Defina o tipo de conteúdo como JSON
 
-$sql = "SELECT * FROM contas WHERE id_usuario = " . $_SESSION['id']; // Seleciona todas as contas do usuário
-$sql2 = "SELECT * FROM cartoes WHERE id_usuario = " . $_SESSION['id']; // Seleciona todos os cartões do usuário
-$sql3 = "SELECT * FROM lancamentos WHERE id_usuario = " . $_SESSION['id'] . " AND metodo_pagamento = 'Crédito'"; // Seleciona todos os lançamentos do usuário que sejam de crédito
+$sql = "SELECT * FROM contas WHERE id_usuario = " . $_SESSION['id_usuario']; // Seleciona todas as contas do usuário
+$sql2 = "SELECT * FROM cartoes WHERE id_usuario = " . $_SESSION['id_usuario']; // Seleciona todos os cartões do usuário
+$sql3 = "SELECT * FROM lancamentos WHERE id_usuario = " . $_SESSION['id_usuario'] . " AND metodo_pagamento = 'Crédito'"; // Seleciona todos os lançamentos do usuário que sejam de crédito
 
-$sql4 = "SELECT * FROM lancamentos WHERE id_usuario = " . $_SESSION['id'] . " AND metodo_pagamento = 'Débito'"; // Seleciona todos os lançamentos do usuário que sejam de debito
+$sql4 = "SELECT * FROM lancamentos WHERE id_usuario = " . $_SESSION['id_usuario'] . " AND metodo_pagamento = 'Débito'"; // Seleciona todos os lançamentos do usuário que sejam de debito
 // Executa as consultas
 $result = $mysqli->query($sql);
 $result2 = $mysqli->query($sql2);

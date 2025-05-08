@@ -10,7 +10,7 @@ use MercadoPago\Item;
 SDK::setAccessToken('APP_USR-5025392289696892-031815-76d692fa75852cfa3fb6d72523ff1a78-2335238967');
 
 // Verifique o ID do usuário na sessão
-$id_Usuario = $_SESSION['id']; // ID do usuário logado
+$id_Usuario = $_SESSION['id_usuario']; // ID do usuário logado
 
 // Verifique qual plano foi selecionado
 $plano = $_POST['plano'];
