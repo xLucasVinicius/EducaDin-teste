@@ -140,6 +140,7 @@
                     <button type="submit">Salvar</button>
                 </div>
                 <input type="hidden" name="id_cartao" id="id-cartao-editar">
+                <input type="hidden" name="tipo" value="1">
             </form>
         </div>
     </div>

@@ -71,7 +71,8 @@ img#preview-img {
 form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
+    margin-bottom: 10px;
 }
 
 label {

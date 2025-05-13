@@ -199,6 +199,10 @@ function renderLancamentos(lancamentos) {
     
         if (lancamentos.length === 0) {
             lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>';
+            lancamentosContainer.style.width = '100%';
+            lancamentosContainer.style.display = 'flex';
+            lancamentosContainer.style.justifyContent = 'center';
+            lancamentosContainer.style.alignItems = 'center';
             return;
         }
     

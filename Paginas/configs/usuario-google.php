@@ -97,7 +97,7 @@ if ($stmt_check_email->num_rows > 0) { // O email já existe no banco de dados, 
             $stmt_check_email->bind_result($id_usuario, $foto_perfil_usuario, $nome_usuario, $sobrenome_usuario, $email_usuario, $salario_usuario, $plano_usuario, $poder_usuario, $moedas_usuario, $data_nascimento_usuario);
             $stmt_check_email->fetch();
 
-            $_SESSION['id'] = $id_usuario;
+            $_SESSION['id_usuario'] = $id_usuario;
             $_SESSION['foto_perfil'] = $foto_perfil_usuario;
             $_SESSION['nome'] = $nome_usuario;
             $_SESSION['sobrenome'] = $sobrenome_usuario;
@@ -107,6 +107,12 @@ if ($stmt_check_email->num_rows > 0) { // O email já existe no banco de dados, 
             $_SESSION['poder'] = $poder_usuario;
             $_SESSION['moedas'] = $moedas_usuario;
             $_SESSION['data_nascimento'] = $data_nascimento_usuario;
+
+            // E agora inserção na tabela contas
+            $sql_insert2 = "INSERT INTO contas (id_usuario, nome_conta, categoria) VALUES (?, 'Carteira', 3)";
+            $stmt_insert2 = $mysqli->prepare($sql_insert2);
+            $stmt_insert2->bind_param("i", $id_usuario);
+            $stmt_insert2->execute();
 
             echo json_encode(['status' => 'success']);
         } else {

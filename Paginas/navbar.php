@@ -5,7 +5,6 @@ session_start();
 if (!isset($_SESSION['email'])) {
     header("Location:../index.html"); // Redirecionar para a página de login caso o usuário não esteja logado
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -20,8 +19,11 @@ if (!isset($_SESSION['email'])) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Estilo Personalizado -->
     <link rel="stylesheet" href="../Style/navbar/navbar.css">
-      <!-- Bootstrap-Icons -->
+    <!-- Bootstrap-Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     
 </head>
 <body>
@@ -142,7 +144,16 @@ if (!isset($_SESSION['email'])) {
         <div class="user-info"> <!-- Informações do usuário -->
         <a href="?page=alterar" class="link-perfil">
                 <img src='<?php echo $_SESSION['foto_perfil'] ?>' alt="">
-                <h1><?php echo $_SESSION['nome']. ' ' .$_SESSION['sobrenome'] ?></h1>
+               <?php 
+                    $nomeCompleto = $_SESSION['nome'] . ' ' . $_SESSION['sobrenome'];
+
+                    if ($_SESSION['plano'] == 1) {
+                        echo "<h1 style='color: #F2A900;'> <i class='fas fa-crown' style='margin-right: 5px;'></i> $nomeCompleto</h1>";
+                    } else {
+                        echo "<h1>$nomeCompleto</h1>";
+                    }
+                ?>
+
             </a>
         </div>
     </nav>

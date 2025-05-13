@@ -29,7 +29,7 @@ list($mesSelecionado, $anoSelecionado) = explode('/', $dataSelecionada);
 if ($plano == 0) {
     $dataInformada = DateTime::createFromFormat('m/Y', $dataSelecionada);
     $dataLimite = new DateTime(); // mês atual
-    $dataLimite->modify('-2 months'); // inclui o mês atual e os dois anteriores
+    $dataLimite->modify('-3 months'); // inclui o mês atual e os dois anteriores
 
     if ($dataInformada < $dataLimite) {
         echo json_encode([

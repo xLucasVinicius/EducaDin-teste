@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
     lancamentosFora.style.display = 'block'; // Exibe o container de lançamentos
   })
   .catch(error => {
-    console.error('Erro ao carregar os dados:', error);
+    console.error('Erro ao carregar os dados: ', error);
   });
 });
 

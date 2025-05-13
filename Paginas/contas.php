@@ -126,6 +126,7 @@
                             <option value="Inter">Inter</option>
                             <option value="Itaú">Itaú</option>
                             <option value="Santander">Santander</option>
+                            <option value="Bradesco">Bradesco</option>
                             <option value="Banco do Brasil">Banco do Brasil</option>
                             <option value="C6 Bank">C6 Bank</option>
                             <option value="Caixa">Caixa</option>

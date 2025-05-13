@@ -349,8 +349,7 @@ formCartao.addEventListener('submit', function (event) {
   const limiteCartao = document.getElementById('limite').value;
   const diaFechamento = document.getElementById('fechamento').value;
   const diaVencimento = document.getElementById('vencimento').value;
-  const checkboxAnuidade = document.getElementById('checkbox-anuidade');
-  const inputAnuidade = document.getElementById('anuidade');
+  const inputAnuidade = document.getElementById('anuidade-valor');
   const pontosCheck = document.getElementById('pontos');
 
   // Primeiro: verificar se selecionou uma conta
@@ -706,12 +705,16 @@ function abrirModalEdicaoCartao(cartao) {
   formatarMoeda(inputLimite);
   document.getElementById('fechamento-editar').value = formatarDia(cartao.dia_fechamento);
   document.getElementById('vencimento-editar').value = formatarDia(cartao.dia_vencimento);
-  if (cartao.anuidade !== null) {
+  const anuidadeValor = Number(cartao.anuidade);
+  if (anuidadeValor > 0) {
     checkboxAnuidadeEditar.checked = true;
-    inputAnuidadeEditar.value = cartao.anuidade;
+    inputAnuidadeEditar.value = anuidadeValor.toFixed(2);
     formatarMoeda(inputAnuidadeEditar);
     anuidadeEditar.style.display = 'flex';
+  } else {
+    checkboxAnuidadeEditar.checked = false;
   }
+
   if (cartao.pontos == 0) {
     document.getElementById('pontos-editar').checked = true;
   }

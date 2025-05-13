@@ -1,6 +1,7 @@
 const avatarImagem = document.querySelector('#avatar-img'); // input de imagem
 const h2Avatar = document.querySelector('#h2-avatar'); // h2 de avatar
 const extensoes = {'image/png': 'png', 'image/jpeg': 'jpeg', 'image/jpg': 'jpg'}; // array com as extensões permitidas
+const form = document.querySelector('form'); // form de envio de imagem
 let cropperInstance = null; // variável para armazenar a instância do Cropper
 
 function createButton(textContent, id) { // função para criar um botão
@@ -44,16 +45,16 @@ avatarImagem.addEventListener('change', event => { // evento de mudança de imag
     reader.onload = function(event) { // evento de carregamento de imagem
         previewImg.id = 'preview-img'; // id da nova imagem
         previewImg.src = event.target.result; // src da nova imagem
-        h2Avatar.insertAdjacentElement('afterend', previewImg); // insere a nova imagem
+        form.insertAdjacentElement('afterend', previewImg); // insere a nova imagem
 
         cropperInstance = crop(previewImg); // cria uma instância do Cropper
         previewCrop.style.display = 'block'; // mostra o preview de recorte
 
-        const removeButton = createButton('Remover Crop', 'remove-button'); // cria o botão de remover
-        const uploadButton = createButton('Confirmar Imagem', 'upload-button'); // cria o botão de upload
+        const removeButton = createButton('Remover', 'remove-button'); // cria o botão de remover
+        const uploadButton = createButton('Enviar', 'upload-button'); // cria o botão de upload
 
-        h2Avatar.insertAdjacentElement('afterend', removeButton); // insere o botão de remover
-        h2Avatar.insertAdjacentElement('afterend', uploadButton); // insere o botão de upload
+        previewImg.insertAdjacentElement('afterend', removeButton); // insere o botão de remover
+        previewImg.insertAdjacentElement('afterend', uploadButton); // insere o botão de upload
 
         removeButton.addEventListener('click', () => { // evento de clique no botão de remover
             cropperInstance.destroy(); // destroi a instância do Cropper

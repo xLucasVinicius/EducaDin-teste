@@ -2,7 +2,7 @@
 session_start();
 include("../configs/config.php");
 
-$id_usuario = $_SESSION['id'];
+$id_usuario = $_SESSION['id_usuario'];
 $data_atual = date('Y-m-1');
 $data_mes_anterior = date('Y-m-1', strtotime('-1 month'));
 $id_conta = $_GET['id_conta'];
