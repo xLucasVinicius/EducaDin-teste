@@ -1,10 +1,18 @@
 <?php
 
 session_start();
+include("../Paginas/configs/config.php");
 // Verificar se o usuário está logado
 if (!isset($_SESSION['email'])) {
     header("Location:../index.html"); // Redirecionar para a página de login caso o usuário não esteja logado
 }
+
+$sql_code = "SELECT * FROM usuarios WHERE email = '{$_SESSION['email']}' LIMIT 1";
+$result = $mysqli->query($sql_code);
+$usuario = $result->fetch_assoc();
+$plano = $usuario['plano'];
+$poder = $usuario['poder'];
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -103,7 +111,7 @@ if (!isset($_SESSION['email'])) {
         <!-- Links Inferiores -->
         <ul class="nav flex-column w-100 bottom-links">
             <?php 
-                if ($_SESSION['poder'] == 1) {
+                if ($poder == 1) {
                     echo '
                         <!-- link Admin -->
                         <li class="nav-item">
@@ -147,7 +155,7 @@ if (!isset($_SESSION['email'])) {
                <?php 
                     $nomeCompleto = $_SESSION['nome'] . ' ' . $_SESSION['sobrenome'];
 
-                    if ($_SESSION['plano'] == 1) {
+                    if ($plano == 1) {
                         echo "<h1 style='color: #F2A900;'> <i class='fas fa-crown' style='margin-right: 5px;'></i> $nomeCompleto</h1>";
                     } else {
                         echo "<h1>$nomeCompleto</h1>";
