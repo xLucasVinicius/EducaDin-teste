@@ -41,6 +41,15 @@
     animation: exibir 0.8s forwards;
 }
 
+#modalCompraMensagem .modal-content {
+    max-width: 350px;
+    gap: 10px;
+}
+
+#modalCompraMensagem .modal-content h2 {
+    font-size: 1.5rem;
+}
+
 .excluir-conta-modal, .excluir-cartao-modal {
     position: relative;
     padding: 5px;

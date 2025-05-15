@@ -6,8 +6,17 @@
     <title>EducaDin</title>
     <link rel="stylesheet" href="../Style/planos/planos.css">
     <link rel="stylesheet" href="../Style/planos/media-planos.css">
+    <link rel="stylesheet" href="../Style/globais/msg-confirmacao.css">
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
 <body>
+    <!-- Modal de Mensagem da compra -->
+    <div id="modalCompraMensagem" class="modal">
+        <div class="modal-content">
+            <h2 id="mensagem-modal"></h2>
+            <button id="fechar-modal">Ok</button>
+        </div>
+    </div>
     <section class="conteudo-total"> <!-- Section do conteudo total -->
         <div class="txt-content-planos"> <!-- Div que contém as divs do titulo e dos planos -->
             <div class="titulos-planos"> <!-- Div que contém o titulo e o paragrafo -->
@@ -69,13 +78,10 @@
                         
                     </span>
                     <!-- Botão para iniciar o pagamento com Mercado Pago -->
-                    <form action="configs/iniciar-pagamento.php" method="post">
-                        <input type="hidden" name="plano" value="premium">
-                        <button type="submit">Assinar</button>
-                    </form>
-                </div>
+                    <button id="btn-premium">Assinar</button>
             </div>
         </div>
     </section>
+    <script src="../Js/paginas/planos.js"></script>
 </body>
 </html>

@@ -8,17 +8,17 @@ include("config.php");
 if (isset($_GET['status']) && $_GET['status'] == 'approved') {
     
     // Capturar o ID do usuário da URL
-    $idUsuario = $_GET['id_usuario'];
+    $idUsuario = $_SESSION['id_usuario'];
 
     // Atualizar o plano do usuário para 'premium'
-    $sql = "UPDATE usuarios SET plano = 'premium' WHERE id_usuario = ?";
+    $sql = "UPDATE usuarios SET plano = 1 WHERE id_usuario = ?";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param("i", $idUsuario);
     
     if ($stmt->execute()) {
         echo "Plano atualizado com sucesso!";
         // Redirecionar para uma página de sucesso ou dashboard
-        header("Location: logout.php");
+        header("Location: https://2c46-2804-1b3-a341-73b-c041-3fcd-9882-26e6.ngrok-free.app/EducaDin-teste/Paginas/navbar.php?page=planos&status=success");
         exit;
     } else {
         echo "Erro ao atualizar o plano: " . $stmt->error; // Usar $stmt->error ao invés de $conn->error
@@ -27,7 +27,7 @@ if (isset($_GET['status']) && $_GET['status'] == 'approved') {
 } else {
     echo "Pagamento não aprovado.";
     // Redirecionar para a página de pagamento novamente
-    header("Location: ?page=planos");
+    header("Location: https://2c46-2804-1b3-a341-73b-c041-3fcd-9882-26e6.ngrok-free.app/EducaDin-teste/Paginas/navbar.php?page=planos");
     exit;
 }
 
