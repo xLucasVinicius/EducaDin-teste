@@ -106,7 +106,7 @@ window.addEventListener('DOMContentLoaded', function () {
     
                 data.contas.forEach(conta => {
                     // Se o nome da conta for "carteira", não adiciona
-                    if (conta.nome_conta.toLowerCase() === "carteira") {
+                    if (conta.nome_conta.toLowerCase() == "carteira") {
                         return; // pula para o próximo item do forEach
                     }
                     const sigla = categoriaMap[conta.categoria] || "?";
@@ -292,7 +292,8 @@ window.addEventListener('DOMContentLoaded', function () {
                             instituicao = conta.nome_conta;
                             // Verifica a categoria e adiciona a inicial correspondente
                             const categoriaConta = conta.categoria; // 0=conta corrente, 1=conta poupança, 2=conta salário
-                            const inicialCategoria = categoriaConta == 0 ? 'Corrente' : categoriaConta == 1 ? 'Poupança' : categoriaConta == 2 ? 'Salário' : '';
+                            console.log(categoriaConta);
+                            const inicialCategoria = categoriaConta == 0 ? 'Corrente' : categoriaConta == 1 ? 'Poupança' : categoriaConta == 2 ? 'Salário' : categoriaConta == 3 ? 'Digital' : '';
                             instituicao +=` (${inicialCategoria})`;
                         } else {
                             instituicao = 'Conta desconhecida';
