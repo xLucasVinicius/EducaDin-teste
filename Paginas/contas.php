@@ -135,7 +135,7 @@
                     <div class="imagem-conta"> <!-- Div para mostrar a imagem da conta (só será mostrada se uma conta for selecionada) -->
                         <p>Imagem da Conta</p>
                         <span>
-                            <img src="../imagens/logos/Nubank.png" alt="Imagem da Conta">
+                            <img src="" alt="Imagem da Conta">
                         </span>
                     </div>
 

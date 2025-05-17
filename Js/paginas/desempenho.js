@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Coluna da imagem (logo)
             const logoCell = document.createElement('td');
             const img = document.createElement('img');
-            img.src = `../imagens/logos/${conta.nome_conta}.png`; // Caminho para a imagem
+            img.src = `../imagens/contas/${conta.nome_conta}.png`; // Caminho para a imagem
             img.alt = `Logo da ${conta.nome_conta}`; // Texto alternativo
             img.width = 50; // Largura da imagem
             img.height = 50; // Altura da imagem

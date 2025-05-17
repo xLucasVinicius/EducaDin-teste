@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
     
       contaDiv.innerHTML = `
         <div class="logo">
-          <img src="../imagens/logos/${account.nome_conta}.png" alt="Logo ${account.nome_conta}">
+          <img src="../imagens/contas/${account.nome_conta}.png" alt="Logo ${account.nome_conta}">
         </div>
         <div class="infos-conta">
           <h1>${account.nome_conta}</h1>
@@ -385,7 +385,7 @@ fetch('../Paginas/consultas/infos-contas.php')
       // Coluna da imagem (logo)
       const logoCell = document.createElement('td');
       const img = document.createElement('img');
-      img.src = `../imagens/logos/${conta.nome_conta}.png`; // Caminho para a imagem
+      img.src = `../imagens/contas/${conta.nome_conta}.png`; // Caminho para a imagem
       img.alt = `Logo da ${conta.nome_conta}`; // Texto alternativo
       img.width = 50; // Largura da imagem
       img.height = 50; // Altura da imagem
@@ -494,7 +494,7 @@ function mostrarImagem() {
   const valueSelect = selectConta.value; // Obtenha a conta selecionada
   if (valueSelect) {
       imagemContent.style.display = 'block'; // Exibe a imagem
-      imgConta.src = `../imagens/logos/${valueSelect}.png`; // Define o caminho da imagem
+      imgConta.src = `../imagens/contas/${valueSelect}.png`; // Define o caminho da imagem
   } else {
       imagemContent.style.display = 'none'; // Oculta a imagem
       imgConta.src = ''; // Limpa o caminho da imagem
