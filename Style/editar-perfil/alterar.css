@@ -52,6 +52,10 @@ form > h1 {
     color: white;
 }
 
+form #data-cadastro {
+    color: white;
+}
+
 label {
     color: #F5A900;
     margin-top: 15px;

@@ -16,6 +16,7 @@ if (isset($_SESSION['id_usuario'])) {
         if ($res->num_rows > 0) {
             $row = $res->fetch_object();
             $salario = 'R$ '.number_format($row->salario, 2, ',', '.');
+            $data_cadastro = date("d/m/Y", strtotime($row->data_cadastro));
         } else {
             echo "Nenhum usuário encontrado com esse ID.";
         }
@@ -50,6 +51,7 @@ if (isset($_SESSION['id_usuario'])) {
 
 <form action="configs/salvar-usuario.php" method="POST" enctype="multipart/form-data" id="form-salvar-usuario">
     <h1>Editar <e style="color: #F5A900; font-family:orbitron">perfil</e></h1>
+    <p id="data-cadastro">Conta criada em: <?php echo $data_cadastro; ?></p>
     <div class="input-img-perfil">
         <div class="img-perfil">
             <img id="imagem-perfil" src="<?php echo $_SESSION['foto_perfil']; ?>" alt="">
