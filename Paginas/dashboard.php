@@ -1,12 +1,3 @@
-<?php
-include("./configs/config.php");
-
-//declarações para teste
-$categorias = "['cartao de credito','pix','debito','laser','viagem']";
-$query = "SELECT * FROM lancamentos WHERE id_usuario = " . $_SESSION['id_usuario'] . " ORDER BY data DESC LIMIT 5";
-$result = $mysqli->query($query);
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
