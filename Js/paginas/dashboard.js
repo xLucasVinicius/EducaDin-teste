@@ -189,95 +189,99 @@ fetch('../Paginas/consultas/desempenho-geral-anterior-atual.php')
 
 
 function renderLancamentos(lancamentos) {
-    fetch ('../Paginas/consultas/infos-cartoes.php')
-    .then(response => response.json())
-    .then(data => {
-        const contasData = data.contas;
-        const cartoesData = data.cartoes;
-    
-        lancamentosContainer.innerHTML = ''; // Limpa o container
-    
-        if (lancamentos.length === 0) {
-            lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>';
-            lancamentosContainer.style.width = '100%';
-            lancamentosContainer.style.display = 'flex';
-            lancamentosContainer.style.justifyContent = 'center';
-            lancamentosContainer.style.alignItems = 'center';
-            return;
-        }
-    
-        const table = document.createElement('table');
-    
-        const thead = `
-        <thead>
-            <tr>
-            <th>Descrição</th>
-            <th>Valor</th>
-            <th>Tipo</th>
-            <th>Método</th>
-            <th>Conta/Cartão</th>
-            <th>Categoria</th>
-            <th>Subcategoria</th>
-            <th>Data</th>
-            <th>Parcelas</th>
-            </tr>
-        </thead>`;
-    
-        let tbody = '<tbody>';
-    
-        lancamentos.forEach(lancamento => {
-            const tipo = lancamento.tipo === 0 ? 'Receita' : 'Despesa';
-            const classeValor = tipo === 'Despesa' ? 'despesa' : 'receita';
-            let contaCartao = '';
-    
-            // Verifica se o lançamento tem id_cartao
-            if (lancamento.id_cartao) {
-                const cartao = cartoesData.find(c => c.id_cartao == lancamento.id_cartao);
-                if (cartao) {
-                    const conta = contasData.find(ct => ct.id_conta == cartao.id_conta);
+    // Ordena os lançamentos pela data (do mais recente para o mais antigo)
+    const lancamentosOrdenados = lancamentos.sort((a, b) => new Date(b.data) - new Date(a.data));
+
+    // Pega os 5 primeiros (os 5 mais recentes)
+    const ultimosLancamentos = lancamentosOrdenados.slice(0, 5);
+
+    fetch('../Paginas/consultas/infos-cartoes.php')
+        .then(response => response.json())
+        .then(data => {
+            const contasData = data.contas;
+            const cartoesData = data.cartoes;
+
+            lancamentosContainer.innerHTML = ''; // Limpa o container
+
+            if (ultimosLancamentos.length === 0) {
+                lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>';
+                lancamentosContainer.style.width = '100%';
+                lancamentosContainer.style.display = 'flex';
+                lancamentosContainer.style.justifyContent = 'center';
+                lancamentosContainer.style.alignItems = 'center';
+                return;
+            }
+
+            const table = document.createElement('table');
+
+            const thead = `
+            <thead>
+                <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Tipo</th>
+                <th>Método</th>
+                <th>Conta/Cartão</th>
+                <th>Categoria</th>
+                <th>Subcategoria</th>
+                <th>Data</th>
+                <th>Parcelas</th>
+                </tr>
+            </thead>`;
+
+            let tbody = '<tbody>';
+
+            ultimosLancamentos.forEach(lancamento => {
+                const tipo = lancamento.tipo === 0 ? 'Receita' : 'Despesa';
+                const classeValor = tipo === 'Despesa' ? 'despesa' : 'receita';
+                let contaCartao = '';
+
+                if (lancamento.id_cartao) {
+                    const cartao = cartoesData.find(c => c.id_cartao == lancamento.id_cartao);
+                    if (cartao) {
+                        const conta = contasData.find(ct => ct.id_conta == cartao.id_conta);
+                        if (conta) {
+                            let categoriaInicial = '';
+                            switch (conta.categoria) {
+                                case 0: categoriaInicial = 'C'; break;
+                                case 1: categoriaInicial = 'P'; break;
+                                case 2: categoriaInicial = 'S'; break;
+                            }
+                            contaCartao = `${conta.nome_conta} (${categoriaInicial}) - Cartão`;
+                        }
+                    }
+                } else {
+                    const conta = contasData.find(ct => ct.id_conta == lancamento.id_conta);
                     if (conta) {
                         let categoriaInicial = '';
                         switch (conta.categoria) {
-                            case 0: categoriaInicial = 'C'; break;
-                            case 1: categoriaInicial = 'P'; break;
-                            case 2: categoriaInicial = 'S'; break;
+                            case "0": categoriaInicial = 'C'; break;
+                            case "1": categoriaInicial = 'P'; break;
+                            case "2": categoriaInicial = 'S'; break;
                         }
-                        contaCartao = `${conta.nome_conta} (${categoriaInicial}) - Cartão`;
+                        contaCartao = `${conta.nome_conta} (${categoriaInicial})`;
                     }
                 }
-            } else {
-                const conta = contasData.find(ct => ct.id_conta == lancamento.id_conta);
-                if (conta) {
-                    let categoriaInicial = '';
-                    switch (conta.categoria) {
-                        case "0": categoriaInicial = 'C'; break;
-                        case "1": categoriaInicial = 'P'; break;
-                        case "2": categoriaInicial = 'S'; break;
-                    }
-                    contaCartao = `${conta.nome_conta} (${categoriaInicial})`;
-                }
-            }
-    
-            let lancamentoParcela = parseInt(lancamento.parcelas) === 0 ? 'À vista' : lancamento.parcelas;
-    
-            tbody += `
-            <tr>
-                <td>${lancamento.descricao}</td>
-                <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
-                <td class="${classeValor}">${tipo}</td>
-                <td>${lancamento.metodo_pagamento}</td>
-                <td>${contaCartao}</td>
-                <td>${lancamento.categoria}</td>
-                <td>${lancamento.subcategoria}</td>
-                <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
-                <td>${lancamentoParcela}</td>
-            </tr>`;
-        });
-    
-        tbody += '</tbody>';
-        table.innerHTML = thead + tbody;
-        lancamentosContainer.appendChild(table);
-    })
-    
-    .catch(error => console.error('Erro ao carregar cartões:', error));
+
+                let lancamentoParcela = parseInt(lancamento.parcelas) === 0 ? 'À vista' : lancamento.parcelas;
+
+                tbody += `
+                <tr>
+                    <td>${lancamento.descricao}</td>
+                    <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
+                    <td class="${classeValor}">${tipo}</td>
+                    <td>${lancamento.metodo_pagamento}</td>
+                    <td>${contaCartao}</td>
+                    <td>${lancamento.categoria}</td>
+                    <td>${lancamento.subcategoria}</td>
+                    <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
+                    <td>${lancamentoParcela}</td>
+                </tr>`;
+            });
+
+            tbody += '</tbody>';
+            table.innerHTML = thead + tbody;
+            lancamentosContainer.appendChild(table);
+        })
+        .catch(error => console.error('Erro ao carregar cartões:', error));
 }

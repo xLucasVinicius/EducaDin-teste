@@ -285,126 +285,155 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch(error => console.error('Erro ao carregar categorias:', error));
 
 
-        // ===============================================================================
+    // Tudo sobre o gráfico de categorias
+    let selectPopulado = false; // controla se o select já foi populado
 
-        const lastYear = currentYear - 1;
+    selectDataCategorias.addEventListener("change", () => {
+        fetchDadosCategorias(selectDataCategorias.value);
+    });
 
-        // Adiciona os meses do ano atual até o mês atual (em ordem decrescente)
-        for (let month = currentMonth; month >= 1; month--) {
-            const option = document.createElement("option");
-            option.value = `${String(month).padStart(2, '0')}/${currentYear}`;
-            option.textContent = `${String(month).padStart(2, '0')}/${currentYear}`;
-            selectDataCategorias.appendChild(option);
-        }
+    // Função para formatar mês/ano com zero à esquerda
+    function formatarMesAno(mes, ano) {
+        return `${String(mes).padStart(2, '0')}/${ano}`;
+    }
 
-        // Adiciona os meses do ano passado (de Dezembro a Janeiro)
-        for (let month = 12; month >= 1; month--) {
-            const option = document.createElement("option");
-            option.value = `${String(month).padStart(2, '0')}/${lastYear}`;
-            option.textContent = `${String(month).padStart(2, '0')}/${lastYear}`;
-            selectDataCategorias.appendChild(option);
-        }
+    // Variáveis com o mês e ano atuais
+    const mesAnoAtual = formatarMesAno(currentMonth, currentYear);
 
-        // Evento para quando o usuário selecionar uma data para categorias
-        selectDataCategorias.addEventListener("change", () => {
-            fetchDadosCategorias(selectDataCategorias.value);
-        });
+    // Buscar dados do mês/ano atual ao carregar a página
+    function fetchDadosCategorias(data) {
+        fetch(`../Paginas/consultas/infos-dashboard.php?data=${data}`)
+        .then(response => response.json())
+        .then(data => {
+            // Popula o gráfico
+            const categoriasData = data.categorias;
+            const chartElement2 = document.querySelector('#chart3');
+            chartElement2.innerHTML = '';
+            const categoriasNomes = categoriasData.map(c => c.nome);
+            const categoriasValores = categoriasData.map(c => c.quantidade);
 
-        // Buscar dados do ano atual ao carregar a página
-        function fetchDadosCategorias(data) {
-            fetch (`../Paginas/consultas/infos-dashboard.php?data=${data}`)
-            .then(response => response.json())
-            .then(data => {
-                const categoriasData = data.categorias;
-                const chartElement2 = document.querySelector('#chart3');
-                chartElement2.innerHTML = '';
-                const categoriasNomes = categoriasData.map(c => c.nome);
-                const categoriasValores = categoriasData.map(c => c.quantidade);
+            const optionsDoughnut = {
+                chart: {
+                    type: 'donut',
+                    height: 200,
+                    width: 300
+                },
+                series: categoriasValores,
+                labels: categoriasNomes,
+                legend: {
+                    position: 'bottom',
+                    labels: { colors: 'white' }
+                },
+                plotOptions: { pie: { donut: { size: '30%' } } }
+            };
 
-                const optionsDoughnut = {
-                    chart: {
-                        type: 'donut',
-                        height: 200,
-                        width: 300
-                    },
-                    series: categoriasValores,
-                    labels: categoriasNomes,
-                    legend: {
-                        position: 'bottom',
-                        labels: {colors: 'white'}
-                    },
-                    plotOptions: {pie: {donut: {size: '30%'}}}
-                };
+            const chartDoughnut = new ApexCharts(chartElement2, optionsDoughnut);
+            chartDoughnut.render();
 
-                const chartDoughnut = new ApexCharts(chartElement2, optionsDoughnut);
-                chartDoughnut.render();
-            })
-            .catch(error => console.error('Erro ao carregar os dados:', error));
-        }
+            // Popula o select apenas uma vez, na primeira chamada
+            if (!selectPopulado && selectDataCategorias && data.seletor) {
+                selectDataCategorias.innerHTML = '';
 
-        fetchDadosCategorias(`${currentMonth}/${currentYear}`);
-
-        // ===============================================================================
-
-        const seletorMesAno = document.getElementById('data-essencial');
-        const barraEssenciais = document.getElementById('barra-essenciais');
-        const barraDesnecessarias = document.getElementById('barra-desnecessarias');
-        const textoEssenciais = document.getElementById('porcentagem-essenciais');
-        const textoDesnecessarias = document.getElementById('porcentagem-desnecessarias');
-        
-        // Função que atualiza as barras com base na resposta
-        function atualizarBarras(dataSelecionada) {
-            fetch(`../Paginas/consultas/desempenho-categoria-essencial.php?data=${dataSelecionada}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.erro) {
-                        alert(data.erro);
-                        return;
-                    }
-        
-                    const essenciais = data.essenciais || 0;
-                    const desnecessarias = data.desnecessarias || 0;
-                    const total = essenciais + desnecessarias;
-        
-                    const percEssenciais = total > 0 ? (essenciais / total) * 100 : 0;
-                    const percDesnecessarias = total > 0 ? (desnecessarias / total) * 100 : 0;
-        
-                    // Atualiza visualmente
-                    barraEssenciais.style.width = `${percEssenciais}%`;
-                    barraDesnecessarias.style.width = `${percDesnecessarias}%`;
-        
-                    textoEssenciais.textContent = `${percEssenciais.toFixed(1)}%`;
-                    textoDesnecessarias.textContent = `${percDesnecessarias.toFixed(1)}%`;
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar os dados:', error);
-                });
-        }
-        
-        // Popular o seletor
-        fetch('../Paginas/consultas/desempenho-categoria-essencial.php')
-            .then(response => response.json())
-            .then(data => {
-                const datas = data.seletor || [];
-                seletorMesAno.innerHTML = '';
-        
-                datas.reverse().forEach(dataItem => {
+                data.seletor.forEach(mesAno => {
                     const option = document.createElement('option');
-                    option.value = dataItem;
-                    option.textContent = dataItem;
-                    seletorMesAno.appendChild(option);
+                    option.value = mesAno;
+                    option.textContent = mesAno;
+                    selectDataCategorias.appendChild(option);
                 });
-        
-                if (datas.length > 0) {
-                    atualizarBarras(datas[0]);
+
+                // Seleciona o valor padrão baseado no mês/ano atual, se existir
+                if (data.seletor.includes(mesAnoAtual)) {
+                    selectDataCategorias.value = mesAnoAtual;
+                } else if (data.seletor.length > 0) {
+                    selectDataCategorias.value = data.seletor[0];
                 }
-            });
-        
-        // Atualiza ao mudar o mês
-        seletorMesAno.addEventListener('change', () => {
-            const dataSelecionada = seletorMesAno.value;
-            atualizarBarras(dataSelecionada);
+
+                selectPopulado = true; // marca que o select já foi populado
+            }
+        })
+        .catch(error => console.error('Erro ao carregar os dados:', error));
+    }
+
+    // Chamada inicial com mês/ano atual
+    fetchDadosCategorias(mesAnoAtual);
+
+    // ===============================================================================
+
+    const seletorMesAno = document.getElementById('data-essencial');
+    const barraEssenciais = document.getElementById('barra-essenciais');
+    const barraDesnecessarias = document.getElementById('barra-desnecessarias');
+    const textoEssenciais = document.getElementById('porcentagem-essenciais');
+    const textoDesnecessarias = document.getElementById('porcentagem-desnecessarias');
+    
+    // Função que atualiza as barras com base na resposta
+    function atualizarBarras(dataSelecionada) {
+        fetch(`../Paginas/consultas/desempenho-categoria-essencial.php?data=${dataSelecionada}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.erro) {
+                alert(data.erro);
+                return;
+            }
+
+            const essenciais = data.essenciais || 0;
+            const desnecessarias = data.desnecessarias || 0;
+            const total = essenciais + desnecessarias;
+
+            const percEssenciais = total > 0 ? (essenciais / total) * 100 : 0;
+            const percDesnecessarias = total > 0 ? (desnecessarias / total) * 100 : 0;
+
+            // Atualiza visualmente
+            barraEssenciais.style.width = `${percEssenciais}%`;
+            barraDesnecessarias.style.width = `${percDesnecessarias}%`;
+
+            textoEssenciais.textContent = `${percEssenciais.toFixed(1)}%`;
+            textoDesnecessarias.textContent = `${percDesnecessarias.toFixed(1)}%`;
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os dados:', error);
         });
+    }
+    
+    // Popular o seletor de controle de gastos
+    fetch('../Paginas/consultas/desempenho-categoria-essencial.php')
+        .then(response => response.json())
+        .then(data => {
+            const datas = data.seletor || [];
+            seletorMesAno.innerHTML = '';
+
+            const dataAtual = new Date();
+            const mesAtual = String(dataAtual.getMonth() + 1).padStart(2, '0');
+            const anoAtual = dataAtual.getFullYear();
+            const mesAnoAtual = `${mesAtual}/${anoAtual}`;
+
+            datas.forEach(dataItem => {
+                const option = document.createElement('option');
+                option.value = dataItem;
+                option.textContent = dataItem;
+
+                if (dataItem === mesAnoAtual) {
+                    option.selected = true;
+                }
+
+                seletorMesAno.appendChild(option);
+            });
+
+            if (datas.includes(mesAnoAtual)) {
+                atualizarBarras(mesAnoAtual);
+            } else if (datas.length > 0) {
+                atualizarBarras(datas[0]); // fallback se mês atual não estiver na lista
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os dados:', error);
+        });
+
+    
+    // Atualiza ao mudar o mês
+    seletorMesAno.addEventListener('change', () => {
+        const dataSelecionada = seletorMesAno.value;
+        atualizarBarras(dataSelecionada);
+    });
         
 
 });

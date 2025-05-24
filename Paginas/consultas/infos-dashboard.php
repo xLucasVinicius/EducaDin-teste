@@ -16,7 +16,7 @@ if (isset($_GET['data']) && preg_match('/^\d{2}\/\d{4}$/', $_GET['data'])) {
     $anoSelecionado = (int)date('Y');
 }
 
-// Consulta: Obter o plano (como TINYINT: 0 = grátis, 1 = premium)
+// Consulta: Obter o plano (0 = grátis, 1 = premium)
 $sqlPlano = "SELECT plano FROM usuarios WHERE id_usuario = $id_usuario LIMIT 1";
 $resultPlano = $mysqli->query($sqlPlano);
 
@@ -63,7 +63,47 @@ if ($plano === 0) {
 $resposta['ano'] = $anoAtual;
 $resposta['valoresMensais'] = $valoresMensais;
 
-// Verifica se o plano gratuito está acessando meses fora dos permitidos
+// --------- NOVO: Montar array dos meses disponíveis para o seletor ---------
+
+$resposta['seletor'] = [];
+
+$sqlDatas = "SELECT DISTINCT DATE_FORMAT(data, '%m/%Y') AS mes_ano, data
+             FROM lancamentos
+             WHERE id_usuario = $id_usuario
+               AND tipo = 1
+               AND categoria IS NOT NULL
+               AND categoria != ''
+             ORDER BY data DESC";
+
+$resultDatas = $mysqli->query($sqlDatas);
+
+if ($resultDatas && $resultDatas->num_rows > 0) {
+    $contador = 0;
+    $anoAtual = (int)date('Y');
+    $mesAtual = (int)date('m');
+
+    while ($row = $resultDatas->fetch_assoc()) {
+        $dataLancamento = DateTime::createFromFormat('Y-m-d', $row['data']);
+        $mesLancamento = (int)$dataLancamento->format('m');
+        $anoLancamento = (int)$dataLancamento->format('Y');
+
+        // Para plano grátis: ignora meses futuros
+        if ($plano === 0 && ($anoLancamento > $anoAtual || ($anoLancamento === $anoAtual && $mesLancamento > $mesAtual))) {
+            continue;
+        }
+
+        // Para plano grátis: limita a 3 meses mais recentes
+        if ($plano === 0 && $contador >= 3) {
+            break;
+        }
+
+        // Adiciona ao seletor
+        $resposta['seletor'][] = $row['mes_ano'];
+        $contador++;
+    }
+}
+
+// Verifica se o plano gratuito está acessando meses fora dos permitidos (bloqueio categorias)
 $bloquearCategorias = false;
 if ($plano === 0) {
     $dataAtual = new DateTime();
@@ -113,4 +153,5 @@ if ($resultLancamentos && $resultLancamentos->num_rows > 0) {
 }
 
 echo json_encode($resposta, JSON_UNESCAPED_UNICODE);
+
 ?>
