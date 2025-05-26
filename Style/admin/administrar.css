@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+.conteudo-adm-total {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.conteudo-adm-total h1 {
+    color: var(--cor-principal);
+    margin-bottom: 20px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+}
+
+.dashboard-adm {
+    width: 100%;
+}
+
+h2 {
+    color: var(--cor-principal);
+    margin: 40px 0;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.dashboard-adm .dashboard {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    justify-content: center;
+    gap: 20px;
+}
+
+.dashboard-adm .dashboard .cards {
+    position: relative;
+    width: 300px;
+    height: 100px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: start;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 7px var(--cor-principal);
+    justify-self: center;
+
+    border: 1px solid var(--cor-principal);
+}
+
+.dashboard-adm .dashboard i {
+    position: absolute;
+    right: 35px;
+    bottom: 10px;
+    font-size: 1.5rem;
+    color: var(--cor-principal);
+}
+
+.dashboard-adm .dashboard .conteudo-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dashboard-adm .dashboard .conteudo-card .titulo-card {
+    color: var(--cor-txt);
+}
+
+.dashboard-adm .dashboard .conteudo-card .valor-card {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--cor-txt);
+}
+
+.chart-usuarios {
+    position: relative;
+}
+
+.chart-usuarios #ano {
+    position: absolute;
+    top: 40px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 70px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 10px;
+    background-color: var(--cor-fundo-content);
+    color: var(--cor-txt);
+    font-size: 1rem;
+    padding: 5px;
+    outline: none;
+}
+
+/* =========================================================================== */
+
+.gerenciar-usuarios {
+    width: 100%;
+}
+
+.gerenciar-usuarios .conteiner-tabela {
+    width: 100%;
+    padding: 20px;
+}
+
+.gerenciar-usuarios .conteiner-tabela .buscar-filtro {
+    margin-bottom: 15px;
+}
+
+.gerenciar-usuarios .conteiner-tabela .buscar-filtro p {
+    color: var(--cor-txt);
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.gerenciar-usuarios .conteiner-tabela .buscar-filtro .plano {
+    color: var(--cor-txt);
+    font-size: 1.2rem;
+    margin: 0 0 3px 7px;
+}
+
+.gerenciar-usuarios .conteiner-tabela .buscar-filtro input,
+.gerenciar-usuarios .conteiner-tabela .buscar-filtro select {
+    width: 235px;
+    background-color: var(--cor-fundo-content);
+    color: var(--cor-txt);
+    border: 1px solid var(--cor-principal);
+    border-radius: 10px;
+    padding: 5px 10px;
+    outline: none;
+}
+
+.gerenciar-usuarios .conteiner-tabela .tabela {
+    width: 100%;
+    height: 510px;
+    max-height: 510px;
+    border: 1px solid var(--cor-principal);
+    overflow: auto;
+    scrollbar-color: var(--cor-principal) var(--cor-fundo-content);
+}
+
+.gerenciar-usuarios .conteiner-tabela table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.gerenciar-usuarios .conteiner-tabela table thead {
+    position: sticky;
+    top: 0px;
+    background-color: var(--cor-principal);
+    z-index: 2;
+}
+
+.gerenciar-usuarios .conteiner-tabela table tbody tr {
+    height: 30px;
+}
+
+.gerenciar-usuarios .conteiner-tabela table tbody tr td:first-child {
+    border-left: 1px solid var(--cor-principal);
+}
+
+.gerenciar-usuarios .conteiner-tabela table tbody tr td:last-child {
+    border-right: 1px solid var(--cor-principal);
+}
+
+.gerenciar-usuarios .conteiner-tabela table tbody tr td {
+    border-bottom: 1px solid var(--cor-principal);
+}
+
+.gerenciar-usuarios .conteiner-tabela table td, th {
+    padding: 4px 15px;
+    text-align: center;
+    white-space: nowrap;
+    color: var(--cor-txt);
+}
+
+.gerenciar-usuarios .conteiner-tabela table td img {
+    width: 50px;
+    height: 50px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.gerenciar-usuarios .conteiner-tabela table .btn-editar {
+    width: 40px;
+    height: 30px;
+    background-color: blue;
+    color: white;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all .3s;
+}
+
+.gerenciar-usuarios .conteiner-tabela table .btn-editar:hover {
+    background-color: rgb(0, 0, 153);
+}
+
+.gerenciar-usuarios .conteiner-tabela table .btn-excluir {
+    width: 40px;
+    height: 30px;
+    background-color: red;
+    color: white;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all .3s;
+}
+
+.gerenciar-usuarios .conteiner-tabela table .btn-excluir:hover {
+    background-color: rgb(153, 0, 0);
+}

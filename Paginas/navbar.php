@@ -210,7 +210,7 @@ $poder = $usuario['poder'];
                     include("estudos.html");
                 break;
                 case "admin":
-                    include("administrar.php");
+                    include("administrador/administrar.php");
                 break;
                 case "contato":
                     include("contato.php");
