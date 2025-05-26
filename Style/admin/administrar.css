@@ -13,7 +13,7 @@
     color: var(--cor-principal);
     margin-bottom: 20px;
     font-family: 'Orbitron', sans-serif;
-    font-size: 2rem;
+    font-size: 1.4rem;
 }
 
 .dashboard-adm {
@@ -24,7 +24,7 @@ h2 {
     color: var(--cor-principal);
     margin: 40px 0;
     font-family: 'Orbitron', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     text-align: center;
 }
 
@@ -99,6 +99,10 @@ h2 {
 
 .gerenciar-usuarios {
     width: 100%;
+}
+
+.gerenciar-usuarios h2 {
+    margin: 40px 0 0px 0;
 }
 
 .gerenciar-usuarios .conteiner-tabela {

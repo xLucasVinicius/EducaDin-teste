@@ -63,9 +63,8 @@
             <section class="conteiner-tabela">
                 <div class="buscar-filtro">
                     <p>Filtrar por:</p>
-                    <p class="plano">Plano</p>
                     <select name="plano" id="plano">
-                        <option value="todos">Todos</option>
+                        <option value="todos">Plano</option>
                         <option value="gratis">Grátis</option>
                         <option value="premium">Premium</option>
                     </select>
