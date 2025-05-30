@@ -290,7 +290,7 @@ function handleSuccess(response) {
 
     // Quando o usuário clicar no botão, redireciona para a página inicial
     closeModalBtn.onclick = function() {
-        window.location.href = "../index.html";
+        window.location.href = "../index.php";
     };
 }
 

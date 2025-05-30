@@ -4,7 +4,7 @@ session_start();
 include("../Paginas/configs/config.php");
 // Verificar se o usuário está logado
 if (!isset($_SESSION['email'])) {
-    header("Location:../index.html"); // Redirecionar para a página de login caso o usuário não esteja logado
+    header("Location:../index.php"); // Redirecionar para a página de login caso o usuário não esteja logado
 }
 
 $sql_code = "SELECT * FROM usuarios WHERE email = '{$_SESSION['email']}' LIMIT 1";
@@ -16,6 +16,7 @@ $poder = $usuario['poder'];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,8 +33,9 @@ $poder = $usuario['poder'];
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    
+
 </head>
+
 <body>
     <!-- Navbar Vertical -->
     <nav class="navbar navbar-vertical d-flex flex-column p-0" id="navbar">
@@ -42,11 +44,11 @@ $poder = $usuario['poder'];
         <a href="?page=dashboard" class="navbar-brand mb-0 mt-2 p-0">
             <img src="../imagens/logos/logo.png" alt="Logo" id="navbar-logo">
         </a>
-        
+
         <!-- Links das Páginas -->
         <ul class="nav flex-column w-100">
             <!-- link Dashboard -->
-            <li class="nav-item"> 
+            <li class="nav-item">
                 <a href="?page=dashboard" class="nav-link">
                     <i class="bi bi-house-door"></i>
                     <span class="nav-text">Dashboard</span>
@@ -55,26 +57,26 @@ $poder = $usuario['poder'];
             <!-- link Lançamentos -->
             <li class="nav-item">
                 <a href="?page=lancamentos" class="nav-link">
-                <i class="bi bi-card-checklist"></i> <span class="nav-text">Lançamentos</span>
+                    <i class="bi bi-card-checklist"></i> <span class="nav-text">Lançamentos</span>
                 </a>
             </li>
             <!-- link Desempenho -->
             <li class="nav-item">
                 <a href="?page=desempenho" class="nav-link">
-                <i class="bi bi-graph-up-arrow"></i> <span class="nav-text">Desempenho</span>
+                    <i class="bi bi-graph-up-arrow"></i> <span class="nav-text">Desempenho</span>
                 </a>
-            </li>   
+            </li>
             <!-- link Contas -->
             <li class="nav-item">
                 <a href="?page=contas" class="nav-link">
-                <i class="bi bi-bank"></i> <span class="nav-text">Contas</span>
+                    <i class="bi bi-bank"></i> <span class="nav-text">Contas</span>
                 </a>
             </li>
             <!-- link Cartões -->
             <li class="nav-item">
                 <a href="?page=cartoes" class="nav-link">
-                <i class="bi bi-credit-card-2-back"></i> <span class="nav-text">Cartões</span>
-                </a>    
+                    <i class="bi bi-credit-card-2-back"></i> <span class="nav-text">Cartões</span>
+                </a>
             </li>
             <!-- link Minigames -->
             <li class="nav-item">
@@ -85,7 +87,7 @@ $poder = $usuario['poder'];
             <!-- link Planos -->
             <li class="nav-item">
                 <a href="?page=planos" class="nav-link">
-                <i class="bi bi-currency-dollar"></i> <span class="nav-text">Planos</span>
+                    <i class="bi bi-currency-dollar"></i> <span class="nav-text">Planos</span>
                 </a>
             </li>
             <!-- link Investimentos -->
@@ -103,10 +105,10 @@ $poder = $usuario['poder'];
             <!-- link Sobre nós -->
             <li class="nav-item">
                 <a href="?page=sobre" class="nav-link">
-                <i class="bi bi-person-raised-hand"></i> <span class="nav-text">Sobre nós</span>
+                    <i class="bi bi-person-raised-hand"></i> <span class="nav-text">Sobre nós</span>
                 </a>
             </li>
-            
+
         </ul>
         <!-- Links Inferiores -->
         <ul class="nav flex-column w-100 bottom-links">
@@ -125,13 +127,13 @@ $poder = $usuario['poder'];
             <!-- link Suporte -->
             <li class="nav-item">
                 <a href="?page=contato" class="nav-link">
-                <i class="bi bi-question-circle"></i> <span class="nav-text">Suporte</span>
+                    <i class="bi bi-question-circle"></i> <span class="nav-text">Suporte</span>
                 </a>
             </li>
             <!-- link Editar Perfil -->
             <li class="nav-item">
                 <a href="?page=alterar" class="nav-link">
-                <i class="bi bi-person-gear"></i> <span class="nav-text">Editar Perfil</span>
+                    <i class="bi bi-person-gear"></i> <span class="nav-text">Editar Perfil</span>
                 </a>
             </li>
             <!-- link Logout -->
@@ -143,16 +145,17 @@ $poder = $usuario['poder'];
         </ul>
     </nav>
 
-        <!-- Navbar Superior -->
-        <nav class="navbar-top" id="navbarTop">
+    <!-- Navbar Superior -->
+    <nav class="navbar-top" id="navbarTop">
         <!-- Botão de fechar a navbar -->
         <button class="toggle-btn" id="toggleBtn">
             <i class="fas fa-angle-double-left"></i>
         </button>
-        <div class="user-info"> <!-- Informações do usuário -->
-        <a href="?page=alterar" class="link-perfil">
+        <div class="user-info">
+            <!-- Informações do usuário -->
+            <a href="?page=alterar" class="link-perfil">
                 <img src='<?php echo $_SESSION['foto_perfil'] ?>' alt="">
-               <?php 
+                <?php 
                     $nomeCompleto = $_SESSION['nome'] . ' ' . $_SESSION['sobrenome'];
 
                     if ($plano == 1) {
@@ -166,7 +169,8 @@ $poder = $usuario['poder'];
         </div>
     </nav>
 
-    <section class="conteudo">  <!-- section conteúdo -->
+    <section class="conteudo">
+        <!-- section conteúdo -->
         <?php
             include("configs/config.php");
             switch(@$_REQUEST["page"]){ // switch para verificar qual pagina deve ser carregada
@@ -187,6 +191,9 @@ $poder = $usuario['poder'];
                 break;
                 case "minigames":
                     include("minigames.php");
+                break;
+                case "loja":
+                    include("resgate.php");
                 break;
                 case "letreco":
                     include("minigames/letreco.php");
@@ -237,4 +244,5 @@ $poder = $usuario['poder'];
     <script src="../Js/paginas/nav-bar.js"></script>
 
 </body>
+
 </html>

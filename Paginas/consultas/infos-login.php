@@ -31,6 +31,7 @@ if(isset($_POST['email'])){
             $_SESSION['salario'] = $usuario['salario'];
             $_SESSION['plano'] = $usuario['plano'];
             $_SESSION['poder'] = $usuario['poder'];
+            $_SESSION['moedas'] = $usuario['moedas'];
             
             
             // Verificar se o usuário optou por "manter conectado"
