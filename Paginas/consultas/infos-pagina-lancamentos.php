@@ -1,6 +1,8 @@
 <?php
 
 session_start();
+date_default_timezone_set('America/Sao_Paulo');
+
 include("../configs/config.php");
 
 $id_usuario = $_SESSION['id_usuario'];
@@ -68,4 +70,3 @@ echo json_encode([
 ], JSON_UNESCAPED_UNICODE);
 
 ?>
-

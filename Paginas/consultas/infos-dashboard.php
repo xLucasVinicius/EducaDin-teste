@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+date_default_timezone_set('America/Sao_Paulo');
 include("../configs/config.php");
 header('Content-Type: application/json');
 

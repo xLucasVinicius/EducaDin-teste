@@ -1,14 +1,25 @@
 <?php
 
 session_start();
+date_default_timezone_set('America/Sao_Paulo');
+
 include("../configs/config.php");
 
 $id_usuario = $_SESSION['id_usuario'];
-$data_atual = date('Y-m-1');
-$data_mes_anterior = date('Y-m-1', strtotime('-1 month'));
 
-// Mês atual (total geral)
-$query_atual = "SELECT SUM(total_receitas) AS total_receitas, SUM(total_despesas) AS total_despesas, SUM(saldo_final) AS saldo_final FROM desempenho_anual WHERE id_usuario = ? AND data_ref = ?";
+
+// Define as datas com o primeiro dia do mês usando DateTime para evitar bugs de overflow
+$data_atual = (new DateTime('first day of this month'))->format('Y-m-d');
+$data_mes_anterior = (new DateTime('first day of last month'))->format('Y-m-d');
+
+// Mês atual
+$query_atual = "
+    SELECT SUM(total_receitas) AS total_receitas, 
+           SUM(total_despesas) AS total_despesas, 
+           SUM(saldo_final) AS saldo_final 
+    FROM desempenho_anual 
+    WHERE id_usuario = ? AND data_ref = ?
+";
 $stmt_atual = $mysqli->prepare($query_atual);
 $stmt_atual->bind_param("is", $id_usuario, $data_atual);
 $stmt_atual->execute();
@@ -25,8 +36,14 @@ if ($result_atual->num_rows > 0) {
     $saldo_final_atual = (float)$row_atual['saldo_final'];
 }
 
-// Mês anterior (total geral)
-$query_anterior = "SELECT SUM(total_receitas) AS total_receitas, SUM(total_despesas) AS total_despesas, SUM(saldo_final) AS saldo_final FROM desempenho_anual WHERE id_usuario = ? AND data_ref = ?";
+// Mês anterior
+$query_anterior = "
+    SELECT SUM(total_receitas) AS total_receitas, 
+           SUM(total_despesas) AS total_despesas, 
+           SUM(saldo_final) AS saldo_final 
+    FROM desempenho_anual 
+    WHERE id_usuario = ? AND data_ref = ?
+";
 $stmt_anterior = $mysqli->prepare($query_anterior);
 $stmt_anterior->bind_param("is", $id_usuario, $data_mes_anterior);
 $stmt_anterior->execute();
@@ -52,4 +69,5 @@ echo json_encode([
     'total_despesas_atual' => $total_despesas_atual,
     'saldo_final_atual' => $saldo_final_atual
 ]);
+
 ?>
