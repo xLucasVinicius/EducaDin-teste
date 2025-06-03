@@ -77,30 +77,44 @@ $sqlDatas = "SELECT DISTINCT DATE_FORMAT(data, '%m/%Y') AS mes_ano, DATE_FORMAT(
 
 $resultDatas = $mysqli->query($sqlDatas);
 
+$mesAtual = (int)date('m');
+$anoAtual = (int)date('Y');
+$mesAnoAtual = str_pad($mesAtual, 2, '0', STR_PAD_LEFT) . '/' . $anoAtual;
+
+$mesesExistentes = [];
+
 if ($resultDatas && $resultDatas->num_rows > 0) {
     $contador = 0;
-    $mesAtual = (int)date('m');
-    $anoAtual = (int)date('Y');
 
     while ($row = $resultDatas->fetch_assoc()) {
         $dataLancamento = DateTime::createFromFormat('Y-m-d', $row['data_formatada']);
         $mesLancamento = (int)$dataLancamento->format('m');
         $anoLancamento = (int)$dataLancamento->format('Y');
 
-        if ($plano == 0) {
-            // Plano grátis: ignorar meses futuros
-            if ($anoLancamento > $anoAtual || ($anoLancamento === $anoAtual && $mesLancamento > $mesAtual)) {
-                continue;
-            }
-
-            // Limitar a 3 meses
-            if ($contador >= 3) break;
-            $contador++;
+        // Plano grátis: ignorar meses futuros
+        if ($plano == 0 && ($anoLancamento > $anoAtual || ($anoLancamento === $anoAtual && $mesLancamento > $mesAtual))) {
+            continue;
         }
 
-        $resposta['seletor'][] = $row['mes_ano'];
+        // Limitar a 3 meses no plano grátis
+        if ($plano == 0 && $contador >= 3) break;
+
+        $mesAno = $row['mes_ano'];
+        $mesesExistentes[] = $mesAno;
+        $resposta['seletor'][] = $mesAno;
+        $contador++;
     }
 }
+
+// Adicionar o mês atual se ainda não estiver no seletor
+if (!in_array($mesAnoAtual, $mesesExistentes)) {
+    if ($plano == 0 && count($resposta['seletor']) >= 3) {
+        // Se já existem 3 meses no plano grátis, substituir o mais antigo
+        array_pop($resposta['seletor']); // remove o último
+    }
+    array_unshift($resposta['seletor'], $mesAnoAtual); // adiciona o mês atual no início
+}
+
 
 echo json_encode($resposta, JSON_UNESCAPED_UNICODE);
 ?>

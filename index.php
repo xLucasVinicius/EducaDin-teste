@@ -6,6 +6,22 @@ include("Paginas/configs/config.php");
 if (isset($_SESSION['email'])) {
     header("Location: Paginas/navbar.php");
     exit();
+} else if (isset($_COOKIE['user'])) {
+    $sqlUser = "SELECT * FROM usuarios WHERE email = '{$_COOKIE['user']}' LIMIT 1";
+    $result = $mysqli->query($sqlUser);
+    $user = $result->fetch_assoc();
+    $_SESSION['id_usuario'] = $user['id_usuario'];;
+    $_SESSION['foto_perfil'] = $user['foto_perfil'];
+    $_SESSION['nome'] = $user['nome'];
+    $_SESSION['sobrenome'] = $user['sobrenome'];
+    $_SESSION['email'] = $user['email'];
+    $_SESSION['salario'] = $user['salario'];
+    $_SESSION['plano'] = $user['plano'];
+    $_SESSION['poder'] = $user['poder'];
+    $_SESSION['moedas'] = $user['moedas'];
+    $_SESSION['data_nascimento'] = $user['data_nascimento'];
+    header("Location: Paginas/navbar.php");
+    exit();
 }
 
 ?>

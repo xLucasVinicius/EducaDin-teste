@@ -66,6 +66,10 @@ if ($stmt_check_email->num_rows > 0) { // O email já existe no banco de dados, 
     $_SESSION['moedas'] = $moedas_usuario;
     $_SESSION['data_nascimento'] = $data_nascimento_usuario;
 
+
+    // Definir um cookie com tempo de expiração de 30 dias
+    setcookie('user', $_SESSION['email'], time() + (86400 * 30), "/");
+
     echo json_encode(['status' => 'success']);
 } else {
     // O email não existe, cadastrar o usuário
@@ -107,6 +111,8 @@ if ($stmt_check_email->num_rows > 0) { // O email já existe no banco de dados, 
             $_SESSION['poder'] = $poder_usuario;
             $_SESSION['moedas'] = $moedas_usuario;
             $_SESSION['data_nascimento'] = $data_nascimento_usuario;
+            // Definir um cookie com tempo de expiração de 30 dias
+            setcookie('user', $_SESSION['email'], time() + (86400 * 30), "/");
 
             // E agora inserção na tabela contas
             $sql_insert2 = "INSERT INTO contas (id_usuario, nome_conta, categoria) VALUES (?, 'Carteira', 3)";

@@ -64,7 +64,7 @@ if ($plano === 0) {
 $resposta['ano'] = $anoAtual;
 $resposta['valoresMensais'] = $valoresMensais;
 
-// --------- NOVO: Montar array dos meses disponíveis para o seletor ---------
+// --------- Montar array dos meses disponíveis para o seletor ---------
 
 $resposta['seletor'] = [];
 
@@ -78,10 +78,14 @@ $sqlDatas = "SELECT DISTINCT DATE_FORMAT(data, '%m/%Y') AS mes_ano, data
 
 $resultDatas = $mysqli->query($sqlDatas);
 
+$anoAtual = (int)date('Y');
+$mesAtual = (int)date('m');
+$mesAnoAtual = str_pad($mesAtual, 2, '0', STR_PAD_LEFT) . '/' . $anoAtual;
+
+$mesesExistentes = [];
+
 if ($resultDatas && $resultDatas->num_rows > 0) {
     $contador = 0;
-    $anoAtual = (int)date('Y');
-    $mesAtual = (int)date('m');
 
     while ($row = $resultDatas->fetch_assoc()) {
         $dataLancamento = DateTime::createFromFormat('Y-m-d', $row['data']);
@@ -98,11 +102,21 @@ if ($resultDatas && $resultDatas->num_rows > 0) {
             break;
         }
 
-        // Adiciona ao seletor
-        $resposta['seletor'][] = $row['mes_ano'];
+        $mesAno = $row['mes_ano'];
+        $mesesExistentes[] = $mesAno;
+        $resposta['seletor'][] = $mesAno;
         $contador++;
     }
 }
+
+// Garante que o mês atual esteja presente
+if (!in_array($mesAnoAtual, $mesesExistentes)) {
+    if ($plano === 0 && count($resposta['seletor']) >= 3) {
+        array_pop($resposta['seletor']); // remove o mais antigo
+    }
+    array_unshift($resposta['seletor'], $mesAnoAtual); // adiciona o mês atual no início
+}
+
 
 // Verifica se o plano gratuito está acessando meses fora dos permitidos (bloqueio categorias)
 $bloquearCategorias = false;

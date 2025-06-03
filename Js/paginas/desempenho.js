@@ -305,52 +305,78 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(`../Paginas/consultas/infos-dashboard.php?data=${data}`)
         .then(response => response.json())
         .then(data => {
-            // Popula o gráfico
-            const categoriasData = data.categorias;
-            const chartElement2 = document.querySelector('#chart3');
-            chartElement2.innerHTML = '';
-            const categoriasNomes = categoriasData.map(c => c.nome);
-            const categoriasValores = categoriasData.map(c => c.quantidade);
+    const categoriasData = data.categorias;
+    const chartElement2 = document.querySelector('#chart3');
+    chartElement2.innerHTML = '';
 
-            const optionsDoughnut = {
-                chart: {
-                    type: 'donut',
-                    height: 200,
-                    width: 300
-                },
-                series: categoriasValores,
-                labels: categoriasNomes,
-                legend: {
-                    position: 'bottom',
-                    labels: { colors: 'white' }
-                },
-                plotOptions: { pie: { donut: { size: '30%' } } }
-            };
+    let categoriasNomes = [];
+    let categoriasValores = [];
+    let semDados = false;
 
-            const chartDoughnut = new ApexCharts(chartElement2, optionsDoughnut);
-            chartDoughnut.render();
+    if (categoriasData.length > 0) {
+        categoriasNomes = categoriasData.map(c => c.nome);
+        categoriasValores = categoriasData.map(c => c.quantidade);
+    } else {
+        categoriasNomes = [''];
+        categoriasValores = [1]; // Garante que o gráfico renderize
+        semDados = true;
+    }
 
-            // Popula o select apenas uma vez, na primeira chamada
-            if (!selectPopulado && selectDataCategorias && data.seletor) {
-                selectDataCategorias.innerHTML = '';
-
-                data.seletor.forEach(mesAno => {
-                    const option = document.createElement('option');
-                    option.value = mesAno;
-                    option.textContent = mesAno;
-                    selectDataCategorias.appendChild(option);
-                });
-
-                // Seleciona o valor padrão baseado no mês/ano atual, se existir
-                if (data.seletor.includes(mesAnoAtual)) {
-                    selectDataCategorias.value = mesAnoAtual;
-                } else if (data.seletor.length > 0) {
-                    selectDataCategorias.value = data.seletor[0];
+    const optionsDoughnut = {
+        chart: {
+            type: 'donut',
+            height: 200,
+            width: 300
+        },
+        series: categoriasValores,
+        labels: categoriasNomes,
+        legend: {
+            position: 'bottom',
+            labels: { colors: 'white' }
+        },
+        plotOptions: {
+            pie: {
+                donut: {
+                    size: '30%',
+                    labels: {
+                        show: false // <- oculta o texto central
+                    }
                 }
-
-                selectPopulado = true; // marca que o select já foi populado
             }
-        })
+        },
+        colors: semDados ? ['#444'] : undefined, // cor neutra quando não há dados
+        tooltip: {
+            enabled: !semDados
+        },
+        dataLabels: {
+            enabled: !semDados
+        }
+    };
+
+    const chartDoughnut = new ApexCharts(chartElement2, optionsDoughnut);
+    chartDoughnut.render();
+
+    // Popula o select
+    if (!selectPopulado && selectDataCategorias && data.seletor) {
+        selectDataCategorias.innerHTML = '';
+
+        data.seletor.forEach(mesAno => {
+            const option = document.createElement('option');
+            option.value = mesAno;
+            option.textContent = mesAno;
+            selectDataCategorias.appendChild(option);
+        });
+
+        if (data.seletor.includes(mesAnoAtual)) {
+            selectDataCategorias.value = mesAnoAtual;
+        } else if (data.seletor.length > 0) {
+            selectDataCategorias.value = data.seletor[0];
+        }
+
+        selectPopulado = true;
+    }
+})
+
         .catch(error => console.error('Erro ao carregar os dados:', error));
     }
 
@@ -370,11 +396,6 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(`../Paginas/consultas/desempenho-categoria-essencial.php?data=${dataSelecionada}`)
         .then(response => response.json())
         .then(data => {
-            if (data.erro) {
-                alert(data.erro);
-                return;
-            }
-
             const essenciais = data.essenciais || 0;
             const desnecessarias = data.desnecessarias || 0;
             const total = essenciais + desnecessarias;
@@ -382,7 +403,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const percEssenciais = total > 0 ? (essenciais / total) * 100 : 0;
             const percDesnecessarias = total > 0 ? (desnecessarias / total) * 100 : 0;
 
-            // Atualiza visualmente
             barraEssenciais.style.width = `${percEssenciais}%`;
             barraDesnecessarias.style.width = `${percDesnecessarias}%`;
 
@@ -405,6 +425,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const mesAtual = String(dataAtual.getMonth() + 1).padStart(2, '0');
             const anoAtual = dataAtual.getFullYear();
             const mesAnoAtual = `${mesAtual}/${anoAtual}`;
+            
 
             datas.forEach(dataItem => {
                 const option = document.createElement('option');

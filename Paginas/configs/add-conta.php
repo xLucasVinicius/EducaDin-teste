@@ -27,7 +27,7 @@ if ($plano == 0) {
 
 $saldo = formatarSalario($saldo); // Formata o saldo
 
-$sqlTest = "SELECT * FROM contas WHERE nome_conta = '$nome_conta' AND categoria = '$tipo'"; // Verifica se a conta ja existe
+$sqlTest = "SELECT * FROM contas WHERE nome_conta = '$nome_conta' AND categoria = '$tipo' AND id_usuario = '$id_usuario'"; // Verifica se a conta ja existe
 
 if ($mysqli->query($sqlTest)->num_rows == 0) { // Se a conta nao existir
     $sql = "INSERT INTO contas (id_usuario, nome_conta, saldo_atual, categoria) VALUES (?, ?, ?, ?)"; // Insere a conta

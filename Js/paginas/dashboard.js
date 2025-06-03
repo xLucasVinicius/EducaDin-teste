@@ -76,35 +76,57 @@ fetch('../Paginas/consultas/infos-dashboard.php')
     // ----- GRÁFICO DE ROSCA -----
     const categorias = data.categorias || [];
 
-    const chartElement2 = document.querySelector('#chart2');
-    const categoriasNomes = categorias.map(c => c.nome);
-    const categoriasValores = categorias.map(c => c.quantidade);
+const chartElement2 = document.querySelector('#chart2');
+chartElement2.innerHTML = ''; // Limpa gráfico anterior, se existir
 
-    const optionsDoughnut = {
-        chart: {
-            type: 'donut',
-            height: 250,
-            width: 350
-        },
-        series: categoriasValores,
-        labels: categoriasNomes,
-        legend: {
-            position: 'bottom',
-            labels: {
-                colors: 'white'
-            }
-        },
-        plotOptions: {
-            pie: {
-                donut: {
-                    size: '30%'
+let categoriasNomes = [];
+let categoriasValores = [];
+let semDados = false;
+
+if (categorias.length > 0) {
+    categoriasNomes = categorias.map(c => c.nome);
+    categoriasValores = categorias.map(c => c.quantidade);
+} else {
+    categoriasNomes = [''];
+    categoriasValores = [1]; // Dado fictício para exibir o gráfico
+    semDados = true;
+}
+
+const optionsDoughnut = {
+    chart: {
+        type: 'donut',
+        height: 250,
+        width: 350
+    },
+    series: categoriasValores,
+    labels: categoriasNomes,
+    legend: {
+        position: 'bottom',
+        labels: {
+            colors: 'white'
+        }
+    },
+    plotOptions: {
+        pie: {
+            donut: {
+                size: '30%',
+                labels: {
+                    show: false // Oculta texto no centro
                 }
             }
         }
-    };
+    },
+    colors: semDados ? ['#444'] : undefined, // Cor neutra caso não tenha dados
+    tooltip: {
+        enabled: !semDados
+    },
+    dataLabels: {
+        enabled: !semDados
+    }
+};
 
-    const chartDoughnut = new ApexCharts(chartElement2, optionsDoughnut);
-    chartDoughnut.render();
+const chartDoughnut = new ApexCharts(chartElement2, optionsDoughnut);
+chartDoughnut.render();
 })
 .catch(error => console.error('Erro ao carregar gráficos:', error));
 //===============================================================================================

@@ -127,7 +127,7 @@ function nameIsValid(value) {
         return validator;
     }
 
-    const regex = /^[A-Za-z\s]+$/;
+    const regex = /^[\p{L}\s]+$/u;
     if (!regex.test(value)) {
         validator.isValid = false;
         validator.errorMessage = 'Insira apenas letras';
