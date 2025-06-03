@@ -36,7 +36,7 @@ if ($metodo == 'Dinheiro') {
 }
 
 // Se for cartão de débito e a conta não tiver sido definida, buscar a conta vinculada ao cartão
-if ($metodo === 'Débito' && empty($id_conta) && !empty($id_cartao)) {
+if ($metodo === 'Débito' || $metodo === 'Crédito' && empty($id_conta) && !empty($id_cartao)) {
     $query = "SELECT id_conta FROM cartoes WHERE id_cartao = ? AND id_usuario = ?";
     $stmt = $mysqli->prepare($query);
     $stmt->bind_param("ii", $id_cartao, $id_usuario);
@@ -230,6 +230,8 @@ if ($id_lancamento) {
                 $stmt_insert->bind_param("iisddd", $id_usuario, $id_conta, $data_ref, $total_receitas, $total_despesas, $saldo_atual);
                 $stmt_insert->execute();
                 $stmt_insert->close();
+                
+                
             }
         } else {
             // Inserir desempenho anual com o mês atual se for o mesmo
