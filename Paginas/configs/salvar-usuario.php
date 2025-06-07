@@ -20,7 +20,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $salario = $_POST['salario'];  
     $data_nascimento = $_POST['data-nascimento'];  
     $senha = $_POST['senha'];
-    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);  
+    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
+    $sql_verificacao = "SELECT status_atividade FROM usuarios WHERE email = ?";
+    $stmt_verificacao = $mysqli->prepare($sql_verificacao);
+    $stmt_verificacao->bind_param("s", $email);
+    $stmt_verificacao->execute();
+    $result_verificacao = $stmt_verificacao->get_result();
+    if ($result_verificacao->num_rows > 0 && $result_verificacao->fetch_assoc()['status_atividade'] == 0) {
+        echo json_encode(['status' => 'banido']);
+        exit;
+    }
+    $stmt_verificacao->close();
 
     // Formatar corretamente o salário
     $salario = formatarSalario($salario);  

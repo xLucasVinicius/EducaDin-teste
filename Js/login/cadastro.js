@@ -93,6 +93,8 @@ form.addEventListener('submit', function (e) {
                 showModalError(data); // Função para exibir o modal com erro
             } else if (data.status === 'success2') {
                 handleSuccess(data);
+            } else if (data.status === 'banido') {
+                showModalError(data)
             } else {
                 // Em caso de outro erro
                 console.log('Erro desconhecido', data);
@@ -371,11 +373,13 @@ function handleSuccess(response) {
 
 // Função para exibir o modal de erro
 function showModalError(data) {
-    var modalerror = document.getElementById("errorModal"); // Modal de erro
-    var closeModalBtn2 = document.getElementById("closeModalBtn2"); // Botão para fechar o modal
+    const modalError = document.getElementById("errorModal"); // Modal de erro
+    const closeModalBtn2 = document.getElementById("closeModalBtn2"); // Botão para fechar o modal
+    const modalErroBanido = document.getElementById("errorModalEmailBanido"); // Modal de erro por banimento
+    const closeModalBtnBanido = document.getElementById("closeModalBtnBanido"); // Botão para fechar o modal de banimento
 
     if (data.status === 'error_email') { // Verifica o status de erro
-        modalerror.style.display = "flex"; // Exibe o modal
+        modalError.style.display = "flex"; // Exibe o modal
         errorSpanEmail.innerHTML = `${errorIcon} Insira um email válido`; // Atribui a mensagem de erro
         errorSpanEmail.style.display = "block"; // Exibe a mensagem
         inputEmailBox.classList.remove('valid'); // Remove a classe de sucesso
@@ -383,8 +387,17 @@ function showModalError(data) {
 
         // Quando o usuário clicar no botão, fecha o modal
         closeModalBtn2.onclick = function() {
-            modalerror.style.display = "none";
+            modalError.style.display = "none";
         };
+    } else if (data.status === 'banido') {
+        modalErroBanido.style.display = "flex"; // Exibe o modal
+        inputEmailBox.classList.remove('valid'); // Remove a classe de sucesso
+        inputEmailBox.classList.add('invalid'); // Adiciona a classe de erro
+
+        // Quando o usuário clicar no botão, fecha o modal
+        closeModalBtnBanido.onclick = function() {
+            modalErroBanido.style.display = "none";
+        }
     }
 }
 

@@ -37,6 +37,7 @@ if (isset($_SESSION['email'])) {
     <link rel="shortcut icon" href="imagens/logos/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="Style/index/index.css">
     <link rel="stylesheet" href="Style/index/media-index.css">
+    <link rel="stylesheet" href="Style/globais/msg-confirmacao.css">
     <script src="Js/botaogoogle/botao-google-index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
     <script src="https://accounts.google.com/gsi/client" async></script>
@@ -44,6 +45,13 @@ if (isset($_SESSION['email'])) {
 <body>
     <div id="gradient"></div>
     <div id="pattern"></div>
+    <div id="errorModalEmailBanido" class="modal">
+        <div class="modal-content">
+            <h2>Erro!</h2>
+            <p>O email utilizado foi banido.</p>
+            <button id="closeModalBtnBanido">OK</button>
+        </div>
+    </div>
     <div class="content">
         <div class="introducao">
             <h1>Seja bem-vindo ao</h1>

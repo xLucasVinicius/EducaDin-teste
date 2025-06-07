@@ -52,6 +52,21 @@ body::-webkit-scrollbar {
     will-change: transform;
 }
 
+#errorModalEmailBanido h2 {
+    font-family: sans-serif;
+    color: red;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+#errorModalEmailBanido p {
+    font-family: sans-serif;
+    position: initial;
+    color: black;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
 .content {
     position: relative;
     display: flex;

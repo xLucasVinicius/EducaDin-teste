@@ -7,9 +7,68 @@
     <title>Document</title>
     <link rel="stylesheet" href="../Style/admin/administrar.css">
     <link rel="stylesheet" href="../Style/admin/administrar-media.css">
+    <link rel="stylesheet" href="../Style/globais/msg-confirmacao.css">
 </head>
 
 <body>
+    <!-- Modal de Confirmação de banimento conta -->
+    <div id="modalConfirmarBanir" class="modal">
+        <div class="modal-content">
+            <h2>Cuidado!</h2>
+            <p></p>
+            <span class="btns-operacoes">
+                <button id="btnModalBanir">Sim</button>
+                <button id="btnModalNaoBanir">Não</button>
+            </span>
+        </div>
+    </div>
+    <div id="modalSucessoBanirUsuario" class="modal">
+        <div class="modal-content">
+            <h2>Sucesso!</h2>
+            <p>O usuário foi banido.</p>
+            <span class="btns-operacoes">
+                <button id="btnModalBanirSucesso">Ok</button>
+            </span>
+        </div>
+    </div>
+    <div id="modalErroBanirUsuario" class="modal">
+        <div class="modal-content">
+            <h2>Erro!</h2>
+            <p>O usuário nao foi banido.</p>
+            <span class="btns-operacoes">
+                <button id="btnModalBanirErro">Ok</button>
+            </span>
+        </div>
+    </div>
+    
+    <div id="modalConfirmarDesbanir" class="modal">
+        <div class="modal-content">
+            <h2>Cuidado!</h2>
+            <p></p>
+            <span class="btns-operacoes">
+                <button id="btnModalDesbanir">Sim</button>
+                <button id="btnModalNaoDesbanir">Não</button>
+            </span>
+        </div>
+    </div>
+    <div id="modalSucessoDesbanirUsuario" class="modal">
+        <div class="modal-content">
+            <h2>Sucesso!</h2>
+            <p>O usuário foi desbanido.</p>
+            <span class="btns-operacoes">
+                <button id="btnModalDesbanirSucesso">Ok</button>
+            </span>
+        </div>
+    </div>
+    <div id="modalErroDesbanirUsuario" class="modal">
+        <div class="modal-content">
+            <h2>Erro!</h2>
+            <p>O usuário nao foi desbanido.</p>
+            <span class="btns-operacoes">
+                <button id="btnModalDesbanirErro">Ok</button>
+            </span>
+        </div>
+    </div>
     <section class="conteudo-adm-total">
         <h1>Painel Administrativo</h1>
         <section class="dashboard-adm">
@@ -81,6 +140,7 @@
                                 <th>Email</th>
                                 <th>Plano</th>
                                 <th>Data de Criação</th>
+                                <th>Status</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>

@@ -280,17 +280,26 @@ function mostrarConfirmarSenha() {
 }
 
 function handleSuccess(response) {
-    var modal = document.getElementById("successModal"); // Modal de sucesso
-    var closeModalBtn = document.getElementById("closeModalBtn"); // Botão para fechar o modal
+    const modal = document.getElementById("successModal"); // Modal de sucesso
+    const closeModalBtn = document.getElementById("closeModalBtn"); // Botão para fechar o modal
+    const modalEmailBanido = document.getElementById("modalEmailBanido");
+    const closeModalBtnBanido = document.getElementById("closeModalBtnBanido"); // Botão para fechar o modal
+
 
     // Mostrar o modal se a resposta for de sucesso
     if (response.status === 'success') {
-        modal.style.display = "block";
+        modal.style.display = "flex";
+    } else if (response.status === 'banido') {
+        modalEmailBanido.style.display = "flex";
     }
 
     // Quando o usuário clicar no botão, redireciona para a página inicial
     closeModalBtn.onclick = function() {
         window.location.href = "../index.php";
+    };
+    
+    closeModalBtnBanido.onclick = function() {
+        location.reload();
     };
 }
 

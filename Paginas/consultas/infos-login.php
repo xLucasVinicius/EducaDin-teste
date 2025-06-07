@@ -4,24 +4,23 @@ session_start();
 $error_email = false;
 $error_senha = false;
 
-if(isset($_POST['email'])){
-    include("./configs/config.php");
-    
-    // Sanitizando o input para prevenir SQL Injection
+if (isset($_POST['email'])) {
+    include("../configs/config.php");
+
     $email = $mysqli->real_escape_string($_POST['email']);
     $senha = $_POST['senha'];
 
     $sql_code = "SELECT * FROM usuarios WHERE email = '$email' LIMIT 1";
     $sql_exec = $mysqli->query($sql_code) or die($mysqli->error);
-    
-
-    // Verifica se a consulta retornou algum usuário
     if ($sql_exec->num_rows > 0) {
         $usuario = $sql_exec->fetch_assoc();
-        
-        // Verifica a senha
+
+        if ($usuario['status_atividade'] == 0) {
+            echo json_encode(['status' => 'banido']);
+            exit;
+        }
+
         if (password_verify($senha, $usuario['senha'])) {
-            // Armazenando os dados do usuário na sessão
             $_SESSION['id_usuario'] = $usuario['id_usuario'];
             $_SESSION['foto_perfil'] = $usuario['foto_perfil'];
             $_SESSION['nome'] = $usuario['nome'];
@@ -32,21 +31,24 @@ if(isset($_POST['email'])){
             $_SESSION['plano'] = $usuario['plano'];
             $_SESSION['poder'] = $usuario['poder'];
             $_SESSION['moedas'] = $usuario['moedas'];
-            
-            
-            // Verificar se o usuário optou por "manter conectado"
+
             if (isset($_POST['remember'])) {
-                // Definir um cookie com tempo de expiração de 30 dias
                 setcookie('user', $usuario['email'], time() + (86400 * 30), "/");
             }
-            // Redireciona para a página inicial
-            header('location: navbar.php?page=dashboard');
-            exit();
+
+            echo json_encode(['status' => 'success']);
+            exit;
         } else {
-            $error_senha = true;
+            echo json_encode(['status' => 'senha_error']);
+            exit;
         }
     } else {
-        $error_email = true;
+        echo json_encode(['status' => 'email_error']);
+        exit;
     }
+} else {
+    // Retorno padrão para requisições que não vieram com POST
+    echo json_encode(['status' => 'invalid_request']);
+    exit;
 }
 ?>

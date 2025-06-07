@@ -12,6 +12,17 @@ $link_foto_perfil_google = $data['foto_perfil']; // Link da foto de perfil retor
 $salario = null;
 $data_nascimento = null;
 
+$sql_verificacao = "SELECT status_atividade FROM usuarios WHERE email = ?";
+$stmt_verificacao = $mysqli->prepare($sql_verificacao);
+$stmt_verificacao->bind_param("s", $email);
+$stmt_verificacao->execute();
+$result_verificacao = $stmt_verificacao->get_result();
+if ($result_verificacao->num_rows > 0 && $result_verificacao->fetch_assoc()['status_atividade'] == 0) {
+    echo json_encode(['status' => 'banido']);
+    exit;
+}
+$stmt_verificacao->close();
+
 // Função para salvar a imagem da URL do Google
 function salvarImagemGoogle($url, $novo_nome) {
     // Diretório absoluto/relativo ao servidor para salvar as imagens

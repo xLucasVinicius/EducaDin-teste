@@ -2,6 +2,7 @@ const searchInput = document.getElementById('busca');
 const searchSelect = document.getElementById('plano');
 let anosJaPopulados = false; // Flag para garantir que só populamos uma vez
 
+
 function exibirInfos() {
     fetch('../Paginas/administrador/infos-adm.php')
         .then(response => response.json())
@@ -93,6 +94,13 @@ function buscarUsuarios(txtBusca) {
             const usuarios = data.usuarios;
 
             usuarios.forEach(usuario => {
+                let buttom = '';
+                if (usuario.status_atividade == '1') {
+                            buttom = `<button class="btn-banir" onclick="banirUsuario(${usuario.id_usuario})" title="Banir"><i class="bi bi-ban"></i></button>`;
+                } else if (usuario.status_atividade == '0') {
+                    buttom = `<button class="btn-desbanir" onclick="desbanirUsuario(${usuario.id_usuario})" title="Desbanir"><i class="bi bi-arrow-clockwise"></i></button>`
+                } 
+
                 // Transforma o texto da data em objeto Date
                 const data = new Date(usuario.data_cadastro);
 
@@ -110,16 +118,111 @@ function buscarUsuarios(txtBusca) {
                     <td>${usuario.email}</td>
                     <td>${usuario.plano == '0' ? 'Gratis' : 'Premium'}</td>
                     <td>${dataFormatada}</td>
-                    <td>
-                        <button class="btn-editar" data-id="${usuario.id_usuario}"><i class="bi bi-pencil-square"></i></button>
-                        <button class="btn-excluir" data-id="${usuario.id_usuario}"><i class="bi bi-trash"></i></button>
-                    </td>
+                    <td style="color: ${usuario.status_atividade == '1' ? 'green' : 'red'};">${usuario.status_atividade == '1' ? 'Ativo' : 'Banido'}</td>
+                    <td>${buttom}</td>
                 `;
                 tabelaBody.appendChild(tr);
             });
     })
     .catch(error => console.error('Erro ao carregar dados:', error));
 }
+
+function banirUsuario(id) {
+    document.querySelector('.conteudo').style.overflowY = 'clip';
+    window.scrollTo(0, 0);
+    const modalConfirmarBanir = document.getElementById("modalConfirmarBanir");
+
+    const nomeUsuario = document.querySelector(`#tabela-corpo tr:nth-child(${id}) td:nth-child(2)`).textContent;
+    modalConfirmarBanir.querySelector("p").innerHTML = `Deseja realmente banir o usuário <br> <span>${nomeUsuario}</span> ? <br> Tenha certeza dessa decisão.`;
+    modalConfirmarBanir.style.display = "flex";
+
+    const botaoConfirmarBanir = document.getElementById("btnModalBanir");
+
+    const novoBotao = botaoConfirmarBanir.cloneNode(true);
+    botaoConfirmarBanir.parentNode.replaceChild(novoBotao, botaoConfirmarBanir);
+
+    novoBotao.addEventListener("click", () => {
+        fetch(`../Paginas/administrador/banir-usuario.php?id_usuario=${id}&acao=banir`, {
+            method: "GET"
+        })
+        .then(response => response.json())
+        .then(data => {
+            modalConfirmarBanir.style.display = "none";
+
+            if (data.status === "success") {
+                const modalSucesso = document.getElementById("modalSucessoBanirUsuario");
+                modalSucesso.style.display = "flex";
+            } else {
+                const modalErro = document.getElementById("modalErroBanirUsuario");
+                modalErro.style.display = "flex";
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao banir o usuário:', error);
+            modalConfirmarBanir.style.display = "none";
+            const modalErro = document.getElementById("modalErroBanirUsuario");
+            modalErro.style.display = "flex";
+        });
+    });
+}
+
+function desbanirUsuario(id) {
+    document.querySelector('.conteudo').style.overflowY = 'clip';
+    window.scrollTo(0, 0);
+    const modalConfirmarDesbanir = document.getElementById("modalConfirmarDesbanir");
+
+    const nomeUsuario = document.querySelector(`#tabela-corpo tr:nth-child(${id}) td:nth-child(2)`).textContent;
+    modalConfirmarDesbanir.querySelector("p").innerHTML = `Deseja realmente desbanir o usuário <br> <span>${nomeUsuario}</span> ? <br> Tenha certeza dessa decisão.`;
+    modalConfirmarDesbanir.style.display = "flex";
+
+    const botaoConfirmarDesbanir = document.getElementById("btnModalDesbanir");
+
+    const novoBotao = botaoConfirmarDesbanir.cloneNode(true);
+    botaoConfirmarDesbanir.parentNode.replaceChild(novoBotao, botaoConfirmarDesbanir);
+
+    novoBotao.addEventListener("click", () => {
+        fetch(`../Paginas/administrador/banir-usuario.php?id_usuario=${id}&acao=desbanir`, {
+            method: "GET"
+        })
+        .then(response => response.json())
+        .then(data => {
+            modalConfirmarDesbanir.style.display = "none";
+
+            if (data.status === "success") {
+                const modalSucesso = document.getElementById("modalSucessoDesbanirUsuario");
+                modalSucesso.style.display = "flex";
+            } else {
+                const modalErro = document.getElementById("modalErroDesbanirUsuario");
+                modalErro.style.display = "flex";
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao desbanir o usuário:', error);
+            modalConfirmarDesbanir.style.display = "none";
+            const modalErro = document.getElementById("modalErroDesbanirUsuario");
+            modalErro.style.display = "flex";
+        });
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 searchInput.addEventListener('input', () => {
     buscarUsuarios(searchInput.value);
@@ -138,4 +241,33 @@ window.addEventListener('DOMContentLoaded', () => {
 document.getElementById('ano').addEventListener('change', () => {
     const anoSelecionado = document.getElementById('ano').value;
     atualizarGrafico(anoSelecionado);
+});
+
+
+document.getElementById('btnModalNaoBanir').addEventListener('click', () => {
+    const modalConfirmarBanir = document.getElementById("modalConfirmarBanir");
+    modalConfirmarBanir.style.display = "none";
+    document.querySelector('.conteudo').style.overflowY = 'scroll';
+});
+
+document.getElementById('btnModalBanirSucesso').addEventListener('click', () => {
+    location.reload();
+});
+
+document.getElementById('btnModalBanirErro').addEventListener('click', () => {
+    location.reload();
+});
+
+document.getElementById('btnModalNaoDesbanir').addEventListener('click', () => {
+    const modalConfirmarDesbanir = document.getElementById("modalConfirmarDesbanir");
+    modalConfirmarDesbanir.style.display = "none";
+    document.querySelector('.conteudo').style.overflowY = 'scroll';
+});
+
+document.getElementById('btnModalDesbanirSucesso').addEventListener('click', () => {
+    location.reload();
+});
+
+document.getElementById('btnModalDesbanirErro').addEventListener('click', () => {
+    location.reload();
 });

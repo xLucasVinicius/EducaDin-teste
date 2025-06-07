@@ -1,6 +1,3 @@
-<?php
-include 'consultas/infos-login.php'; // Inclui o arquivo de configuração
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -9,6 +6,7 @@ include 'consultas/infos-login.php'; // Inclui o arquivo de configuração
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="../Style/login/login.css">
+    <link rel="stylesheet" href="../Style/globais/msg-confirmacao.css">
     <link rel="shortcut icon" href="../imagens/logos/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
@@ -20,16 +18,23 @@ include 'consultas/infos-login.php'; // Inclui o arquivo de configuração
     <div id="gradient"></div>
     <div id="pattern"></div>
 
+    <div id="errorModalEmailBanido" class="modal">
+        <div class="modal-content">
+            <h2>Erro!</h2>
+            <p>O email utilizado foi banido.</p>
+            <button id="closeModalBtnBanido">OK</button>
+        </div>
+    </div>
     <!-- Todo o conteúdo -->
     <div class="content">
         <span class="icon-voltar">
             <a href="../index.php"><i class="bi bi-x-lg"></i></a>
         </span>
-        <form action="" method="post" id="form" class="form">
+        <form id="form" class="form">
             <!-- Formulário de login -->
             <h1>Educa<span id="titulo">Din</span></h1> <!-- Logo -->
 
-            <span class="form-span <?php echo ($error_email) ? 'error' : ''; ?>">
+            <span class="form-span email <?php echo ($error_email) ? 'error' : ''; ?>">
                 <!-- Campo de email -->
                 <label for="email">Endereço de Email</label>
                 <input class="input" type="email" name="email" id="email" placeholder="exemplo@mail.com" required>
@@ -50,7 +55,7 @@ include 'consultas/infos-login.php'; // Inclui o arquivo de configuração
                 <label for="remember" id="remember-label">Manter conectado</label>
             </span>
 
-            <input type="submit" value="Login">
+            <input type="submit" value="Login" id="btn-login">
             <a href="#">Esqueci a senha</a>
         </form>
         <div class="login-google">

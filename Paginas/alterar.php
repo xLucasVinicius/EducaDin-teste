@@ -49,6 +49,14 @@ if (isset($_SESSION['id_usuario'])) {
     </div>
 </div>
 
+<div id="modalEmailBanido" class="modal">
+    <div class="modal-content">
+        <h2>Erro!</h2>
+        <p>O email está inserido banido.</p>
+        <button id="closeModalBtnBanido">Ok</button>
+    </div>
+</div>
+
 <form action="configs/salvar-usuario.php" method="POST" enctype="multipart/form-data" id="form-salvar-usuario">
     <h1>Editar <e style="color: #F5A900; font-family:orbitron">perfil</e></h1>
     <p id="data-cadastro">Conta criada em: <?php echo $data_cadastro; ?></p>

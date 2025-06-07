@@ -28,6 +28,8 @@ function handleCredentialResponse(response) {
     .then(data => {
         if (data.status === 'success') {
             window.location.href = 'navbar.php?page=dashboard'; // Redireciona para o dashboard
+        } else if (data.status === 'banido') {
+            showModalError(data)
         }
     })
     .catch(error => console.error('Erro:', error));
@@ -52,4 +54,17 @@ window.onload = function () { // É carregado quando a página for carregada
     }
   );
   google.accounts.id.prompt(); // Mostra o botão de login do Google
+}
+
+function showModalError(data) {
+    const modalErroBanido = document.getElementById("errorModalEmailBanido"); // Modal de erro por banimento
+    const closeModalBtnBanido = document.getElementById("closeModalBtnBanido"); // Botão para fechar o modal de banimento
+
+    if (data.status === 'banido') {
+        modalErroBanido.style.display = "flex"; // Exibe o modal
+        // Quando o usuário clicar no botão, fecha o modal
+        closeModalBtnBanido.onclick = function() {
+            modalErroBanido.style.display = "none";
+        }
+    }
 }
