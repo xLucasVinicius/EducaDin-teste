@@ -34,6 +34,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    document.getElementById("esqueci-senha").addEventListener("click", () => {
+    const modalConfirmar = document.getElementById("modalRecuperar");
+    modalConfirmar.style.display = "flex";
+    });
+
+    const formRecuperar = document.getElementById("form-recuperar");
+    const txtErro = document.getElementById("mensagem-erro");
+    formRecuperar.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(formRecuperar);
+        formData.append("recuperar", "recuperar"); // força o campo, se necessário
+
+        fetch("configs/recuperando-senha.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Erro na requisição");
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === "success") {
+                txtErro.style.color = "green";
+                txtErro.textContent = "Email de recuperação enviado com sucesso";
+            } else if (data.status === "error_email") {
+                txtErro.textContent = "Email inválido";
+                document.querySelector("#email-recuperar").addEventListener("input", () => {
+                    txtErro.textContent = "";
+                });
+            } else if (data.status === "error_envio") {
+                txtErro.textContent = "Erro ao enviar o email de recuperação";
+            } else {
+                console.error("Resposta inesperada:", data);
+            }
+        })
+        .catch(error => txtErro.textContent = "Erro ao enviar o email de recuperação" || console.error("Erro:", error));
+    });
+
+    document.getElementById("fecharModalRecuperar").addEventListener("click", () => {
+        location.reload();
+    });
+
 });
 
 
@@ -71,6 +114,8 @@ if (input.value === '') {
     content.classList.remove('focused');
 }
 });
+
+
 
 
 

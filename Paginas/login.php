@@ -25,6 +25,20 @@
             <button id="closeModalBtnBanido">OK</button>
         </div>
     </div>
+    
+    <!-- Modal para recuperaçãor senha -->
+    <div id="modalRecuperar" class="modal">
+        <div class="modal-content error-conta">
+            <h1>Recuperar Senha</h1>
+            <form method="post" id="form-recuperar" action="configs/recuperando-senha.php">
+                <span id="fecharModalRecuperar"><i class="bi bi-x-lg"></i></span>
+                <input id="email-recuperar" type="email" name="email" placeholder="Email" required>
+                <p id="mensagem-erro"></p>
+                <input type="submit" name="recuperar" value="verificar">
+            </form>
+        </div>
+    </div>
+    
     <!-- Todo o conteúdo -->
     <div class="content">
         <span class="icon-voltar">
@@ -56,7 +70,7 @@
             </span>
 
             <input type="submit" value="Login" id="btn-login">
-            <a href="#">Esqueci a senha</a>
+            <z id="esqueci-senha">Esqueci a senha</z>
         </form>
         <div class="login-google">
             <!-- Botão de login com o google -->

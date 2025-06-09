@@ -277,13 +277,13 @@ input[type="submit"]:hover {
     background-color: #b88100;
 }
 
-a {
+a, z {
     color: var(--cor-principal);
     text-decoration: none;
     transition: all .2s;
 }
 
-a:hover {
+a:hover, z:hover {
     color: #b88100;
 }
 
@@ -296,7 +296,7 @@ a:hover {
     min-height: 100px;
 }
 
-p {
+.login-google p {
     position: absolute;
     top: -10px;
     right: 105px;
@@ -318,6 +318,76 @@ p {
     width: 103px;
     top: -35px;
     right: 0;
+}
+
+#modalRecuperar .modal-content {
+    align-items: center;
+    justify-content: center;
+    background-color: var(--cor-fundo-content);
+}
+
+#modalRecuperar h1 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+#modalRecuperar form {
+    position: relative;
+    margin-bottom: 0;
+}
+
+#modalRecuperar #email-recuperar {
+    width: 100%;
+    background-color: transparent;
+    color: white;
+    border: 1.5px solid white;
+    border-radius: 4px;
+    padding: 10px;
+    outline: none;
+}
+
+#modalRecuperar input[type="submit"] {
+    margin-bottom: 0;
+}
+
+#modalRecuperar #email-recuperar:-webkit-autofill,
+#modalRecuperar #email-recuperar:-webkit-autofill:hover,
+#modalRecuperar #email-recuperar:-webkit-autofill:focus {
+    background-color: transparent !important;
+    color: white !important;
+    border: 1px solid white !important;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white  !important;
+    caret-color: white;
+    outline: none;
+}
+
+#modalRecuperar #mensagem-erro {
+    color: red;
+    font-size: 0.9rem;
+    align-self: start;
+    text-align: start;
+    margin-top: 10px;
+}
+
+#fecharModalRecuperar {
+    position: absolute;
+    top: -95px;
+    right: -40px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+#fecharModalRecuperar:hover {
+    background-color: #79797983;
 }
 
 @media screen and (max-width: 767px) {
