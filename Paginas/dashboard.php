@@ -54,7 +54,7 @@
             </div>
           </section>
           <section class="secao2"> <!-- section com o grafico 1 -->
-              Desempenho Mensal
+              Resumo Mensal
               <div id="chart1"></div> <!-- div que armazena o grafico -->
           </section>
           <section class="secao3"> <!-- section com o grafico 2 -->

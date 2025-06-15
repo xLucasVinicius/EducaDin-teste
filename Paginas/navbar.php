@@ -5,13 +5,18 @@ include("../Paginas/configs/config.php");
 // Verificar se o usuário está logado
 if (!isset($_SESSION['email'])) {
     header("Location:../index.php"); // Redirecionar para a página de login caso o usuário não esteja logado
-}
+} 
 
 $sql_code = "SELECT * FROM usuarios WHERE email = '{$_SESSION['email']}' LIMIT 1";
 $result = $mysqli->query($sql_code);
 $usuario = $result->fetch_assoc();
 $plano = $usuario['plano'];
 $poder = $usuario['poder'];
+$status_atividade = $usuario['status_atividade'];
+
+if ($status_atividade == 0) {
+    header("Location:../Paginas/configs/logout.php");
+}
 
 ?>
 <!DOCTYPE html>

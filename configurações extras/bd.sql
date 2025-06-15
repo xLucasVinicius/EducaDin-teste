@@ -11,7 +11,8 @@ CREATE TABLE usuarios (
     plano TINYINT(1) DEFAULT 0 COMMENT '0 = grátis, 1 = premium',
     poder TINYINT(1) DEFAULT 0 COMMENT '0 = comum, 1 = admin',
     moedas INT DEFAULT 0,
-    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
+    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status_atividade TINYINT(1) DEFAULT 1 COMMENT '0 = banido, 1 = ativo'
 );
 
 -- 2. Tabela de Contas
@@ -115,3 +116,7 @@ CREATE TABLE trocas_premios (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_premio) REFERENCES premios(id_premio) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT INTO minigames (nome) VALUES ('Letreco');
+INSERT INTO minigames (nome) VALUES ('Snake');
+INSERT INTO minigames (nome) VALUES ('Forca');

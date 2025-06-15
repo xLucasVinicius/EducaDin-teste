@@ -1,3 +1,12 @@
+<?php
+
+$sql_busca_moedas = "SELECT moedas FROM usuarios WHERE id_usuario = '{$_SESSION['id_usuario']}' LIMIT 1";
+$result_moedas = $mysqli->query($sql_busca_moedas);
+$moedas = $result_moedas->fetch_assoc();
+$_SESSION['moedas'] = $moedas['moedas'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
