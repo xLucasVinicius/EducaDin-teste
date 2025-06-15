@@ -205,25 +205,6 @@ function desbanirUsuario(id) {
     });
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 searchInput.addEventListener('input', () => {
     buscarUsuarios(searchInput.value);
 });

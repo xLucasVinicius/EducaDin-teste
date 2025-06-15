@@ -71,9 +71,9 @@ $resposta['seletor'] = [];
 $sqlDatas = "SELECT DISTINCT DATE_FORMAT(data, '%m/%Y') AS mes_ano, data
              FROM lancamentos
              WHERE id_usuario = $id_usuario
-               AND tipo = 1
-               AND categoria IS NOT NULL
-               AND categoria != ''
+             AND tipo = 1
+             AND categoria IS NOT NULL
+             AND categoria != ''
              ORDER BY data DESC";
 
 $resultDatas = $mysqli->query($sqlDatas);

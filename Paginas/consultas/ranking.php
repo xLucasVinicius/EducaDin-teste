@@ -10,13 +10,12 @@ $data = json_decode(file_get_contents('php://input'), true);
 $_SESSION['id_minigame'] = $data['id_minigame'];
 
 // Query SQL para buscar os 10 melhores recordes junto com as informações do usuário
-$sql = "
-    SELECT r.id_usuario, r.recorde_pontos, u.nome, u.sobrenome, u.foto_perfil
-    FROM recordes_mg r
-    JOIN usuarios u ON r.id_usuario = u.id_usuario
-    WHERE r.id_minigame = ? 
-    ORDER BY r.recorde_pontos DESC
-    LIMIT 10
+$sql = "SELECT r.id_usuario, r.recorde_pontos, u.nome, u.sobrenome, u.foto_perfil 
+        FROM recordes_mg r 
+        JOIN usuarios u ON r.id_usuario = u.id_usuario
+        WHERE r.id_minigame = ? 
+        ORDER BY r.recorde_pontos DESC
+        LIMIT 10
 ";
 
 // Preparando e executando a query

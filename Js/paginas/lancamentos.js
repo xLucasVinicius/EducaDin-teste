@@ -458,7 +458,7 @@ formLancamento.addEventListener("submit", (event) => {
 event.preventDefault();
 const formData = new FormData(formLancamento);
 console.log(formData);
-fetch("../paginas/configs/add-lancamento.php", {
+fetch("../Paginas/configs/add-lancamento.php", {
     method: "POST",
     body: formData
 })

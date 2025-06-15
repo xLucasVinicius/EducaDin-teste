@@ -12,9 +12,9 @@ $item->unit_price = 20.00;
 $preference = new MercadoPago\Preference();
 $preference->items = [$item];
 $preference->back_urls = [
-    "success" => "https://2c46-2804-1b3-a341-73b-c041-3fcd-9882-26e6.ngrok-free.app/EducaDin-teste/Paginas/configs/retorno-pagamento.php?status=approved",
-    "failure" => "https://2c46-2804-1b3-a341-73b-c041-3fcd-9882-26e6.ngrok-free.app/EducaDin-teste/Paginas/navbar.php?page=planos&status=failure",
-    "pending" => "https://2c46-2804-1b3-a341-73b-c041-3fcd-9882-26e6.ngrok-free.app/EducaDin-teste/Paginas/navbar.php?page=planos&status=pending"
+    "success" => "https://educadin.ct.ws/Paginas/configs/retorno-pagamento.php?status=approved",
+    "failure" => "https://educadin.ct.ws/Paginas/navbar.php?page=planos&status=failure",
+    "pending" => "https://educadin.ct.ws/Paginas/navbar.php?page=planos&status=pending"
 ];
 $preference->auto_return = "approved";
 $preference->save();

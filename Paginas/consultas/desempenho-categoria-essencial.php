@@ -40,7 +40,16 @@ if ($plano == 0) {
 }
 
 // Consulta filtrada por mês/ano
-$sql = "SELECT categoria, SUM(valor) AS total FROM lancamentos WHERE id_usuario = $id_usuario AND tipo = 1 AND categoria IS NOT NULL AND categoria != '' AND MONTH(data) = $mesSelecionado AND YEAR(data) = $anoSelecionado GROUP BY categoria ORDER BY total DESC";
+$sql = "SELECT categoria, SUM(valor) AS total 
+        FROM lancamentos 
+        WHERE id_usuario = $id_usuario 
+        AND tipo = 1 
+        AND categoria IS NOT NULL 
+        AND categoria != '' 
+        AND MONTH(data) = $mesSelecionado 
+        AND YEAR(data) = $anoSelecionado 
+        GROUP BY categoria 
+        ORDER BY total DESC";
 
 $result = $mysqli->query($sql);
 $resposta['totais'] = [];
@@ -73,7 +82,15 @@ if ($result && $result->num_rows > 0) {
 // Buscar todos os meses com lançamentos válidos (tipo 1 e categoria preenchida)
 $resposta['seletor'] = [];
 
-$sqlDatas = "SELECT DISTINCT DATE_FORMAT(data, '%m/%Y') AS mes_ano, DATE_FORMAT(data, '%Y-%m-01') AS data_formatada FROM lancamentos WHERE id_usuario = $id_usuario AND tipo = 1 AND categoria IS NOT NULL AND categoria != '' ORDER BY data_formatada DESC";
+$sqlDatas = "SELECT DISTINCT 
+             DATE_FORMAT(data, '%m/%Y') AS mes_ano, 
+             DATE_FORMAT(data, '%Y-%m-01') AS data_formatada 
+             FROM lancamentos 
+             WHERE id_usuario = $id_usuario 
+             AND tipo = 1 
+             AND categoria IS NOT NULL 
+             AND categoria != '' 
+             ORDER BY data_formatada DESC";
 
 $resultDatas = $mysqli->query($sqlDatas);
 

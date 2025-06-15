@@ -13,13 +13,11 @@ $data_atual = (new DateTime('first day of this month'))->format('Y-m-d');
 $data_mes_anterior = (new DateTime('first day of last month'))->format('Y-m-d');
 
 // Mês atual
-$query_atual = "
-    SELECT SUM(total_receitas) AS total_receitas, 
-           SUM(total_despesas) AS total_despesas, 
-           SUM(saldo_final) AS saldo_final 
-    FROM desempenho_anual 
-    WHERE id_usuario = ? AND data_ref = ?
-";
+$query_atual = "SELECT SUM(total_receitas) AS total_receitas, 
+                SUM(total_despesas) AS total_despesas, 
+                SUM(saldo_final) AS saldo_final 
+                FROM desempenho_anual 
+                WHERE id_usuario = ? AND data_ref = ?";
 $stmt_atual = $mysqli->prepare($query_atual);
 $stmt_atual->bind_param("is", $id_usuario, $data_atual);
 $stmt_atual->execute();
@@ -37,13 +35,11 @@ if ($result_atual->num_rows > 0) {
 }
 
 // Mês anterior
-$query_anterior = "
-    SELECT SUM(total_receitas) AS total_receitas, 
-           SUM(total_despesas) AS total_despesas, 
-           SUM(saldo_final) AS saldo_final 
-    FROM desempenho_anual 
-    WHERE id_usuario = ? AND data_ref = ?
-";
+$query_anterior = "SELECT SUM(total_receitas) AS total_receitas, 
+                   SUM(total_despesas) AS total_despesas, 
+                   SUM(saldo_final) AS saldo_final 
+                   FROM desempenho_anual 
+                   WHERE id_usuario = ? AND data_ref = ?";
 $stmt_anterior = $mysqli->prepare($query_anterior);
 $stmt_anterior->bind_param("is", $id_usuario, $data_mes_anterior);
 $stmt_anterior->execute();

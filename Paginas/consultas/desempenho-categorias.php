@@ -54,19 +54,18 @@ if ($plano === 0) {
 }
 
 // Montar a consulta
-$sql = "
-    SELECT 
+$sql = "SELECT 
         YEAR(data) AS ano,
         MONTH(data) AS mes,
         categoria,
         SUM(valor) AS total
-    FROM lancamentos
-    WHERE id_usuario = ?
-    AND tipo = 1
-    AND categoria IS NOT NULL AND categoria != ''
-    $condicaoData
-    GROUP BY ano, mes, categoria
-    ORDER BY ano, mes
+        FROM lancamentos
+        WHERE id_usuario = ?
+        AND tipo = 1
+        AND categoria IS NOT NULL AND categoria != ''
+        $condicaoData
+        GROUP BY ano, mes, categoria
+        ORDER BY ano, mes
 ";
 
 // Preparar a query com parâmetros dinâmicos

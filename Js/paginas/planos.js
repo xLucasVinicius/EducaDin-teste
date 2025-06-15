@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById("fechar-modal").addEventListener("click", () => {
     const modal = document.getElementById("modalCompraMensagem");
     modal.style.display = "none";
-    window.location.href = "https://2c46-2804-1b3-a341-73b-c041-3fcd-9882-26e6.ngrok-free.app/EducaDin-teste/Paginas/navbar.php?page=planos";
+    window.location.href = "https://educadin.ct.ws/Paginas/navbar.php?page=planos";
 })
 
 function abrirModal(mensagem) {

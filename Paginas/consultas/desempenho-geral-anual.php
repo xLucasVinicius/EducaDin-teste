@@ -50,12 +50,12 @@ if ($plano == 0) {
 
         // Consultar receitas e despesas para esse mês
         $query = "SELECT 
-                    SUM(total_receitas) AS total_receitas,
-                    SUM(total_despesas) AS total_despesas
+                  SUM(total_receitas) AS total_receitas,
+                  SUM(total_despesas) AS total_despesas
                   FROM desempenho_anual
                   WHERE id_usuario = ? 
-                    AND YEAR(data_ref) = ? 
-                    AND MONTH(data_ref) = ?";
+                  AND YEAR(data_ref) = ? 
+                  AND MONTH(data_ref) = ?";
         $stmt = $mysqli->prepare($query);
         $stmt->bind_param("iii", $id_usuario, $ano_usuario, $i);
         $stmt->execute();
@@ -75,12 +75,12 @@ if ($plano == 0) {
 
         // Consultar receitas e despesas para esse mês
         $query = "SELECT 
-                    SUM(total_receitas) AS total_receitas,
-                    SUM(total_despesas) AS total_despesas
+                  SUM(total_receitas) AS total_receitas,
+                  SUM(total_despesas) AS total_despesas
                   FROM desempenho_anual
                   WHERE id_usuario = ? 
-                    AND YEAR(data_ref) = ? 
-                    AND MONTH(data_ref) = ?";
+                  AND YEAR(data_ref) = ? 
+                  AND MONTH(data_ref) = ?";
         $stmt = $mysqli->prepare($query);
         $stmt->bind_param("iii", $id_usuario, $ano_usuario, $i);
         $stmt->execute();
