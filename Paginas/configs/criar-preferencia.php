@@ -1,28 +1,45 @@
 <?php
-
-require __DIR__ . '/../../vendor/autoload.php';
-
-MercadoPago\SDK::setAccessToken('APP_USR-5025392289696892-031815-76d692fa75852cfa3fb6d72523ff1a78-2335238967');
-
-$item = new MercadoPago\Item();
-$item->title = "Plano Premium EducaDin";
-$item->quantity = 1;
-$item->unit_price = 20.00;
-
-$preference = new MercadoPago\Preference();
-$preference->items = [$item];
-$preference->back_urls = [
-    "success" => "https://educadin.ct.ws/Paginas/configs/retorno-pagamento.php?status=approved",
-    "failure" => "https://educadin.ct.ws/Paginas/navbar.php?page=planos&status=failure",
-    "pending" => "https://educadin.ct.ws/Paginas/navbar.php?page=planos&status=pending"
+// Dados da preferência
+$preferenceData = [
+    "items" => [[
+        "title" => "Plano Premium EducaDin",
+        "quantity" => 1,
+        "unit_price" => 20.00
+    ]],
+    "back_urls" => [
+        "success" => "https://educadin.ct.ws/Paginas/configs/retorno-pagamento.php?status=approved",
+        "failure" => "https://educadin.ct.ws/Paginas/navbar.php?page=planos&status=failure",
+        "pending" => "https://educadin.ct.ws/Paginas/navbar.php?page=planos&status=pending"
+    ],
+    "auto_return" => "approved"
 ];
-$preference->auto_return = "approved";
-$preference->save();
 
-echo json_encode([
-    "id" => $preference->id,
-    "init_point" => $preference->init_point
+// Inicializa cURL
+$ch = curl_init("https://api.mercadopago.com/checkout/preferences");
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($preferenceData));
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    "Content-Type: application/json",
+    "Authorization: Bearer APP_USR-5025392289696892-031815-76d692fa75852cfa3fb6d72523ff1a78-2335238967"
 ]);
-exit;
 
+$response = curl_exec($ch);
+
+if (curl_errno($ch)) {
+    http_response_code(500);
+    echo json_encode(["error" => curl_error($ch)]);
+} else {
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    if ($httpCode >= 200 && $httpCode < 300) {
+        echo $response;
+    } else {
+        http_response_code($httpCode);
+        echo json_encode(["error" => "Erro HTTP $httpCode", "response" => $response]);
+    }
+}
+
+curl_close($ch);
+exit;
 ?>
