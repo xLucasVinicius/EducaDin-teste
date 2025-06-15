@@ -236,7 +236,7 @@ window.addEventListener('DOMContentLoaded', function () {
         
                 if (data.lancamentos.length === 0) {
                     lancamentosContainer.innerHTML = `
-                        <z style="color: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        <z style="color: white; width: 100%; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
                             Nenhum lançamento encontrado.
                         </z>`;
                     return;

@@ -1,6 +1,7 @@
 @media screen and (max-width: 767px) {
     .conteudo-total {
         padding: 10px;
+        min-height: 100%;
     }
 
     .infos-topo {
@@ -20,5 +21,10 @@
     .form-container .form-add-lancamento {
         height: 100%;
         border-radius: 0;
+    }
+
+    .lancamentos {
+        max-height: 430px;
+        min-height: 430px;
     }
 }
