@@ -340,7 +340,7 @@ window.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => {
             console.error('Erro ao carregar os dados:', error);
-            lancamentosContainer.innerHTML = `<z style="color: red;">Erro ao carregar lançamentos.</z>`;
+            lancamentosContainer.innerHTML = `<z style="color: white; width: 100%; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Erro ao carregar lançamentos.</z>`;
         });
     }
 
