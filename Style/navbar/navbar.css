@@ -37,6 +37,7 @@ html, body {
 }
 .navbar-vertical .navbar-brand { /* Estilo do container da logo na navbar vertical */
     margin-left: 0px; 
+    text-align: center;
 }
 .navbar-vertical .navbar-brand img { /* Estilo do logo na navbar vertical */
     max-width: 70%; 
