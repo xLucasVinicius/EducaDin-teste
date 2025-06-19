@@ -139,7 +139,6 @@ chartDoughnut.render();
 fetch('../Paginas/consultas/infos-pagina-lancamentos.php')
 .then(response => response.json())
 .then(data => {
-    console.log(data);
     renderLancamentos(data.lancamentos);
 })
 .catch(error => console.error('Erro ao carregar lançamentos:', error));

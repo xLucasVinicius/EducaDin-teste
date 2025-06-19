@@ -5,7 +5,6 @@ const palavras = [
 
 const indiceAleatorio = Math.floor(Math.random() * palavras.length); // Cria um número aleatório com base nas palavras existentes
 const palavraAleatoria = palavras[indiceAleatorio]; // Seleciona a palavra aleatória
-console.log(palavraAleatoria);
 const tiles = document.querySelector(".tile-container"); // área de digitação do letreco
 const backspaceAndEnterRow = document.querySelector("#backspaceAndEnterRow"); // linha dos botões backspace e enter
 const keyboardFirstRow = document.querySelector("#keyboardFirstRow"); // primeira linha da teclado

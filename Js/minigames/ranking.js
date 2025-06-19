@@ -8,7 +8,6 @@ document.getElementById('voltar').addEventListener('click', function () {
   document.getElementById('ranking').addEventListener('click', function () {
     const minigame = document.getElementById('minigame');
     const idMinigame = minigame.dataset;
-    console.log(idMinigame);
   
     // Envia uma solicitação POST para o arquivo PHP para obter o ranking de pontuaçõo
     fetch('../Paginas/consultas/ranking.php', {

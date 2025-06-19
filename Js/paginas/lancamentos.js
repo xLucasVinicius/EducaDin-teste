@@ -292,7 +292,6 @@ window.addEventListener('DOMContentLoaded', function () {
                             instituicao = conta.nome_conta;
                             // Verifica a categoria e adiciona a inicial correspondente
                             const categoriaConta = conta.categoria; // 0=conta corrente, 1=conta poupança, 2=conta salário
-                            console.log(categoriaConta);
                             const inicialCategoria = categoriaConta == 0 ? 'Corrente' : categoriaConta == 1 ? 'Poupança' : categoriaConta == 2 ? 'Salário' : categoriaConta == 3 ? 'Digital' : '';
                             instituicao +=` (${inicialCategoria})`;
                         } else {
@@ -457,7 +456,6 @@ function formatarMoeda(input) {
 formLancamento.addEventListener("submit", (event) => {
 event.preventDefault();
 const formData = new FormData(formLancamento);
-console.log(formData);
 fetch("../Paginas/configs/add-lancamento.php", {
     method: "POST",
     body: formData

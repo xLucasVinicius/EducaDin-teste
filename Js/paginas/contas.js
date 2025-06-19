@@ -223,8 +223,6 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
         );
 
       });
-      
-      console.log(lancamentos);
     
       if (lancamentos.length === 0) {
         lancamentosContainer.innerHTML = '<z style="color: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Nenhum lançamento encontrado.</z>';
