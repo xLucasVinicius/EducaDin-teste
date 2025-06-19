@@ -6,7 +6,7 @@
     <title>Contas e Lançamentos</title>
     <link rel="stylesheet" href="../Style/contas/contas.css">
     <link rel="stylesheet" href="../Style/contas/contas-media.css">
-    <link rel="stylesheet" href="../style/globais/msg-confirmacao.css">
+    <link rel="stylesheet" href="../Style/globais/msg-confirmacao.css">
 </head>
 <body>
     <!-- Modal de Sucesso -->

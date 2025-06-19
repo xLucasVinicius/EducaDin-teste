@@ -26,7 +26,7 @@ if ($status_atividade == 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EducaDin</title>
-    <link rel="shortcut icon" href="../imagens/logos/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../imagens/logos/moeda.png" type="image/x-icon">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Icons (Opcional) -->

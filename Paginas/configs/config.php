@@ -1,9 +1,9 @@
 <?php
     // definindo as variaveis com as credenciais do banco
     $host = "localhost";
-    $user = "root";
-    $pass = "";
-    $bd = "educadin";
+    $user = "u921758680_lucas_admin";
+    $pass = "Luca$09112003";
+    $bd = "u921758680_educadin";
 
     $mysqli = new mysqli($host, $user, $pass, $bd); //criando a conexao
 

@@ -10,7 +10,7 @@ toggleBtn.addEventListener('click', () => { // Adiciona um ouvinte para o evento
 
     // Alterar logo quando a navbar estiver recolhida
     if (navbar.classList.contains('collapsed')) {
-        logo.src = '../imagens/logos/favicon.ico'; // Altere para o caminho da logo recolhida
+        logo.src = '../imagens/logos/moeda.png'; // Altere para o caminho da logo recolhida
         content.classList.add('collapsed'); // Adiciona a classe "collapsed" ao conteúdo
     } else {
         logo.src = '../imagens/logos/logo.png'; // Altere para o caminho da logo expandida
@@ -28,7 +28,7 @@ function verificarLarguraTela() { // Função para verificar a largura da tela
         navbar.classList.add('collapsed'); // Adiciona a classe "collapsed" a navbar
         navbarTop.classList.add('collapsed'); // Adiciona a classe "collapsed" a navbar superior
         content.classList.add('collapsed'); // Adiciona a classe "collapsed" ao conteúdo
-        logo.src = '../imagens/logos/favicon.ico'; // Altere para o caminho da logo recolhida
+        logo.src = '../imagens/logos/moeda.png'; // Altere para o caminho da logo recolhida
     } else {
         navbar.classList.remove('collapsed'); // Remove a classe "collapsed" da navbar
         navbarTop.classList.remove('collapsed'); // Remove a classe "collapsed" da navbar superior

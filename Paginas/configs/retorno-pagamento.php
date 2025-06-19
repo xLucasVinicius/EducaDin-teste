@@ -1,36 +1,51 @@
 <?php
 session_start();
 require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
-
 include("config.php");
 
-// Verifique se o pagamento foi aprovado
-if (isset($_GET['status']) && $_GET['status'] == 'approved') {
-    
-    // Capturar o ID do usuário da URL
-    $idUsuario = $_SESSION['id_usuario'];
+// Define seu access token do Mercado Pago
+MercadoPago\SDK::setAccessToken("APP_USR-5025392289696892-031815-76d692fa75852cfa3fb6d72523ff1a78-2335238967");
 
-    // Atualizar o plano do usuário para 'premium'
-    $sql = "UPDATE usuarios SET plano = 1 WHERE id_usuario = ?";
-    $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("i", $idUsuario);
-    
-    if ($stmt->execute()) {
-        echo "Plano atualizado com sucesso!";
-        // Redirecionar para uma página de sucesso ou dashboard
-        header("Location: https://educadin.ct.ws/Paginas/navbar.php?page=planos&status=success");
-        exit;
-    } else {
-        echo "Erro ao atualizar o plano: " . $stmt->error; // Usar $stmt->error ao invés de $conn->error
+// Verifica se o payment_id está presente na URL
+if (isset($_GET['payment_id'])) {
+    $payment_id = $_GET['payment_id'];
+
+    try {
+        // Busca os dados do pagamento via API REST
+        $payment = MercadoPago\Payment::find_by_id($payment_id);
+
+        // Confirma se o pagamento existe e foi aprovado
+        if ($payment && $payment->status === 'approved') {
+            $idUsuario = $_SESSION['id_usuario'];
+
+            // Atualiza o plano no banco de dados
+            $sql = "UPDATE usuarios SET plano = 1 WHERE id_usuario = ?";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param("i", $idUsuario);
+
+            if ($stmt->execute()) {
+                header("Location: https://educadin.com/Paginas/navbar.php?page=planos&status=success");
+                exit;
+            } else {
+                echo "Erro ao atualizar o plano: " . $stmt->error;
+            }
+
+            $stmt->close();
+        } else {
+            // Pagamento não aprovado
+            header("Location: https://educadin.com/Paginas/navbar.php?page=planos&status=failure");
+            exit;
+        }
+
+    } catch (Exception $e) {
+        echo "Erro ao verificar pagamento: " . $e->getMessage();
     }
-    $stmt->close();
+
 } else {
-    echo "Pagamento não aprovado.";
-    // Redirecionar para a página de pagamento novamente
-    header("Location: https://educadin.ct.ws/Paginas/navbar.php?page=planos");
+    echo "ID do pagamento não fornecido.";
+    header("Location: https://educadin.com/Paginas/navbar.php?page=planos");
     exit;
 }
 
-// Fechar a conexão
 $mysqli->close();
 ?>

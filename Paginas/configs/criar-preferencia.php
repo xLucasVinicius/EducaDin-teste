@@ -7,9 +7,9 @@ $preferenceData = [
         "unit_price" => 20.00
     ]],
     "back_urls" => [
-        "success" => "https://educadin.ct.ws/Paginas/configs/retorno-pagamento.php?status=approved",
-        "failure" => "https://educadin.ct.ws/Paginas/navbar.php?page=planos&status=failure",
-        "pending" => "https://educadin.ct.ws/Paginas/navbar.php?page=planos&status=pending"
+        "success" => "https://educadin.com/Paginas/configs/retorno-pagamento.php?status=approved",
+        "failure" => "https://educadin.com/Paginas/navbar.php?page=planos&status=failure",
+        "pending" => "https://educadin.com/Paginas/navbar.php?page=planos&status=pending"
     ],
     "auto_return" => "approved"
 ];

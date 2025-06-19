@@ -49,7 +49,7 @@
         <input type="text" name="honeypot" style="display: none;">
 
         <!-- Redirect -->
-        <input type="hidden" name="redirectTo" value="http://educadin.ct.ws/Paginas/navbar.php?page=contato">
+        <input type="hidden" name="redirectTo" value="http://educadin.com/Paginas/navbar.php?page=contato">
 
         <!-- Campo do reCAPTCHA (vai ser preenchido pelo JS) -->
         <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
@@ -61,13 +61,13 @@
   </section>
 
   <!-- reCAPTCHA v3 -->
-  <script src="https://www.google.com/recaptcha/api.js?render=6LdDZWErAAAAADeeQeYnA3Q0Ez9FNo7vJ-jJeCQF"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LcOEGIrAAAAAJYoNQXlOPkgxEuXoMUJEcc0XE6q"></script>
   <script>
     document.getElementById('form-contato').addEventListener('submit', function (e) {
       e.preventDefault();
 
       grecaptcha.ready(function () {
-        grecaptcha.execute('6LdDZWErAAAAADeeQeYnA3Q0Ez9FNo7vJ-jJeCQF', { action: 'submit' }).then(function (token) {
+        grecaptcha.execute('6LcOEGIrAAAAAJYoNQXlOPkgxEuXoMUJEcc0XE6q', { action: 'submit' }).then(function (token) {
           document.getElementById('g-recaptcha-response').value = token;
 
           // Espera o input ser preenchido e envia o formulário

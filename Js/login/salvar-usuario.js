@@ -108,7 +108,7 @@ function nameIsValid(value) {
     }
 
     // Expressão regular para validar apenas letras
-    const regex = /^[A-Za-z\s]+$/;
+    const regex =  /^[\p{L}\s]+$/u;
 
     if (!regex.test(value)) { // Verifica se o nome contém apenas letras
         validator.isValid = false;
@@ -295,7 +295,7 @@ function handleSuccess(response) {
 
     // Quando o usuário clicar no botão, redireciona para a página inicial
     closeModalBtn.onclick = function() {
-        window.location.href = "../index.php";
+        window.location.href = "../Paginas/configs/logout.php";
     };
     
     closeModalBtnBanido.onclick = function() {
