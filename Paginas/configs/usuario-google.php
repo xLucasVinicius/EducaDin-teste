@@ -94,7 +94,7 @@ if ($stmt_check_email->num_rows > 0) { // O email já existe no banco de dados, 
 
     if ($caminho_foto_perfil) {
         // Cadastro no banco de dados com o novo caminho da imagem para o front-end
-        $senha_hash = password_hash('senha_gerada_aleatoriamente', PASSWORD_DEFAULT); // Gerar uma senha aleatória
+        $senha_hash = password_hash(date('Y-m-d H:i'), PASSWORD_DEFAULT); // Gerar uma senha aleatória
         // Codigo de inserção
         $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario) VALUES (?, ?, ?, ?, ?, ?, ?)";
         // Inserção dos dados do usuário
