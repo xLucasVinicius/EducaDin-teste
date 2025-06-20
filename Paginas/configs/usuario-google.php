@@ -1,5 +1,6 @@
 <?php
 include('config.php'); // Incluindo o arquivo de configuração
+date_default_timezone_set('America/Sao_Paulo');
 
 // Recebe os dados enviados via POST
 $data = json_decode(file_get_contents('php://input'), true);
@@ -11,6 +12,7 @@ $email = $data['email'];
 $link_foto_perfil_google = $data['foto_perfil']; // Link da foto de perfil retornado pelo Google
 $salario = null;
 $data_nascimento = null;
+$data_cadastro = date('Y-m-d H:i:s');
 
 $sql_verificacao = "SELECT status_atividade FROM usuarios WHERE email = ?";
 $stmt_verificacao = $mysqli->prepare($sql_verificacao);
@@ -55,7 +57,7 @@ function salvarImagemGoogle($url, $novo_nome) {
 session_start();
 
 // Verifica se o email já está cadastrado
-$stmt_check_email = $mysqli->prepare("SELECT id_usuario, foto_perfil, nome, sobrenome, email, salario, plano, poder, moedas, data_nascimento FROM usuarios WHERE email = ?");
+$stmt_check_email = $mysqli->prepare("SELECT id_usuario, foto_perfil, nome, sobrenome, email, salario, plano, poder, moedas, data_nascimento, data_cadastro FROM usuarios WHERE email = ?");
 $stmt_check_email->bind_param("s", $email);
 $stmt_check_email->execute();
 $stmt_check_email->store_result();
@@ -76,6 +78,7 @@ if ($stmt_check_email->num_rows > 0) { // O email já existe no banco de dados, 
     $_SESSION['poder'] = $poder_usuario;
     $_SESSION['moedas'] = $moedas_usuario;
     $_SESSION['data_nascimento'] = $data_nascimento_usuario;
+    $_SESSION['data_cadastro'] = $data_cadastro_usuario;
 
 
     // Definir um cookie com tempo de expiração de 30 dias
@@ -94,22 +97,22 @@ if ($stmt_check_email->num_rows > 0) { // O email já existe no banco de dados, 
         // Cadastro no banco de dados com o novo caminho da imagem para o front-end
         $senha_hash = password_hash('senha_gerada_aleatoriamente', PASSWORD_DEFAULT); // Gerar uma senha aleatória
         // Codigo de inserção
-        $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario, data_cadastro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         // Inserção dos dados do usuário
         $stmt_insert = $mysqli->prepare($sql_insert);
         // Vincular os parâmetros
-        $stmt_insert->bind_param("sssssss", $caminho_foto_perfil, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario);
+        $stmt_insert->bind_param("sssssss", $caminho_foto_perfil, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario, $data_cadastro);
 
 
         if ($stmt_insert->execute()) {
             // Buscar as informações do usuário no banco de dados após o cadastro
-            $stmt_check_email = $mysqli->prepare("SELECT id_usuario, foto_perfil, nome, sobrenome, email, salario, plano, poder, moedas, data_nascimento FROM usuarios WHERE email = ?");
+            $stmt_check_email = $mysqli->prepare("SELECT id_usuario, foto_perfil, nome, sobrenome, email, salario, plano, poder, moedas, data_nascimento, data_cadastro FROM usuarios WHERE email = ?");
             $stmt_check_email->bind_param("s", $email);
             $stmt_check_email->execute();
             $stmt_check_email->store_result();
 
             // Salvar as informações do usuário nas variáveis de sessão
-            $stmt_check_email->bind_result($id_usuario, $foto_perfil_usuario, $nome_usuario, $sobrenome_usuario, $email_usuario, $salario_usuario, $plano_usuario, $poder_usuario, $moedas_usuario, $data_nascimento_usuario);
+            $stmt_check_email->bind_result($id_usuario, $foto_perfil_usuario, $nome_usuario, $sobrenome_usuario, $email_usuario, $salario_usuario, $plano_usuario, $poder_usuario, $moedas_usuario, $data_nascimento_usuario, $data_cadastro_usuario);
             $stmt_check_email->fetch();
 
             $_SESSION['id_usuario'] = $id_usuario;
@@ -122,6 +125,7 @@ if ($stmt_check_email->num_rows > 0) { // O email já existe no banco de dados, 
             $_SESSION['poder'] = $poder_usuario;
             $_SESSION['moedas'] = $moedas_usuario;
             $_SESSION['data_nascimento'] = $data_nascimento_usuario;
+            $_SESSION['data_cadastro'] = $data_cadastro_usuario;
             // Definir um cookie com tempo de expiração de 30 dias
             setcookie('user', $_SESSION['email'], time() + (86400 * 30), "/");
 

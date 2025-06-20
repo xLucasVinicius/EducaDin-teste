@@ -31,6 +31,30 @@ if (isset($_GET['payment_id'])) {
             }
 
             $stmt->close();
+
+            $data_atual = date('Y-m-d');
+            $data_final = date('Y-m-d', strtotime('+1 month'));
+
+            $sql_busca = "SELECT * FROM status_plano WHERE id_usuario = ?";
+            $stmt_busca = $mysqli->prepare($sql_busca);
+            $stmt_busca->bind_param("i", $idUsuario);
+            $stmt_busca->execute();
+            $result = $stmt_busca->get_result();
+
+            if ($result->num_rows > 0) {
+                $sql_update = "UPDATE status_plano SET data_inicio = ?, data_fim = ? WHERE id_usuario = ?";
+                $stmt_update = $mysqli->prepare($sql_update);
+                $stmt_update->bind_param("ssi", $data_atual, $data_final, $idUsuario);
+                $stmt_update->execute();
+                $stmt_update->close();
+            } else {
+                $sql_insert = "INSERT INTO status_plano (id_usuario, data_inicio, data_fim) VALUES (?, ?, ?)";
+                $stmt_insert = $mysqli->prepare($sql_insert);
+                $stmt_insert->bind_param("iss", $idUsuario, $data_atual, $data_final);
+                $stmt_insert->execute();
+                $stmt_insert->close();
+            }
+
         } else {
             // Pagamento não aprovado
             header("Location: https://educadin.com/Paginas/navbar.php?page=planos&status=failure");

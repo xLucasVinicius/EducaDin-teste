@@ -102,9 +102,11 @@ CREATE TABLE recordes_mg (
 -- 9. Tabela de Prêmios de Troca
 CREATE TABLE premios (
     id_premio INT AUTO_INCREMENT PRIMARY KEY,
+    imagem_premio VARCHAR(255),
     nome_premio VARCHAR(100),
     descricao_premio TEXT,
-    valor_moedas INT
+    valor_moedas INT,
+    limite_trocas INT
 );
 
 -- 10. Tabela de Trocas de Prêmios
@@ -115,6 +117,14 @@ CREATE TABLE trocas_premios (
     data_troca DATE,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_premio) REFERENCES premios(id_premio) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- 11. Tabela de Plano Premium
+CREATE TABLE status_plano (
+    id_usuario INT,
+    data_inicio DATE,
+    data_fim DATE,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO minigames (nome) VALUES ('Letreco');

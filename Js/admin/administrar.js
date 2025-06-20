@@ -1,3 +1,10 @@
+window.addEventListener('DOMContentLoaded', () => {
+    exibirInfos();
+    atualizarGrafico();
+    buscarUsuarios(searchInput.value);
+    carregarPremios();
+});
+
 const searchInput = document.getElementById('busca');
 const searchSelect = document.getElementById('plano');
 let anosJaPopulados = false; // Flag para garantir que só populamos uma vez
@@ -205,6 +212,40 @@ function desbanirUsuario(id) {
     });
 }
 
+function carregarPremios() {
+    fetch('../Paginas/administrador/buscar-premios.php')
+        .then(response => response.json())
+        .then(data => {
+            const premios = data.premios;
+            console.log(premios);
+
+            const premiosContainer = document.querySelector('.premios-conteiner');
+
+            premios.forEach(premio => {
+                const premioElement = `
+                    <div class="premio">
+                            <div class="imagem-premio">
+                                <img src="${premio.imagem_premio}" alt="${premio.nome_premio}">
+                            </div>
+                            <div class="infos-premio">
+                                <span class="nome-premio">${premio.nome_premio}</span>
+                                <span class="descricao-premio">${premio.descricao_premio}</span>
+                                <span class="preco-premio"><i class="bi bi-coin">${premio.valor_moedas}</i> </span>
+                                <span class="limite-premio">Limite de trocas: ${premio.limite_trocas}</span>
+                            </div>
+                            <div class="acoes-premio">
+                                <button onclick="editarPremio(${premio.id_premio})" id="editar-premio"><i class="bi bi-pencil-square"></i></button>
+                                <button onclick="excluirPremio(${premio.id_premio})" id="excluir-premio"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                `;
+                premiosContainer.innerHTML += premioElement;
+            });
+        })
+        .catch(error => console.error('Erro ao carregar premiços:', error));
+}
+            
+
 searchInput.addEventListener('input', () => {
     buscarUsuarios(searchInput.value);
 });
@@ -213,17 +254,10 @@ searchSelect.addEventListener('change', () => {
     buscarUsuarios(searchSelect.value);
 });
 
-window.addEventListener('DOMContentLoaded', () => {
-    exibirInfos();
-    atualizarGrafico();
-    buscarUsuarios(searchInput.value);
-});
-
 document.getElementById('ano').addEventListener('change', () => {
     const anoSelecionado = document.getElementById('ano').value;
     atualizarGrafico(anoSelecionado);
 });
-
 
 document.getElementById('btnModalNaoBanir').addEventListener('click', () => {
     const modalConfirmarBanir = document.getElementById("modalConfirmarBanir");
@@ -252,3 +286,46 @@ document.getElementById('btnModalDesbanirSucesso').addEventListener('click', () 
 document.getElementById('btnModalDesbanirErro').addEventListener('click', () => {
     location.reload();
 });
+
+document.getElementById('foto-premio').addEventListener('change', function(event) {
+    const arquivo = event.target.files[0];
+
+    if (arquivo) {
+        const leitor = new FileReader();
+
+        leitor.onload = function(e) {
+            const imgPreview = document.querySelector('.imagem-premio');
+            const img = document.createElement('img');
+            imgPreview.appendChild(img);
+            img.id = 'preview-imagem';
+            img.src = e.target.result;
+            img.style.display = 'block';
+            img.style.width = '100%';
+            img.style.height = 'auto';
+            img.style.borderRadius = '50%';
+            img.style.objectFit = 'cover';
+        };
+
+        leitor.readAsDataURL(arquivo); // converte para base64
+    }
+});
+
+document.getElementById('form-adicionar-premio').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+    fetch('../Paginas/administrador/adicionar-premio.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            exibirSucessoAdd(data);
+        } else {
+            exibirErroAdd(data);
+        }
+    })
+    .catch(error => console.error('Erro ao adicionar o premio:', error));
+});
+

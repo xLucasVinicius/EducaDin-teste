@@ -39,8 +39,7 @@
                 <button id="btnModalBanirErro">Ok</button>
             </span>
         </div>
-    </div>
-    
+    </div>   
     <div id="modalConfirmarDesbanir" class="modal">
         <div class="modal-content">
             <h2>Cuidado!</h2>
@@ -69,6 +68,7 @@
             </span>
         </div>
     </div>
+
     <section class="conteudo-adm-total">
         <h1>Painel Administrativo</h1>
         <section class="dashboard-adm">
@@ -145,12 +145,42 @@
                             </tr>
                         </thead>
                         <tbody id="tabela-corpo">
-                            <!-- Conteúdo gerado via JavaScript -->
+                            
                         </tbody>
                     </table>
                 </div>
             </section>
         </section>
+
+        <section class="gerenciar-premios">
+            <h2>Adicionar Prêmio</h2>
+            <div class="adicionar-premio">
+                <form action="adicionar-premio.php" enctype="multipart/form-data" id="form-adicionar-premio" method="post">
+                    <span class="imagem-premio-container">
+                        <span class="imagem-premio"></span>
+                        <input type="file" name="foto-premio" id="foto-premio" accept="image/*">
+                        <label for="foto-premio"><i class="bi bi-camera"></i></label>
+                    </span>
+                    <label for="nome-premio">Nome</label>
+                    <input type="text" name="nome-premio" id="nome-premio">
+                    <label for="descricao-premio">Descrição</label>
+                    <input type="text" name="descricao-premio" id="descricao-premio">
+                    <label for="preco-premio">Preço</label>
+                    <input type="number" name="preco-premio" id="preco-premio">
+                    <label for="limite-trocas">Limite de trocas</label>
+                    <input type="number" name="limite-trocas" id="limite-trocas">
+                    <button type="submit">Adicionar</button>
+                </form>
+            </div>
+
+            <div class="premios-existentes">
+                <h2>Prêmios Existentes</h2>
+                <div class="premios-conteiner">
+                    
+                </div>
+            </div>
+        </section>
+
     </section>
 
     <script src="../Js/libs/apexcharts.min.js"></script> <!-- Biblioteca ApexCharts -->

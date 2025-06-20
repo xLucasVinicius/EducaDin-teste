@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+.conteudo-total-loja {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    padding: 20px;
+}
+
+.btn-voltar {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: transparent;
+    border: 1px solid var(--cor-principal);
+    color: var(--cor-principal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .45s;
+}
+
+.btn-voltar:hover {
+    background-color: var(--cor-principal);
+    color: var(--cor-txt);
+}
+
+.btn-voltar i {
+    margin-top: -1px;
+}
+
+.moedas-usuario {  /* Moedas do usuário */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--cor-principal);
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--cor-principal);
+    box-shadow: 1px 1px 20px black;
+}
+
+.conteudo-total-loja .txt-loja h1 {
+    text-align: center;
+    color: var(--cor-principal);
+    margin-bottom: 20px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+}
+
+.conteudo-total-loja .txt-loja p {
+    text-align: center;
+    color: var(--cor-txt);
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.premios-loja-conteiner {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1100px;
+    margin: 35px 0px;
+}
+
+.premios-loja-conteiner .premio {
+    position: relative;
+    width: 200px;
+    max-width: 200px;
+    height: 280px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.premios-loja-conteiner .premio .imagem-premio {
+    position: absolute;
+    top: -50px;
+    overflow: hidden;
+    background-color: var(--cor-fundo-content);
+}
+
+.premios-loja-conteiner .premio img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px solid var(--cor-principal);
+    object-fit: contain;
+}
+
+.premios-loja-conteiner .premio .infos-premio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+    color: var(--cor-txt);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.premios-loja-conteiner .premio .infos-premio .nome-premio {
+    color: var(--cor-principal);
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.premios-loja-conteiner .premio .infos-premio .descricao-premio {
+    text-align: start;
+    padding: 0 8px;
+}
+
+.premios-loja-conteiner .premio .infos-premio .preco-premio {
+    width: 100%;
+    padding-left: 8px;
+    color: var(--cor-principal);
+    font-weight: bold;
+}
+
+.premios-loja-conteiner .premio button {
+    width: 100px;
+    height: 30px;
+    background-color: transparent;
+    color: var(--cor-principal);
+    border: 1px solid var(--cor-principal);
+    margin-top: auto;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all .5s;
+}
+
+.premios-loja-conteiner .premio button:hover {
+    background-color: var(--cor-principal);
+    color: var(--cor-txt);
+    transform: scale(0.97);
+}
+
+.premios-loja-conteiner .premio button.disabled {
+    color: rgb(160, 0, 0);
+    border: 1px solid rgb(160, 0, 0);
+}
+
+.premios-loja-conteiner .premio button.disabled:hover {
+    color: rgb(160, 0, 0);
+    border: 1px solid rgb(160, 0, 0);
+    background-color: transparent;
+    transform: none;
+}

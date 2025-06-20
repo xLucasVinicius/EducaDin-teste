@@ -1,0 +1,6 @@
+@media screen and (max-width: 900px) { /* Responsividade para telas menores */
+    .premios-loja-conteiner .premio {
+        margin-top: 55px;
+    }
+    
+}

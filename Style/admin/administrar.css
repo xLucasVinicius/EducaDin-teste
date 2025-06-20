@@ -226,3 +226,242 @@
 .gerenciar-usuarios .conteiner-tabela table .btn-banir:hover {
     background-color: rgb(153, 0, 0);
 }
+
+.gerenciar-premios {
+    width: 100%;
+    
+}
+
+.gerenciar-premios .adicionar-premio {
+    margin: 40px 0 0 0;
+    width: 300px;
+
+    border: 1px solid var(--cor-principal);
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+    justify-self: center;
+}
+
+.gerenciar-premios .adicionar-premio form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+
+.gerenciar-premios .adicionar-premio form label {
+    margin-top: 10px;
+    align-self: start;
+    color: var(--cor-txt);
+}
+
+.gerenciar-premios .adicionar-premio form input {
+    width: 100%;
+    background-color: transparent;
+    color: var(--cor-txt);
+    border: 1px solid var(--cor-principal);
+    border-radius: 10px;
+    padding: 5px 10px;
+    outline: none;
+}
+
+.gerenciar-premios .adicionar-premio form input:-webkit-autofill,
+.gerenciar-premios .adicionar-premio form input:-webkit-autofill:hover,
+.gerenciar-premios .adicionar-premio form input:-webkit-autofill:focus,
+.gerenciar-premios .adicionar-premio form input:-webkit-autofill:active {
+    background-color: transparent !important;
+    color: var(--cor-txt) !important;
+    border: 1px solid var(--cor-principal) !important;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: var(--cor-txt)  !important;
+    caret-color: white;
+    outline: none;
+}
+
+.gerenciar-premios .adicionar-premio form input[type="number"] {
+    width: 80px;
+    align-self: start;
+}
+
+.gerenciar-premios .adicionar-premio form input[type="number"]::-webkit-outer-spin-button,
+.gerenciar-premios .adicionar-premio form input[type="number"]::-webkit-inner-spin-button {
+    display: none;
+}
+
+.gerenciar-premios .adicionar-premio form .imagem-premio-container {
+    position: relative;
+}
+
+.gerenciar-premios .adicionar-premio form .imagem-premio-container .imagem-premio {
+    display: block;
+    width: 100px;
+    height: 100px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.gerenciar-premios .adicionar-premio form .imagem-premio-container .imagem-premio #previw-imagem {
+    display: none;
+}
+
+.gerenciar-premios .adicionar-premio form .imagem-premio-container #foto-premio {
+    display: none;
+}
+
+.gerenciar-premios .adicionar-premio form .imagem-premio-container label {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--cor-fundo-content);
+    color: var(--cor-txt);
+    font-size: 1.2rem;
+    border: 1px solid var(--cor-principal);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.gerenciar-premios .adicionar-premio form button {
+    margin-top: 20px;
+    width: 100px;
+    height: 30px;
+    background-color: var(--cor-principal);
+    color: var(--cor-txt);
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all .5s;
+}
+
+.gerenciar-premios .adicionar-premio form button:hover {
+    background-color: #b47e00;
+    color: var(--cor-txt);
+    transform: scale(0.97);
+}
+
+.gerenciar-premios .premios-existentes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    justify-self: center;
+    margin-top: 20px;
+    width: 100%;
+    color: white;
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1100px;
+    margin: 35px 0px;
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio {
+    position: relative;
+    width: 200px;
+    min-width: 200px;
+    height: 280px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio .imagem-premio {
+    position: absolute;
+    top: -50px;
+    overflow: hidden;
+    background-color: var(--cor-fundo-content);
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px solid var(--cor-principal);
+    object-fit: contain;
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio .infos-premio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+    color: var(--cor-txt);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio .infos-premio .nome-premio {
+    color: var(--cor-principal);
+    font-weight: bold;
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio .infos-premio .descricao-premio {
+    text-align: start;
+    padding: 0 8px;
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio .infos-premio .preco-premio {
+    width: 100%;
+    padding: 0 8px;
+    color: var(--cor-principal);
+    font-weight: bold;
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio .infos-premio .limite-premio {
+    width: 100%;
+    padding: 0 8px;
+    margin-top: -10px;
+    text-align: start;
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio .acoes-premio {
+    width: 100%;
+    height: 30px;
+    background-color: transparent;
+    margin-top: auto;
+    text-align: center;
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio .acoes-premio button {
+    width: 30px;
+    color: var(--cor-txt);
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all .5s;
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio .acoes-premio button#editar-premio {
+    background-color: blue;
+    margin-right: 5px;
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio .acoes-premio button#excluir-premio {
+    background-color: red;
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio button#editar-premio:hover {
+    background-color: rgb(0, 0, 160);
+    transform: scale(0.97);
+}
+
+.gerenciar-premios .premios-existentes .premios-conteiner .premio button#excluir-premio:hover {
+    background-color: rgb(160, 0, 0);
+    transform: scale(0.97);
+}
