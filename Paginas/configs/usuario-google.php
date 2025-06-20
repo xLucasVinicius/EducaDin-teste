@@ -1,7 +1,6 @@
 <?php
 include('config.php'); // Incluindo o arquivo de configuração
 date_default_timezone_set('America/Sao_Paulo');
-
 // Recebe os dados enviados via POST
 $data = json_decode(file_get_contents('php://input'), true);
 
@@ -12,6 +11,8 @@ $email = $data['email'];
 $link_foto_perfil_google = $data['foto_perfil']; // Link da foto de perfil retornado pelo Google
 $salario = null;
 $data_nascimento = null;
+$data_cadastro = date('Y-m-d H:i:s');
+
 
 $sql_verificacao = "SELECT status_atividade FROM usuarios WHERE email = ?";
 $stmt_verificacao = $mysqli->prepare($sql_verificacao);
@@ -63,7 +64,7 @@ $stmt_check_email->store_result();
 
 if ($stmt_check_email->num_rows > 0) { // O email já existe no banco de dados, logar o usuário
     
-    $stmt_check_email->bind_result($id_usuario, $foto_perfil_usuario, $nome_usuario, $sobrenome_usuario, $email_usuario, $salario_usuario, $plano_usuario, $poder_usuario, $moedas_usuario, $data_nascimento_usuario);
+    $stmt_check_email->bind_result($id_usuario, $foto_perfil_usuario, $nome_usuario, $sobrenome_usuario, $email_usuario, $salario_usuario, $plano_usuario, $poder_usuario, $moedas_usuario, $data_nascimento_usuario, $data_cadastro_usuario);
     $stmt_check_email->fetch();
 
     // Salvar as informações do usuário nas variáveis de sessão
@@ -96,11 +97,11 @@ if ($stmt_check_email->num_rows > 0) { // O email já existe no banco de dados, 
         // Cadastro no banco de dados com o novo caminho da imagem para o front-end
         $senha_hash = password_hash(date('Y-m-d H:i'), PASSWORD_DEFAULT); // Gerar uma senha aleatória
         // Codigo de inserção
-        $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario, data_cadastro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         // Inserção dos dados do usuário
         $stmt_insert = $mysqli->prepare($sql_insert);
         // Vincular os parâmetros
-        $stmt_insert->bind_param("sssssss", $caminho_foto_perfil, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario);
+        $stmt_insert->bind_param("ssssssss", $caminho_foto_perfil, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario, $data_cadastro);
 
 
         if ($stmt_insert->execute()) {
