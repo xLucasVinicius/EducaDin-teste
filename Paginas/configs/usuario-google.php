@@ -12,7 +12,6 @@ $email = $data['email'];
 $link_foto_perfil_google = $data['foto_perfil']; // Link da foto de perfil retornado pelo Google
 $salario = null;
 $data_nascimento = null;
-$data_cadastro = date('Y-m-d H:i:s');
 
 $sql_verificacao = "SELECT status_atividade FROM usuarios WHERE email = ?";
 $stmt_verificacao = $mysqli->prepare($sql_verificacao);
@@ -97,11 +96,11 @@ if ($stmt_check_email->num_rows > 0) { // O email já existe no banco de dados, 
         // Cadastro no banco de dados com o novo caminho da imagem para o front-end
         $senha_hash = password_hash('senha_gerada_aleatoriamente', PASSWORD_DEFAULT); // Gerar uma senha aleatória
         // Codigo de inserção
-        $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario, data_cadastro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario) VALUES (?, ?, ?, ?, ?, ?, ?)";
         // Inserção dos dados do usuário
         $stmt_insert = $mysqli->prepare($sql_insert);
         // Vincular os parâmetros
-        $stmt_insert->bind_param("sssssss", $caminho_foto_perfil, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario, $data_cadastro);
+        $stmt_insert->bind_param("sssssss", $caminho_foto_perfil, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario);
 
 
         if ($stmt_insert->execute()) {

@@ -21,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data_nascimento = $_POST['data-nascimento'];  
     $senha = $_POST['senha'];
     $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-    $data_cadastro = date('Y-m-d H:i:s');
 
     $sql_verificacao = "SELECT status_atividade FROM usuarios WHERE email = ?";
     $stmt_verificacao = $mysqli->prepare($sql_verificacao);
@@ -170,9 +169,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Inserção dos dados do usuário
-        $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario, data_cadastro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql_insert = "INSERT INTO usuarios (foto_perfil, nome, sobrenome, email, senha, data_nascimento, salario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt_insert = $mysqli->prepare($sql_insert);
-        $stmt_insert->bind_param("sssssss", $path_relativo, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario, $data_cadastro);
+        $stmt_insert->bind_param("sssssss", $path_relativo, $nome, $sobrenome, $email, $senha_hash, $data_nascimento, $salario);
 
         if ($stmt_insert->execute()) {
             
