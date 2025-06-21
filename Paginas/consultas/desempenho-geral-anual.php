@@ -42,7 +42,7 @@ if ($ano_usuario == $current_year) {
 // Lógica para definir os meses a serem considerados com base no plano
 if ($plano == 0) {
     // Plano grátis: Buscar os últimos 3 meses
-    $start_month = max(1, $limit_month - 3); // Garantir que o mês inicial seja pelo menos o mês 1
+    $start_month = max(1, $limit_month - 2); // Garantir que o mês inicial seja pelo menos o mês 1
 
     // Buscar dados apenas para os últimos 3 meses
     for ($i = $start_month; $i <= $limit_month; $i++) {

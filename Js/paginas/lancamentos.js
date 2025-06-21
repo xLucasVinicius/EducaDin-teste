@@ -233,14 +233,24 @@ window.addEventListener('DOMContentLoaded', function () {
                 const cartoesData = dataContasCartoes.cartoes;
         
                 atualizarTotais(data.total_receitas, data.total_despesas);
-        
-                if (data.lancamentos.length === 0) {
+                
+                if (data.lancamentos.length === 0 && data.status == "limite_gratis") {
+                    lancamentosContainer.innerHTML = `
+                        <z style="color: white; width: 100%; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                            Obtenha o Plano Premium para ter acesso sem limite de meses.
+                        </z>`;
+                    return;
+                } else if (data.lancamentos.length === 0) {
                     lancamentosContainer.innerHTML = `
                         <z style="color: white; width: 100%; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
                             Nenhum lançamento encontrado.
                         </z>`;
                     return;
                 }
+        
+                
+                
+                
         
                 const table = document.createElement('table');
         

@@ -14,7 +14,6 @@ $_SESSION['moedas'] = $moedas['moedas'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resgate</title>
     <link rel="stylesheet" href="../Style/resgate/resgate.css">
-    <link rel="stylesheet" href="../Style/resgate/resgate-media.css">
     <link rel="stylesheet" href="../Style/globais/msg-confirmacao.css">
 </head>
 
@@ -24,6 +23,13 @@ $_SESSION['moedas'] = $moedas['moedas'];
             <h2 style="color: green;">Sucesso!</h2>
             <p></p>
             <button id="btnModalSucesso">Ok</button>
+        </div>
+    </div>
+    <div id="modalErroMoedas" class="modal">
+        <div class="modal-content">
+            <h2 style="color: red;">Erro!</h2>
+            <p></p>
+            <button id="btnModalErro">Ok</button>
         </div>
     </div>
     <section class="conteudo-total-loja">

@@ -3,11 +3,12 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function carregarPremios() {
+    let moedasUsuario = document.querySelector('.moedas-usuario').textContent;
+    moedasUsuario = parseInt(moedasUsuario);
     fetch('../Paginas/administrador/buscar-premios.php')
         .then(response => response.json())
         .then(data => {
             const premios = data.premios;
-            console.log(premios);
 
             const premiosContainer = document.querySelector('.premios-loja-conteiner');
 
@@ -23,7 +24,7 @@ function carregarPremios() {
                                 <span class="preco-premio"><i class="bi bi-coin">${premio.valor_moedas}</i> </span>
                                 <span class="limite-premio">${premio.quantidade_resgates}/${premio.limite_trocas}</span>
                             </div>
-                            <button onclick="resgatarPremio(${premio.id_premio}, '${premio.nome_premio}', ${premio.valor_moedas})" ${premio.quantidade_resgates >= premio.limite_trocas ? 'disabled' : ''} ${premio.quantidade_resgates >= premio.limite_trocas ? 'class="disabled"' : ''} >Resgatar</button>
+                            <button onclick="resgatarPremio(${premio.id_premio}, '${premio.nome_premio}', ${premio.valor_moedas}, ${moedasUsuario})" ${premio.quantidade_resgates >= premio.limite_trocas ? 'disabled' : ''} ${premio.quantidade_resgates >= premio.limite_trocas ? 'class="disabled"' : ''} >Resgatar</button>
                         </div>
                 `;
                 premiosContainer.innerHTML += premioElement;
@@ -32,15 +33,15 @@ function carregarPremios() {
         .catch(error => console.error('Erro ao carregar premiços:', error));
 }
 
-function resgatarPremio(id_premio, premio_nome, valor_moedas) {
-    fetch('../Paginas/administrador/resgate-premium.php?premio_id=' + id_premio + '&premio_nome=' + premio_nome + '&valor_moedas=' + valor_moedas, {
+function resgatarPremio(id_premio, premio_nome, valor_moedas, moedasUsuario) {
+    fetch('../Paginas/administrador/resgate-premium.php?premio_id=' + id_premio + '&premio_nome=' + premio_nome + '&valor_moedas=' + valor_moedas + '%moedas_usuario=' + moedasUsuario, {
         method: 'POST'
     })
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
             exibirSucessoResgate(data);
-        } else {
+        } else if (data.erro === 'Moedas insuficientes.') {
             exibirErroResgate(data);
         }
     })
@@ -56,5 +57,18 @@ function exibirSucessoResgate(data) {
 }
 
 document.getElementById('btnModalSucesso').addEventListener('click', () => {
+    location.reload();
+});
+
+function exibirErroResgate(data) {
+    const modal = document.getElementById('modalErroMoedas');
+    const mensagem = document.querySelector('#modalErroMoedas p');
+
+    document.querySelector('.conteudo').style.overflowY = 'clip';
+    modal.style.display = 'flex';
+    mensagem.textContent = data.erro;
+}
+
+document.getElementById('btnModalErro').addEventListener('click', () => {
     location.reload();
 });

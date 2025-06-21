@@ -15,10 +15,17 @@ $usuario_id = $_SESSION['id_usuario'];
 $premio_id = $_GET['premio_id'] ?? null;
 $nome_premio = $_GET['premio_nome'] ?? null;
 $valor_premio = $_GET['valor_moedas'] ?? null;
+$moedas_usuario = $_GET['moedas_usuario'] ?? null;
 
 if (!$premio_id || !$nome_premio) {
     http_response_code(400);
     echo json_encode(['erro' => 'Parâmetros inválidos.']);
+    exit;
+}
+
+if ($moedas_usuario < $valor_premio) {
+    http_response_code(400);
+    echo json_encode(['erro' => 'Moedas insuficientes.']);
     exit;
 }
 

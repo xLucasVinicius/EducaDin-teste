@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../Style/admin/administrar.css">
-    <link rel="stylesheet" href="../Style/admin/administrar-media.css">
     <link rel="stylesheet" href="../Style/globais/msg-confirmacao.css">
 </head>
 
@@ -65,6 +64,26 @@
             <p>O usuário nao foi desbanido.</p>
             <span class="btns-operacoes">
                 <button id="btnModalDesbanirErro">Ok</button>
+            </span>
+        </div>
+    </div>
+
+    <div id="modalSucessoAddPremio" class="modal">
+        <div class="modal-content">
+            <h2>Sucesso!</h2>
+            <p>Premio adicionado com sucesso.</p>
+            <span class="btns-operacoes">
+                <button id="btnModalPremioAdd">OK</button>
+            </span>
+        </div>
+    </div>
+    
+    <div id="modalErroAddPremio" class="modal">
+        <div class="modal-content">
+            <h2>Erro!</h2>
+            <p>O premio não foi adicionado.</p>
+            <span class="btns-operacoes">
+                <button id="btnModalErroPremioAdd">OK</button>
             </span>
         </div>
     </div>

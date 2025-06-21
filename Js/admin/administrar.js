@@ -244,6 +244,18 @@ function carregarPremios() {
         })
         .catch(error => console.error('Erro ao carregar premiços:', error));
 }
+
+function exibirSucessoAdd() {
+    document.querySelector('.conteudo').style.overflowY = 'clip';
+    const modalSucesso = document.getElementById("modalSucessoAddPremio");
+    modalSucesso.style.display = "flex";
+}
+
+function exibirErroAdd() {
+    document.querySelector('.conteudo').style.overflowY = 'clip';
+    const modalErro = document.getElementById("modalErroAddPremio");
+    modalErro.style.display = "flex";
+}
             
 
 searchInput.addEventListener('input', () => {
@@ -321,11 +333,19 @@ document.getElementById('form-adicionar-premio').addEventListener('submit', func
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
-            exibirSucessoAdd(data);
+            exibirSucessoAdd();
         } else {
-            exibirErroAdd(data);
+            exibirErroAdd();
         }
     })
     .catch(error => console.error('Erro ao adicionar o premio:', error));
+});
+
+document.getElementById('btnModalPremioAdd').addEventListener('click', () => {
+    location.reload();
+});
+
+document.getElementById('btnModalErroPremioAdd').addEventListener('click', () => {
+    location.reload();
 });
 

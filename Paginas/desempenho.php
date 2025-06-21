@@ -28,7 +28,7 @@
                 </table>
             </div>
             <div class="grafico-desempenho chart3">
-                <h3>Categorias por mês</h3>
+                <h3>Gasto Mensal</h3>
                 <div id="checkbox-categorias"></div>
                 <select id="select-ano"></select>
                 <div id="chart2"></div>
@@ -47,7 +47,7 @@
                 <select name="data-essencial" id="data-essencial"></select>
                 <div id="grafico-categorias">
                     <div class="barra-container">
-                        <span style="color: rgb(0, 255, 0);">GastosEssenciais</span>
+                        <span style="color: rgb(0, 255, 0);">Gastos Essenciais</span>
                         <div class="progress-bar">
                         <div id="barra-essenciais" class="progresso"></div>
                         </div>

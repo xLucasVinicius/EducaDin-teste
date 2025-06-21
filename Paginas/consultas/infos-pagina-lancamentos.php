@@ -27,7 +27,11 @@ if ($plano == 0) {
 
     if ($data_escolhida < $data_limite) {
         echo json_encode([
-            'error' => 'Plano gratuito permite acesso apenas aos últimos 3 meses.'
+            'lancamentos' => [],
+            'status' => 'limite_gratis',
+            'total_receitas' => 0,
+            'total_despesas' => 0,
+            
         ]);
         exit;
     }
