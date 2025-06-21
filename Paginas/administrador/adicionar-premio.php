@@ -2,11 +2,11 @@
 
 include("../configs/config.php");
 
-if (isset($_POST['nome-premio']) && isset($_POST['descricao-premio']) && isset($_POST['preco-premio']) && isset($_FILES['foto-premio']) && $_POST['limite-premios']) {
+if (isset($_POST['nome-premio']) && isset($_POST['descricao-premio']) && isset($_POST['preco-premio']) && isset($_FILES['foto-premio']) && $_POST['limite-trocas']) {
     $nome = $_POST['nome-premio'];
     $descricao = $_POST['descricao-premio'];
     $preco = $_POST['preco-premio'];
-    $limite = $_POST['limite-premios'];
+    $limite = $_POST['limite-trocas'];
 
     // Verifica se foi enviada uma imagem
     if (isset($_FILES['foto-premio']) && $_FILES['foto-premio']['error'] === UPLOAD_ERR_OK) {

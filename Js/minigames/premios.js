@@ -1,3 +1,7 @@
+window.addEventListener('DOMContentLoaded', () => {
+    carregarPremios();
+});
+
 function carregarPremios() {
     fetch('../Paginas/administrador/buscar-premios.php')
         .then(response => response.json())
@@ -19,7 +23,7 @@ function carregarPremios() {
                                 <span class="preco-premio"><i class="bi bi-coin">${premio.valor_moedas}</i> </span>
                                 <span class="limite-premio">${premio.quantidade_resgates}/${premio.limite_trocas}</span>
                             </div>
-                            <button onclick="resgatarPremio(${premio.id_premio})" ${premio.quantidade_resgates >= premio.limite_trocas ? 'disabled' : ''} ${premio.quantidade_resgates >= premio.limite_trocas ? 'class="disabled"' : ''} >Resgatar</button>
+                            <button onclick="resgatarPremio(${premio.id_premio}, '${premio.nome_premio}', ${premio.valor_moedas})" ${premio.quantidade_resgates >= premio.limite_trocas ? 'disabled' : ''} ${premio.quantidade_resgates >= premio.limite_trocas ? 'class="disabled"' : ''} >Resgatar</button>
                         </div>
                 `;
                 premiosContainer.innerHTML += premioElement;
@@ -28,6 +32,29 @@ function carregarPremios() {
         .catch(error => console.error('Erro ao carregar premiços:', error));
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    carregarPremios();
+function resgatarPremio(id_premio, premio_nome, valor_moedas) {
+    fetch('../Paginas/administrador/resgate-premium.php?premio_id=' + id_premio + '&premio_nome=' + premio_nome + '&valor_moedas=' + valor_moedas, {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            exibirSucessoResgate(data);
+        } else {
+            exibirErroResgate(data);
+        }
+    })
+    .catch(error => console.error('Erro ao resgatar o premio:', error));
+}
+
+function exibirSucessoResgate(data) {
+    const modal = document.getElementById('modalSucesso');
+    const mensagem = document.querySelector('#modalSucesso p');
+
+    modal.style.display = 'flex';
+    mensagem.textContent = 'O ' + data.premio + ' ' + data.mensagem;
+}
+
+document.getElementById('btnModalSucesso').addEventListener('click', () => {
+    location.reload();
 });

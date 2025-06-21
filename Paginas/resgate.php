@@ -15,9 +15,17 @@ $_SESSION['moedas'] = $moedas['moedas'];
     <title>Resgate</title>
     <link rel="stylesheet" href="../Style/resgate/resgate.css">
     <link rel="stylesheet" href="../Style/resgate/resgate-media.css">
+    <link rel="stylesheet" href="../Style/globais/msg-confirmacao.css">
 </head>
 
 <body>
+    <div id="modalSucesso" class="modal">
+        <div class="modal-content">
+            <h2 style="color: green;">Sucesso!</h2>
+            <p></p>
+            <button id="btnModalSucesso">Ok</button>
+        </div>
+    </div>
     <section class="conteudo-total-loja">
         <span class="btn-voltar" onclick="window.history.back()" title="Voltar"><i class="bi bi-arrow-left"></i></span>
         <div class="moedas-usuario">
