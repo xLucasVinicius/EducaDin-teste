@@ -28,6 +28,21 @@
     width: 100%;
 }
 
+.loja {
+    position: absolute;
+    top: 20px;
+    right: 130px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--cor-principal);
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--cor-principal);
+    box-shadow: 1px 1px 20px black;
+    cursor: pointer;
+    transition: all .3s;
+}
+
 .moedas-usuario {  /* Moedas do usuário */
     position: absolute;
     top: 20px;
@@ -43,7 +58,7 @@
     transition: all .3s;
 }
 
-.moedas-usuario:hover {
+.loja:hover {
     transform: scale(1.1);
     box-shadow: 1px 1px 20px var(--cor-principal);
 }

@@ -10,7 +10,7 @@
 </head>
 <body>
     <section class="conteudo-forca">
-        <!-- Modal de Vitória -->
+    <!-- Modal de Vitória -->
     <div id="modalVitoria" class="modal">
         <div class="modal-content">
             <h2 style="color: green;">Vitória!</h2>
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="section" id="minigame" data-id-mg="3">
+        <section id="minigame" data-id-mg="3">
             <div class="botoes-navegar">
                 <i class="bi bi-arrow-left-circle" id="voltar" title="Voltar"></i>
                 <i class="bi bi-trophy" id="ranking" title="Ranking"></i>
@@ -59,7 +59,7 @@
                 <div class="keyboard-row-container" id="keyboardThirdRow"></div>
                 <div class="keyboard-row-container notAlphabetic" id="backspaceAndEnterRow"></div>
             </div>
-        </div>
+        </section>
     </section>
 
     <script src="../Js/minigames/forca.js"></script>

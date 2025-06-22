@@ -19,6 +19,7 @@ $_SESSION['moedas'] = $moedas['moedas'];
 
 <body>
     <section class="conteudo-total-minigames">
+        <span class="loja"><i class="bi bi-cart-plus"></i></span>
         <div class="moedas-usuario">
             <i class="bi bi-coin"></i>
             <?php echo $_SESSION['moedas']; ?>
@@ -54,7 +55,7 @@ $_SESSION['moedas'] = $moedas['moedas'];
                 <div class="card-minigames">
                     <a href="?page=memoria">
                         <span class="tela-escura"></span>
-                        <img src="../imagens/minigames/3.png" alt="Jogo da Memória">
+                        <img src="../imagens/minigames/4.png" alt="Jogo da Memória">
                     </a>
                 </div>
             </div>
@@ -63,7 +64,7 @@ $_SESSION['moedas'] = $moedas['moedas'];
 </body>
 
 <script>
-document.querySelector('.moedas-usuario').addEventListener('click', function() {
+document.querySelector('.loja').addEventListener('click', function() {
     window.location.href = '?page=loja';
 })
 </script>

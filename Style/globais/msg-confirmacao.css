@@ -29,6 +29,7 @@
     left: 50%;
     transform: translate(-50%, -25%);
     background-color: #fff;
+    color: black;
     box-shadow: 3px 4px 19px 10px rgba(255, 255, 255, 0.3);
     padding: 20px;
     border: 1px solid #888;
