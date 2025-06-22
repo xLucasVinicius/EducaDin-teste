@@ -234,8 +234,8 @@ function carregarPremios() {
                                 <span class="limite-premio">Limite de trocas: ${premio.limite_trocas}</span>
                             </div>
                             <div class="acoes-premio">
-                                <button onclick="editarPremio(${premio.id_premio})" id="editar-premio"><i class="bi bi-pencil-square"></i></button>
-                                <button onclick="excluirPremio(${premio.id_premio})" id="excluir-premio"><i class="bi bi-trash"></i></button>
+                                <button onclick="confirmarEditarPremio(${premio.id_premio})" id="editar-premio"><i class="bi bi-pencil-square"></i></button>
+                                <button onclick="confirmarExcluirPremio(${premio.id_premio})" id="excluir-premio"><i class="bi bi-trash"></i></button>
                             </div>
                         </div>
                 `;
@@ -255,6 +255,40 @@ function exibirErroAdd() {
     document.querySelector('.conteudo').style.overflowY = 'clip';
     const modalErro = document.getElementById("modalErroAddPremio");
     modalErro.style.display = "flex";
+}
+
+function confirmarExcluirPremio(id) {
+    document.querySelector('.conteudo').style.overflowY = 'clip';
+    const modalConfirmarExcluirPremio = document.getElementById("modalConfirmarExcluirPremio");
+    modalConfirmarExcluirPremio.style.display = "flex";
+    const botaoConfirmarExcluirPremio = document.getElementById("btnExcluirPremio");
+    const novoBotao = botaoConfirmarExcluirPremio.cloneNode(true);
+    botaoConfirmarExcluirPremio.parentNode.replaceChild(novoBotao, botaoConfirmarExcluirPremio);
+    novoBotao.addEventListener("click", () => {
+        excluirPremio(id);
+        modalConfirmarExcluirPremio.style.display = "none";
+    });
+}
+
+function excluirPremio(id) {
+    fetch(`../Paginas/administrador/excluir-premio.php?id_premio=${id}`, {
+        method: "GET"
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            document.querySelector('.conteudo').style.overflowY = 'clip';
+            document.getElementById("modalSucessoExcluirPremio").style.display = "flex";
+        } else {
+            const modalErro = document.getElementById("modalErroExcluirPremio");
+            modalErro.style.display = "flex";
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao excluir o premio:', error);
+        const modalErro = document.getElementById("modalErroExcluirPremio");
+        modalErro.style.display = "flex";
+    });
 }
             
 
@@ -346,6 +380,18 @@ document.getElementById('btnModalPremioAdd').addEventListener('click', () => {
 });
 
 document.getElementById('btnModalErroPremioAdd').addEventListener('click', () => {
+    location.reload();
+});
+
+document.getElementById('btnNaoExcluirPremio').addEventListener('click', () => {
+    location.reload();
+});
+
+document.getElementById('btnModalSucessoExcluirPremio').addEventListener('click', () => {
+    location.reload();
+});
+
+document.getElementById('btnModalErroExcluirPremio').addEventListener('click', () => {
     location.reload();
 });
 

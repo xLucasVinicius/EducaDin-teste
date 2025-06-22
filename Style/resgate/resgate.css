@@ -162,3 +162,10 @@
     background-color: transparent;
     transform: none;
 }
+
+@media screen and (max-width: 768px) {
+    .conteudo-total-loja .txt-loja {
+        margin-top: 55px;
+    }
+    
+}

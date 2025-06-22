@@ -88,6 +88,37 @@
         </div>
     </div>
 
+    <div id="modalConfirmarExcluirPremio" class="modal">
+        <div class="modal-content">
+            <h2>Cuidado!</h2>
+            <p>Deseja realmente excluir esse premio?</p>
+            <span class="btns-operacoes">
+                <button id="btnExcluirPremio">Sim</button>
+                <button id="btnNaoExcluirPremio">Cancelar</button>
+            </span>
+        </div>
+    </div>
+
+    <div id="modalSucessoExcluirPremio" class="modal">
+        <div class="modal-content">
+            <h2>Sucesso!</h2>
+            <p>Premio excluido com sucesso.</p>
+            <span class="btns-operacoes">
+                <button id="btnModalSucessoExcluirPremio">OK</button>
+            </span>
+        </div>
+    </div>
+
+    <div id="modalErroExcluirPremio" class="modal">
+        <div class="modal-content">
+            <h2>Erro!</h2>
+            <p>O premio não foi excluido.</p>
+            <span class="btns-operacoes">
+                <button id="btnModalErroExcluirPremio">OK</button>
+            </span>
+        </div>
+    </div>
+
     <section class="conteudo-adm-total">
         <h1>Painel Administrativo</h1>
         <section class="dashboard-adm">
