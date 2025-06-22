@@ -130,3 +130,4 @@ CREATE TABLE status_plano (
 INSERT INTO minigames (nome) VALUES ('Letreco');
 INSERT INTO minigames (nome) VALUES ('Snake');
 INSERT INTO minigames (nome) VALUES ('Forca');
+INSERT INTO minigames (nome) VALUES ('Memoria');
