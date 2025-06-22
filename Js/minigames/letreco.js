@@ -94,34 +94,34 @@ const checkGuess = () => {
     }
   }
 
-// Adiciona um delay antes de mover para a próxima ação
-setTimeout(() => {
-  if (guess === letreco) { // Se o jogador acertou a palavra
-    const tempoFinal = (Date.now() - tempoInicio) / 1000; // Calcula o tempo de jogo
-    pontuacao = Math.max(0, (7 - tentativas) * 60 - tempoFinal * 2); // Calcula a pontuação
-    if (pontuacao < 30) { // Se a pontuação for menor que 30
-      pontuacao = 30; // Define a pontuação minima como 30
-    }
+  // Adiciona um delay antes de mover para a próxima ação
+  setTimeout(() => {
+    if (guess === letreco) { // Se o jogador acertou a palavra
+      const tempoFinal = (Date.now() - tempoInicio) / 1000; // Calcula o tempo de jogo
+      pontuacao = Math.max(0, (7 - tentativas) * 60 - tempoFinal * 2); // Calcula a pontuação
+      if (pontuacao < 30) { // Se a pontuação for menor que 30
+        pontuacao = 30; // Define a pontuação minima como 30
+      }
 
-    pontuacao = Math.round(pontuacao); // Arredonda a pontuação
-    document.querySelector('.modal-vitoria .tempo').textContent = `Tempo: ${tempoFinal.toFixed(2)} segundos`; // Exibe o tempo de jogo
-    document.querySelector('.modal-vitoria .pontuacao').textContent = `Pontuação: ${pontuacao}`; // Exibe a pontuação final
+      pontuacao = Math.round(pontuacao); // Arredonda a pontuação
+      document.querySelector('.modal-vitoria .tempo').textContent = `Tempo: ${tempoFinal.toFixed(2)} segundos`; // Exibe o tempo de jogo
+      document.querySelector('.modal-vitoria .pontuacao').textContent = `Pontuação: ${pontuacao}`; // Exibe a pontuação final
 
-    modalVitoria.style = "display: flex"; // Exibe o modal de vitória
+      modalVitoria.style = "display: flex"; // Exibe o modal de vitória
 
-    salvarPontos(); // Salva a pontuação
-    jogoVencido = true; // Define o jogo como vencido
-  } else {
-    if (currentRow === rows - 1) { // Se o jogador chegou ao fim das tentativas
-      palavraCorreta = letreco; // Armazena a palavra correta
-      textoPalavraCorreta.textContent = `A palavra correta era: ${palavraCorreta}`; // Exibe a palavra correta
-
-      modalDerrota.style = "display: flex"; // Exibe o modal de derrota
+      salvarPontos(); // Salva a pontuação
+      jogoVencido = true; // Define o jogo como vencido
     } else {
-      moveToNextRow(); // Move para a próxima linha
+      if (currentRow === rows - 1) { // Se o jogador chegou ao fim das tentativas
+        palavraCorreta = letreco; // Armazena a palavra correta
+        textoPalavraCorreta.textContent = `A palavra correta era: ${palavraCorreta}`; // Exibe a palavra correta
+
+        modalDerrota.style = "display: flex"; // Exibe o modal de derrota
+      } else {
+        moveToNextRow(); // Move para a próxima linha
+      }
     }
-  }
-}, 500);
+  }, 500);
 };
 
 // Função para mover para a próxima linha ao verificar a palavra

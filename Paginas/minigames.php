@@ -29,28 +29,32 @@ $_SESSION['moedas'] = $moedas['moedas'];
         </section>
         <section class="conteudo-minigames">
             <div class="container-card-minigames">
+                <!-- Letreco -->
                 <div class="card-minigames">
                     <a href="?page=letreco">
                         <span class="tela-escura"></span>
                         <img src="../imagens/minigames/1.png" alt="Letreco">
                     </a>
                 </div>
+                <!-- Snake -->
                 <div class="card-minigames">
                     <a href="?page=snake">
                         <span class="tela-escura"></span>
                         <img src="../imagens/minigames/2.png" alt="Snake Game">
                     </a>
                 </div>
+                <!-- Forca -->
                 <div class="card-minigames">
-                    <a href="">
+                    <a href="?page=forca">
                         <span class="tela-escura"></span>
                         <img src="../imagens/minigames/3.png" alt="Jogo da Forca">
                     </a>
                 </div>
+                <!-- Memória -->
                 <div class="card-minigames">
-                    <a href="">
+                    <a href="?page=memoria">
                         <span class="tela-escura"></span>
-                        <img src="../imagens/minigames/3.png" alt="Minigame 4">
+                        <img src="../imagens/minigames/3.png" alt="Jogo da Memória">
                     </a>
                 </div>
             </div>

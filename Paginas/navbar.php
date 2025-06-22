@@ -209,8 +209,8 @@ if ($status_atividade == 0) {
                 case "forca":
                     include("minigames/forca.php");
                 break;
-                case "jogo4":
-                    include("minigames/jogo4.php");
+                case "memoria":
+                    include("minigames/memoria.php");
                 break;
                 case "planos":
                     include("planos.html");
