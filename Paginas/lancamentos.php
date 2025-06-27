@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="../Style/globais/msg-confirmacao.css">
 </head>
 <body>
+    <div class="modal" id="modalErroCampos">
+        <div class="modal-content">
+            <h1>Erro!</h1>
+            <p id="msg-modal">Preencha todos os campos antes de enviar.</p>
+            <button id="btnModalErroPreencher">Ok</button>
+        </div>
+    </div>
+
     <div class="modal" id="modalAddLancamento">
         <div class="modal-content">
             <h1>Sucesso!</h1>

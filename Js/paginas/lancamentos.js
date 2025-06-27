@@ -465,6 +465,59 @@ function formatarMoeda(input) {
 
 formLancamento.addEventListener("submit", (event) => {
 event.preventDefault();
+
+const inputDescricao = document.getElementById("descricao");
+const inputValor = document.getElementById("valor");
+const inputRadioReceita = document.getElementById("receita");
+const inputRadioDespesa = document.getElementById("despesa");
+const inputMetodo = document.getElementById("metodo");
+const inputConta = document.getElementById("conta");
+const inputCartao = document.getElementById("cartao");
+const inputCategoria = document.getElementById("categoria");
+const inputSubcategoria = document.getElementById("subcategoria");
+const inputData = document.getElementById("data");
+const inputParcelas = document.getElementById("parcelas");
+const modalErroPreencher = document.getElementById("modalErroCampos");
+
+if (!inputDescricao.value || !inputValor.value || !inputCategoria.value || !inputSubcategoria.value || !inputData.value) {
+    modalErroPreencher.style.display = "flex";
+    return;
+}
+
+if (inputRadioDespesa.checked) {
+    if (!inputParcelas.value) {
+        modalErroPreencher.style.display = "flex";
+        return;
+    }
+}
+
+if (!inputRadioReceita.checked && !inputRadioDespesa.checked) {
+    modalErroPreencher.style.display = "flex";
+    return;
+}
+
+if (inputMetodo.value === "Débito" || inputMetodo.value === "Crédito") {
+    if (!inputCartao.value) {
+        modalErroPreencher.style.display = "flex";
+        return;
+    }
+}
+
+if (inputMetodo.value === "Transferência" || inputMetodo.value === "Boleto" || inputMetodo.value === "Pix") {
+    if (!inputConta.value) {
+        modalErroPreencher.style.display = "flex";
+        return;
+    }
+}
+
+if (!inputMetodo.value) {
+    modalErroPreencher.style.display = "flex";
+    return;
+}
+
+
+
+
 const formData = new FormData(formLancamento);
 fetch("../Paginas/configs/add-lancamento.php", {
     method: "POST",
@@ -750,4 +803,8 @@ document.getElementById("btnModalErroExcluir").addEventListener("click", () => {
     const modalErro = document.getElementById("modalErroExcluirLancamento");
     modalErro.style.display = "none";
     location.reload();
+});
+
+document.getElementById("btnModalErroPreencher").addEventListener("click", () => {
+    document.getElementById("modalErroCampos").style.display = "none";
 });
