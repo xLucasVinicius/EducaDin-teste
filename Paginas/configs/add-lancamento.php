@@ -151,11 +151,51 @@ if ($id_lancamento) {
 
 } else {
     // ====== INSERÇÃO ======
-    $query = "INSERT INTO lancamentos (id_usuario, id_conta, id_cartao, descricao, valor, tipo, metodo_pagamento, categoria, subcategoria, data, parcelas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $mysqli->prepare($query);
-    $stmt->bind_param("iiisssssssi", $id_usuario, $id_conta, $id_cartao, $descricao, $valor, $tipo, $metodo, $categoria, $subcategoria, $data, $parcelas);
-    $stmt->execute();
-    $stmt->close();
+    if ($metodo === 'Crédito' && $parcelas > 1) {
+        // Buscar data de fechamento da fatura
+        $query_fechamento = "SELECT dia_fechamento FROM cartoes WHERE id_cartao = ? AND id_usuario = ?";
+        $stmt = $mysqli->prepare($query_fechamento);
+        $stmt->bind_param("ii", $id_cartao, $id_usuario);
+        $stmt->execute();
+        $stmt->bind_result($dia_fechamento);
+        $stmt->fetch();
+        $stmt->close();
+
+        $valor_parcela = round($valor / $parcelas, 2);  // Valor dividido
+        $data_lancamento = new DateTime($data);
+        $hoje = new DateTime();
+
+        $dia_lancamento = (int)$data_lancamento->format('d');
+        $mes_lancamento = (int)$data_lancamento->format('m');
+        $ano_lancamento = (int)$data_lancamento->format('Y');
+
+        // Se o lançamento foi antes ou no dia do fechamento, começa no mês atual, senão no próximo
+        $mes_base = $dia_lancamento <= $dia_fechamento ? $data_lancamento : $data_lancamento->modify('+1 month');
+
+        // Inserir uma linha para cada parcela
+        for ($i = 0; $i < $parcelas; $i++) {
+            $data_parcela = (clone $mes_base)->modify("+$i months");
+            $data_sql = $data_parcela->format('Y-m-d');
+
+            $descricao_parcela = $descricao . " (" . ($i+1) . "/" . $parcelas . ")";
+
+            $query = "INSERT INTO lancamentos (id_usuario, id_conta, id_cartao, descricao, valor, tipo, metodo_pagamento, categoria, subcategoria, data, parcelas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $mysqli->prepare($query);
+            $stmt->bind_param("iiisssssssi", $id_usuario, $id_conta, $id_cartao, $descricao_parcela, $valor_parcela, $tipo, $metodo, $categoria, $subcategoria, $data_sql, $parcelas);
+            $stmt->execute();
+            $stmt->close();
+
+            // Aqui você pode também atualizar saldo, desempenho anual etc, repetindo as lógicas anteriores para cada mês
+        }
+
+    } else {
+        // Lançamento único (sem parcelamento)
+        $query = "INSERT INTO lancamentos (id_usuario, id_conta, id_cartao, descricao, valor, tipo, metodo_pagamento, categoria, subcategoria, data, parcelas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("iiisssssssi", $id_usuario, $id_conta, $id_cartao, $descricao, $valor, $tipo, $metodo, $categoria, $subcategoria, $data, $parcelas);
+        $stmt->execute();
+        $stmt->close();
+    }
 
     if (isset($id_conta) || $tipo  && $mesAtual == $data_ref) {
         $ajuste = ($tipo == 0) ? $valor : -$valor;

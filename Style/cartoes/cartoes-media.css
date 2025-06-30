@@ -30,12 +30,18 @@
 
   .cartao .infos-cartao h1 {
     font-size: 1.5rem;
-    margin: 15px 0 20px 0;
+    margin: 0;
   }
   
   .cartao .infos-cartao h2 {
     font-size: 1rem;
     text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .cartao .infos-cartao #tipo-conta {
+    font-size: 0.8rem;
+    margin-bottom: 15px;
   }
   
   .cartao .infos-cartao p {

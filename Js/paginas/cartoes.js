@@ -72,103 +72,88 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     cartoesData.forEach((cartao, index) => {
-      const nomeConta = contasMap[cartao.id_conta]; // Busca o nome da conta associado ao id_conta do cartão
-      const account = accountsData.find(account => account.id_conta === cartao.id_conta); // Encontra a conta correspondente ao cartão
+      const nomeConta = contasMap[cartao.id_conta];
+      const account = accountsData.find(account => account.id_conta === cartao.id_conta);
       const tipoConta = tipoContaMap[account.categoria];
-      const diaFechamento = cartao.dia_fechamento; // Busca o dia de fechamento do cartão
-      const diaVencimento = cartao.dia_vencimento; // Busca o dia de vencimento do cartão
-      const respPontos = cartao.pontos; // Busca o dia de vencimento do cartão
-      const dataAtual = new Date(); // Obtem a data atual
-      const diaAtual = dataAtual.getDate(); // Obtem o dia atual
-      let mesAtual = dataAtual.getMonth(); // Obtem o mês atual
-      let anoAtual = dataAtual.getFullYear(); // Obtem o ano atual
+      const diaFechamento = parseInt(cartao.dia_fechamento);
+      const diaVencimento = parseInt(cartao.dia_vencimento);
+      const respPontos = cartao.pontos;
 
-      // Verifica se o dia de vencimento já passou e ajusta o mês de vencimento
-      let mesVencimento = mesAtual;
-      if (diaAtual > diaVencimento) {
-        mesVencimento = mesAtual + 1;
-        if (mesVencimento > 11) { // Se o mês ultrapassar dezembro
-          mesVencimento = 0;
-          anoAtual += 1;
-        }
+      const hoje = new Date();
+      const diaAtual = hoje.getDate();
+      const mesAtual = hoje.getMonth();
+      const anoAtual = hoje.getFullYear();
+
+      const dataFechamentoAtual = new Date(anoAtual, mesAtual, diaFechamento);
+      const vencimento = new Date(anoAtual, mesAtual, diaVencimento);
+
+      const limiteTotal = parseFloat(cartao.limite_total);
+      const limiteDisponivel = parseFloat(cartao.limite_disponivel);
+      const faturaAtual = parseFloat(cartao.fatura_atual);
+
+      const cartaoDiv = document.createElement('div');
+      cartaoDiv.classList.add('cartao');
+      if (index === 0) {
+        cartaoDiv.classList.add('active');
+        cartaoDiv.style.transform = 'translateX(0)';
       }
-
-      // Verifica se o dia de fechamento já passou
-      let mesFechamento = mesAtual;
-      if (diaAtual > diaFechamento && diaAtual > diaVencimento) {
-        mesFechamento = mesAtual + 1;
-        if (mesFechamento > 11) { // Se o mês ultrapassar dezembro
-          mesFechamento = 0;
-          anoAtual += 1;
-        }
-      }
-
-      const cartaoDiv = document.createElement('div'); // Cria uma div para o cartão
-      cartaoDiv.classList.add('cartao'); // Adiciona a classe 'cartao'
-      if (index === 0) { // Se for o primeiro cartão
-        cartaoDiv.classList.add('active'); // Adiciona a classe 'active'
-        cartaoDiv.style.transform = 'translateX(0)'; // Define a transformação para o primeiro cartão
-      }
-
-      const limiteTotal = parseFloat(cartao.limite_total); // Calcular o limite disponível
-      const totalLancamentos = lancamentosCreditoData.reduce((acc, lancamentos_credito) => acc + parseFloat(lancamentos_credito.valor), 0); // Somar os lançamentos (todos os lançamentos são valores positivos)
-      const limiteDisponivel = limiteTotal - totalLancamentos; // Calcular o limite disponível
 
       if (cartao.tipo == 1) {
-        // Renderizar o cartão crédito
+        // Cartão de crédito
         cartaoDiv.innerHTML = `
-        <span class="info-icon" id="infoIcon${cartao.id_cartao}">
-          <i class="bi bi-question"></i>
-          <p class="txt-pontos disable" id="txtPontos${cartao.id_cartao}"></p>
-        </span>
-        <div class="logo">
-          <img src="../imagens/cartoes/${nomeConta}.jpeg" alt="Cartão de ${nomeConta}">
-        </div>
-        <div class="infos-cartao">
-          <h1> Cartão ${nomeConta}</h1>
-          <h2 id="tipo-conta">Conta: ${nomeConta} (${tipoConta})</h2>
-          <h2>Limite Total: R$ ${parseFloat(cartao.limite_total).toFixed(2).replace('.', ',')}</h2>
-          <h2>Disponível: R$ ${parseFloat(limiteDisponivel).toFixed(2).replace('.', ',')}</h2>
-          <span class="infos-fatura">
-            <p>Fechamento: ${formatarDia(diaFechamento)}/${formatarMes(mesFechamento)}/${anoAtual}</p>
-            <p>Vencimento: ${formatarDia(diaVencimento)}/${formatarMes(mesVencimento)}/${anoAtual}</p>
+          <span class="info-icon" id="infoIcon${cartao.id_cartao}">
+            <i class="bi bi-question"></i>
+            <p class="txt-pontos disable" id="txtPontos${cartao.id_cartao}"></p>
           </span>
-        </div>
-        <button class="btn-editar-cartao" data-id-cartao="${cartao.id_cartao}"><i class="bi bi-gear"></i></button>
-      `;
+          <div class="logo">
+            <img src="../imagens/cartoes/${nomeConta}.jpeg" alt="Cartão de ${nomeConta}">
+          </div>
+          <div class="infos-cartao">
+            <h1>Cartão ${nomeConta}</h1>
+            <h2 id="tipo-conta">Conta: ${nomeConta} (${tipoConta})</h2>
+            <h2>Limite Total: R$ ${limiteTotal.toFixed(2).replace('.', ',')}</h2>
+            <h2>Disponível: R$ ${limiteDisponivel.toFixed(2).replace('.', ',')}</h2>
+            <h2 style="color: orange">Fatura Atual: R$ ${faturaAtual.toFixed(2).replace('.', ',')}</h2>
+            <span class="infos-fatura">
+              <p>Fechamento: ${formatarDia(diaFechamento)}/${formatarMes(dataFechamentoAtual.getMonth())}/${dataFechamentoAtual.getFullYear()}</p>
+              <p>Vencimento: ${formatarDia(diaVencimento)}/${formatarMes(vencimento.getMonth())}/${vencimento.getFullYear()}</p>
+            </span>
+          </div>
+          <button class="btn-editar-cartao" data-id-cartao="${cartao.id_cartao}"><i class="bi bi-gear"></i></button>
+        `;
       } else {
-        // Renderizar o cartão de débito
+        // Cartão de débito
         cartaoDiv.innerHTML = `
-        <span class="info-icon" id="infoIcon${cartao.id_cartao}">
-          <i class="bi bi-question"></i>
-          <p class="txt-pontos disable" id="txtPontos${cartao.id_cartao}"></p>
-        </span>
-        <div class="logo">
-          <img src="../imagens/cartoes/${nomeConta}.jpeg" alt="Cartão de ${nomeConta}">
-        </div>
-        <div class="infos-cartao">
-          <h1> Cartão ${nomeConta}</h1>
-          <h2 id="tipo-conta">Conta: ${nomeConta} (${tipoConta})</h2>
-          <h2>Apenas débito</h2>
-        </div>
-      `;
+          <span class="info-icon" id="infoIcon${cartao.id_cartao}">
+            <i class="bi bi-question"></i>
+            <p class="txt-pontos disable" id="txtPontos${cartao.id_cartao}"></p>
+          </span>
+          <div class="logo">
+            <img src="../imagens/cartoes/${nomeConta}.jpeg" alt="Cartão de ${nomeConta}">
+          </div>
+          <div class="infos-cartao">
+            <h1>Cartão ${nomeConta}</h1>
+            <h2 id="tipo-conta">Conta: ${nomeConta} (${tipoConta})</h2>
+            <h2>Apenas débito</h2>
+          </div>
+        `;
       }
-      
-      
-      carouselContainer.appendChild(cartaoDiv); // Adiciona o cartão ao carrossel
-      const txtPontos = document.getElementById(`txtPontos${cartao.id_cartao}`); //
-      if (respPontos == 0) {
-        txtPontos.innerHTML = 'Usar este cartão em compras pode gerar benefícios, entenda mais pesquisando sobre as vantagens proporcionadas pela sua bandeira.';
-      } else {
-        txtPontos.innerHTML = 'Este cartão não possui beneficios ao realizar compras, usar outro cartão pode ser a melhor opção.';
-        txtPontos.style.height = '60px';
-      }
+
+      carouselContainer.appendChild(cartaoDiv);
+
+      // Dica de pontos
+      const txtPontos = document.getElementById(`txtPontos${cartao.id_cartao}`);
+      txtPontos.innerHTML = respPontos == 0
+        ? 'Usar este cartão em compras pode gerar benefícios, entenda mais pesquisando sobre as vantagens proporcionadas pela sua bandeira.'
+        : 'Este cartão não possui benefícios ao realizar compras. Usar outro cartão pode ser a melhor opção.';
+      if (respPontos != 0) txtPontos.style.height = '60px';
 
       const infoIcon = document.getElementById(`infoIcon${cartao.id_cartao}`);
       infoIcon.addEventListener('click', () => {
-      txtPontos.classList.toggle('disable'); // Alterna a visibilidade do parágrafo
+        txtPontos.classList.toggle('disable');
+      });
     });
-    });
+
 
     const selectConta = document.getElementById('conta'); // Seleciona o select de contas
 
@@ -267,8 +252,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Função para renderizar os lançamentos em formato de tabela
     function renderLancamentos(accountId) {
+      const mesAtual = new Date().getMonth();
+      const anoAtual = new Date().getFullYear();
       lancamentosContainer.innerHTML = ''; // Limpa o container de lançamentos
-      const lancamentos = lancamentosData.filter(l => l.id_cartao === accountId); // Filtra os lançamentos da conta selecionada
+      const lancamentos = lancamentosData.filter(l => l.id_cartao === accountId && new Date(l.data).getMonth() === mesAtual && new Date(l.data).getFullYear() === anoAtual); // Filtra os lançamentos do cartão selecionado
       if (lancamentos.length === 0) { // Se nenhuma conta foi encontrada
         lancamentosContainer.innerHTML = '<z style="color: white;">Nenhum lançamento encontrado.</z>'; 
         return;
@@ -320,7 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderLancamentos(cartoesData[currentIndex].id_cartao);
     // Formatando exibição da tabela corretamente
     const lancamentosFora = document.getElementById('fora-lancamentos');
-    lancamentosFora.style.display = 'flex';
+    lancamentosFora.style.display = 'block';
 
     // Evento de clique no botão de edição
     document.querySelectorAll('.btn-editar-cartao').forEach(botao => {

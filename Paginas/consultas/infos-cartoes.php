@@ -2,62 +2,86 @@
 session_start();
 include("../configs/config.php");
 
-header('Content-Type: application/json');  // Defina o tipo de conteúdo como JSON
+header('Content-Type: application/json');
 
-$sql = "SELECT * FROM contas WHERE id_usuario = " . $_SESSION['id_usuario']; // Seleciona todas as contas do usuário
-$sql2 = "SELECT * FROM cartoes WHERE id_usuario = " . $_SESSION['id_usuario']; // Seleciona todos os cartões do usuário
-$sql3 = "SELECT * FROM lancamentos WHERE id_usuario = " . $_SESSION['id_usuario'] . " AND metodo_pagamento = 'Crédito'"; // Seleciona todos os lançamentos do usuário que sejam de crédito
+$id_usuario = $_SESSION['id_usuario'];
 
-$sql4 = "SELECT * FROM lancamentos WHERE id_usuario = " . $_SESSION['id_usuario'] . " AND metodo_pagamento = 'Débito'"; // Seleciona todos os lançamentos do usuário que sejam de debito
-// Executa as consultas
+$sql = "SELECT * FROM contas WHERE id_usuario = $id_usuario";
+$sql2 = "SELECT * FROM cartoes WHERE id_usuario = $id_usuario";
+$sql3 = "SELECT * FROM lancamentos WHERE id_usuario = $id_usuario AND metodo_pagamento = 'Crédito'";
+$sql4 = "SELECT * FROM lancamentos WHERE id_usuario = $id_usuario AND metodo_pagamento = 'Débito'";
+
 $result = $mysqli->query($sql);
 $result2 = $mysqli->query($sql2);
 $result3 = $mysqli->query($sql3);
 $result4 = $mysqli->query($sql4);
 
-$response = array(); // Array principal para a resposta
+$response = [];
 
-// Verifica se há dados nas contas
-if ($result->num_rows > 0) {
-    $contas = array();
-    while($row = $result->fetch_assoc()) {
-        $contas[] = $row;
+// Contas
+$response['contas'] = $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : [];
+
+// Cartões
+$cartoes = $result2->num_rows > 0 ? $result2->fetch_all(MYSQLI_ASSOC) : [];
+$response['cartoes'] = [];
+
+// Lançamentos Crédito
+$lancamentosCredito = $result3->num_rows > 0 ? $result3->fetch_all(MYSQLI_ASSOC) : [];
+$response['lancamentos_credito'] = $lancamentosCredito;
+
+// Lançamentos Débito
+$response['lancamentos_debito'] = $result4->num_rows > 0 ? $result4->fetch_all(MYSQLI_ASSOC) : [];
+
+// Processar cada cartão para adicionar limite disponível e fatura atual
+foreach ($cartoes as &$cartao) {
+    if ($cartao['tipo'] == '1') { // Apenas cartão de crédito
+        $limite_total = (float)$cartao['limite_total'];
+        $id_cartao = $cartao['id_cartao'];
+        $dia_fechamento = (int)$cartao['dia_fechamento'];
+
+        $hoje = new DateTime();
+        $diaAtual = (int)$hoje->format('d');
+        $mesAtual = (int)$hoje->format('m');
+        $anoAtual = (int)$hoje->format('Y');
+
+        // Data de fechamento atual
+        if ($diaAtual >= $dia_fechamento) {
+            $dataFechamentoAtual = new DateTime("$anoAtual-$mesAtual-$dia_fechamento");
+        } else {
+            $dataFechamentoAtual = (new DateTime("$anoAtual-$mesAtual-01"))->modify("-1 month")->setDate($anoAtual, $mesAtual - 1, $dia_fechamento);
+        }
+        $dataFechamentoAtual->setTime(0, 0, 0);
+
+        // Próximo fechamento
+        $dataFechamentoProximo = clone $dataFechamentoAtual;
+        $dataFechamentoProximo->modify('+1 month');
+
+        // Comprometimento futuro
+        $comprometido = 0;
+        $faturaAtual = 0;
+
+        foreach ($lancamentosCredito as $lanc) {
+            if ($lanc['id_cartao'] == $id_cartao) {
+                $dataLanc = new DateTime($lanc['data']);
+                $dataLanc->setTime(0, 0, 0);
+
+                // Comprometido se >= fechamento atual
+                if ($dataLanc >= $dataFechamentoAtual) {
+                    $comprometido += (float)$lanc['valor'];
+                }
+
+                // Fatura atual se entre fechamento atual e próximo
+                if ($dataLanc >= $dataFechamentoAtual && $dataLanc < $dataFechamentoProximo) {
+                    $faturaAtual += (float)$lanc['valor'];
+                }
+            }
+        }
+
+        $cartao['limite_disponivel'] = $limite_total - $comprometido;
+        $cartao['fatura_atual'] = $faturaAtual;
     }
-    $response['contas'] = $contas; // Adiciona as contas ao array de resposta
-} else {
-    $response['contas'] = array(); // Caso não haja contas, retorna um array vazio
+
+    $response['cartoes'][] = $cartao;
 }
 
-// Verifica se há dados nos cartões
-if ($result2->num_rows > 0) {
-    $cartoes = array();
-    while($row = $result2->fetch_assoc()) { // Adiciona os cartões ao array
-        $cartoes[] = $row;
-    }
-    $response['cartoes'] = $cartoes;  // Adiciona os cartões ao array de resposta
-} else {
-    $response['cartoes'] = array();  // Caso não haja cartões, retorna um array vazio
-}
-
-// Verifica se há dados nos lançamentos
-if ($result3->num_rows > 0) {
-    $lancamentosCredito = array();
-    while($row = $result3->fetch_assoc()) { // Adiciona os lançamentos ao array
-        $lancamentosCredito[] = $row;
-    }
-    $response['lancamentos_credito'] = $lancamentosCredito;  // Adiciona os lançamentos ao array de resposta
-} else {
-    $response['lancamentos_credito'] = array();  // Caso não haja lançamentos, retorna um array vazio
-}
-
-if ($result4->num_rows > 0) {
-    $lancamentosDebito = array();
-    while($row = $result4->fetch_assoc()) { // Adiciona os lançamentos ao array
-        $lancamentosDebito[] = $row;
-    }
-    $response['lancamentos_debito'] = $lancamentosDebito;  // Adiciona os lançamentos ao array de resposta
-} else {
-    $response['lancamentos_debito'] = array();  // Caso não haja lançamentos, retorna um array vazio
-}
-
-echo json_encode($response);  // Retorna o JSON com ambas as seções
+echo json_encode($response);
