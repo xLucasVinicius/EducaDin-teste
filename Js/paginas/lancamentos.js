@@ -564,7 +564,7 @@ function editarLancamento(id) {
     .then(data => {
 
         formEditar.style.display = "flex";
-        fetch(`../paginas/consultas/infos-lancamento-unico.php?id_lancamento=${id}`)
+        fetch(`../Paginas/consultas/infos-lancamento-unico.php?id_lancamento=${id}`)
         .then(response => response.json())
         .then(data => {
             const inputDescricao = document.getElementById("descricao-editar");

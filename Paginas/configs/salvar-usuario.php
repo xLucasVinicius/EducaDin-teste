@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt_check_image->fetch();
 
                 if ($foto_antiga && $foto_antiga != "../foto-perfil/default.png") {
-                    $caminho_imagem_antiga = $_SERVER['DOCUMENT_ROOT'] . "/EducaDin-teste" . substr($foto_antiga, 2);
+                    $caminho_imagem_antiga = $_SERVER['DOCUMENT_ROOT'] . substr($foto_antiga, 2);
                     if (file_exists($caminho_imagem_antiga)) {
                         unlink($caminho_imagem_antiga); // Apaga a imagem antiga
                     }
@@ -146,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Definir o caminho para salvar a imagem no servidor
                 $pasta_relativa = "../foto-perfil/";
-                $pasta_absoluta = $_SERVER['DOCUMENT_ROOT'] . '/EducaDin-teste/foto-perfil/';
+                $pasta_absoluta = $_SERVER['DOCUMENT_ROOT'] . '/foto-perfil/';
                 $novoNomeDoArquivo = uniqid();
 
                 // Caminho absoluto e relativo

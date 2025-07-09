@@ -132,5 +132,13 @@ if (isset($_SESSION['id_usuario'])) {
 
 <script src="../Js/login/salvar-usuario.js"></script>
 
+<script>
+    window.onpageshow = function(event) {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    };
+</script>
+
 </body>
 </html>
