@@ -279,6 +279,7 @@ function renderLancamentos(lancamentos) {
                             case "0": categoriaInicial = 'C'; break;
                             case "1": categoriaInicial = 'P'; break;
                             case "2": categoriaInicial = 'S'; break;
+                            case "3": xategoriaInicial = 'D'; break;
                         }
                         contaCartao = `${conta.nome_conta} (${categoriaInicial})`;
                     }

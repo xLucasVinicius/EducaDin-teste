@@ -11,21 +11,28 @@ const subcategorias = {
     Transporte: ["Aplicativos de transporte", "Combustível", "Transporte público", "Manutenção de veículo", "Pedágios/estacionamento"],
     Educação: ["Mensalidade escolar/faculdade", "Cursos e workshops", "Material escolar"],
     Saúde: ["Plano de saúde", "Medicamentos", "Consultas médicas", "Tratamentos odontológicos"],
-    Lazer: ["Cinema", "Shows", "Viagens", "Assinaturas de streaming"],
+    Lazer: ["Cinema", "Shows", "Viagens"],
     Vestuário: ["Roupas", "Acessórios", "Calçados"],
     Impostos: ["IPVA", "Imposto de Renda", "Multas", "Anuidade"],
-    Serviços: ["Celular", "Assinaturas de software", "Apps"],
-    Despesas_Gerais: ["Presentes", "Doações", "Outros"],
-    Salário: ["Salário fixo", "13º salário", "Bônus/PLR"],
+    Assinaturas: ["Celular", "Assinaturas de software", "Apps", "Assinaturas de streaming"],
+    Despesas_Gerais: ["Presentes", "Doações", "Outros", "Fatura do cartão de crédito"],
+    Salário: ["Salário fixo", "13º salário", "Vale", "Bônus/PLR"],
     Freelance: ["Serviços eventuais", "Consultorias"],
-    Investimentos: ["Juros de poupança", "Renda de ações", "Aluguéis recebidos"],
+    Investimentos: ["Juros de poupança", "Renda de ações", "Aluguéis recebidos", "Dividendos", "Compra de ações", "Venda de ações"],
     Vendas: ["Venda de bens", "Venda de produtos"],
     Outros: ["Reembolsos", "Prêmios", "Doações recebidas"]
 };
 
+const tipoContainer = document.getElementById("tipo-container");
 const selectSubcategoriaEditar = document.getElementById("subcategoria-editar");
 const selectCategoriaEditar = document.getElementById("categoria-editar");
 const containerSubcategoriasEditar = document.getElementById("subcategoria-container-editar");
+const containerCheckboxTranferenciaContas = document.getElementById("transferencia-entre-contas-check");
+const checkboxTranferenciaContas = document.getElementById("transferencia-contas");
+const containerContasTransferencia = document.getElementById("contas-transferencia");
+const containerCheckboxTranferenciaContasEditar = document.getElementById("transferencia-entre-contas-check-editar");
+const checkboxTranferenciaContasEditar = document.getElementById("transferencia-contas-editar");
+const containerContasTransferenciaEditar = document.getElementById("contas-transferencia-editar");
 
 window.addEventListener('DOMContentLoaded', function () {
     const btnAbrirForm = document.querySelector('.abrir-form-icon');
@@ -92,6 +99,9 @@ window.addEventListener('DOMContentLoaded', function () {
                 meioPagamento.appendChild(select);
     
             } else if (metodoSelecionado === "Transferência" || metodoSelecionado === "Boleto" || metodoSelecionado === "Pix") {
+                if (metodoSelecionado === "Transferência") {
+                    containerCheckboxTranferenciaContas.style.display = "flex";
+                }
                 const label = document.createElement("label");
                 label.textContent = "Selecione a conta";
     
@@ -120,6 +130,66 @@ window.addEventListener('DOMContentLoaded', function () {
     
                 meioPagamento.appendChild(label);
                 meioPagamento.appendChild(select);
+
+                checkboxTranferenciaContas.addEventListener("change", () => {
+                    if (checkboxTranferenciaContas.checked) {
+                        tipoContainer.style.display = "none";
+                        containerContasTransferencia.style.display = "flex";
+                        meioPagamento.style.display = "none";
+
+                        const defaultOptionUm = document.createElement("option");
+                        defaultOptionUm.value = "";
+                        defaultOptionUm.textContent = "Selecione a conta";
+
+                        const defaultOptionDois = document.createElement("option");
+                        defaultOptionDois.value = "";
+                        defaultOptionDois.textContent = "Selecione a conta";
+
+                        const labelUm = document.createElement("label");
+                        labelUm.textContent = "Conta de origem";
+                        const labelDois = document.createElement("label");
+                        labelDois.textContent = "Conta de destino";
+            
+                        const selectUm = document.createElement("select");
+                        selectUm.name = "conta-saida";
+                        selectUm.id = "conta-saida";
+                        selectUm.appendChild(defaultOptionUm);
+
+                        const selectDois = document.createElement("select");
+                        selectDois.name = "conta-entrada";
+                        selectDois.id = "conta-entrada";
+                        selectDois.appendChild(defaultOptionDois);
+            
+                        data.contas.forEach(conta => {
+                            // Se o nome da conta for "carteira", não adiciona
+                            if (conta.nome_conta.toLowerCase() == "carteira") {
+                                return; // pula para o próximo item do forEach
+                            }
+                            const sigla = categoriaMap[conta.categoria] || "?";
+                            const nomeComCategoria = `${conta.nome_conta} ${sigla}`;
+            
+                            const option1 = document.createElement("option");
+                            option1.value = conta.id_conta;
+                            option1.textContent = nomeComCategoria;
+
+                            const option2 = document.createElement("option");
+                            option2.value = conta.id_conta;
+                            option2.textContent = nomeComCategoria;
+
+                            selectUm.appendChild(option1);
+                            selectDois.appendChild(option2);
+                        });
+                        containerContasTransferencia.appendChild(labelUm);
+                        containerContasTransferencia.appendChild(selectUm);
+                        containerContasTransferencia.appendChild(labelDois);
+                        containerContasTransferencia.appendChild(selectDois);
+                    } else {
+                        containerContasTransferencia.style.display = "none";
+                        containerContasTransferencia.innerHTML = "";
+                        meioPagamento.style.display = "flex";
+                        tipoContainer.style.display = "flex";
+                    }
+                });
             }
         });
     })  
@@ -287,7 +357,7 @@ window.addEventListener('DOMContentLoaded', function () {
                                 instituicao = `Cartão ${conta.nome_conta}`;
                                 // Verifica a categoria e adiciona a inicial correspondente
                                 const categoriaConta = conta.categoria; // 0=conta corrente, 1=conta poupança, 2=conta salário
-                                const inicialCategoria = categoriaConta == 0 ? 'Corrente' : categoriaConta == 1 ? 'Poupança' : categoriaConta == 2 ? 'Salário' : '';
+                                const inicialCategoria = categoriaConta == 0 ? 'Corrente' : categoriaConta == 1 ? 'Poupança' : categoriaConta == 2 ? 'Salário' : categoriaConta == 3 ? 'Digital' : '';
                                 instituicao += ` (${inicialCategoria})`;
                             } else {
                                 instituicao = 'Conta desconhecida';
@@ -316,7 +386,7 @@ window.addEventListener('DOMContentLoaded', function () {
                             <td class="${classeValor}">${tipo}</td>
                             <td>${lancamento.metodo_pagamento}</td>
                             <td>${instituicao}</td>
-                            <td>${lancamento.categoria}</td>
+                            <td>${(lancamento.categoria).replace('_', ' ')}</td>
                             <td>${lancamento.subcategoria}</td>
                             <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
                             <td>${lancamentoParcela}</td>
@@ -472,6 +542,8 @@ const inputRadioReceita = document.getElementById("receita");
 const inputRadioDespesa = document.getElementById("despesa");
 const inputMetodo = document.getElementById("metodo");
 const inputConta = document.getElementById("conta");
+const inputContaSaida = document.getElementById("conta-saida");
+const inputContaEntrada = document.getElementById("conta-entrada");
 const inputCartao = document.getElementById("cartao");
 const inputCategoria = document.getElementById("categoria");
 const inputSubcategoria = document.getElementById("subcategoria");
@@ -491,7 +563,7 @@ if (inputRadioDespesa.checked) {
     }
 }
 
-if (!inputRadioReceita.checked && !inputRadioDespesa.checked) {
+if (!inputRadioReceita.checked && !inputRadioDespesa.checked && inputMetodo.value !== "Transferência") {
     modalErroPreencher.style.display = "flex";
     return;
 }
@@ -503,9 +575,22 @@ if (inputMetodo.value === "Débito" || inputMetodo.value === "Crédito") {
     }
 }
 
-if (inputMetodo.value === "Transferência" || inputMetodo.value === "Boleto" || inputMetodo.value === "Pix") {
+if (inputMetodo.value === "Boleto" || inputMetodo.value === "Pix") {
     if (!inputConta.value) {
         modalErroPreencher.style.display = "flex";
+        return;
+    }
+}
+
+if (inputMetodo.value === "Transferência") {
+    if (!inputContaSaida.value || !inputContaEntrada.value) {
+        modalErroPreencher.style.display = "flex";
+        return;
+    }
+
+    if (inputContaSaida.value === inputContaEntrada.value) {
+        modalErroPreencher.style.display = "flex";
+        modalErroPreencher.querySelector("p").textContent = "As contas de entrada e saída devem ser diferentes.";
         return;
     }
 }
@@ -514,8 +599,6 @@ if (!inputMetodo.value) {
     modalErroPreencher.style.display = "flex";
     return;
 }
-
-
 
 
 const formData = new FormData(formLancamento);
@@ -621,7 +704,8 @@ function editarLancamento(id) {
         const categoriaMapEditar = {
             "0": "C", // Corrente
             "1": "P", // Poupança
-            "2": "S"  // Salário
+            "2": "S",  // Salário
+            "3": "D"  // Digital
         };
 
         const contasMapEditar = new Map();
@@ -631,6 +715,55 @@ function editarLancamento(id) {
             const nomeComCategoria = `${conta.nome_conta} ${sigla}`;
             contasMapEditar.set(conta.id_conta, nomeComCategoria);
         });
+
+        function popularContasTransferenciaEditar() {
+            const defaultOptionUm = document.createElement("option");
+            defaultOptionUm.value = "";
+            defaultOptionUm.textContent = "Selecione a conta";
+
+            const defaultOptionDois = document.createElement("option");
+            defaultOptionDois.value = "";
+            defaultOptionDois.textContent = "Selecione a conta";
+
+            const labelUm = document.createElement("label");
+            labelUm.textContent = "Conta de origem";
+            const labelDois = document.createElement("label");
+            labelDois.textContent = "Conta de destino";
+
+            const selectUm = document.createElement("select");
+            selectUm.name = "conta-saida";
+            selectUm.id = "conta-saida";
+            selectUm.appendChild(defaultOptionUm);
+
+            const selectDois = document.createElement("select");
+            selectDois.name = "conta-entrada";
+            selectDois.id = "conta-entrada";
+            selectDois.appendChild(defaultOptionDois);
+
+            data.contas.forEach(conta => {
+                // Se o nome da conta for "carteira", não adiciona
+                if (conta.nome_conta.toLowerCase() == "carteira") {
+                    return; // pula para o próximo item do forEach
+                }
+                const sigla = categoriaMapEditar[conta.categoria] || "?";
+                const nomeComCategoria = `${conta.nome_conta} ${sigla}`;
+
+                const option1 = document.createElement("option");
+                option1.value = conta.id_conta;
+                option1.textContent = nomeComCategoria;
+
+                const option2 = document.createElement("option");
+                option2.value = conta.id_conta;
+                option2.textContent = nomeComCategoria;
+
+                selectUm.appendChild(option1);
+                selectDois.appendChild(option2);
+            });
+            containerContasTransferenciaEditar.appendChild(labelUm);
+            containerContasTransferenciaEditar.appendChild(selectUm);
+            containerContasTransferenciaEditar.appendChild(labelDois);
+            containerContasTransferenciaEditar.appendChild(selectDois);
+        }
 
         function atualizarMeioPagamentoEditar() {
             const metodoSelecionado = metodoSelectEditar.value;
@@ -662,6 +795,10 @@ function editarLancamento(id) {
                 meioPagamentoEditar.appendChild(select);
         
             } else if (metodoSelecionado === "Transferência" || metodoSelecionado === "Boleto" || metodoSelecionado === "Pix") {
+                if (metodoSelecionado === "Transferência") {
+                    containerCheckboxTranferenciaContasEditar.style.display = "flex";
+                }
+
                 const label = document.createElement("label");
                 label.textContent = "Selecione a conta";
         
@@ -686,6 +823,17 @@ function editarLancamento(id) {
         
                 meioPagamentoEditar.appendChild(label);
                 meioPagamentoEditar.appendChild(select);
+
+                if (checkboxTranferenciaContasEditar.checked) {
+                    containerContasTransferenciaEditar.style.display = "flex";
+                    popularContasTransferenciaEditar();
+                }
+
+                checkboxTranferenciaContasEditar.addEventListener("change", () => {
+                    popularContasTransferenciaEditar();
+                    containerContasTransferenciaEditar.style.display = "flex";
+                    meioPagamentoEditar.style.display = "none";
+                })
             }
         };
 

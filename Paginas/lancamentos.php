@@ -108,7 +108,7 @@
                     <label for="valor">Valor</label>
                     <input type="text" name="valor" id="valor" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
                 </span>
-                <span class="input-box">
+                <span class="input-box" id="tipo-container">
                     <label for="tipo">Tipo</label>
                     <span class="tipo-lancamento">
                         <input type="radio" name="tipo" id="receita" value="0" onchange="ocultarParcelas()">
@@ -131,7 +131,14 @@
                         <option value="Pix">Pix</option>
                     </select>
                 </span>
+                <span class="input-box" id="transferencia-entre-contas-check">
+                    <label for="transferencia-contas">Transferência entre Contas</label>
+                    <input type="checkbox" name="transferencia-contas" id="transferencia-contas">
+                </span>
                 <span class="input-box" id="meio-pagamento"></span>
+                <span class="input-box" id="contas-transferencia">
+                    
+                </span>
                 <span class="input-box">
                     <label for="categoria">Categoria</label>
                     <select name="categoria" id="categoria">
@@ -196,7 +203,14 @@
                         <option value="Pix">Pix</option>
                     </select>
                 </span>
+                <span class="input-box" id="transferencia-entre-contas-check-editar">
+                    <label for="transferencia-contas-editar">Transferência entre Contas</label>
+                    <input type="checkbox" name="transferencia-contas-editar" id="transferencia-contas-editar">
+                </span>
                 <span class="input-box" id="meio-pagamento-editar"></span>
+                <span class="input-box" id="contas-transferencia-editar">
+                    
+                </span>
                 <span class="input-box">
                     <label for="categoria-editar">Categoria</label>
                     <select name="categoria-editar" id="categoria-editar">

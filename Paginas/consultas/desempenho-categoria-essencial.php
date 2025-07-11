@@ -61,8 +61,8 @@ if ($result && $result->num_rows > 0) {
         $categoria = $row['categoria'];
         $total = (float)$row['total'];
 
-        $essenciais = ['Moradia', 'Alimentação', 'Transporte', 'Educação', 'Saúde', 'Impostos'];
-        $desnecessarias = ['Lazer', 'Vestuário', 'Despesas_Gerais', 'Outros', 'Serviços'];
+        $essenciais = ['Moradia', 'Educação', 'Saúde', 'Investimentos'];
+        $desnecessarias = ['Transporte','Alimentação', 'Lazer', 'Vestuário', 'Despesas_Gerais', 'Outros', 'Assinaturas', 'Impostos'];
 
         if (in_array($categoria, $essenciais)) {
             $resposta['essenciais'] += $total;
