@@ -265,6 +265,10 @@ table td.receita {
     color: rgb(0, 190, 0);
 }
 
+table td.transferencia {
+    color: rgb(177, 246, 255);
+}
+
 .table-container table tr td:last-child {
     gap: 5px;
 }
