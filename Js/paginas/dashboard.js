@@ -156,8 +156,6 @@ fetch('../Paginas/consultas/desempenho-geral-anterior-atual.php')
     const porcentagemSaldo = document.getElementById('porcentagemSaldo');
 
     let saldoFinal = data.saldo_final_anterior + data.saldo_final_atual;
-    let totalReceitas = data.total_receitas_atual == 0 ? data.total_receitas_anterior : data.total_receitas_atual;
-    let totalDespesas = data.total_despesas_atual == 0 ? data.total_despesas_anterior : data.total_despesas_atual;
 
     // Cálculo das porcentagens
     let valorPorcentagemEntradas = data.total_receitas_anterior !== 0
@@ -213,8 +211,8 @@ function renderLancamentos(lancamentos) {
     // Ordena os lançamentos pela data (do mais recente para o mais antigo)
     const lancamentosOrdenados = lancamentos.sort((a, b) => new Date(b.data) - new Date(a.data));
 
-    // Pega os 5 primeiros (os 5 mais recentes)
-    const ultimosLancamentos = lancamentosOrdenados.slice(0, 5);
+    // Pega os 5 ultimos (os 5 mais recentes)
+    const ultimosLancamentos = lancamentosOrdenados.slice(-5).reverse();
 
     fetch('../Paginas/consultas/infos-cartoes.php')
         .then(response => response.json())
@@ -253,8 +251,8 @@ function renderLancamentos(lancamentos) {
             let tbody = '<tbody>';
 
             ultimosLancamentos.forEach(lancamento => {
-                const tipo = lancamento.tipo === 0 ? 'Receita' : 'Despesa';
-                const classeValor = tipo === 'Despesa' ? 'despesa' : 'receita';
+                const tipo = lancamento.tipo === 0 ? 'Receita' : lancamento.tipo === 1 ? 'Despesa' : 'Transferencia';
+                const classeValor = tipo === 'Despesa' ? 'despesa' : tipo === 'Receita' ? 'receita' : 'transferencia';
                 let contaCartao = '';
 
                 if (lancamento.id_cartao) {
@@ -279,7 +277,7 @@ function renderLancamentos(lancamentos) {
                             case "0": categoriaInicial = 'C'; break;
                             case "1": categoriaInicial = 'P'; break;
                             case "2": categoriaInicial = 'S'; break;
-                            case "3": xategoriaInicial = 'D'; break;
+                            case "3": categoriaInicial = 'D'; break;
                         }
                         contaCartao = `${conta.nome_conta} (${categoriaInicial})`;
                     }
@@ -296,7 +294,13 @@ function renderLancamentos(lancamentos) {
                     <td>${contaCartao}</td>
                     <td>${lancamento.categoria}</td>
                     <td>${lancamento.subcategoria}</td>
-                    <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
+                    <td>${
+                        (() => {
+                            const partes = lancamento.data.split('-'); // ["2025", "07", "09"]
+                            const dataLocal = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
+                            return dataLocal.toLocaleDateString('pt-BR');
+                        })()
+                    }</td>
                     <td>${lancamentoParcela}</td>
                 </tr>`;
             });

@@ -342,8 +342,8 @@ window.addEventListener('DOMContentLoaded', function () {
         
                 let tbody = '<tbody>';
                 data.lancamentos.forEach(lancamento => {
-                    const tipo = lancamento.tipo === 0 ? 'Receita' : 'Despesa';
-                    const classeValor = tipo === 'Despesa' ? 'despesa' : 'receita';
+                    const tipo = lancamento.tipo === 0 ? 'Receita' : lancamento.tipo === 1 ? 'Despesa' : 'Transferencia';
+                    const classeValor = tipo === 'Despesa' ? 'despesa' : tipo === 'Receita' ? 'receita' : 'transferencia';
                     let lancamentoParcela = parseInt(lancamento.parcelas) === 0 ? 'A vista' : lancamento.parcelas;
         
                     let instituicao = '';
@@ -388,7 +388,13 @@ window.addEventListener('DOMContentLoaded', function () {
                             <td>${instituicao}</td>
                             <td>${(lancamento.categoria).replace('_', ' ')}</td>
                             <td>${lancamento.subcategoria}</td>
-                            <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
+                            <td>${
+                                (() => {
+                                    const partes = lancamento.data.split('-');
+                                    const dataLocal = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
+                                    return dataLocal.toLocaleDateString('pt-BR');
+                                })()
+                            }</td>
                             <td>${lancamentoParcela}</td>
                             <td>
                                 <button id="editar" onclick="editarLancamento(${lancamento.id_lancamento})"><i class="fas fa-edit"></i></button>

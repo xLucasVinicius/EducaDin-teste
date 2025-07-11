@@ -247,8 +247,8 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
       let tbody = '<tbody>';
     
       lancamentos.forEach(lancamento => {
-        let lancamentoTipo = parseInt(lancamento.tipo) === 1 ? 'Despesa' : 'Receita';
-        let classeValor = lancamentoTipo === 'Despesa' ? 'despesa' : 'receita';
+        let lancamentoTipo = parseInt(lancamento.tipo) === 1 ? 'Despesa' : parseInt(lancamento.tipo) === 2 ? 'Despesa' : 'Transferencia';
+        let classeValor = lancamentoTipo === 'Despesa' ? 'despesa' : lancamentoTipo === 'Receita' ? 'receita' : 'transferencia';
     
         tbody += `
           <tr>
@@ -258,7 +258,13 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
               <td>${lancamento.metodo_pagamento}</td>
               <td>${lancamento.categoria}</td>
               <td>${lancamento.subcategoria}</td>
-              <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
+              <td>${
+                (() => {
+                    const partes = lancamento.data.split('-'); // ["2025", "07", "09"]
+                    const dataLocal = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
+                    return dataLocal.toLocaleDateString('pt-BR');
+                })()
+              }</td>
           </tr>`;
       });
     

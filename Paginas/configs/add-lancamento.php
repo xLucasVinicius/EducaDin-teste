@@ -22,7 +22,6 @@ $subcategoria = $_POST['subcategoria' . $prefixo];
 $data = $_POST['data' . $prefixo];
 $parcelas = $_POST['parcelas' . $prefixo];
 $valor = formatarValor($valor);
-
 if ($tipo == 0) $parcelas = 0;
 
 $data_ref = date('Y-m-01', strtotime($data));
@@ -117,15 +116,15 @@ if ($id_lancamento) {
                     $diferenca = $valor;
                 }
 
-                $query = "UPDATE desempenho_anual SET total_despesas = total_despesas + ?, saldo_final = saldo_final - ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+                $query = "UPDATE desempenho_anual SET saldo_final = saldo_final - ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
                 $stmt = $mysqli->prepare($query);
-                $stmt->bind_param("ddiis", $diferenca, $diferenca, $id_usuario, $id_conta, $data_ref);
+                $stmt->bind_param("diis", $diferenca, $id_usuario, $id_conta, $data_ref);
                 $stmt->execute();
                 $stmt->close();
                 if ($id_conta !== $id_conta_saida_antiga) {
-                    $query_conta_saida_antiga = "UPDATE desempenho_anual SET total_despesas = total_despesas - ?, saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+                    $query_conta_saida_antiga = "UPDATE desempenho_anual SET saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
                     $stmt = $mysqli->prepare($query_conta_saida_antiga);
-                    $stmt->bind_param("ddiis", $diferenca, $diferenca, $id_usuario, $id_conta_saida_antiga, $data_ref);
+                    $stmt->bind_param("diis", $diferenca, $id_usuario, $id_conta_saida_antiga, $data_ref);
                     $stmt->execute();
                     $stmt->close();
                 }
@@ -171,15 +170,15 @@ if ($id_lancamento) {
                     $diferenca = $valor;
                 }
 
-                $query = "UPDATE desempenho_anual SET total_receitas = total_receitas + ?, saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+                $query = "UPDATE desempenho_anual SET saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
                 $stmt = $mysqli->prepare($query);
-                $stmt->bind_param("ddiis", $diferenca, $diferenca, $id_usuario, $id_conta_entrada, $data_ref);
+                $stmt->bind_param("diis", $diferenca, $id_usuario, $id_conta_entrada, $data_ref);
                 $stmt->execute();
                 $stmt->close();
                 if ($id_conta_entrada !== $id_conta_entrada_antiga) {
-                    $query_conta_entrada_antiga = "UPDATE desempenho_anual SET total_receitas = total_receitas - ?, saldo_final = saldo_final - ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+                    $query_conta_entrada_antiga = "UPDATE desempenho_anual SET saldo_final = saldo_final - ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
                     $stmt = $mysqli->prepare($query_conta_entrada_antiga);
-                    $stmt->bind_param("ddiis", $diferenca, $diferenca, $id_usuario, $id_conta_entrada_antiga, $data_ref);
+                    $stmt->bind_param("diis", $diferenca, $id_usuario, $id_conta_entrada_antiga, $data_ref);
                     $stmt->execute();
                     $stmt->close();
                 }
@@ -289,122 +288,130 @@ if ($id_lancamento) {
 } else {
     // ====== INSERÇÃO ======
     if ($tranferenciaContas) {
-    $tipo = 2;
-    // Inserir transferência entre contas
-    $query = "INSERT INTO lancamentos (id_usuario, id_conta, id_conta_entrada, descricao, valor, tipo, metodo_pagamento, categoria, subcategoria, data, parcelas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $mysqli->prepare($query);
-    $stmt->bind_param("iiississssi", $id_usuario, $contaSaida, $contaEntrada, $descricao, $valor, $tipo, $metodo, $categoria, $subcategoria, $data, $parcelas);
-    $stmt->execute();
-    $stmt->close();
-
-    // Atualizar saldo da conta de origem (saida)
-    $ajuste_saida = -$valor;
-    $query_saldo_saida = "UPDATE contas SET saldo_atual = saldo_atual + ? WHERE id_conta = ? AND id_usuario = ?";
-    $stmt_saida = $mysqli->prepare($query_saldo_saida);
-    $stmt_saida->bind_param("dii", $ajuste_saida, $contaSaida, $id_usuario);
-    $stmt_saida->execute();
-    $stmt_saida->close();
-
-    // Atualizar saldo da conta de destino (entrada)
-    $ajuste_entrada = $valor;
-    $query_saldo_entrada = "UPDATE contas SET saldo_atual = saldo_atual + ? WHERE id_conta = ? AND id_usuario = ?";
-    $stmt_entrada = $mysqli->prepare($query_saldo_entrada);
-    $stmt_entrada->bind_param("dii", $ajuste_entrada, $contaEntrada, $id_usuario);
-    $stmt_entrada->execute();
-    $stmt_entrada->close();
-
-    $query_check = "SELECT id_desempenho FROM desempenho_anual WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
-    $stmt_check = $mysqli->prepare($query_check);
-    $stmt_check->bind_param("iis", $id_usuario, $contaSaida, $data_ref);
-    $stmt_check->execute();
-
-    if ($stmt_check->num_rows > 0) {
-        $stmt_check->close();
-        $query_conta_saida = "UPDATE desempenho_anual SET total_despesas = total_despesas + ?, saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
-        
-        $stmt_update = $mysqli->prepare($query);
-        $stmt_update->bind_param("ddiis", $ajuste_saida, $ajuste_saida, $id_usuario, $contaSaida, $data_ref);
-        $stmt_update->execute();
-        $stmt_update->close();
-
-        $query_conta_entrada = "UPDATE desempenho_anual SET total_receitas = total_receitas + ?, saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
-        
-        $stmt_update = $mysqli->prepare($query);
-        $stmt_update->bind_param("ddiis", $ajuste_entrada, $ajuste_entrada, $id_usuario, $contaEntrada, $data_ref);
-        $stmt_update->execute();
-        $stmt_update->close();
-    } else {
-        $stmt_check->close();
-        $total_receitas_saida = 0;
-        $total_despesas_saida = $ajuste_saida;
-        $total_receitas_entrada = $ajuste_entrada;
-        $total_despesas_entrada = 0;
-
-        $query_saldo_atual_conta_saida = "SELECT saldo_atual FROM contas WHERE id_conta = ? AND id_usuario = ?";
-        $stmt = $mysqli->prepare($query_saldo_atual_conta_saida);
-        $stmt->bind_param("ii", $contaSaida, $id_usuario);
+        $tipo = 2;
+        // Inserir transferência entre contas
+        $query = "INSERT INTO lancamentos (id_usuario, id_conta, id_conta_entrada, descricao, valor, tipo, metodo_pagamento, categoria, subcategoria, data, parcelas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("iiississssi", $id_usuario, $contaSaida, $contaEntrada, $descricao, $valor, $tipo, $metodo, $categoria, $subcategoria, $data, $parcelas);
         $stmt->execute();
-        $stmt->bind_result($saldo_atual);
-        $stmt->fetch();
         $stmt->close();
 
-        // Verificar se o mês do lançamento é diferente do mês atual
-        if ($data_ref !== $mesAtual) {
-            // Verificar se já existe o registro de desempenho para o mês do lançamento
-            $query_check = "SELECT id_desempenho FROM desempenho_anual WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
-            $stmt_check = $mysqli->prepare($query_check);
-            $stmt_check->bind_param("iis", $id_usuario, $id_conta, $data_ref);
-            $stmt_check->execute();
-            $stmt_check->store_result();
+        // Atualizar saldo da conta de origem (saida)
+        $ajuste_saida = -$valor;
+        $query_saldo_saida = "UPDATE contas SET saldo_atual = saldo_atual + ? WHERE id_conta = ? AND id_usuario = ?";
+        $stmt_saida = $mysqli->prepare($query_saldo_saida);
+        $stmt_saida->bind_param("dii", $ajuste_saida, $contaSaida, $id_usuario);
+        $stmt_saida->execute();
+        $stmt_saida->close();
 
-            if ($stmt_check->num_rows > 0) {
-                $stmt_check->close();
-                // Atualizar o saldo do desempenho anual
-                $query_saida = "UPDATE desempenho_anual SET total_despesas = total_despesas + ?, saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
-                
-                $stmt_update = $mysqli->prepare($query);
-                $stmt_update->bind_param("ddiis", $total_despesas_saida, $total_despesas_saida, $id_usuario, $contaSaida, $data_ref);
-                $stmt_update->execute();
-                $stmt_update->close();
+        // Atualizar saldo da conta de destino (entrada)
+        $ajuste_entrada = $valor;
+        $query_saldo_entrada = "UPDATE contas SET saldo_atual = saldo_atual + ? WHERE id_conta = ? AND id_usuario = ?";
+        $stmt_entrada = $mysqli->prepare($query_saldo_entrada);
+        $stmt_entrada->bind_param("dii", $ajuste_entrada, $contaEntrada, $id_usuario);
+        $stmt_entrada->execute();
+        $stmt_entrada->close();
 
-                $query_entrada = "UPDATE desempenho_anual SET total_receitas = total_receitas + ?, saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
-                
-                $stmt_update = $mysqli->prepare($query);
-                $stmt_update->bind_param("ddiis", $total_receitas_entrada, $total_receitas_entrada, $id_usuario, $contaEntrada, $data_ref);
-                $stmt_update->execute();
-                $stmt_update->close();
+        $query_check = "SELECT id_desempenho FROM desempenho_anual WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+        $stmt_check = $mysqli->prepare($query_check);
+        $stmt_check->bind_param("iis", $id_usuario, $contaSaida, $data_ref);
+        $stmt_check->execute();
+
+        if ($stmt_check->num_rows > 0) {
+            $stmt_check->close();
+            $query_conta_saida = "UPDATE desempenho_anual SET saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+            
+            $stmt_update = $mysqli->prepare($query);
+            $stmt_update->bind_param("diis", $ajuste_saida, $id_usuario, $contaSaida, $data_ref);
+            $stmt_update->execute();
+            $stmt_update->close();
+
+            $query_conta_entrada = "UPDATE desempenho_anual SET saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+            
+            $stmt_update = $mysqli->prepare($query);
+            $stmt_update->bind_param("diis", $ajuste_entrada, $id_usuario, $contaEntrada, $data_ref);
+            $stmt_update->execute();
+            $stmt_update->close();
+        } else {
+            $stmt_check->close();
+            $total_receitas_saida = 0;
+            $total_despesas_saida = $ajuste_saida;
+            $total_receitas_entrada = $ajuste_entrada;
+            $total_despesas_entrada = 0;
+
+            $query_saldo_atual_conta_saida = "SELECT saldo_atual FROM contas WHERE id_conta = ? AND id_usuario = ?";
+            $stmt = $mysqli->prepare($query_saldo_atual_conta_saida);
+            $stmt->bind_param("ii", $contaSaida, $id_usuario);
+            $stmt->execute();
+            $stmt->bind_result($saldo_atual);
+            $stmt->fetch();
+            $stmt->close();
+
+            // Verificar se o mês do lançamento é diferente do mês atual
+            if ($data_ref !== $mesAtual) {
+                // Verificar se já existe o registro de desempenho para o mês do lançamento
+                $query_check = "SELECT id_desempenho FROM desempenho_anual WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+                $stmt_check = $mysqli->prepare($query_check);
+                $stmt_check->bind_param("iis", $id_usuario, $id_conta, $data_ref);
+                $stmt_check->execute();
+                $stmt_check->store_result();
+
+                if ($stmt_check->num_rows > 0) {
+                    $stmt_check->close();
+                    // Atualizar o saldo do desempenho anual
+                    $query_saida = "UPDATE desempenho_anual SET saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+                    
+                    $stmt_update = $mysqli->prepare($query);
+                    $stmt_update->bind_param("diis", $total_despesas_saida, $id_usuario, $contaSaida, $data_ref);
+                    $stmt_update->execute();
+                    $stmt_update->close();
+
+                    $query_entrada = "UPDATE desempenho_anual SET saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+                    
+                    $stmt_update = $mysqli->prepare($query);
+                    $stmt_update->bind_param("diis", $total_receitas_entrada, $id_usuario, $contaEntrada, $data_ref);
+                    $stmt_update->execute();
+                    $stmt_update->close();
+                } else {
+                    $total_receitas_entrada = 0;
+                    $total_despesas_entrada = 0;
+                    $total_receitas_saida = 0;
+                    $total_despesas_saida = 0;
+                    
+                    // Inserir novo registro de desempenho anual para o mês do lançamento
+                    $query_insert_conta_saida = "INSERT INTO desempenho_anual (id_usuario, id_conta, data_ref, total_receitas, total_despesas, saldo_final) VALUES (?, ?, ?, ?, ?, ?)";
+                    $stmt_insert = $mysqli->prepare($query_insert_conta_saida);
+                    $stmt_insert->bind_param("iisddd", $id_usuario, $contaSaida, $data_ref, $total_receitas_saida, $total_despesas_saida, $saldo_atual);
+                    $stmt_insert->execute();
+                    $stmt_insert->close();
+                    
+                    $query_insert_conta_entrada = "INSERT INTO desempenho_anual (id_usuario, id_conta, data_ref, total_receitas, total_despesas, saldo_final) VALUES (?, ?, ?, ?, ?, ?)";
+                    $stmt_insert = $mysqli->prepare($query_insert_conta_entrada);
+                    $stmt_insert->bind_param("iisddd", $id_usuario, $contaEntrada, $data_ref, $total_receitas_entrada, $total_despesas_entrada, $saldo_atual);
+                    $stmt_insert->execute();
+                    $stmt_insert->close();
+                }
             } else {
-                
-                // Inserir novo registro de desempenho anual para o mês do lançamento
+                $total_receitas_entrada = 0;
+                $total_despesas_entrada = 0;
+                $total_receitas_saida = 0;
+                $total_despesas_saida = 0;
+                // Inserir desempenho anual com o mês atual se for o mesmo
                 $query_insert_conta_saida = "INSERT INTO desempenho_anual (id_usuario, id_conta, data_ref, total_receitas, total_despesas, saldo_final) VALUES (?, ?, ?, ?, ?, ?)";
-                $stmt_insert = $mysqli->prepare($query_insert_conta_saida);
+                $stmt_insert = $mysqli->prepare($query_insert);
                 $stmt_insert->bind_param("iisddd", $id_usuario, $contaSaida, $data_ref, $total_receitas_saida, $total_despesas_saida, $saldo_atual);
                 $stmt_insert->execute();
                 $stmt_insert->close();
-                
+
                 $query_insert_conta_entrada = "INSERT INTO desempenho_anual (id_usuario, id_conta, data_ref, total_receitas, total_despesas, saldo_final) VALUES (?, ?, ?, ?, ?, ?)";
-                $stmt_insert = $mysqli->prepare($query_insert_conta_entrada);
+                $stmt_insert = $mysqli->prepare($query_insert);
                 $stmt_insert->bind_param("iisddd", $id_usuario, $contaEntrada, $data_ref, $total_receitas_entrada, $total_despesas_entrada, $saldo_atual);
                 $stmt_insert->execute();
                 $stmt_insert->close();
             }
-        } else {
-            // Inserir desempenho anual com o mês atual se for o mesmo
-            $query_insert_conta_saida = "INSERT INTO desempenho_anual (id_usuario, id_conta, data_ref, total_receitas, total_despesas, saldo_final) VALUES (?, ?, ?, ?, ?, ?)";
-            $stmt_insert = $mysqli->prepare($query_insert);
-            $stmt_insert->bind_param("iisddd", $id_usuario, $contaSaida, $data_ref, $total_receitas_saida, $total_despesas_saida, $saldo_atual);
-            $stmt_insert->execute();
-            $stmt_insert->close();
-
-            $query_insert_conta_entrada = "INSERT INTO desempenho_anual (id_usuario, id_conta, data_ref, total_receitas, total_despesas, saldo_final) VALUES (?, ?, ?, ?, ?, ?)";
-            $stmt_insert = $mysqli->prepare($query_insert);
-            $stmt_insert->bind_param("iisddd", $id_usuario, $contaEntrada, $data_ref, $total_receitas_entrada, $total_despesas_entrada, $saldo_atual);
-            $stmt_insert->execute();
-            $stmt_insert->close();
         }
-    }
-    echo json_encode(['status' => 'success']);
-    exit;
+        echo json_encode(['status' => 'success']);
+        exit;
     }
 
     if ($metodo === 'Crédito' && $parcelas > 1) {

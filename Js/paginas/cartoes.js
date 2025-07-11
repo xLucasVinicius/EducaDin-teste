@@ -290,7 +290,13 @@ document.addEventListener("DOMContentLoaded", () => {
               <td>${lancamento.metodo_pagamento}</td>
               <td>${lancamento.categoria}</td>
               <td>${lancamento.subcategoria}</td>
-              <td>${new Date(lancamento.data).toLocaleDateString('pt-BR')}</td>
+              <td>${
+                (() => {
+                    const partes = lancamento.data.split('-'); // ["2025", "07", "09"]
+                    const dataLocal = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
+                    return dataLocal.toLocaleDateString('pt-BR');
+                })()
+              }</td>
               <td>${lancamentoParcela}</td>
               
           </tr>`;
