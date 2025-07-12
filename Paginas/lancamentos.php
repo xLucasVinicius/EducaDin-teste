@@ -180,7 +180,7 @@
                     <label for="valor-editar">Valor</label>
                     <input type="text" name="valor-editar" id="valor-editar" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
                 </span>
-                <span class="input-box">
+                <span class="input-box" id="tipo-container-editar">
                     <label for="tipo-editar">Tipo</label>
                     <span class="tipo-lancamento">
                         <input type="radio" name="tipo-editar" id="receita-editar" value="0" onchange="ocultarParcelasEditar()">

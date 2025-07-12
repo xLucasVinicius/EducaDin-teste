@@ -3,6 +3,7 @@ const containerParcelasEditar = document.getElementById('parcelas-container-edit
 const formLancamento = document.getElementById('form-add-lancamento'); // Seleciona o formulário de lançamentos
 const formLancamentoEditar = document.getElementById('form-edit-lancamento'); // Seleciona o formulário de lançamentos
 const formEditar = document.getElementById('form-edit-container'); // Seleciona o container do formulário de edição
+const modalErroPreencher = document.getElementById("modalErroCampos");
 
 // Categorias/Subcategorias
 const subcategorias = {
@@ -24,6 +25,7 @@ const subcategorias = {
 };
 
 const tipoContainer = document.getElementById("tipo-container");
+const tipoContainerEditar = document.getElementById("tipo-container-editar");
 const selectSubcategoriaEditar = document.getElementById("subcategoria-editar");
 const selectCategoriaEditar = document.getElementById("categoria-editar");
 const containerSubcategoriasEditar = document.getElementById("subcategoria-container-editar");
@@ -555,7 +557,7 @@ const inputCategoria = document.getElementById("categoria");
 const inputSubcategoria = document.getElementById("subcategoria");
 const inputData = document.getElementById("data");
 const inputParcelas = document.getElementById("parcelas");
-const modalErroPreencher = document.getElementById("modalErroCampos");
+
 
 if (!inputDescricao.value || !inputValor.value || !inputCategoria.value || !inputSubcategoria.value || !inputData.value) {
     modalErroPreencher.style.display = "flex";
@@ -588,7 +590,7 @@ if (inputMetodo.value === "Boleto" || inputMetodo.value === "Pix") {
     }
 }
 
-if (inputMetodo.value === "Transferência") {
+if (inputMetodo.value === "Transferência" && checkboxTranferenciaContas.checked) {
     if (!inputContaSaida.value || !inputContaEntrada.value) {
         modalErroPreencher.style.display = "flex";
         return;
@@ -656,27 +658,48 @@ function editarLancamento(id) {
         fetch(`../Paginas/consultas/infos-lancamento-unico.php?id_lancamento=${id}`)
         .then(response => response.json())
         .then(data => {
-            const inputDescricao = document.getElementById("descricao-editar");
-            const inputValor = document.getElementById("valor-editar");
+            
+            const inputDescricaoEditar = document.getElementById("descricao-editar");
+            const inputValorEditar = document.getElementById("valor-editar");
             const inputReceita = document.getElementById("receita-editar");
             const inputDespesa = document.getElementById("despesa-editar");
             const selectMetodo = document.getElementById("metodo-editar");
+            
             const inputCategoria = document.getElementById("categoria-editar");
             const inputSubcategoria = document.getElementById("subcategoria-editar");
             const inputData = document.getElementById("data-editar");
             const inputParcelas = document.getElementById("parcelas-editar");
 
-            inputDescricao.value = data.descricao;
-            inputValor.value = formatarSaldo(data.valor);
+            inputDescricaoEditar.value = data.descricao;
+            inputValorEditar.value = formatarSaldo(data.valor);
+            selectMetodo.value = data.metodo_pagamento;
+
 
             if (data.tipo == 1) {
                 inputDespesa.checked = true;
                 mostrarParcelasEditar();
-            } else {
+            } else if (data.tipo == 0) {
                 inputReceita.checked = true;
+            } else if (data.tipo == 2) {
+                atualizarMeioPagamentoEditar();
+                tipoContainerEditar.style.display = "none";
+                checkboxTranferenciaContasEditar.checked = true;
             }
 
-            selectMetodo.value = data.metodo_pagamento;
+            if (checkboxTranferenciaContasEditar.checked) {
+                containerContasTransferenciaEditar.style.display = "flex";
+                meioPagamentoEditar.style.display = "none";
+                tipoContainerEditar.style.display = "none";
+                popularContasTransferenciaEditar();
+                document.getElementById("contaSaidaEditar").value = data.id_conta;
+                document.getElementById("contaEntradaEditar").value = data.id_conta_entrada;
+            } else {
+                containerContasTransferenciaEditar.style.display = "none";
+                containerContasTransferenciaEditar.innerHTML = "";
+                meioPagamentoEditar.style.display = "flex";
+                tipoContainerEditar.style.display = "flex";
+            }
+
 
         
             inputCategoria.value = data.categoria;
@@ -696,6 +719,28 @@ function editarLancamento(id) {
 
             inputData.value = data.data;
             inputParcelas.value = data.parcelas;
+
+            formLancamentoEditar.addEventListener("submit", (event) => {
+
+                event.preventDefault();
+                const formData = new FormData(formLancamentoEditar);
+
+                fetch("../Paginas/configs/add-lancamento.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        exibirSucessoEditar(data);
+                    } else {
+                        exibirErroEditar(data);
+                    }
+                })
+                .catch(error => console.error("Erro:", error));
+            });
+
+
         })
         .catch(error => console.error("Erro:", error));
 
@@ -723,6 +768,7 @@ function editarLancamento(id) {
         });
 
         function popularContasTransferenciaEditar() {
+            containerContasTransferenciaEditar.innerHTML = '';
             const defaultOptionUm = document.createElement("option");
             defaultOptionUm.value = "";
             defaultOptionUm.textContent = "Selecione a conta";
@@ -737,13 +783,13 @@ function editarLancamento(id) {
             labelDois.textContent = "Conta de destino";
 
             const selectUm = document.createElement("select");
-            selectUm.name = "conta-saida";
-            selectUm.id = "conta-saida";
+            selectUm.name = "conta-saida-editar";
+            selectUm.id = "contaSaidaEditar";
             selectUm.appendChild(defaultOptionUm);
 
             const selectDois = document.createElement("select");
-            selectDois.name = "conta-entrada";
-            selectDois.id = "conta-entrada";
+            selectDois.name = "conta-entrada-editar";
+            selectDois.id = "contaEntradaEditar";
             selectDois.appendChild(defaultOptionDois);
 
             data.contas.forEach(conta => {
@@ -830,15 +876,19 @@ function editarLancamento(id) {
                 meioPagamentoEditar.appendChild(label);
                 meioPagamentoEditar.appendChild(select);
 
-                if (checkboxTranferenciaContasEditar.checked) {
-                    containerContasTransferenciaEditar.style.display = "flex";
-                    popularContasTransferenciaEditar();
-                }
-
                 checkboxTranferenciaContasEditar.addEventListener("change", () => {
-                    popularContasTransferenciaEditar();
-                    containerContasTransferenciaEditar.style.display = "flex";
-                    meioPagamentoEditar.style.display = "none";
+                    if (checkboxTranferenciaContasEditar.checked) {
+                        containerContasTransferenciaEditar.style.display = "flex";
+                        meioPagamentoEditar.style.display = "none";
+                        tipoContainerEditar.style.display = "none";
+                        popularContasTransferenciaEditar();
+                    } else {
+                        containerContasTransferenciaEditar.style.display = "none";
+                        containerContasTransferenciaEditar.innerHTML = "";
+                        meioPagamentoEditar.style.display = "flex";
+                        tipoContainerEditar.style.display = "flex";
+                    }
+                    
                 })
             }
         };
@@ -922,26 +972,6 @@ document.getElementById("btnModalErroEditar").addEventListener("click", () => {
 document.querySelector("#form-edit-container .fechar-form-icon").addEventListener("click", () => {
     formEditar.style.display = "none";
     location.reload();
-});
-
-formLancamentoEditar.addEventListener("submit", (event) => {
-
-    event.preventDefault();
-    const formData = new FormData(formLancamentoEditar);
-
-    fetch("../Paginas/configs/add-lancamento.php", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === "success") {
-            exibirSucessoEditar(data);
-        } else {
-            exibirErroEditar(data);
-        }
-    })
-    .catch(error => console.error("Erro:", error));
 });
 
 document.getElementById("btnModalCancelarExcluir").addEventListener("click", () => {

@@ -43,9 +43,9 @@ if ($lancamento['tipo'] == 2) {
         $stmt_att_saldo_conta_saida->execute();
         $stmt_att_saldo_conta_saida->close();
 
-        $query_att_desempenho = "UPDATE desempenho_anual SET total_despesas = total_despesas - ?, saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+        $query_att_desempenho = "UPDATE desempenho_anual SET saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
         $stmt_att_desempenho = $mysqli->prepare($query_att_desempenho);
-        $stmt_att_desempenho->bind_param("ddiis", $valor, $valor, $id_usuario, $id_conta_saida, $data_ref);
+        $stmt_att_desempenho->bind_param("diis", $valor, $id_usuario, $id_conta_saida, $data_ref);
         $stmt_att_desempenho->execute();
         $stmt_att_desempenho->close();
 
@@ -55,21 +55,21 @@ if ($lancamento['tipo'] == 2) {
         $stmt_att_saldo_conta_entrada->execute();
         $stmt_att_saldo_conta_entrada->close();
 
-        $query_att_desempenho = "UPDATE desempenho_anual SET total_receitas = total_receitas - ?, saldo_final = saldo_final - ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+        $query_att_desempenho = "UPDATE desempenho_anual SET saldo_final = saldo_final - ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
         $stmt_att_desempenho = $mysqli->prepare($query_att_desempenho);
-        $stmt_att_desempenho->bind_param("ddiis", $valor, $valor, $id_usuario, $id_conta_entrada, $data_ref);
+        $stmt_att_desempenho->bind_param("diis", $valor, $id_usuario, $id_conta_entrada, $data_ref);
         $stmt_att_desempenho->execute();
         $stmt_att_desempenho->close();
     } else {
-        $query_att_desempenho = "UPDATE desempenho_anual SET total_despesas = total_despesas - ?, saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+        $query_att_desempenho = "UPDATE desempenho_anual SET saldo_final = saldo_final + ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
         $stmt_att_desempenho = $mysqli->prepare($query_att_desempenho);
-        $stmt_att_desempenho->bind_param("ddiis", $valor, $valor, $id_usuario, $id_conta_saida, $data_ref);
+        $stmt_att_desempenho->bind_param("diis", $valor, $id_usuario, $id_conta_saida, $data_ref);
         $stmt_att_desempenho->execute();
         $stmt_att_desempenho->close();
 
-        $query_att_desempenho = "UPDATE desempenho_anual SET total_receitas = total_receitas - ?, saldo_final = saldo_final - ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
+        $query_att_desempenho = "UPDATE desempenho_anual SET saldo_final = saldo_final - ? WHERE id_usuario = ? AND id_conta = ? AND data_ref = ?";
         $stmt_att_desempenho = $mysqli->prepare($query_att_desempenho);
-        $stmt_att_desempenho->bind_param("ddiis", $valor, $valor, $id_usuario, $id_conta_entrada, $data_ref);
+        $stmt_att_desempenho->bind_param("diis", $valor, $id_usuario, $id_conta_entrada, $data_ref);
         $stmt_att_desempenho->execute();
         $stmt_att_desempenho->close();
     }

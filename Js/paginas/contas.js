@@ -205,74 +205,96 @@ document.addEventListener("DOMContentLoaded", () => { // Adiciona um ouvinte par
 
     // Função para renderizar os lançamentos em formato de tabela
     function renderLancamentos(accountId) {
-      lancamentosContainer.innerHTML = ''; // Limpa o container de lançamentos
-    
-      const hoje = new Date();
-      const hojeAnoMes = hoje.toISOString().slice(0, 7); // "2025-05"
-    
-      // Filtra os lançamentos da conta selecionada E do mês atual
-      const lancamentos = lancamentosData.filter(l => {
-        if (parseInt(l.id_conta) != parseInt(accountId) || !l.data) return false;
-      
-        const dataLanc = new Date(l.data);
-        const lancAnoMes = dataLanc.toISOString().slice(0, 7);
+  lancamentosContainer.innerHTML = ''; // Limpa o container de lançamentos
 
-        return (
-          parseInt(l.id_conta) === parseInt(accountId) &&
-          lancAnoMes === hojeAnoMes
-        );
+  const hoje = new Date();
+  const hojeAnoMes = hoje.toISOString().slice(0, 7); // "2025-07"
 
-      });
-    
-      if (lancamentos.length === 0) {
-        lancamentosContainer.innerHTML = '<z style="color: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Nenhum lançamento encontrado.</z>';
-        return;
+  // Filtra os lançamentos da conta selecionada E do mês atual
+  const lancamentos = lancamentosData.filter(l => {
+    if (!l.data) return false;
+
+    const dataLanc = new Date(l.data);
+    const lancAnoMes = dataLanc.toISOString().slice(0, 7);
+
+    const isContaSaida = parseInt(l.id_conta) === parseInt(accountId);
+    const isContaEntrada = parseInt(l.id_conta_entrada) === parseInt(accountId);
+
+    return (isContaSaida || isContaEntrada) && lancAnoMes === hojeAnoMes;
+  });
+
+  if (lancamentos.length === 0) {
+    lancamentosContainer.innerHTML = '<z style="color: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Nenhum lançamento encontrado.</z>';
+    return;
+  }
+
+  const table = document.createElement('table');
+
+  const thead = `
+    <thead>
+      <tr>
+        <th>Descrição</th>
+        <th>Valor</th>
+        <th>Tipo</th>
+        <th>Método</th>
+        <th>Categoria</th>
+        <th>Subcategoria</th>
+        <th>Data</th>
+      </tr>
+    </thead>`;
+
+  let tbody = '<tbody>';
+
+  lancamentos.forEach(lancamento => {
+    let tipoTexto = '';
+    let classeValor = '';
+
+    if (parseInt(lancamento.tipo) === 2) {
+      // Transferência
+      if (parseInt(lancamento.id_conta) === parseInt(accountId)) {
+        tipoTexto = 'Despesa'; // Conta de saída
+        classeValor = 'despesa';
+      } else if (parseInt(lancamento.id_conta_entrada) === parseInt(accountId)) {
+        tipoTexto = 'Receita'; // Conta de entrada
+        classeValor = 'receita';
+      } else {
+        tipoTexto = 'Transferência';
+        classeValor = 'transferencia';
       }
-    
-      const table = document.createElement('table');
-    
-      const thead = `
-        <thead>
-            <tr>
-                <th>Descrição</th>
-                <th>Valor</th>
-                <th>Tipo</th>
-                <th>Método</th>
-                <th>Categoria</th>
-                <th>Subcategoria</th>
-                <th>Data</th>
-            </tr>
-        </thead>`;
-    
-      let tbody = '<tbody>';
-    
-      lancamentos.forEach(lancamento => {
-        let lancamentoTipo = parseInt(lancamento.tipo) === 1 ? 'Despesa' : parseInt(lancamento.tipo) === 2 ? 'Despesa' : 'Transferencia';
-        let classeValor = lancamentoTipo === 'Despesa' ? 'despesa' : lancamentoTipo === 'Receita' ? 'receita' : 'transferencia';
-    
-        tbody += `
-          <tr>
-              <td>${lancamento.descricao}</td>
-              <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
-              <td class="${classeValor}">${lancamentoTipo}</td>
-              <td>${lancamento.metodo_pagamento}</td>
-              <td>${lancamento.categoria}</td>
-              <td>${lancamento.subcategoria}</td>
-              <td>${
-                (() => {
-                    const partes = lancamento.data.split('-'); // ["2025", "07", "09"]
-                    const dataLocal = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
-                    return dataLocal.toLocaleDateString('pt-BR');
-                })()
-              }</td>
-          </tr>`;
-      });
-    
-      tbody += '</tbody>';
-    
-      table.innerHTML = thead + tbody;
-      lancamentosContainer.appendChild(table);
+    } else {
+      // Receita ou Despesa comuns
+      if (parseInt(lancamento.tipo) === 1) {
+        tipoTexto = 'Despesa';
+        classeValor = 'despesa';
+      } else {
+        tipoTexto = 'Receita';
+        classeValor = 'receita';
+      }
     }
+
+    tbody += `
+      <tr>
+        <td>${lancamento.descricao}</td>
+        <td>R$ ${parseFloat(lancamento.valor).toFixed(2).replace('.', ',')}</td>
+        <td class="${classeValor}">${tipoTexto}</td>
+        <td>${lancamento.metodo_pagamento || '-'}</td>
+        <td>${lancamento.categoria || '-'}</td>
+        <td>${lancamento.subcategoria || '-'}</td>
+        <td>${
+          (() => {
+            const partes = lancamento.data.split('-');
+            const dataLocal = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
+            return dataLocal.toLocaleDateString('pt-BR');
+          })()
+        }</td>
+      </tr>`;
+  });
+
+  tbody += '</tbody>';
+  table.innerHTML = thead + tbody;
+  lancamentosContainer.appendChild(table);
+}
+
     
 
     // Renderiza os lançamentos iniciais
