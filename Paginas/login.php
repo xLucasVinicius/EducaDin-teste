@@ -7,7 +7,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="../Style/login/login.css">
     <link rel="stylesheet" href="../Style/globais/msg-confirmacao.css">
-    <link rel="shortcut icon" href="../imagens/logos/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../imagens/logos/moeda.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
     <script src="https://accounts.google.com/gsi/client" async></script>

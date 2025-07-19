@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
             yaxis: { labels: { style: { colors: 'white' } } },
             grid: { borderColor: 'rgba(255, 255, 255, 0.1)' },
             stroke: { curve: 'smooth' },
-            legend: { position: 'bottom', labels: { colors: 'white' } },
+            legend: { show: false, position: 'bottom', labels: { colors: 'white' } },
             tooltip: { theme: 'dark', y: { formatter: val => `R$ ${val.toFixed(2).replace('.', ',')}` } }
         };
 
@@ -325,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const optionsDoughnut = {
         chart: {
             type: 'donut',
-            height: 200,
+            height: 250,
             width: 300
         },
         series: categoriasValores,

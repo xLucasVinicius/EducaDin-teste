@@ -51,8 +51,8 @@
 
 select {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 10px;
+    right: 10px;
     background-color: transparent;
     border: 1px solid var(--cor-principal);
     border-radius: 35px;

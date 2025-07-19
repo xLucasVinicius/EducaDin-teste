@@ -10,7 +10,11 @@
     }
 
     .chart3 #checkbox-categorias {
-        width: 70%;
+        width: 90%;
+        max-width: none;
+        overflow: auto;
+        flex-wrap: nowrap;
+        scrollbar-color: var(--cor-principal) var(--cor-fundo-content);
     }
 
     .chart4 {
